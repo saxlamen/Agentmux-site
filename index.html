@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentmux - The One-Stop Remote CLI Command Center</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #e0e0e0;
+            --accent-color: #22c55e;
+            --secondary-bg: #1a1a1a;
+            --card-bg: #242424;
+            --dim-text: #a0a0a0;
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dim-text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 8px;
+            margin-left: 20px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--dim-text);
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background-color: rgba(34, 197, 94, 0.1);
+        }
+
+        /* Hero Section */
+        header {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        header p {
+            font-size: 20px;
+            color: var(--dim-text);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: black;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, opacity 0.3s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .mockup-container {
+            margin-top: 60px;
+            background: linear-gradient(180deg, var(--border-color), transparent);
+            padding: 2px;
+            border-radius: 24px;
+            box-shadow: 0 20px 80px rgba(34, 197, 94, 0.1);
+        }
+
+        .mockup {
+            background-color: black;
+            border-radius: 22px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-color);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--dim-text);
+            font-size: 16px;
+        }
+
+        /* Vibe Coding Section */
+        .vibe-section {
+            padding: 80px 0;
+            background-color: var(--secondary-bg);
+            border-radius: 40px;
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+        .vibe-section h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .vibe-section p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--dim-text);
+            font-size: 18px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--dim-text);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--dim-text);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 40px; }
+            header { padding: 60px 0; }
+            .features { grid-template-columns: 1fr; }
+            .nav-links { gap: 15px; }
+            .lang-switcher { display: none; } /* Hide switcher in mobile nav to save space, or move it */
+        }
+
+        /* Lang Toggling */
+        [data-lang] { display: none; }
+        [data-lang].active { display: block; }
+        span[data-lang].active { display: inline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">AGENT<span>MUX</span></div>
+            <div class="nav-links">
+                <a href="#features">
+                    <span data-lang="en" class="active">Features</span>
+                    <span data-lang="zh-Hant">功能特色</span>
+                    <span data-lang="zh-Hans">功能特色</span>
+                    <span data-lang="ja">特徴</span>
+                </a>
+                <a href="privacy.html">
+                    <span data-lang="en" class="active">Privacy</span>
+                    <span data-lang="zh-Hant">隱私政策</span>
+                    <span data-lang="zh-Hans">隐私政策</span>
+                    <span data-lang="ja">プライバシー</span>
+                </a>
+                <a href="mailto:support@saxcave.cc">
+                    <span data-lang="en" class="active">Support</span>
+                    <span data-lang="zh-Hant">技術支援</span>
+                    <span data-lang="zh-Hans">技术支持</span>
+                    <span data-lang="ja">サポート</span>
+                </a>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="switchLang('en')">EN</button>
+                    <button class="lang-btn" onclick="switchLang('zh-Hant')">繁中</button>
+                    <button class="lang-btn" onclick="switchLang('zh-Hans')">简中</button>
+                    <button class="lang-btn" onclick="switchLang('ja')">日本語</button>
+                </div>
+            </div>
+        </nav>
+
+        <header>
+            <h1 data-lang="en" class="active">Elevate Your CLI <br><span>Vibe Coding</span> on the Go.</h1>
+            <h1 data-lang="zh-Hant">提升您的 CLI <br><span>隨時隨地，Vibe Coding</span></h1>
+            <h1 data-lang="zh-Hans">提升您的 CLI <br><span>随时随地，Vibe Coding</span></h1>
+            <h1 data-lang="ja">CLI体験を革新する <br><span>いつでもどこでも、Vibe Coding</span></h1>
+            
+            <p data-lang="en" class="active">The first purpose-built iOS command center for modern engineers. One-tap AI Agent discovery, seamless tmux persistence, and a desktop-grade terminal experience.</p>
+            <p data-lang="zh-Hant">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
+            <p data-lang="zh-Hans">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
+            <p data-lang="ja">現代のエンジニアのために構築された初のiOSコマンドセンター。AIエージェントの自動検出、シームレスなtmux永続化、デスクトップ級のターミナル体験。</p>
+            
+            <a href="#" class="cta-button">
+                <span data-lang="en" class="active">Download on App Store</span>
+                <span data-lang="zh-Hant">前往 App Store 下載</span>
+                <span data-lang="zh-Hans">前往 App Store 下载</span>
+                <span data-lang="ja">App Storeでダウンロード</span>
+            </a>
+            
+            <div class="mockup-container">
+                <div class="mockup">
+                    <div style="position: absolute; top: 20px; left: 20px; text-align: left; font-family: 'SF Mono', monospace; font-size: 12px; color: #22c55e;">
+                        $ agentmux discover<br>
+                        <span style="color: #666;">[SEARCHING] /home/user/projects...</span><br>
+                        <span style="color: #fff;">> Claude Code found at ./website-v2</span><br>
+                        <span style="color: #fff;">> Gemini Agent found at ./backend-api</span><br>
+                        <br>
+                        <span style="color: #22c55e;">Ready to vibe.</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="features" class="features">
+            <!-- Agent Discovery -->
+            <div class="feature-card">
+                <span class="feature-icon">🚀</span>
+                <div data-lang="en" class="active">
+                    <h3>Agent Discovery</h3>
+                    <p>No more manual path navigation. Automatically scans your server for projects and installed CLI agents like Claude Code, Codex, and Gemini.</p>
+                </div>
+                <div data-lang="zh-Hant">
+                    <h3>AI Agent 探索</h3>
+                    <p>不再需要手動進入路徑。自動掃描伺服器上的專案，並識別已安裝的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
+                </div>
+                <div data-lang="zh-Hans">
+                    <h3>AI Agent 探索</h3>
+                    <p>不再需要手动进入路径。自动扫描服务器上的项目，并识别已安装的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
+                </div>
+                <div data-lang="ja">
+                    <h3>エージェント検出</h3>
+                    <p>手動でのパス移動は不要。サーバー上のプロジェクトを自動スキャンし、Claude Code、Codex、GeminiなどのCLIエージェントを検出します。</p>
+                </div>
+            </div>
+
+            <!-- tmux -->
+            <div class="feature-card">
+                <span class="feature-icon">♾️</span>
+                <div data-lang="en" class="active">
+                    <h3>tmux Integration</h3>
+                    <p>Persistent CLI sessions that never die. One-tap automatic tmux installation if your server is missing it.</p>
+                </div>
+                <div data-lang="zh-Hant">
+                    <h3>tmux 深度整合</h3>
+                    <p>永不中斷的持久化 CLI 會話。如果伺服器缺少 tmux，支援一鍵自動安裝。</p>
+                </div>
+                <div data-lang="zh-Hans">
+                    <h3>tmux 深度整合</h3>
+                    <p>永不中断的持久化 CLI 会话。如果服务器缺少 tmux，支持一键自动安装。</p>
+                </div>
+                <div data-lang="ja">
+                    <h3>tmux統合</h3>
+                    <p>決して途切れない永続的なCLIセッション。サーバーにtmuxがない場合はワンタップで自動インストール。</p>
+                </div>
+            </div>
+
+            <!-- File Management -->
+            <div class="feature-card">
+                <span class="feature-icon">📂</span>
+                <div data-lang="en" class="active">
+                    <h3>Integrated File Management</h3>
+                    <p>Browse Markdown docs, preview images, and edit configuration files like .env or .json without leaving the app.</p>
+                </div>
+                <div data-lang="zh-Hant">
+                    <h3>整合式檔案管理</h3>
+                    <p>直接在 App 內瀏覽 Markdown、預覽圖片並編輯 .env 或 .json 等設定檔。</p>
+                </div>
+                <div data-lang="zh-Hans">
+                    <h3>整合式文件管理</h3>
+                    <p>直接在 App 内浏览 Markdown、预览图片并编辑 .env 或 .json 等配置文件。</p>
+                </div>
+                <div data-lang="ja">
+                    <h3>統合ファイル管理</h3>
+                    <p>アプリを離れることなく、Markdownの閲覧、画像のプレビュー、.envや.jsonなどの設定ファイルの編集が可能。</p>
+                </div>
+            </div>
+
+            <!-- UX -->
+            <div class="feature-card">
+                <span class="feature-icon">⌨️</span>
+                <div data-lang="en" class="active">
+                    <h3>Desktop-Grade UX</h3>
+                    <p>Full trackpad and physical keyboard support for iPad Pro, plus a specialized shortcut panel for iPhone terminal use.</p>
+                </div>
+                <div data-lang="zh-Hant">
+                    <h3>桌面級體驗</h3>
+                    <p>完美支援 iPad Pro 的觸控板與實體鍵盤，並為 iPhone 提供專屬的終端機快捷面板。</p>
+                </div>
+                <div data-lang="zh-Hans">
+                    <h3>桌面级体验</h3>
+                    <p>完美支持 iPad Pro 的触控板与实体键盘，并为 iPhone 提供专属的终端快捷面板。</p>
+                </div>
+                <div data-lang="ja">
+                    <h3>デスクトップ級の操作性</h3>
+                    <p>iPad Proのトラックパッドと物理キーボードをフルサポート。iPhone向けには専用のショートカットパネルを搭載。</p>
+                </div>
+            </div>
+
+            <!-- Connectivity -->
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <div data-lang="en" class="active">
+                    <h3>Robust Connectivity</h3>
+                    <p>Industry-leading state recovery for cellular networks. Best used with VPNs like Tailscale or Netbird for seamless remote access.</p>
+                </div>
+                <div data-lang="zh-Hant">
+                    <h3>強健連線</h3>
+                    <p>領先業界的行動網路狀態恢復。搭配 Tailscale 或 Netbird 等 VPN 使用體驗更佳。</p>
+                </div>
+                <div data-lang="zh-Hans">
+                    <h3>强健连接</h3>
+                    <p>领先行业的移动网络状态恢复。搭配 Tailscale 或 Netbird 等 VPN 使用体验更佳。</p>
+                </div>
+                <div data-lang="ja">
+                    <h3>強固な接続性</h3>
+                    <p>モバイルネットワークに特化した状態復旧機能。TailscaleやNetbirdなどのVPNとの併用でさらに快適に。</p>
+                </div>
+            </div>
+
+            <!-- Shell -->
+            <div class="feature-card">
+                <span class="feature-icon">💻</span>
+                <div data-lang="en" class="active">
+                    <h3>Any System, Any Shell</h3>
+                    <p>Fully compatible with macOS and Linux servers. Supports your favorite shells including bash, zsh, and fish.</p>
+                </div>
+                <div data-lang="zh-Hant">
+                    <h3>支援各種系統與 Shell</h3>
+                    <p>全面相容 macOS 與 Linux 伺服器，支援您最愛的 bash, zsh 與 fish。</p>
+                </div>
+                <div data-lang="zh-Hans">
+                    <h3>支持各种系统与 Shell</h3>
+                    <p>全面兼容 macOS 与 Linux 服务器，支持您最爱的 bash, zsh 与 fish。</p>
+                </div>
+                <div data-lang="ja">
+                    <h3>あらゆるシステムとシェル</h3>
+                    <p>macOSおよびLinuxサーバーに完全対応。bash、zsh、fishなど、お好みのシェルを利用可能。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="vibe-section">
+            <div data-lang="en" class="active">
+                <h2>Built to Replace Your Legacy SSH Setup.</h2>
+                <p>Agentmux isn't just another SSH client like Termius. It's a specialized command center designed for the high-intensity AI Agent workflow. Stay in "the zone" whether you're at your desk or on the train.</p>
+            </div>
+            <div data-lang="zh-Hant">
+                <h2>為取代傳統 SSH 而生</h2>
+                <p>Agentmux 不僅僅是另一個 SSH 客戶端。它是專為高強度 AI Agent 工作流設計的指令中心。無論是在辦公桌前還是通勤途中，都能保持專注。</p>
+            </div>
+            <div data-lang="zh-Hans">
+                <h2>为取代传统 SSH 而生</h2>
+                <p>Agentmux 不仅仅是另一个 SSH 客户端。它是专为高强度 AI Agent 工作流设计的指令中心。无论是在办公桌前还是通勤途中，都能保持专注。</p>
+            </div>
+            <div data-lang="ja">
+                <h2>従来のSSH環境を置き換えるために</h2>
+                <p>Agentmuxは単なるSSHクライアントではありません。高強度のAIエージェントワークフローのために設計された専用のコマンドセンターです。デスクでも電車でも、常に「ゾーン」を維持。</p>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-links">
+                <a href="privacy.html">
+                    <span data-lang="en" class="active">Privacy Policy</span>
+                    <span data-lang="zh-Hant">隱私政策</span>
+                    <span data-lang="zh-Hans">隐私政策</span>
+                    <span data-lang="ja">プライバシーポリシー</span>
+                </a>
+                <a href="#">
+                    <span data-lang="en" class="active">Terms of Service</span>
+                    <span data-lang="zh-Hant">服務條款</span>
+                    <span data-lang="zh-Hans">服务条款</span>
+                    <span data-lang="ja">利用規約</span>
+                </a>
+                <a href="mailto:support@saxcave.cc">
+                    <span data-lang="en" class="active">Contact Support</span>
+                    <span data-lang="zh-Hant">聯絡支援</span>
+                    <span data-lang="zh-Hans">联系支持</span>
+                    <span data-lang="ja">お問い合わせ</span>
+                </a>
+            </div>
+            <p>&copy; 2026 Agentmux. Built for the Vibe Coding generation.</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            // Update buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase().includes(lang.toLowerCase()) || 
+                    (lang === 'zh-Hant' && btn.innerText === '繁中') ||
+                    (lang === 'zh-Hans' && btn.innerText === '简中') ||
+                    (lang === 'ja' && btn.innerText === '日本語') ||
+                    (lang === 'en' && btn.innerText === 'EN')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update content (div and span)
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                el.classList.remove('active');
+                if (el.getAttribute('data-lang') === lang) {
+                    el.classList.add('active');
+                }
+            });
+
+            // Update page language
+            document.documentElement.lang = lang;
+            
+            // Save preference
+            localStorage.setItem('preferred-lang', lang);
+        }
+
+        // Auto-detect or use saved preference
+        window.onload = () => {
+            const saved = localStorage.getItem('preferred-lang');
+            if (saved) {
+                switchLang(saved);
+            } else {
+                const browserLang = navigator.language;
+                if (browserLang.startsWith('zh-TW') || browserLang.startsWith('zh-HK')) switchLang('zh-Hant');
+                else if (browserLang.startsWith('zh')) switchLang('zh-Hans');
+                else if (browserLang.startsWith('ja')) switchLang('ja');
+                else switchLang('en');
+            }
+        };
+    </script>
+</body>
+</html>
