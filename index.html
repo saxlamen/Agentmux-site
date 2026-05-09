@@ -100,30 +100,41 @@
 
         /* Hero Section */
         header {
-            padding: 80px 0;
-            text-align: center;
+            padding: 100px 0;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            text-align: left;
+        }
+
+        .hero-content {
+            flex: 1.2;
         }
 
         h1 {
-            font-size: 56px;
+            font-size: 64px;
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            letter-spacing: -3px;
+        }
+
+        h1 span {
+            color: var(--accent-color);
         }
 
         header p {
             font-size: 20px;
             color: var(--dim-text);
-            max-width: 700px;
-            margin: 0 auto 40px;
+            margin-bottom: 40px;
+            max-width: 540px;
         }
 
         .cta-button {
             background-color: var(--accent-color);
             color: black;
-            padding: 16px 40px;
-            border-radius: 12px;
+            padding: 18px 36px;
+            border-radius: 14px;
             font-weight: 700;
             font-size: 18px;
             text-decoration: none;
@@ -136,113 +147,148 @@
             transform: translateY(-2px);
         }
 
-        .mockup-container {
-            margin-top: 60px;
-            background: linear-gradient(180deg, var(--border-color), transparent);
-            padding: 2px;
-            border-radius: 24px;
-            box-shadow: 0 20px 80px rgba(34, 197, 94, 0.1);
+        .hero-mockup {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            perspective: 1000px;
         }
 
-        .mockup {
-            background-color: black;
-            border-radius: 22px;
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+        .hero-mockup img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 40px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 50px rgba(34, 197, 94, 0.15);
+            border: 4px solid #1a1a1a;
+            transform: rotate(-2deg);
         }
 
         /* Features Section */
-        .features {
-            padding: 80px 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        .features-container {
+            padding: 100px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
         }
 
-        .feature-card {
-            background-color: var(--card-bg);
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .feature-row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .feature-image-side {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            background: linear-gradient(145deg, #161616, #0a0a0a);
             padding: 40px;
-            border-radius: 20px;
+            border-radius: 40px;
             border: 1px solid var(--border-color);
-            transition: border-color 0.3s;
         }
 
-        .feature-card:hover {
-            border-color: var(--accent-color);
+        .feature-image-side img {
+            max-width: 100%;
+            height: auto;
+            max-height: 550px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .feature-text-side {
+            flex: 1;
         }
 
         .feature-icon {
-            font-size: 32px;
-            margin-bottom: 20px;
+            font-size: 40px;
+            margin-bottom: 24px;
             display: block;
         }
 
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 12px;
+        .feature-text-side h3 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            font-weight: 700;
         }
 
-        .feature-card p {
+        .feature-text-side p {
             color: var(--dim-text);
-            font-size: 16px;
+            font-size: 18px;
+            line-height: 1.6;
         }
 
         /* Vibe Coding Section */
         .vibe-section {
-            padding: 80px 0;
-            background-color: var(--secondary-bg);
-            border-radius: 40px;
-            margin-bottom: 80px;
+            padding: 100px 60px;
+            background: linear-gradient(180deg, var(--secondary-bg), var(--bg-color));
+            border-radius: 60px;
+            margin-bottom: 100px;
             text-align: center;
+            border: 1px solid var(--border-color);
         }
 
         .vibe-section h2 {
-            font-size: 40px;
-            margin-bottom: 20px;
+            font-size: 48px;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
         }
 
         .vibe-section p {
             max-width: 800px;
             margin: 0 auto;
             color: var(--dim-text);
-            font-size: 18px;
+            font-size: 20px;
         }
 
         /* Footer */
         footer {
-            padding: 60px 0;
+            padding: 80px 0;
             border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--dim-text);
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .footer-links {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
         }
 
         .footer-links a {
             color: var(--dim-text);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         .footer-links a:hover {
-            color: var(--text-color);
+            color: var(--accent-color);
         }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 40px; }
-            header { padding: 60px 0; }
-            .features { grid-template-columns: 1fr; }
-            .nav-links { gap: 15px; }
-            .lang-switcher { display: none; } /* Hide switcher in mobile nav to save space, or move it */
+        @media (max-width: 992px) {
+            header { 
+                flex-direction: column; 
+                text-align: center;
+                padding: 60px 0;
+            }
+            header p { margin: 0 auto 40px; }
+            .hero-mockup { justify-content: center; }
+            .hero-mockup img { transform: none; max-width: 320px; }
+            h1 { font-size: 48px; }
+            
+            .feature-row, .feature-row.reverse { 
+                flex-direction: column; 
+                gap: 40px;
+                text-align: center;
+            }
+            .feature-image-side { padding: 20px; }
+            .feature-image-side img { max-height: 450px; }
         }
 
         /* Lang Toggling */
@@ -284,161 +330,178 @@
         </nav>
 
         <header>
-            <h1 data-lang="en" class="active">Elevate Your CLI <br><span>Vibe Coding</span> on the Go.</h1>
-            <h1 data-lang="zh-Hant">提升您的 CLI <br><span>隨時隨地，Vibe Coding</span></h1>
-            <h1 data-lang="zh-Hans">提升您的 CLI <br><span>随时随地，Vibe Coding</span></h1>
-            <h1 data-lang="ja">CLI体験を革新する <br><span>いつでもどこでも、Vibe Coding</span></h1>
+            <div class="hero-content">
+                <h1 data-lang="en" class="active">Elevate Your CLI <br><span>Vibe Coding</span> on the Go.</h1>
+                <h1 data-lang="zh-Hant">提升您的 CLI <br><span>隨時隨地，Vibe Coding</span></h1>
+                <h1 data-lang="zh-Hans">提升您的 CLI <br><span>随时随地，Vibe Coding</span></h1>
+                <h1 data-lang="ja">CLI体験を革新する <br><span>いつでもどこでも、Vibe Coding</span></h1>
+                
+                <p data-lang="en" class="active">The first purpose-built iOS command center for modern engineers. One-tap AI Agent discovery, seamless tmux persistence, and a desktop-grade terminal experience.</p>
+                <p data-lang="zh-Hant">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
+                <p data-lang="zh-Hans">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
+                <p data-lang="ja">現代のエンジニアのために構築された初のiOSコマンドセンター。AIエージェントの自動検出、シームレスなtmux永続化、デスクトップ級のターミナル体験。</p>
+                
+                <a href="https://testflight.apple.com/join/TB1bVUNz" class="cta-button">
+                    <span data-lang="en" class="active">Join Beta on TestFlight</span>
+                    <span data-lang="zh-Hant">參與 TestFlight 測試</span>
+                    <span data-lang="zh-Hans">参与 TestFlight 测试</span>
+                    <span data-lang="ja">TestFlightでベータ版に参加</span>
+                </a>
+            </div>
             
-            <p data-lang="en" class="active">The first purpose-built iOS command center for modern engineers. One-tap AI Agent discovery, seamless tmux persistence, and a desktop-grade terminal experience.</p>
-            <p data-lang="zh-Hant">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
-            <p data-lang="zh-Hans">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
-            <p data-lang="ja">現代のエンジニアのために構築された初のiOSコマンドセンター。AIエージェントの自動検出、シームレスなtmux永続化、デスクトップ級のターミナル体験。</p>
-            
-            <a href="#" class="cta-button">
-                <span data-lang="en" class="active">Download on App Store</span>
-                <span data-lang="zh-Hant">前往 App Store 下載</span>
-                <span data-lang="zh-Hans">前往 App Store 下载</span>
-                <span data-lang="ja">App Storeでダウンロード</span>
-            </a>
-            
-            <div class="mockup-container">
-                <div class="mockup">
-                    <div style="position: absolute; top: 20px; left: 20px; text-align: left; font-family: 'SF Mono', monospace; font-size: 12px; color: #22c55e;">
-                        $ agentmux discover<br>
-                        <span style="color: #666;">[SEARCHING] /home/user/projects...</span><br>
-                        <span style="color: #fff;">> Claude Code found at ./website-v2</span><br>
-                        <span style="color: #fff;">> Gemini Agent found at ./backend-api</span><br>
-                        <br>
-                        <span style="color: #22c55e;">Ready to vibe.</span>
-                    </div>
-                </div>
+            <div class="hero-mockup">
+                <img src="iphone_terminal_shortcut.png" alt="Agentmux iPhone Terminal with Shortcuts">
             </div>
         </header>
 
-        <section id="features" class="features">
+        <section id="features" class="features-container">
             <!-- Agent Discovery -->
-            <div class="feature-card">
-                <span class="feature-icon">🚀</span>
-                <div data-lang="en" class="active">
-                    <h3>Agent Discovery</h3>
-                    <p>No more manual path navigation. Automatically scans your server for projects and installed CLI agents like Claude Code, Codex, and Gemini.</p>
+            <div class="feature-row">
+                <div class="feature-image-side">
+                    <img src="Serverview_tmux_agents.png" alt="Agent Discovery">
                 </div>
-                <div data-lang="zh-Hant">
-                    <h3>AI Agent 探索</h3>
-                    <p>不再需要手動進入路徑。自動掃描伺服器上的專案，並識別已安裝的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
-                </div>
-                <div data-lang="zh-Hans">
-                    <h3>AI Agent 探索</h3>
-                    <p>不再需要手动进入路径。自动扫描服务器上的项目，并识别已安装的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
-                </div>
-                <div data-lang="ja">
-                    <h3>エージェント検出</h3>
-                    <p>手動でのパス移動は不要。サーバー上のプロジェクトを自動スキャンし、Claude Code、Codex、GeminiなどのCLIエージェントを検出します。</p>
-                </div>
-            </div>
-
-            <!-- tmux -->
-            <div class="feature-card">
-                <span class="feature-icon">♾️</span>
-                <div data-lang="en" class="active">
-                    <h3>tmux Integration</h3>
-                    <p>Persistent CLI sessions that never die. One-tap automatic tmux installation if your server is missing it.</p>
-                </div>
-                <div data-lang="zh-Hant">
-                    <h3>tmux 深度整合</h3>
-                    <p>永不中斷的持久化 CLI 會話。如果伺服器缺少 tmux，支援一鍵自動安裝。</p>
-                </div>
-                <div data-lang="zh-Hans">
-                    <h3>tmux 深度整合</h3>
-                    <p>永不中断的持久化 CLI 会话。如果服务器缺少 tmux，支持一键自动安装。</p>
-                </div>
-                <div data-lang="ja">
-                    <h3>tmux統合</h3>
-                    <p>決して途切れない永続的なCLIセッション。サーバーにtmuxがない場合はワンタップで自動インストール。</p>
+                <div class="feature-text-side">
+                    <span class="feature-icon">🚀</span>
+                    <div data-lang="en" class="active">
+                        <h3>Agent Discovery</h3>
+                        <p>No more manual path navigation. Automatically scans your server for projects and installed CLI agents like Claude Code, Codex, and Gemini.</p>
+                    </div>
+                    <div data-lang="zh-Hant">
+                        <h3>AI Agent 探索</h3>
+                        <p>不再需要手動進入路徑。自動掃描伺服器上的專案，並識別已安裝的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
+                    </div>
+                    <div data-lang="zh-Hans">
+                        <h3>AI Agent 探索</h3>
+                        <p>不再需要手动进入路径。自动扫描服务器上的项目，并识别已安装的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
+                    </div>
+                    <div data-lang="ja">
+                        <h3>エージェント検出</h3>
+                        <p>手動でのパス移動は不要。サーバー上のプロジェクトを自動スキャンし、Claude Code、Codex、GeminiなどのCLIエージェントを検出します。</p>
+                    </div>
                 </div>
             </div>
 
             <!-- File Management -->
-            <div class="feature-card">
-                <span class="feature-icon">📂</span>
-                <div data-lang="en" class="active">
-                    <h3>Integrated File Management</h3>
-                    <p>Browse Markdown docs, preview images, and edit configuration files like .env or .json without leaving the app.</p>
+            <div class="feature-row reverse">
+                <div class="feature-image-side">
+                    <img src="FileExplorer.png" alt="Integrated File Explorer">
                 </div>
-                <div data-lang="zh-Hant">
-                    <h3>整合式檔案管理</h3>
-                    <p>直接在 App 內瀏覽 Markdown、預覽圖片並編輯 .env 或 .json 等設定檔。</p>
-                </div>
-                <div data-lang="zh-Hans">
-                    <h3>整合式文件管理</h3>
-                    <p>直接在 App 内浏览 Markdown、预览图片并编辑 .env 或 .json 等配置文件。</p>
-                </div>
-                <div data-lang="ja">
-                    <h3>統合ファイル管理</h3>
-                    <p>アプリを離れることなく、Markdownの閲覧、画像のプレビュー、.envや.jsonなどの設定ファイルの編集が可能。</p>
+                <div class="feature-text-side">
+                    <span class="feature-icon">📂</span>
+                    <div data-lang="en" class="active">
+                        <h3>Integrated File Explorer</h3>
+                        <p>Browse Markdown docs, preview images, and edit configuration files like .env or .json without leaving the app.</p>
+                    </div>
+                    <div data-lang="zh-Hant">
+                        <h3>整合式檔案管理</h3>
+                        <p>直接在 App 內瀏覽 Markdown、預覽圖片並編輯 .env 或 .json 等設定檔。</p>
+                    </div>
+                    <div data-lang="zh-Hans">
+                        <h3>整合式文件管理</h3>
+                        <p>直接在 App 内浏览 Markdown、预览图片并编辑 .env 或 .json 等配置文件。</p>
+                    </div>
+                    <div data-lang="ja">
+                        <h3>統合ファイル管理</h3>
+                        <p>アプリを離れることなく、Markdownの閲覧、画像のプレビュー、.envや.jsonなどの設定ファイルの編集が可能。</p>
+                    </div>
                 </div>
             </div>
 
             <!-- UX -->
-            <div class="feature-card">
-                <span class="feature-icon">⌨️</span>
-                <div data-lang="en" class="active">
-                    <h3>Desktop-Grade UX</h3>
-                    <p>Full trackpad and physical keyboard support for iPad Pro, plus a specialized shortcut panel for iPhone terminal use.</p>
+            <div class="feature-row">
+                <div class="feature-image-side">
+                    <img src="Dardmode_viewmode.png" alt="Terminal Experience">
                 </div>
-                <div data-lang="zh-Hant">
-                    <h3>桌面級體驗</h3>
-                    <p>完美支援 iPad Pro 的觸控板與實體鍵盤，並為 iPhone 提供專屬的終端機快捷面板。</p>
+                <div class="feature-text-side">
+                    <span class="feature-icon">⌨️</span>
+                    <div data-lang="en" class="active">
+                        <h3>Desktop-Grade UX</h3>
+                        <p>Full trackpad and physical keyboard support for iPad Pro, plus a specialized shortcut panel for iPhone terminal use.</p>
+                    </div>
+                    <div data-lang="zh-Hant">
+                        <h3>桌面級體驗</h3>
+                        <p>完美支援 iPad Pro 的觸控板與實體鍵盤，並為 iPhone 提供專屬的終端機快捷面板。</p>
+                    </div>
+                    <div data-lang="zh-Hans">
+                        <h3>桌面级体验</h3>
+                        <p>完美支持 iPad Pro 的触控板与实体键盘，并为 iPhone 提供专属的终端快捷面板。</p>
+                    </div>
+                    <div data-lang="ja">
+                        <h3>デスクトップ級の操作性</h3>
+                        <p>iPad Proのトラックパッドと物理キーボードをフルサポート。iPhone向けには専用のショートカットパネルを搭載。</p>
+                    </div>
                 </div>
-                <div data-lang="zh-Hans">
-                    <h3>桌面级体验</h3>
-                    <p>完美支持 iPad Pro 的触控板与实体键盘，并为 iPhone 提供专属的终端快捷面板。</p>
+            </div>
+
+            <!-- Server Management -->
+            <div class="feature-row reverse">
+                <div class="feature-image-side">
+                    <img src="Darkmode_serverlist.png" alt="Server Management">
                 </div>
-                <div data-lang="ja">
-                    <h3>デスクトップ級の操作性</h3>
-                    <p>iPad Proのトラックパッドと物理キーボードをフルサポート。iPhone向けには専用のショートカットパネルを搭載。</p>
+                <div class="feature-text-side">
+                    <span class="feature-icon">🛡️</span>
+                    <div data-lang="en" class="active">
+                        <h3>Server Management</h3>
+                        <p>Manage multiple servers with ease. Deeply integrated with SwiftData for fast local storage and quick connection recovery.</p>
+                    </div>
+                    <div data-lang="zh-Hant">
+                        <h3>高效伺服器管理</h3>
+                        <p>輕鬆管理多台伺服器。深度整合 SwiftData 提供流暢的本地儲存與快速連線恢復體驗。</p>
+                    </div>
+                    <div data-lang="zh-Hans">
+                        <h3>高效服务器管理</h3>
+                        <p>轻松管理多台服务器。深度整合 SwiftData 提供流畅的本地存储与快速连接恢复体验。</p>
+                    </div>
+                    <div data-lang="ja">
+                        <h3>高度なサーバー管理</h3>
+                        <p>複数のサーバーを簡単に管理。SwiftDataとの統合により、高速なローカル保存と迅速な接続復旧を実現。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- tmux -->
+            <div class="feature-row">
+                <div class="feature-text-side">
+                    <span class="feature-icon">♾️</span>
+                    <div data-lang="en" class="active">
+                        <h3>tmux Integration</h3>
+                        <p>Persistent CLI sessions that never die. One-tap automatic tmux installation if your server is missing it.</p>
+                    </div>
+                    <div data-lang="zh-Hant">
+                        <h3>tmux 深度整合</h3>
+                        <p>永不中斷的持久化 CLI 會話。如果伺服器缺少 tmux，支援一鍵自動安裝。</p>
+                    </div>
+                    <div data-lang="zh-Hans">
+                        <h3>tmux 深度整合</h3>
+                        <p>永不中断的持久化 CLI 会话。如果服务器缺少 tmux，支持一键自动安装。</p>
+                    </div>
+                    <div data-lang="ja">
+                        <h3>tmux統合</h3>
+                        <p>決して途切れない永続的なCLIセッション。サーバーにtmuxがない場合はワンタップで自動インストール。</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Connectivity -->
-            <div class="feature-card">
-                <span class="feature-icon">🛡️</span>
-                <div data-lang="en" class="active">
-                    <h3>Robust Connectivity</h3>
-                    <p>Industry-leading state recovery for cellular networks. Best used with VPNs like Tailscale or Netbird for seamless remote access.</p>
-                </div>
-                <div data-lang="zh-Hant">
-                    <h3>強健連線</h3>
-                    <p>領先業界的行動網路狀態恢復。搭配 Tailscale 或 Netbird 等 VPN 使用體驗更佳。</p>
-                </div>
-                <div data-lang="zh-Hans">
-                    <h3>强健连接</h3>
-                    <p>领先行业的移动网络状态恢复。搭配 Tailscale 或 Netbird 等 VPN 使用体验更佳。</p>
-                </div>
-                <div data-lang="ja">
-                    <h3>強固な接続性</h3>
-                    <p>モバイルネットワークに特化した状態復旧機能。TailscaleやNetbirdなどのVPNとの併用でさらに快適に。</p>
-                </div>
-            </div>
-
-            <!-- Shell -->
-            <div class="feature-card">
-                <span class="feature-icon">💻</span>
-                <div data-lang="en" class="active">
-                    <h3>Any System, Any Shell</h3>
-                    <p>Fully compatible with macOS and Linux servers. Supports your favorite shells including bash, zsh, and fish.</p>
-                </div>
-                <div data-lang="zh-Hant">
-                    <h3>支援各種系統與 Shell</h3>
-                    <p>全面相容 macOS 與 Linux 伺服器，支援您最愛的 bash, zsh 與 fish。</p>
-                </div>
-                <div data-lang="zh-Hans">
-                    <h3>支持各种系统与 Shell</h3>
-                    <p>全面兼容 macOS 与 Linux 服务器，支持您最爱的 bash, zsh 与 fish。</p>
-                </div>
-                <div data-lang="ja">
-                    <h3>あらゆるシステムとシェル</h3>
-                    <p>macOSおよびLinuxサーバーに完全対応。bash、zsh、fishなど、お好みのシェルを利用可能。</p>
+            <div class="feature-row reverse">
+                <div class="feature-text-side">
+                    <span class="feature-icon">💻</span>
+                    <div data-lang="en" class="active">
+                        <h3>Robust Connectivity</h3>
+                        <p>Industry-leading state recovery for cellular networks. Best used with VPNs like Tailscale or Netbird for seamless remote access.</p>
+                    </div>
+                    <div data-lang="zh-Hant">
+                        <h3>強健連線</h3>
+                        <p>領先業界的行動網路狀態恢復。搭配 Tailscale 或 Netbird 等 VPN 使用體驗更佳。</p>
+                    </div>
+                    <div data-lang="zh-Hans">
+                        <h3>强健连接</h3>
+                        <p>领先行业的移动网络状态恢复。搭配 Tailscale 或 Netbird 使用体验更佳。</p>
+                    </div>
+                    <div data-lang="ja">
+                        <h3>強固な接続性</h3>
+                        <p>モバイルネットワークに特化した状態復旧機能。TailscaleやNetbirdなどのVPNとの併用でさらに快適に。</p>
+                    </div>
                 </div>
             </div>
         </section>
