@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agentmux - The One-Stop Remote CLI Command Center</title>
+    <meta name="theme-color" content="#0d0d0d">
     <style>
         :root {
             --bg-color: #0d0d0d;
@@ -271,24 +272,142 @@
             color: var(--accent-color);
         }
 
-        @media (max-width: 992px) {
-            header { 
-                flex-direction: column; 
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Nav overlay for mobile */
+        .nav-overlay {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--secondary-bg);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 24px;
+                transition: right 0.35s ease;
+                z-index: 1000;
+                border-left: 1px solid var(--border-color);
+                padding: 60px 20px;
+            }
+            .nav-links.open {
+                right: 0;
+            }
+            .nav-overlay {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.6);
+                z-index: 999;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s ease;
+            }
+            .nav-overlay.show {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .nav-links a {
+                font-size: 18px;
+            }
+            .lang-switcher {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            header {
+                flex-direction: column;
                 text-align: center;
                 padding: 60px 0;
             }
             header p { margin: 0 auto 40px; }
             .hero-mockup { justify-content: center; }
-            .hero-mockup img { transform: none; max-width: 320px; }
-            h1 { font-size: 48px; }
-            
-            .feature-row, .feature-row.reverse { 
-                flex-direction: column; 
-                gap: 40px;
+            .hero-mockup img { transform: none; max-width: 280px; }
+
+            h1 { font-size: 40px; letter-spacing: -1.5px; }
+
+            .feature-row, .feature-row.reverse {
+                flex-direction: column;
+                gap: 36px;
                 text-align: center;
             }
-            .feature-image-side { padding: 20px; }
-            .feature-image-side img { max-height: 450px; }
+            .feature-image-side { padding: 16px; }
+            .feature-image-side img { max-height: 380px; }
+
+            .feature-text-side h3 { font-size: 26px; }
+            .feature-text-side p { font-size: 16px; }
+
+            .vibe-section { padding: 60px 24px; border-radius: 40px; }
+            .vibe-section h2 { font-size: 32px; }
+            .vibe-section p { font-size: 17px; }
+
+            .features-container { gap: 80px; padding: 60px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            nav { height: 64px; }
+            .logo { font-size: 20px; }
+            .nav-links { width: 260px; }
+
+            h1 { font-size: 32px; letter-spacing: -1px; }
+            header { padding: 40px 0; }
+            header p { font-size: 16px; margin-bottom: 28px; }
+            .cta-button { padding: 14px 28px; font-size: 16px; border-radius: 12px; }
+            .hero-mockup img { max-width: 220px; border-radius: 28px; }
+
+            .feature-row, .feature-row.reverse { gap: 24px; }
+            .feature-image-side { padding: 12px; border-radius: 28px; }
+            .feature-image-side img { max-height: 300px; border-radius: 14px; }
+            .feature-text-side h3 { font-size: 22px; margin-bottom: 8px; }
+            .feature-text-side p { font-size: 15px; }
+            .feature-icon { font-size: 32px; margin-bottom: 12px; }
+
+            .vibe-section { padding: 50px 18px; border-radius: 28px; margin-bottom: 60px; }
+            .vibe-section h2 { font-size: 26px; }
+            .vibe-section p { font-size: 15px; }
+
+            .features-container { gap: 56px; padding: 40px 0; }
+
+            footer { padding: 50px 0; font-size: 13px; }
+            .footer-links { flex-wrap: wrap; gap: 16px; }
         }
 
         /* Lang Toggling */
@@ -301,7 +420,12 @@
     <div class="container">
         <nav>
             <div class="logo">AGENT<span>MUX</span></div>
-            <div class="nav-links">
+            <button class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
                 <a href="#features">
                     <span data-lang="en" class="active">Features</span>
                     <span data-lang="zh-Hant">功能特色</span>
@@ -551,6 +675,29 @@
     </div>
 
     <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'nav-overlay';
+        document.body.appendChild(overlay);
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu on nav link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('open')) toggleMenu();
+            });
+        });
+
         function switchLang(lang) {
             // Update buttons
             document.querySelectorAll('.lang-btn').forEach(btn => {
