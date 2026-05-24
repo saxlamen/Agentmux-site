@@ -3,435 +3,933 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentmux - The One-Stop Remote CLI Command Center</title>
-    <meta name="theme-color" content="#0d0d0d">
+    <title>Agentmux - Coding agents on your phone</title>
+    <meta name="description" content="Agentmux is an iOS command center for remote CLI agents, tmux sessions, SSH, files, and code editing.">
+    <meta name="theme-color" content="#f7faf6">
     <style>
         :root {
-            --bg-color: #0d0d0d;
-            --text-color: #e0e0e0;
-            --accent-color: #22c55e;
-            --secondary-bg: #1a1a1a;
-            --card-bg: #242424;
-            --dim-text: #a0a0a0;
-            --border-color: #333;
+            --bg: #f7faf6;
+            --paper: #ffffff;
+            --ink: #101513;
+            --muted: #66756e;
+            --line: #dce6e0;
+            --green: #087c61;
+            --green-2: #0f3b31;
+            --lime: #d8ff63;
+            --shadow: 0 24px 80px rgba(16, 21, 19, 0.12);
+            --radius: 28px;
         }
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
+            margin: 0;
+            background:
+                radial-gradient(circle at 12% 10%, rgba(216, 255, 99, 0.25), transparent 30%),
+                radial-gradient(circle at 88% 0%, rgba(8, 124, 97, 0.13), transparent 32%),
+                var(--bg);
+            color: var(--ink);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.5;
         }
 
-        .container {
-            max-width: 1100px;
+        a {
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .shell {
+            width: min(1180px, calc(100% - 40px));
             margin: 0 auto;
-            padding: 0 20px;
         }
 
-        /* Navigation */
-        nav {
-            height: 80px;
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 20;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
+            gap: 18px;
+            padding: 18px 0;
+            backdrop-filter: blur(18px);
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            display: flex;
+        .brand {
+            display: inline-flex;
             align-items: center;
             gap: 10px;
+            font-size: 18px;
+            font-weight: 850;
+            text-decoration: none;
+            letter-spacing: 0;
         }
 
-        .logo span {
-            color: var(--accent-color);
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: #101513;
+            color: var(--lime);
+            font-size: 13px;
+            font-weight: 900;
+            box-shadow: 0 12px 28px rgba(16, 21, 19, 0.18);
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 10px;
+            padding: 8px;
+            border: 1px solid rgba(220, 230, 224, 0.9);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.74);
+            box-shadow: 0 8px 26px rgba(16, 21, 19, 0.06);
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dim-text);
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .lang-switcher {
-            display: flex;
-            gap: 8px;
-            margin-left: 20px;
-        }
-
+        .nav-links a,
         .lang-btn {
-            background: none;
-            border: 1px solid var(--border-color);
-            color: var(--dim-text);
-            padding: 4px 8px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 11px;
-            transition: all 0.2s;
-        }
-
-        .lang-btn.active {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-            background-color: rgba(34, 197, 94, 0.1);
-        }
-
-        /* Hero Section */
-        header {
-            padding: 100px 0;
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            text-align: left;
-        }
-
-        .hero-content {
-            flex: 1.2;
-        }
-
-        h1 {
-            font-size: 64px;
-            font-weight: 800;
-            line-height: 1.05;
-            margin-bottom: 24px;
-            letter-spacing: -3px;
-        }
-
-        h1 span {
-            color: var(--accent-color);
-        }
-
-        header p {
-            font-size: 20px;
-            color: var(--dim-text);
-            margin-bottom: 40px;
-            max-width: 540px;
-        }
-
-        .cta-button {
-            background-color: var(--accent-color);
-            color: black;
-            padding: 18px 36px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 18px;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
             text-decoration: none;
-            display: inline-block;
-            transition: transform 0.2s, opacity 0.3s;
+            font-size: 13px;
+            font-weight: 750;
+            padding: 9px 13px;
+            border-radius: 999px;
+            cursor: pointer;
         }
 
-        .cta-button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+        .nav-links a:hover,
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: #edf5ef;
+            color: var(--green);
         }
 
-        .hero-mockup {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            perspective: 1000px;
-        }
-
-        .hero-mockup img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 40px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 50px rgba(34, 197, 94, 0.15);
-            border: 4px solid #1a1a1a;
-            transform: rotate(-2deg);
-        }
-
-        /* Features Section */
-        .features-container {
-            padding: 100px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 120px;
-        }
-
-        .feature-row {
-            display: flex;
+        .nav-cta {
+            display: inline-flex;
             align-items: center;
-            gap: 80px;
-        }
-
-        .feature-row.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .feature-image-side {
-            flex: 1;
-            display: flex;
             justify-content: center;
-            background: linear-gradient(145deg, #161616, #0a0a0a);
-            padding: 40px;
-            border-radius: 40px;
-            border: 1px solid var(--border-color);
+            min-height: 42px;
+            padding: 0 18px;
+            border-radius: 999px;
+            background: var(--ink);
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 850;
+            box-shadow: 0 14px 34px rgba(16, 21, 19, 0.2);
         }
 
-        .feature-image-side img {
-            max-width: 100%;
-            height: auto;
-            max-height: 550px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        .hero {
+            min-height: 760px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(360px, 0.86fr);
+            align-items: center;
+            gap: 52px;
+            padding: 72px 0 54px;
         }
 
-        .feature-text-side {
-            flex: 1;
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            background: rgba(8, 124, 97, 0.08);
+            border: 1px solid rgba(8, 124, 97, 0.14);
+            border-radius: 999px;
+            padding: 8px 13px;
+            font-size: 13px;
+            font-weight: 850;
         }
 
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 24px;
+        .hero h1 {
+            margin: 22px 0 18px;
+            max-width: 720px;
+            font-size: clamp(54px, 8vw, 108px);
+            line-height: 0.92;
+            letter-spacing: 0;
+            font-weight: 900;
+        }
+
+        .accent {
+            color: var(--green);
+        }
+
+        .hero-copy {
+            max-width: 620px;
+            margin: 0 0 34px;
+            color: var(--muted);
+            font-size: 21px;
+            font-weight: 560;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            min-height: 54px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0 24px;
+            font-size: 16px;
+            font-weight: 850;
+            text-decoration: none;
+        }
+
+        .primary-btn {
+            color: #fff;
+            background: var(--green);
+            box-shadow: 0 16px 38px rgba(8, 124, 97, 0.25);
+        }
+
+        .secondary-btn {
+            color: var(--ink);
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid var(--line);
+        }
+
+        .proof {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 36px;
+        }
+
+        .proof span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 36px;
+            border-radius: 999px;
+            padding: 0 13px;
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid var(--line);
+            color: #425049;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .hero-stage {
+            position: relative;
+            min-height: 660px;
+        }
+
+        .phone-stack {
+            position: absolute;
+            inset: 0;
+        }
+
+        .phone-shot {
+            position: absolute;
+            width: min(330px, 48vw);
+            border-radius: 46px;
+            box-shadow: var(--shadow);
+            background: #fff;
+            border: 8px solid #101513;
+        }
+
+        .phone-shot.main {
+            right: 6%;
+            top: 2%;
+            z-index: 3;
+            transform: rotate(2deg);
+        }
+
+        .phone-shot.back-left {
+            left: 1%;
+            top: 18%;
+            z-index: 2;
+            transform: rotate(-7deg) scale(0.88);
+            opacity: 0.92;
+        }
+
+        .phone-shot.back-bottom {
+            right: 2%;
+            bottom: 0;
+            z-index: 1;
+            transform: rotate(7deg) scale(0.82);
+            opacity: 0.82;
+        }
+
+        .floating-note {
+            position: absolute;
+            left: 8%;
+            bottom: 12%;
+            z-index: 4;
+            width: 245px;
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(220, 230, 224, 0.95);
+            box-shadow: 0 22px 60px rgba(16, 21, 19, 0.16);
+            backdrop-filter: blur(16px);
+        }
+
+        .floating-note strong {
             display: block;
-        }
-
-        .feature-text-side h3 {
-            font-size: 32px;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-
-        .feature-text-side p {
-            color: var(--dim-text);
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-        /* Vibe Coding Section */
-        .vibe-section {
-            padding: 100px 60px;
-            background: linear-gradient(180deg, var(--secondary-bg), var(--bg-color));
-            border-radius: 60px;
-            margin-bottom: 100px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .vibe-section h2 {
-            font-size: 48px;
-            margin-bottom: 24px;
-            letter-spacing: -1px;
-        }
-
-        .vibe-section p {
-            max-width: 800px;
-            margin: 0 auto;
-            color: var(--dim-text);
-            font-size: 20px;
-        }
-
-        /* Footer */
-        footer {
-            padding: 80px 0;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            color: var(--dim-text);
+            margin-bottom: 5px;
             font-size: 15px;
         }
 
-        .footer-links {
-            margin-bottom: 30px;
+        .floating-note p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .strip {
+            overflow: hidden;
+            padding: 18px 0 74px;
+        }
+
+        .strip-track {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(178px, 1fr));
+            gap: 18px;
+        }
+
+        .mini-shot {
+            overflow: hidden;
+            border-radius: 24px;
+            background: #fff;
+            border: 1px solid var(--line);
+            box-shadow: 0 18px 44px rgba(16, 21, 19, 0.09);
+        }
+
+        .mini-shot img {
+            width: 100%;
+            aspect-ratio: 1320 / 2868;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .section-head {
+            max-width: 760px;
+            margin: 0 auto 42px;
+            text-align: center;
+        }
+
+        .section-head h2 {
+            margin: 14px 0 14px;
+            font-size: clamp(38px, 5vw, 68px);
+            line-height: 0.98;
+            letter-spacing: 0;
+        }
+
+        .section-head p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 19px;
+            font-weight: 560;
+        }
+
+        .features {
+            padding: 74px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature-card {
+            min-height: 278px;
+            padding: 28px;
+            border-radius: var(--radius);
+            background: var(--paper);
+            border: 1px solid var(--line);
+            box-shadow: 0 18px 48px rgba(16, 21, 19, 0.07);
+        }
+
+        .feature-card strong {
+            display: block;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 900;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 12px;
+            font-size: 28px;
+            line-height: 1.05;
+            letter-spacing: 0;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 16px;
+            font-weight: 560;
+        }
+
+        .showcase {
+            padding: 70px 0 34px;
+            display: grid;
+            gap: 26px;
+        }
+
+        .showcase-row {
+            display: grid;
+            grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr);
+            align-items: center;
+            gap: 48px;
+            min-height: 620px;
+            padding: 56px;
+            border-radius: 44px;
+            background: #fff;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .showcase-row.dark {
+            color: #fff;
+            background:
+                radial-gradient(circle at 78% 16%, rgba(216, 255, 99, 0.18), transparent 32%),
+                linear-gradient(135deg, #0f211c, #101513);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .showcase-row.reverse {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+        }
+
+        .showcase-copy strong {
+            display: inline-flex;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .showcase-row.dark .showcase-copy strong {
+            color: var(--lime);
+        }
+
+        .showcase-copy h2 {
+            margin: 0 0 18px;
+            font-size: clamp(36px, 4.6vw, 64px);
+            line-height: 0.98;
+            letter-spacing: 0;
+        }
+
+        .showcase-copy p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 19px;
+            font-weight: 560;
+        }
+
+        .showcase-row.dark .showcase-copy p {
+            color: #b9cbc4;
+        }
+
+        .showcase-media {
             display: flex;
             justify-content: center;
-            gap: 30px;
+        }
+
+        .showcase-media img {
+            width: min(360px, 100%);
+            max-height: 680px;
+            object-fit: contain;
+            border-radius: 44px;
+            border: 8px solid #101513;
+            box-shadow: 0 30px 80px rgba(16, 21, 19, 0.28);
+        }
+
+        .final-cta {
+            margin: 82px 0;
+            padding: 70px;
+            border-radius: 44px;
+            color: #fff;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(216, 255, 99, 0.28), transparent 34%),
+                linear-gradient(135deg, #101513, #0f3b31);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .final-cta h2 {
+            margin: 0 auto 18px;
+            max-width: 760px;
+            font-size: clamp(38px, 6vw, 76px);
+            line-height: 0.96;
+            letter-spacing: 0;
+        }
+
+        .final-cta p {
+            max-width: 650px;
+            margin: 0 auto 30px;
+            color: #c2d3cc;
+            font-size: 19px;
+            font-weight: 560;
+        }
+
+        .final-cta .primary-btn {
+            background: var(--lime);
+            color: var(--ink);
+            box-shadow: none;
+        }
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 34px 0 60px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
         }
 
         .footer-links a {
-            color: var(--dim-text);
             text-decoration: none;
-            transition: color 0.2s;
+            color: var(--muted);
         }
 
-        .footer-links a:hover {
-            color: var(--accent-color);
-        }
+        [data-lang] { display: none; }
+        [data-lang].active { display: initial; }
+        div[data-lang].active,
+        section[data-lang].active { display: block; }
 
-        /* Hamburger */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            z-index: 1001;
-        }
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--text-color);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        /* Nav overlay for mobile */
-        .nav-overlay {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
+        @media (max-width: 980px) {
+            .nav {
+                align-items: flex-start;
             }
+
             .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 280px;
-                height: 100vh;
-                background: var(--secondary-bg);
+                max-width: 520px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                border-radius: 22px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding-top: 48px;
+            }
+
+            .hero-stage {
+                min-height: 600px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .showcase-row,
+            .showcase-row.reverse {
+                grid-template-columns: 1fr;
+                padding: 34px;
+                min-height: auto;
+            }
+
+            .showcase-row.reverse .showcase-copy {
+                order: 0;
+            }
+
+            .showcase-row.reverse .showcase-media {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .shell {
+                width: min(100% - 28px, 1180px);
+            }
+
+            .nav {
+                position: static;
                 flex-direction: column;
+            }
+
+            .nav-links {
                 justify-content: center;
-                align-items: center;
-                gap: 24px;
-                transition: right 0.35s ease;
-                z-index: 1000;
-                border-left: 1px solid var(--border-color);
-                padding: 60px 20px;
             }
-            .nav-links.open {
-                right: 0;
+
+            .nav-cta {
+                width: 100%;
             }
-            .nav-overlay {
-                display: block;
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.6);
-                z-index: 999;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.35s ease;
+
+            .hero {
+                padding-top: 38px;
+                gap: 28px;
             }
-            .nav-overlay.show {
-                opacity: 1;
-                pointer-events: auto;
+
+            .hero h1 {
+                font-size: 46px;
             }
-            .nav-links a {
+
+            .hero-copy {
                 font-size: 18px;
             }
-            .lang-switcher {
-                margin-left: 0;
-                margin-top: 8px;
+
+            .primary-btn,
+            .secondary-btn {
+                width: 100%;
             }
 
-            header {
+            .hero-stage {
+                min-height: 500px;
+            }
+
+            .phone-shot {
+                width: 250px;
+                border-radius: 34px;
+                border-width: 6px;
+            }
+
+            .phone-shot.main {
+                right: 4%;
+            }
+
+            .phone-shot.back-left {
+                left: -6%;
+            }
+
+            .phone-shot.back-bottom,
+            .floating-note {
+                display: none;
+            }
+
+            .strip-track {
+                display: flex;
+                overflow-x: auto;
+                padding-bottom: 8px;
+                scroll-snap-type: x mandatory;
+            }
+
+            .mini-shot {
+                flex: 0 0 190px;
+                scroll-snap-align: start;
+            }
+
+            .features,
+            .showcase {
+                padding: 48px 0;
+            }
+
+            .feature-card {
+                min-height: auto;
+                padding: 24px;
+            }
+
+            .showcase-row,
+            .showcase-row.reverse {
+                border-radius: 30px;
+                padding: 26px;
+            }
+
+            .showcase-media img {
+                border-radius: 34px;
+                border-width: 6px;
+            }
+
+            .final-cta {
+                margin: 52px 0;
+                padding: 42px 24px;
+                border-radius: 30px;
+            }
+
+            footer {
                 flex-direction: column;
-                text-align: center;
-                padding: 60px 0;
+                align-items: flex-start;
             }
-            header p { margin: 0 auto 40px; }
-            .hero-mockup { justify-content: center; }
-            .hero-mockup img { transform: none; max-width: 280px; }
-
-            h1 { font-size: 40px; letter-spacing: -1.5px; }
-
-            .feature-row, .feature-row.reverse {
-                flex-direction: column;
-                gap: 36px;
-                text-align: center;
-            }
-            .feature-image-side { padding: 16px; }
-            .feature-image-side img { max-height: 380px; }
-
-            .feature-text-side h3 { font-size: 26px; }
-            .feature-text-side p { font-size: 16px; }
-
-            .vibe-section { padding: 60px 24px; border-radius: 40px; }
-            .vibe-section h2 { font-size: 32px; }
-            .vibe-section p { font-size: 17px; }
-
-            .features-container { gap: 80px; padding: 60px 0; }
         }
-
-        @media (max-width: 480px) {
-            .container { padding: 0 16px; }
-            nav { height: 64px; }
-            .logo { font-size: 20px; }
-            .nav-links { width: 260px; }
-
-            h1 { font-size: 32px; letter-spacing: -1px; }
-            header { padding: 40px 0; }
-            header p { font-size: 16px; margin-bottom: 28px; }
-            .cta-button { padding: 14px 28px; font-size: 16px; border-radius: 12px; }
-            .hero-mockup img { max-width: 220px; border-radius: 28px; }
-
-            .feature-row, .feature-row.reverse { gap: 24px; }
-            .feature-image-side { padding: 12px; border-radius: 28px; }
-            .feature-image-side img { max-height: 300px; border-radius: 14px; }
-            .feature-text-side h3 { font-size: 22px; margin-bottom: 8px; }
-            .feature-text-side p { font-size: 15px; }
-            .feature-icon { font-size: 32px; margin-bottom: 12px; }
-
-            .vibe-section { padding: 50px 18px; border-radius: 28px; margin-bottom: 60px; }
-            .vibe-section h2 { font-size: 26px; }
-            .vibe-section p { font-size: 15px; }
-
-            .features-container { gap: 56px; padding: 40px 0; }
-
-            footer { padding: 50px 0; font-size: 13px; }
-            .footer-links { flex-wrap: wrap; gap: 16px; }
-        }
-
-        /* Lang Toggling */
-        [data-lang] { display: none; }
-        [data-lang].active { display: block; }
-        span[data-lang].active { display: inline; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <div class="logo">AGENT<span>MUX</span></div>
-            <button class="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links" id="navLinks">
+    <div class="shell">
+        <nav class="nav" aria-label="Main navigation">
+            <a class="brand" href="#">
+                <span class="brand-mark">&gt;A</span>
+                Agentmux
+            </a>
+            <div class="nav-links">
                 <a href="#features">
                     <span data-lang="en" class="active">Features</span>
-                    <span data-lang="zh-Hant">功能特色</span>
-                    <span data-lang="zh-Hans">功能特色</span>
-                    <span data-lang="ja">特徴</span>
+                    <span data-lang="zh-Hant">功能</span>
+                    <span data-lang="zh-Hans">功能</span>
+                    <span data-lang="ja">機能</span>
                 </a>
+                <a href="privacy.html">
+                    <span data-lang="en" class="active">Privacy</span>
+                    <span data-lang="zh-Hant">隱私</span>
+                    <span data-lang="zh-Hans">隐私</span>
+                    <span data-lang="ja">プライバシー</span>
+                </a>
+                <button class="lang-btn active" type="button" onclick="switchLang('en')">EN</button>
+                <button class="lang-btn" type="button" onclick="switchLang('zh-Hant')">繁中</button>
+                <button class="lang-btn" type="button" onclick="switchLang('zh-Hans')">简中</button>
+                <button class="lang-btn" type="button" onclick="switchLang('ja')">日本語</button>
+            </div>
+            <a class="nav-cta" href="https://testflight.apple.com/join/TB1bVUNz">
+                <span data-lang="en" class="active">Join TestFlight</span>
+                <span data-lang="zh-Hant">加入 TestFlight</span>
+                <span data-lang="zh-Hans">加入 TestFlight</span>
+                <span data-lang="ja">TestFlight に参加</span>
+            </a>
+        </nav>
+
+        <main>
+            <section class="hero">
+                <div>
+                    <div class="eyebrow">
+                        <span data-lang="en" class="active">SSH, tmux, and coding agents for iOS</span>
+                        <span data-lang="zh-Hant">給 iOS 的 SSH、tmux 與 coding agents</span>
+                        <span data-lang="zh-Hans">给 iOS 的 SSH、tmux 与 coding agents</span>
+                        <span data-lang="ja">iOS のための SSH、tmux、coding agents</span>
+                    </div>
+                    <h1>
+                        <span data-lang="en" class="active">Run coding agents from your <span class="accent">phone.</span></span>
+                        <span data-lang="zh-Hant">手機就是你的 <span class="accent">coding cockpit。</span></span>
+                        <span data-lang="zh-Hans">手机就是你的 <span class="accent">coding cockpit。</span></span>
+                        <span data-lang="ja">スマホが開発 agent の<span class="accent">操縦席に。</span></span>
+                    </h1>
+                    <p class="hero-copy">
+                        <span data-lang="en" class="active">Agentmux turns your iPhone into a command center for remote projects, persistent tmux sessions, and AI coding agents like Claude, Codex, Gemini, and OpenCode.</span>
+                        <span data-lang="zh-Hant">Agentmux 把 iPhone 變成遠端專案指揮中心：接回 tmux session、啟動 Claude、Codex、Gemini、OpenCode，臨時修 code 也不慌。</span>
+                        <span data-lang="zh-Hans">Agentmux 把 iPhone 变成远程项目指挥中心：接回 tmux session、启动 Claude、Codex、Gemini、OpenCode，临时修 code 也不慌。</span>
+                        <span data-lang="ja">Agentmux は iPhone を remote project の command center にします。tmux session に戻り、Claude、Codex、Gemini、OpenCode をすぐ起動できます。</span>
+                    </p>
+                    <div class="hero-actions">
+                        <a class="primary-btn" href="https://testflight.apple.com/join/TB1bVUNz">
+                            <span data-lang="en" class="active">Join the beta</span>
+                            <span data-lang="zh-Hant">加入 Beta 測試</span>
+                            <span data-lang="zh-Hans">加入 Beta 测试</span>
+                            <span data-lang="ja">Beta に参加</span>
+                        </a>
+                        <a class="secondary-btn" href="#features">
+                            <span data-lang="en" class="active">See what it does</span>
+                            <span data-lang="zh-Hant">看看能做什麼</span>
+                            <span data-lang="zh-Hans">看看能做什么</span>
+                            <span data-lang="ja">できることを見る</span>
+                        </a>
+                    </div>
+                    <div class="proof" aria-label="Supported workflows">
+                        <span>Claude</span>
+                        <span>Codex</span>
+                        <span>Gemini</span>
+                        <span>OpenCode</span>
+                        <span>tmux</span>
+                        <span>SSH</span>
+                    </div>
+                </div>
+
+                <div class="hero-stage" aria-hidden="true">
+                    <div class="phone-stack">
+                        <img class="phone-shot main" src="01-run-coding-agents-anywhere.png" alt="">
+                        <img class="phone-shot back-left" src="02-launch-any-agent.png" alt="">
+                        <img class="phone-shot back-bottom" src="03-session-command-center.png" alt="">
+                    </div>
+                    <div class="floating-note">
+                        <strong>tmux stays alive</strong>
+                        <p>Reconnect from your phone without losing the session.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="strip" aria-label="Agentmux screens">
+                <div class="strip-track">
+                    <div class="mini-shot"><img src="01-run-coding-agents-anywhere.png" alt="OpenCode running in Agentmux"></div>
+                    <div class="mini-shot"><img src="02-launch-any-agent.png" alt="Agent launcher"></div>
+                    <div class="mini-shot"><img src="03-session-command-center.png" alt="Session command center"></div>
+                    <div class="mini-shot"><img src="04-edit-code-over-ssh.png" alt="Remote code editor"></div>
+                    <div class="mini-shot"><img src="05-browse-remote-projects.png" alt="Remote file explorer"></div>
+                    <div class="mini-shot"><img src="06-preview-docs-instantly.png" alt="Markdown preview"></div>
+                </div>
+            </section>
+
+            <section id="features" class="features">
+                <div class="section-head">
+                    <div class="eyebrow">
+                        <span data-lang="en" class="active">Built for mobile development sessions</span>
+                        <span data-lang="zh-Hant">為行動開發 session 設計</span>
+                        <span data-lang="zh-Hans">为移动开发 session 设计</span>
+                        <span data-lang="ja">モバイル開発 session のために</span>
+                    </div>
+                    <h2>
+                        <span data-lang="en" class="active">The SSH app for the agent era.</span>
+                        <span data-lang="zh-Hant">Agent 時代的 SSH app。</span>
+                        <span data-lang="zh-Hans">Agent 时代的 SSH app。</span>
+                        <span data-lang="ja">Agent 時代の SSH app。</span>
+                    </h2>
+                    <p>
+                        <span data-lang="en" class="active">Not a tiny terminal with a keyboard bolted on. Agentmux is shaped around real remote work: sessions, agents, files, edits, and docs.</span>
+                        <span data-lang="zh-Hant">不是把 terminal 縮小塞進手機。Agentmux 是為真正的遠端工作流設計：session、agent、檔案、編輯、文件一次到位。</span>
+                        <span data-lang="zh-Hans">不是把 terminal 缩小塞进手机。Agentmux 是为真正的远程工作流设计：session、agent、文件、编辑、文档一次到位。</span>
+                        <span data-lang="ja">小さな terminal をスマホに押し込むだけではありません。session、agent、files、edits、docs まで、実作業に合わせて設計しています。</span>
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <strong>01</strong>
+                        <h3>
+                            <span data-lang="en" class="active">One-tap agent launch</span>
+                            <span data-lang="zh-Hant">Agent 一鍵啟動</span>
+                            <span data-lang="zh-Hans">Agent 一键启动</span>
+                            <span data-lang="ja">Agent をすぐ起動</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en" class="active">Start Shell, Claude, Codex, Gemini, OpenCode, and project tools from one project menu.</span>
+                            <span data-lang="zh-Hant">Shell、Claude、Codex、Gemini、OpenCode，全都從同一個 project menu 啟動。</span>
+                            <span data-lang="zh-Hans">Shell、Claude、Codex、Gemini、OpenCode，全都从同一个 project menu 启动。</span>
+                            <span data-lang="ja">Shell、Claude、Codex、Gemini、OpenCode を project menu からすぐ起動。</span>
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <strong>02</strong>
+                        <h3>
+                            <span data-lang="en" class="active">Persistent tmux sessions</span>
+                            <span data-lang="zh-Hant">tmux session 不斷線</span>
+                            <span data-lang="zh-Hans">tmux session 不掉线</span>
+                            <span data-lang="ja">tmux session を維持</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en" class="active">Reconnect to active work instead of rebuilding context after every network change.</span>
+                            <span data-lang="zh-Hant">網路切換後不用重建上下文，打開手機就接回原本工作狀態。</span>
+                            <span data-lang="zh-Hans">网络切换后不用重建上下文，打开手机就接回原本工作状态。</span>
+                            <span data-lang="ja">通信が変わっても作業文脈を失わず、すぐ元の状態に戻れます。</span>
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <strong>03</strong>
+                        <h3>
+                            <span data-lang="en" class="active">Files, code, and docs</span>
+                            <span data-lang="zh-Hant">檔案、code、文件都能處理</span>
+                            <span data-lang="zh-Hans">文件、code、文档都能处理</span>
+                            <span data-lang="ja">files、code、docs まで</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en" class="active">Browse remote projects, edit source files, and preview Markdown without leaving the app.</span>
+                            <span data-lang="zh-Hant">瀏覽遠端專案、修改 source file、預覽 Markdown，不用離開 app。</span>
+                            <span data-lang="zh-Hans">浏览远程项目、修改 source file、预览 Markdown，不用离开 app。</span>
+                            <span data-lang="ja">remote project を見て、source file を直し、Markdown も preview。</span>
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="showcase">
+                <article class="showcase-row dark">
+                    <div class="showcase-copy">
+                        <strong>AGENT LAUNCHER</strong>
+                        <h2>
+                            <span data-lang="en" class="active">Claude, Codex, Gemini, OpenCode. One tap.</span>
+                            <span data-lang="zh-Hant">想用哪個 agent，點一下就開。</span>
+                            <span data-lang="zh-Hans">想用哪个 agent，点一下就开。</span>
+                            <span data-lang="ja">使いたい agent を、すぐ呼び出せる。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Agentmux understands that modern remote work is not just SSH. It keeps your agent choices close to the project, where they belong.</span>
+                            <span data-lang="zh-Hant">現代遠端工作不只是 SSH。Agentmux 把 Shell、檔案和 AI agent 放在 project 旁邊，少切換、少中斷。</span>
+                            <span data-lang="zh-Hans">现代远程工作不只是 SSH。Agentmux 把 Shell、文件和 AI agent 放在 project 旁边，少切换、少中断。</span>
+                            <span data-lang="ja">remote work は SSH だけではありません。Shell、files、AI agent を project のすぐそばに置けます。</span>
+                        </p>
+                    </div>
+                    <div class="showcase-media">
+                        <img src="02-launch-any-agent.png" alt="Agentmux agent launcher">
+                    </div>
+                </article>
+
+                <article class="showcase-row reverse">
+                    <div class="showcase-media">
+                        <img src="04-edit-code-over-ssh.png" alt="Agentmux remote code editor">
+                    </div>
+                    <div class="showcase-copy">
+                        <strong>REMOTE EDITOR</strong>
+                        <h2>
+                            <span data-lang="en" class="active">Edit remote code without leaving SSH.</span>
+                            <span data-lang="zh-Hant">遠端檔案，直接改、直接存。</span>
+                            <span data-lang="zh-Hans">远程文件，直接改、直接存。</span>
+                            <span data-lang="ja">remote file をその場で編集、すぐ保存。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">For the small fixes that unblock the big task: line numbers, syntax highlighting, and quick saves are already there.</span>
+                            <span data-lang="zh-Hant">臨時修 code、改設定、調文件，不必再找電腦。行號、語法上色、快速儲存都已備好。</span>
+                            <span data-lang="zh-Hans">临时修 code、改配置、调文档，不必再找电脑。行号、语法高亮、快速保存都已备好。</span>
+                            <span data-lang="ja">ちょっとした修正や設定変更なら PC を開かずに。行番号、ハイライト、保存まで揃っています。</span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="showcase-row dark">
+                    <div class="showcase-copy">
+                        <strong>PROJECT FILES</strong>
+                        <h2>
+                            <span data-lang="en" class="active">Browse project folders like they are local.</span>
+                            <span data-lang="zh-Hant">遠端專案，在手機上也看得清楚。</span>
+                            <span data-lang="zh-Hans">远程项目，在手机上也看得清楚。</span>
+                            <span data-lang="ja">project の中身を、スマホでも迷わず確認。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Jump between branches, worktrees, source files, builds, and Markdown docs without typing long paths.</span>
+                            <span data-lang="zh-Hant">branch、worktree、source、build、README，都能直接瀏覽，不用在 terminal 裡猜路徑。</span>
+                            <span data-lang="zh-Hans">branch、worktree、source、build、README，都能直接浏览，不用在 terminal 里猜路径。</span>
+                            <span data-lang="ja">branch、worktree、source、build、README まで、長い path を打たずに移動できます。</span>
+                        </p>
+                    </div>
+                    <div class="showcase-media">
+                        <img src="05-browse-remote-projects.png" alt="Agentmux file explorer">
+                    </div>
+                </article>
+            </section>
+
+            <section class="final-cta">
+                <h2>
+                    <span data-lang="en" class="active">Take your dev box with you.</span>
+                    <span data-lang="zh-Hant">把你的 dev box 帶著走。</span>
+                    <span data-lang="zh-Hans">把你的 dev box 带着走。</span>
+                    <span data-lang="ja">dev box を、そのまま持ち歩く。</span>
+                </h2>
+                <p>
+                    <span data-lang="en" class="active">Agentmux is in beta for developers who already live in terminals, tmux, and AI coding agents.</span>
+                    <span data-lang="zh-Hant">Agentmux beta 適合每天都在 terminal、tmux 和 AI coding agents 裡工作的開發者。</span>
+                    <span data-lang="zh-Hans">Agentmux beta 适合每天都在 terminal、tmux 和 AI coding agents 里工作的开发者。</span>
+                    <span data-lang="ja">Agentmux beta は terminal、tmux、AI coding agents を日常的に使う開発者向けです。</span>
+                </p>
+                <a class="primary-btn" href="https://testflight.apple.com/join/TB1bVUNz">
+                    <span data-lang="en" class="active">Join TestFlight</span>
+                    <span data-lang="zh-Hant">加入 TestFlight</span>
+                    <span data-lang="zh-Hans">加入 TestFlight</span>
+                    <span data-lang="ja">TestFlight に参加</span>
+                </a>
+            </section>
+        </main>
+
+        <footer>
+            <div>© 2026 Agentmux</div>
+            <div class="footer-links">
                 <a href="privacy.html">
                     <span data-lang="en" class="active">Privacy</span>
                     <span data-lang="zh-Hant">隱私政策</span>
@@ -444,301 +942,45 @@
                     <span data-lang="zh-Hans">技术支持</span>
                     <span data-lang="ja">サポート</span>
                 </a>
-                <div class="lang-switcher">
-                    <button class="lang-btn active" onclick="switchLang('en')">EN</button>
-                    <button class="lang-btn" onclick="switchLang('zh-Hant')">繁中</button>
-                    <button class="lang-btn" onclick="switchLang('zh-Hans')">简中</button>
-                    <button class="lang-btn" onclick="switchLang('ja')">日本語</button>
-                </div>
             </div>
-        </nav>
-
-        <header>
-            <div class="hero-content">
-                <h1 data-lang="en" class="active">Elevate Your CLI <br><span>Vibe Coding</span> on the Go.</h1>
-                <h1 data-lang="zh-Hant">提升您的 CLI <br><span>隨時隨地，Vibe Coding</span></h1>
-                <h1 data-lang="zh-Hans">提升您的 CLI <br><span>随时随地，Vibe Coding</span></h1>
-                <h1 data-lang="ja">CLI体験を革新する <br><span>いつでもどこでも、Vibe Coding</span></h1>
-                
-                <p data-lang="en" class="active">The first purpose-built iOS command center for modern engineers. One-tap AI Agent discovery, seamless tmux persistence, and a desktop-grade terminal experience.</p>
-                <p data-lang="zh-Hant">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
-                <p data-lang="zh-Hans">首款專為現代工程師設計的 iOS 指令中心。一鍵探索 AI Agent、無縫 tmux 持久化、以及桌面級的終端機體驗。</p>
-                <p data-lang="ja">現代のエンジニアのために構築された初のiOSコマンドセンター。AIエージェントの自動検出、シームレスなtmux永続化、デスクトップ級のターミナル体験。</p>
-                
-                <a href="https://testflight.apple.com/join/TB1bVUNz" class="cta-button">
-                    <span data-lang="en" class="active">Join Beta on TestFlight</span>
-                    <span data-lang="zh-Hant">參與 TestFlight 測試</span>
-                    <span data-lang="zh-Hans">参与 TestFlight 测试</span>
-                    <span data-lang="ja">TestFlightでベータ版に参加</span>
-                </a>
-            </div>
-            
-            <div class="hero-mockup">
-                <img src="iphone_terminal_shortcut.png" alt="Agentmux iPhone Terminal with Shortcuts">
-            </div>
-        </header>
-
-        <section id="features" class="features-container">
-            <!-- Agent Discovery -->
-            <div class="feature-row">
-                <div class="feature-image-side">
-                    <img src="Serverview_tmux_agents.png" alt="Agent Discovery">
-                </div>
-                <div class="feature-text-side">
-                    <span class="feature-icon">🚀</span>
-                    <div data-lang="en" class="active">
-                        <h3>Agent Discovery</h3>
-                        <p>No more manual path navigation. Automatically scans your server for projects and installed CLI agents like Claude Code, Codex, and Gemini.</p>
-                    </div>
-                    <div data-lang="zh-Hant">
-                        <h3>AI Agent 探索</h3>
-                        <p>不再需要手動進入路徑。自動掃描伺服器上的專案，並識別已安裝的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
-                    </div>
-                    <div data-lang="zh-Hans">
-                        <h3>AI Agent 探索</h3>
-                        <p>不再需要手动进入路径。自动扫描服务器上的项目，并识别已安装的 CLI Agent（如 Claude Code, Codex, Gemini）。</p>
-                    </div>
-                    <div data-lang="ja">
-                        <h3>エージェント検出</h3>
-                        <p>手動でのパス移動は不要。サーバー上のプロジェクトを自動スキャンし、Claude Code、Codex、GeminiなどのCLIエージェントを検出します。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- File Management -->
-            <div class="feature-row reverse">
-                <div class="feature-image-side">
-                    <img src="FileExplorer.png" alt="Integrated File Explorer">
-                </div>
-                <div class="feature-text-side">
-                    <span class="feature-icon">📂</span>
-                    <div data-lang="en" class="active">
-                        <h3>Integrated File Explorer</h3>
-                        <p>Browse Markdown docs, preview images, and edit configuration files like .env or .json without leaving the app.</p>
-                    </div>
-                    <div data-lang="zh-Hant">
-                        <h3>整合式檔案管理</h3>
-                        <p>直接在 App 內瀏覽 Markdown、預覽圖片並編輯 .env 或 .json 等設定檔。</p>
-                    </div>
-                    <div data-lang="zh-Hans">
-                        <h3>整合式文件管理</h3>
-                        <p>直接在 App 内浏览 Markdown、预览图片并编辑 .env 或 .json 等配置文件。</p>
-                    </div>
-                    <div data-lang="ja">
-                        <h3>統合ファイル管理</h3>
-                        <p>アプリを離れることなく、Markdownの閲覧、画像のプレビュー、.envや.jsonなどの設定ファイルの編集が可能。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- UX -->
-            <div class="feature-row">
-                <div class="feature-image-side">
-                    <img src="Dardmode_viewmode.png" alt="Terminal Experience">
-                </div>
-                <div class="feature-text-side">
-                    <span class="feature-icon">⌨️</span>
-                    <div data-lang="en" class="active">
-                        <h3>Desktop-Grade UX</h3>
-                        <p>Full trackpad and physical keyboard support for iPad Pro, plus a specialized shortcut panel for iPhone terminal use.</p>
-                    </div>
-                    <div data-lang="zh-Hant">
-                        <h3>桌面級體驗</h3>
-                        <p>完美支援 iPad Pro 的觸控板與實體鍵盤，並為 iPhone 提供專屬的終端機快捷面板。</p>
-                    </div>
-                    <div data-lang="zh-Hans">
-                        <h3>桌面级体验</h3>
-                        <p>完美支持 iPad Pro 的触控板与实体键盘，并为 iPhone 提供专属的终端快捷面板。</p>
-                    </div>
-                    <div data-lang="ja">
-                        <h3>デスクトップ級の操作性</h3>
-                        <p>iPad Proのトラックパッドと物理キーボードをフルサポート。iPhone向けには専用のショートカットパネルを搭載。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Server Management -->
-            <div class="feature-row reverse">
-                <div class="feature-image-side">
-                    <img src="Darkmode_serverlist.png" alt="Server Management">
-                </div>
-                <div class="feature-text-side">
-                    <span class="feature-icon">🛡️</span>
-                    <div data-lang="en" class="active">
-                        <h3>Server Management</h3>
-                        <p>Manage multiple servers with ease. Deeply integrated with SwiftData for fast local storage and quick connection recovery.</p>
-                    </div>
-                    <div data-lang="zh-Hant">
-                        <h3>高效伺服器管理</h3>
-                        <p>輕鬆管理多台伺服器。深度整合 SwiftData 提供流暢的本地儲存與快速連線恢復體驗。</p>
-                    </div>
-                    <div data-lang="zh-Hans">
-                        <h3>高效服务器管理</h3>
-                        <p>轻松管理多台服务器。深度整合 SwiftData 提供流畅的本地存储与快速连接恢复体验。</p>
-                    </div>
-                    <div data-lang="ja">
-                        <h3>高度なサーバー管理</h3>
-                        <p>複数のサーバーを簡単に管理。SwiftDataとの統合により、高速なローカル保存と迅速な接続復旧を実現。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- tmux -->
-            <div class="feature-row">
-                <div class="feature-text-side">
-                    <span class="feature-icon">♾️</span>
-                    <div data-lang="en" class="active">
-                        <h3>tmux Integration</h3>
-                        <p>Persistent CLI sessions that never die. One-tap automatic tmux installation if your server is missing it.</p>
-                    </div>
-                    <div data-lang="zh-Hant">
-                        <h3>tmux 深度整合</h3>
-                        <p>永不中斷的持久化 CLI 會話。如果伺服器缺少 tmux，支援一鍵自動安裝。</p>
-                    </div>
-                    <div data-lang="zh-Hans">
-                        <h3>tmux 深度整合</h3>
-                        <p>永不中断的持久化 CLI 会话。如果服务器缺少 tmux，支持一键自动安装。</p>
-                    </div>
-                    <div data-lang="ja">
-                        <h3>tmux統合</h3>
-                        <p>決して途切れない永続的なCLIセッション。サーバーにtmuxがない場合はワンタップで自動インストール。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Connectivity -->
-            <div class="feature-row reverse">
-                <div class="feature-text-side">
-                    <span class="feature-icon">💻</span>
-                    <div data-lang="en" class="active">
-                        <h3>Robust Connectivity</h3>
-                        <p>Industry-leading state recovery for cellular networks. Best used with VPNs like Tailscale or Netbird for seamless remote access.</p>
-                    </div>
-                    <div data-lang="zh-Hant">
-                        <h3>強健連線</h3>
-                        <p>領先業界的行動網路狀態恢復。搭配 Tailscale 或 Netbird 等 VPN 使用體驗更佳。</p>
-                    </div>
-                    <div data-lang="zh-Hans">
-                        <h3>强健连接</h3>
-                        <p>领先行业的移动网络状态恢复。搭配 Tailscale 或 Netbird 使用体验更佳。</p>
-                    </div>
-                    <div data-lang="ja">
-                        <h3>強固な接続性</h3>
-                        <p>モバイルネットワークに特化した状態復旧機能。TailscaleやNetbirdなどのVPNとの併用でさらに快適に。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="vibe-section">
-            <div data-lang="en" class="active">
-                <h2>Built to Replace Your Legacy SSH Setup.</h2>
-                <p>Agentmux isn't just another SSH client like Termius. It's a specialized command center designed for the high-intensity AI Agent workflow. Stay in "the zone" whether you're at your desk or on the train.</p>
-            </div>
-            <div data-lang="zh-Hant">
-                <h2>為取代傳統 SSH 而生</h2>
-                <p>Agentmux 不僅僅是另一個 SSH 客戶端。它是專為高強度 AI Agent 工作流設計的指令中心。無論是在辦公桌前還是通勤途中，都能保持專注。</p>
-            </div>
-            <div data-lang="zh-Hans">
-                <h2>为取代传统 SSH 而生</h2>
-                <p>Agentmux 不仅仅是另一个 SSH 客户端。它是专为高强度 AI Agent 工作流设计的指令中心。无论是在办公桌前还是通勤途中，都能保持专注。</p>
-            </div>
-            <div data-lang="ja">
-                <h2>従来のSSH環境を置き換えるために</h2>
-                <p>Agentmuxは単なるSSHクライアントではありません。高強度のAIエージェントワークフローのために設計された専用のコマンドセンターです。デスクでも電車でも、常に「ゾーン」を維持。</p>
-            </div>
-        </section>
-
-        <footer>
-            <div class="footer-links">
-                <a href="privacy.html">
-                    <span data-lang="en" class="active">Privacy Policy</span>
-                    <span data-lang="zh-Hant">隱私政策</span>
-                    <span data-lang="zh-Hans">隐私政策</span>
-                    <span data-lang="ja">プライバシーポリシー</span>
-                </a>
-                <a href="#">
-                    <span data-lang="en" class="active">Terms of Service</span>
-                    <span data-lang="zh-Hant">服務條款</span>
-                    <span data-lang="zh-Hans">服务条款</span>
-                    <span data-lang="ja">利用規約</span>
-                </a>
-                <a href="mailto:support@saxcave.cc">
-                    <span data-lang="en" class="active">Contact Support</span>
-                    <span data-lang="zh-Hant">聯絡支援</span>
-                    <span data-lang="zh-Hans">联系支持</span>
-                    <span data-lang="ja">お問い合わせ</span>
-                </a>
-            </div>
-            <p>&copy; 2026 Agentmux. Built for the Vibe Coding generation.</p>
         </footer>
     </div>
 
     <script>
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'nav-overlay';
-        document.body.appendChild(overlay);
-
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        overlay.addEventListener('click', toggleMenu);
-
-        // Close menu on nav link click
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('open')) toggleMenu();
-            });
-        });
-
         function switchLang(lang) {
-            // Update buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
+            document.querySelectorAll('.lang-btn').forEach((btn) => {
                 btn.classList.remove('active');
-                if (btn.innerText.toLowerCase().includes(lang.toLowerCase()) || 
-                    (lang === 'zh-Hant' && btn.innerText === '繁中') ||
-                    (lang === 'zh-Hans' && btn.innerText === '简中') ||
-                    (lang === 'ja' && btn.innerText === '日本語') ||
-                    (lang === 'en' && btn.innerText === 'EN')) {
+                if (
+                    (lang === 'en' && btn.textContent.trim() === 'EN') ||
+                    (lang === 'zh-Hant' && btn.textContent.trim() === '繁中') ||
+                    (lang === 'zh-Hans' && btn.textContent.trim() === '简中') ||
+                    (lang === 'ja' && btn.textContent.trim() === '日本語')
+                ) {
                     btn.classList.add('active');
                 }
             });
 
-            // Update content (div and span)
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                el.classList.remove('active');
-                if (el.getAttribute('data-lang') === lang) {
-                    el.classList.add('active');
-                }
+            document.querySelectorAll('[data-lang]').forEach((el) => {
+                el.classList.toggle('active', el.getAttribute('data-lang') === lang);
             });
 
-            // Update page language
             document.documentElement.lang = lang;
-            
-            // Save preference
             localStorage.setItem('preferred-lang', lang);
         }
 
-        // Auto-detect or use saved preference
-        window.onload = () => {
+        window.addEventListener('load', () => {
             const saved = localStorage.getItem('preferred-lang');
             if (saved) {
                 switchLang(saved);
-            } else {
-                const browserLang = navigator.language;
-                if (browserLang.startsWith('zh-TW') || browserLang.startsWith('zh-HK')) switchLang('zh-Hant');
-                else if (browserLang.startsWith('zh')) switchLang('zh-Hans');
-                else if (browserLang.startsWith('ja')) switchLang('ja');
-                else switchLang('en');
+                return;
             }
-        };
+
+            const browserLang = navigator.language;
+            if (browserLang.startsWith('zh-TW') || browserLang.startsWith('zh-HK')) switchLang('zh-Hant');
+            else if (browserLang.startsWith('zh')) switchLang('zh-Hans');
+            else if (browserLang.startsWith('ja')) switchLang('ja');
+            else switchLang('en');
+        });
     </script>
 </body>
 </html>

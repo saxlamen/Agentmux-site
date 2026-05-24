@@ -4,226 +4,525 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - Agentmux</title>
+    <meta name="description" content="Agentmux privacy policy: no data collection, local storage, Keychain credentials, encrypted SSH traffic, and user-controlled logs.">
+    <meta name="theme-color" content="#f7faf6">
     <style>
         :root {
-            --bg-color: #0d0d0d;
-            --text-color: #e0e0e0;
-            --accent-color: #22c55e;
-            --dim-text: #a0a0a0;
-            --border-color: #333;
+            --bg: #f7faf6;
+            --paper: #ffffff;
+            --ink: #101513;
+            --muted: #66756e;
+            --line: #dce6e0;
+            --green: #087c61;
+            --lime: #d8ff63;
+            --shadow: 0 24px 80px rgba(16, 21, 19, 0.12);
         }
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            margin: 0;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(216, 255, 99, 0.24), transparent 30%),
+                radial-gradient(circle at 88% 0%, rgba(8, 124, 97, 0.13), transparent 32%),
+                var(--bg);
+            color: var(--ink);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            padding: 40px 20px;
         }
 
-        .container {
-            max-width: 800px;
+        a {
+            color: inherit;
+        }
+
+        .shell {
+            width: min(1040px, calc(100% - 40px));
             margin: 0 auto;
         }
 
-        .header-nav {
+        .nav {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px 0;
         }
 
-        .back-link {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .lang-switcher {
-            display: flex;
+        .brand {
+            display: inline-flex;
+            align-items: center;
             gap: 10px;
+            font-size: 18px;
+            font-weight: 850;
+            text-decoration: none;
         }
 
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: #101513;
+            color: var(--lime);
+            font-size: 13px;
+            font-weight: 900;
+            box-shadow: 0 12px 28px rgba(16, 21, 19, 0.18);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border: 1px solid rgba(220, 230, 224, 0.9);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.74);
+            box-shadow: 0 8px 26px rgba(16, 21, 19, 0.06);
+        }
+
+        .nav-actions a,
         .lang-btn {
-            background: none;
-            border: 1px solid var(--border-color);
-            color: var(--dim-text);
-            padding: 5px 10px;
-            border-radius: 6px;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 750;
+            padding: 9px 13px;
+            border-radius: 999px;
             cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s;
         }
 
+        .nav-actions a:hover,
+        .lang-btn:hover,
         .lang-btn.active {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-            background-color: rgba(34, 197, 94, 0.1);
+            background: #edf5ef;
+            color: var(--green);
         }
 
-        h1 { font-size: 32px; margin-bottom: 10px; }
-        .last-updated { color: var(--dim-text); margin-bottom: 40px; font-size: 14px; }
-        h2 { margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); color: var(--accent-color); }
-        h3 { margin-top: 30px; margin-bottom: 10px; font-size: 18px; }
-        p { margin-bottom: 15px; color: var(--dim-text); }
-        ul { margin-bottom: 20px; margin-left: 20px; color: var(--dim-text); }
-        li { margin-bottom: 10px; }
+        .hero {
+            padding: 74px 0 34px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            color: var(--green);
+            background: rgba(8, 124, 97, 0.08);
+            border: 1px solid rgba(8, 124, 97, 0.14);
+            border-radius: 999px;
+            padding: 8px 13px;
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        h1 {
+            max-width: 780px;
+            margin: 22px auto 16px;
+            font-size: clamp(48px, 8vw, 92px);
+            line-height: 0.94;
+            letter-spacing: 0;
+            font-weight: 900;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 20px;
+            font-weight: 560;
+        }
+
+        .policy-card {
+            margin: 42px auto 78px;
+            padding: clamp(26px, 5vw, 58px);
+            border-radius: 34px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .last-updated {
+            display: inline-flex;
+            margin-bottom: 26px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #edf5ef;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .policy-card h2 {
+            margin: 38px 0 12px;
+            padding-top: 28px;
+            border-top: 1px solid var(--line);
+            font-size: 28px;
+            line-height: 1.1;
+            letter-spacing: 0;
+        }
+
+        .policy-card h2:first-of-type {
+            margin-top: 12px;
+            padding-top: 0;
+            border-top: 0;
+        }
+
+        .policy-card p,
+        .policy-card li {
+            color: var(--muted);
+            font-size: 17px;
+            font-weight: 540;
+        }
+
+        .policy-card p {
+            margin: 0 0 16px;
+        }
+
+        .policy-card ul {
+            margin: 0 0 18px;
+            padding-left: 22px;
+        }
+
+        .policy-card li {
+            margin-bottom: 12px;
+        }
+
+        .policy-card strong {
+            color: var(--ink);
+        }
+
+        .policy-card a {
+            color: var(--green);
+            font-weight: 800;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 0 0 30px;
+        }
+
+        .summary-item {
+            padding: 18px;
+            border-radius: 22px;
+            background: #f4f8f4;
+            border: 1px solid var(--line);
+        }
+
+        .summary-item strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .summary-item span {
+            display: block;
+            color: var(--ink);
+            font-size: 16px;
+            font-weight: 850;
+            line-height: 1.2;
+        }
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 0 0 60px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+        }
 
         [data-lang] { display: none; }
-        [data-lang].active { display: block; }
+        [data-lang].active { display: initial; }
+        div[data-lang].active { display: block; }
+
+        @media (max-width: 780px) {
+            .shell {
+                width: min(100% - 28px, 1040px);
+            }
+
+            .nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-actions {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                border-radius: 22px;
+            }
+
+            .hero {
+                padding-top: 44px;
+                text-align: left;
+            }
+
+            h1 {
+                margin-left: 0;
+                margin-right: 0;
+                font-size: 48px;
+            }
+
+            .hero p {
+                margin-left: 0;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-card {
+                border-radius: 26px;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-nav">
-            <a href="index.html" class="back-link">
-                <span data-lang="en" class="active">&larr; Back to Agentmux</span>
-                <span data-lang="zh-Hant">&larr; 返回 Agentmux</span>
-                <span data-lang="zh-Hans">&larr; 返回 Agentmux</span>
-                <span data-lang="ja">&larr; Agentmuxに戻る</span>
+    <div class="shell">
+        <nav class="nav" aria-label="Privacy navigation">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">&gt;A</span>
+                Agentmux
             </a>
-            
-            <div class="lang-switcher">
-                <button class="lang-btn active" onclick="switchLang('en')">EN</button>
-                <button class="lang-btn" onclick="switchLang('zh-Hant')">繁中</button>
-                <button class="lang-btn" onclick="switchLang('zh-Hans')">简中</button>
-                <button class="lang-btn" onclick="switchLang('ja')">日本語</button>
+            <div class="nav-actions">
+                <a href="index.html">
+                    <span data-lang="en" class="active">Home</span>
+                    <span data-lang="zh-Hant">首頁</span>
+                    <span data-lang="zh-Hans">首页</span>
+                    <span data-lang="ja">ホーム</span>
+                </a>
+                <a href="mailto:support@saxcave.cc">
+                    <span data-lang="en" class="active">Support</span>
+                    <span data-lang="zh-Hant">支援</span>
+                    <span data-lang="zh-Hans">支持</span>
+                    <span data-lang="ja">サポート</span>
+                </a>
+                <button class="lang-btn active" type="button" onclick="switchLang('en')">EN</button>
+                <button class="lang-btn" type="button" onclick="switchLang('zh-Hant')">繁中</button>
+                <button class="lang-btn" type="button" onclick="switchLang('zh-Hans')">简中</button>
+                <button class="lang-btn" type="button" onclick="switchLang('ja')">日本語</button>
             </div>
-        </div>
-        
-        <!-- English -->
-        <div data-lang="en" class="active">
-            <h1>Privacy Policy</h1>
-            <div class="last-updated">Last Updated: 2026-05-02</div>
-            <p>Agentmux ("we," "our," or "the App") is committed to protecting your privacy. This policy outlines our approach to data security and privacy.</p>
-            <h2>1. No Data Collection</h2>
-            <p>Agentmux is a tool designed for developers. We <strong>DO NOT</strong> collect, store, or transmit any of your personal data, server credentials, or terminal traffic to any external servers or third parties.</p>
-            <h2>2. Local Storage & Security</h2>
-            <ul>
-                <li><strong>SSH Credentials</strong>: Your passwords and private keys are stored exclusively in the iOS system <strong>Keychain</strong>. We use industry-standard encryption provided by Apple to ensure your credentials remain secure.</li>
-                <li><strong>Server Information</strong>: All server configurations and project paths are stored locally on your device via <strong>SwiftData</strong>.</li>
-                <li><strong>Terminal Traffic</strong>: All communication between the App and your server is encrypted via the <strong>SSH protocol</strong>. We do not intercept or log your terminal output.</li>
-            </ul>
-            <h2>3. iCloud Synchronization (Pro Feature)</h2>
-            <p>If you enable iCloud Sync, your server configurations (excluding sensitive passwords/keys unless stored in iCloud Keychain) will be synced across your own devices using <strong>Apple's iCloud service</strong>. We do not have access to this data.</p>
-            <h2>4. Debug Logs</h2>
-            <p>Debug logs are stored locally on your device for troubleshooting purposes only. These logs are never transmitted automatically. You have full control over these logs and can clear them at any time.</p>
-            <h2>5. Contact Us</h2>
-            <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:support@saxcave.cc" style="color: var(--accent-color);">support@saxcave.cc</a></p>
-        </div>
+        </nav>
 
-        <!-- Traditional Chinese -->
-        <div data-lang="zh-Hant">
-            <h1>隱私政策</h1>
-            <div class="last-updated">最後更新：2026-05-02</div>
-            <p>Agentmux（下稱「我們」或「本應用程式」）致力於保護您的隱私。本政策說明了我們處理數據安全與隱私的方法。</p>
-            <h2>1. 不收集數據</h2>
-            <p>Agentmux 是一款專為開發者設計的工具。我們 <strong>不會</strong> 收集、儲存或傳輸您的任何個人資料、伺服器憑據或終端流量至任何外部伺服器或第三方。</p>
-            <h2>2. 本地儲存與安全</h2>
-            <ul>
-                <li><strong>SSH 憑據</strong>：您的密碼與私鑰僅儲存在 iOS 系統的 <strong>Keychain (鑰匙圈)</strong> 中。我們使用 Apple 提供的業界標準加密技術，確保您的憑據安全。</li>
-                <li><strong>伺服器資訊</strong>：所有伺服器設定與專案路徑均透過 <strong>SwiftData</strong> 儲存在您的裝置本地。</li>
-                <li><strong>終端流量</strong>：本應用程式與您的伺服器之間的所有通訊均透過 <strong>SSH 協定</strong> 加密。我們不會截取或記錄您的終端輸出內容。</li>
-            </ul>
-            <h2>3. iCloud 同步（專業版功能）</h2>
-            <p>如果您啟用了 iCloud 同步，您的伺服器設定將透過 <strong>Apple 的 iCloud 服務</strong> 在您自己的裝置之間同步。我們無法存取這些數據。</p>
-            <h2>4. 偵錯日誌 (Debug Logs)</h2>
-            <p>偵錯日誌僅儲存在您的裝置本地，用於故障排除。這些日誌絕不會自動傳輸。您對這些日誌擁有完全控制權，並可隨時清除。</p>
-            <h2>5. 聯絡我們</h2>
-            <p>如果您對本隱私政策有任何疑問，請透過以下方式聯絡我們：<a href="mailto:support@saxcave.cc" style="color: var(--accent-color);">support@saxcave.cc</a></p>
-        </div>
+        <header class="hero">
+            <div class="eyebrow">
+                <span data-lang="en" class="active">Privacy first by design</span>
+                <span data-lang="zh-Hant">從設計就以隱私為優先</span>
+                <span data-lang="zh-Hans">从设计就以隐私为优先</span>
+                <span data-lang="ja">プライバシーを前提に設計</span>
+            </div>
+            <h1>
+                <span data-lang="en" class="active">Privacy Policy</span>
+                <span data-lang="zh-Hant">隱私政策</span>
+                <span data-lang="zh-Hans">隐私政策</span>
+                <span data-lang="ja">プライバシーポリシー</span>
+            </h1>
+            <p>
+                <span data-lang="en" class="active">Agentmux is a local-first developer tool. Your credentials, server settings, and terminal traffic stay under your control.</span>
+                <span data-lang="zh-Hant">Agentmux 是 local-first 的開發工具。你的憑證、server 設定與 terminal traffic 都由你掌控。</span>
+                <span data-lang="zh-Hans">Agentmux 是 local-first 的开发工具。你的凭据、server 设置与 terminal traffic 都由你掌控。</span>
+                <span data-lang="ja">Agentmux は local-first の開発ツールです。認証情報、server 設定、terminal traffic はあなたの管理下にあります。</span>
+            </p>
+        </header>
 
-        <!-- Simplified Chinese -->
-        <div data-lang="zh-Hans">
-            <h1>隐私政策</h1>
-            <div class="last-updated">最后更新：2026-05-02</div>
-            <p>Agentmux（下称“我们”或“本应用程序”）致力于保护您的隐私。本政策说明了我们处理数据安全与隐私的方法。</p>
-            <h2>1. 不收集数据</h2>
-            <p>Agentmux 是一款专为开发者设计的工具。我们 <strong>不会</strong> 收集、存储或传输您的任何个人资料、服务器凭据或终端流量至任何外部服务器或第三方。</p>
-            <h2>2. 本地存储与安全</h2>
-            <ul>
-                <li><strong>SSH 凭据</strong>：您的密码与私钥仅存储在 iOS 系统的 <strong>Keychain (钥匙圈)</strong> 中。我们使用 Apple 提供的业界标准加密技术，确保您的凭据安全。</li>
-                <li><strong>服务器信息</strong>：所有服务器设置与项目路径均通过 <strong>SwiftData</strong> 存储在您的设备本地。</li>
-                <li><strong>终端流量</strong>：本应用程序与您的服务器之间的所有通信均通过 <strong>SSH 协议</strong> 加密。我们不会截取或记录您的终端输出内容。</li>
-            </ul>
-            <h2>3. iCloud 同步（专业版功能）</h2>
-            <p>如果您启用了 iCloud 同步，您的服务器设置将通过 <strong>Apple 的 iCloud 服务</strong> 在您自己的设备之间同步。我们无法访问这些数据。</p>
-            <h2>4. 调试日志 (Debug Logs)</h2>
-            <p>调试日志仅存储在您的设备本地，用于故障排除。这些日志绝不会自动传输。您对这些日志拥有完全控制权，并可随时清除。</p>
-            <h2>5. 联系我们</h2>
-            <p>如果您对本隐私政策有任何疑问，请通过以下方式联系我们：<a href="mailto:support@saxcave.cc" style="color: var(--accent-color);">support@saxcave.cc</a></p>
-        </div>
+        <main class="policy-card">
+            <div data-lang="en" class="active">
+                <div class="last-updated">Last updated: 2026-05-02</div>
+                <div class="summary-grid" aria-label="Privacy summary">
+                    <div class="summary-item"><strong>01</strong><span>No personal data collection</span></div>
+                    <div class="summary-item"><strong>02</strong><span>Credentials stay in Keychain</span></div>
+                    <div class="summary-item"><strong>03</strong><span>SSH traffic is not logged</span></div>
+                </div>
+                <p>Agentmux ("we," "our," or "the App") is committed to protecting your privacy. This policy explains how Agentmux handles data security and privacy.</p>
 
-        <!-- Japanese -->
-        <div data-lang="ja">
-            <h1>プライバシーポリシー</h1>
-            <div class="last-updated">最終更新日：2026-05-02</div>
-            <p>Agentmux（以下「当社」）は、お客様のプライバシー保護に努めています。このポリシーは、データセキュリティとプライバシーに対する当社の取り組みの概要を説明するものです。</p>
-            <h2>1. データの収集なし</h2>
-            <p>Agentmuxは開発者向けに設計されたツールです。当社は、お客様の個人データ、サーバーの認証情報、またはターミナルのトラフィックを外部サーバーや第三者に収集、保存、または送信することは <strong>ありません</strong>。</p>
-            <h2>2. ローカルストレージとセキュリティ</h2>
-            <ul>
-                <li><strong>SSH認証情報</strong>：パスワードと秘密鍵は、iOSシステムの <strong>Keychain (キーチェーン)</strong> にのみ保存されます。Appleが提供する業界標準の暗号化を使用して、認証情報の安全を確保します。</li>
-                <li><strong>サーバー情報</strong>：すべてのサーバー設定とプロジェクトパスは、<strong>SwiftData</strong> を介してデバイスのローカルに保存されます。</li>
-                <li><strong>ターミナルトラフィック</strong>：アプリとサーバー間のすべての通信は、<strong>SSHプロトコル</strong> を介して暗号化されます。当社がターミナル出力を傍受または記録することはありません。</li>
-            </ul>
-            <h2>3. iCloud同期（Pro機能）</h2>
-            <p>iCloud同期を有効にすると、サーバー設定は <strong>AppleのiCloudサービス</strong> を使用して自身のデバイス間で同期されます。当社がこのデータにアクセスすることはできません。</p>
-            <h2>4. デバッグログ</h2>
-            <p>デバッグログは、トラブルシューティングのみを目的としてデバイスのローカルに保存されます。これらのログが自動的に送信されることはありません。お客様はこれらのログを完全に制御でき、いつでも消去できます。</p>
-            <h2>5. お問い合わせ</h2>
-            <p>このプライバシーポリシーについてご質問がある場合は、以下までご連絡ください：<a href="mailto:support@saxcave.cc" style="color: var(--accent-color);">support@saxcave.cc</a></p>
-        </div>
+                <h2>1. No Data Collection</h2>
+                <p>Agentmux is a tool designed for developers. We <strong>do not</strong> collect, store, or transmit your personal data, server credentials, or terminal traffic to external servers or third parties.</p>
+
+                <h2>2. Local Storage & Security</h2>
+                <ul>
+                    <li><strong>SSH credentials</strong>: Passwords and private keys are stored only in the iOS system <strong>Keychain</strong>, using Apple-provided security mechanisms.</li>
+                    <li><strong>Server information</strong>: Server configurations and project paths are stored locally on your device via <strong>SwiftData</strong>.</li>
+                    <li><strong>Terminal traffic</strong>: Communication between Agentmux and your server is encrypted through the <strong>SSH protocol</strong>. We do not intercept or log terminal output.</li>
+                </ul>
+
+                <h2>3. iCloud Synchronization</h2>
+                <p>If you enable iCloud Sync, supported server configuration data may sync across your own devices through <strong>Apple iCloud</strong>. We do not have access to that data.</p>
+
+                <h2>4. Debug Logs</h2>
+                <p>Debug logs are stored locally on your device for troubleshooting. They are not transmitted automatically. You can clear them at any time.</p>
+
+                <h2>5. Contact</h2>
+                <p>Questions about this policy? Contact us at <a href="mailto:support@saxcave.cc">support@saxcave.cc</a>.</p>
+            </div>
+
+            <div data-lang="zh-Hant">
+                <div class="last-updated">最後更新：2026-05-02</div>
+                <div class="summary-grid" aria-label="隱私摘要">
+                    <div class="summary-item"><strong>01</strong><span>不收集個人資料</span></div>
+                    <div class="summary-item"><strong>02</strong><span>憑證留在 Keychain</span></div>
+                    <div class="summary-item"><strong>03</strong><span>不記錄 SSH traffic</span></div>
+                </div>
+                <p>Agentmux（下稱「我們」或「本 App」）重視你的隱私。本政策說明 Agentmux 如何處理資料安全與隱私。</p>
+
+                <h2>1. 不收集資料</h2>
+                <p>Agentmux 是為開發者設計的工具。我們<strong>不會</strong>收集、儲存或傳送你的個人資料、server 憑證或 terminal traffic 到外部 server 或第三方。</p>
+
+                <h2>2. 本機儲存與安全</h2>
+                <ul>
+                    <li><strong>SSH 憑證</strong>：密碼與私鑰只會儲存在 iOS 系統的 <strong>Keychain</strong>，並使用 Apple 提供的安全機制保護。</li>
+                    <li><strong>Server 資訊</strong>：server 設定與 project path 會透過 <strong>SwiftData</strong> 儲存在你的裝置本機。</li>
+                    <li><strong>Terminal traffic</strong>：Agentmux 與你的 server 之間透過 <strong>SSH protocol</strong> 加密通訊。我們不會攔截或記錄 terminal output。</li>
+                </ul>
+
+                <h2>3. iCloud 同步</h2>
+                <p>如果你啟用 iCloud Sync，支援同步的 server 設定資料可能會透過 <strong>Apple iCloud</strong> 在你自己的裝置間同步。我們無法存取這些資料。</p>
+
+                <h2>4. Debug logs</h2>
+                <p>Debug logs 只會儲存在你的裝置本機，用於排查問題，不會自動傳送。你可以隨時清除這些 logs。</p>
+
+                <h2>5. 聯絡方式</h2>
+                <p>如果你對本政策有疑問，請聯絡 <a href="mailto:support@saxcave.cc">support@saxcave.cc</a>。</p>
+            </div>
+
+            <div data-lang="zh-Hans">
+                <div class="last-updated">最后更新：2026-05-02</div>
+                <div class="summary-grid" aria-label="隐私摘要">
+                    <div class="summary-item"><strong>01</strong><span>不收集个人资料</span></div>
+                    <div class="summary-item"><strong>02</strong><span>凭据留在 Keychain</span></div>
+                    <div class="summary-item"><strong>03</strong><span>不记录 SSH traffic</span></div>
+                </div>
+                <p>Agentmux（下称“我们”或“本 App”）重视你的隐私。本政策说明 Agentmux 如何处理数据安全与隐私。</p>
+
+                <h2>1. 不收集数据</h2>
+                <p>Agentmux 是为开发者设计的工具。我们<strong>不会</strong>收集、存储或传送你的个人资料、server 凭据或 terminal traffic 到外部 server 或第三方。</p>
+
+                <h2>2. 本地存储与安全</h2>
+                <ul>
+                    <li><strong>SSH 凭据</strong>：密码与私钥只会存储在 iOS 系统的 <strong>Keychain</strong>，并使用 Apple 提供的安全机制保护。</li>
+                    <li><strong>Server 信息</strong>：server 设置与 project path 会通过 <strong>SwiftData</strong> 存储在你的设备本地。</li>
+                    <li><strong>Terminal traffic</strong>：Agentmux 与你的 server 之间通过 <strong>SSH protocol</strong> 加密通信。我们不会拦截或记录 terminal output。</li>
+                </ul>
+
+                <h2>3. iCloud 同步</h2>
+                <p>如果你启用 iCloud Sync，支持同步的 server 设置数据可能会通过 <strong>Apple iCloud</strong> 在你自己的设备间同步。我们无法访问这些数据。</p>
+
+                <h2>4. Debug logs</h2>
+                <p>Debug logs 只会存储在你的设备本地，用于排查问题，不会自动传送。你可以随时清除这些 logs。</p>
+
+                <h2>5. 联系方式</h2>
+                <p>如果你对本政策有疑问，请联系 <a href="mailto:support@saxcave.cc">support@saxcave.cc</a>。</p>
+            </div>
+
+            <div data-lang="ja">
+                <div class="last-updated">最終更新日：2026-05-02</div>
+                <div class="summary-grid" aria-label="プライバシー概要">
+                    <div class="summary-item"><strong>01</strong><span>個人データを収集しません</span></div>
+                    <div class="summary-item"><strong>02</strong><span>認証情報は Keychain に保存</span></div>
+                    <div class="summary-item"><strong>03</strong><span>SSH traffic を記録しません</span></div>
+                </div>
+                <p>Agentmux（以下「当社」または「本 App」）は、ユーザーのプライバシーを重視しています。本ポリシーでは、Agentmux におけるデータセキュリティとプライバシーの扱いについて説明します。</p>
+
+                <h2>1. データ収集について</h2>
+                <p>Agentmux は開発者向けのツールです。当社は、個人データ、server 認証情報、terminal traffic を外部 server や第三者へ収集、保存、送信することは<strong>ありません</strong>。</p>
+
+                <h2>2. ローカル保存とセキュリティ</h2>
+                <ul>
+                    <li><strong>SSH 認証情報</strong>：パスワードと秘密鍵は iOS の <strong>Keychain</strong> のみに保存され、Apple が提供するセキュリティ機構で保護されます。</li>
+                    <li><strong>Server 情報</strong>：server 設定と project path は <strong>SwiftData</strong> を通じてデバイス上に保存されます。</li>
+                    <li><strong>Terminal traffic</strong>：Agentmux と server の通信は <strong>SSH protocol</strong> で暗号化されます。当社が terminal output を傍受または記録することはありません。</li>
+                </ul>
+
+                <h2>3. iCloud 同期</h2>
+                <p>iCloud Sync を有効にした場合、対応する server 設定データは <strong>Apple iCloud</strong> を通じて自身のデバイス間で同期される場合があります。当社はこのデータにアクセスできません。</p>
+
+                <h2>4. Debug logs</h2>
+                <p>Debug logs はトラブルシューティングのためにデバイス上にのみ保存され、自動送信されません。いつでも削除できます。</p>
+
+                <h2>5. お問い合わせ</h2>
+                <p>本ポリシーについて質問がある場合は、<a href="mailto:support@saxcave.cc">support@saxcave.cc</a> までご連絡ください。</p>
+            </div>
+        </main>
+
+        <footer>
+            <div>© 2026 Agentmux</div>
+            <div class="footer-links">
+                <a href="index.html">
+                    <span data-lang="en" class="active">Home</span>
+                    <span data-lang="zh-Hant">首頁</span>
+                    <span data-lang="zh-Hans">首页</span>
+                    <span data-lang="ja">ホーム</span>
+                </a>
+                <a href="mailto:support@saxcave.cc">
+                    <span data-lang="en" class="active">Support</span>
+                    <span data-lang="zh-Hant">支援</span>
+                    <span data-lang="zh-Hans">支持</span>
+                    <span data-lang="ja">サポート</span>
+                </a>
+            </div>
+        </footer>
     </div>
 
     <script>
         function switchLang(lang) {
-            // Update buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
+            document.querySelectorAll('.lang-btn').forEach((btn) => {
                 btn.classList.remove('active');
-                if (btn.innerText.toLowerCase().includes(lang.toLowerCase()) || 
-                    (lang === 'zh-Hant' && btn.innerText === '繁中') ||
-                    (lang === 'zh-Hans' && btn.innerText === '简中') ||
-                    (lang === 'ja' && btn.innerText === '日本語') ||
-                    (lang === 'en' && btn.innerText === 'EN')) {
+                if (
+                    (lang === 'en' && btn.textContent.trim() === 'EN') ||
+                    (lang === 'zh-Hant' && btn.textContent.trim() === '繁中') ||
+                    (lang === 'zh-Hans' && btn.textContent.trim() === '简中') ||
+                    (lang === 'ja' && btn.textContent.trim() === '日本語')
+                ) {
                     btn.classList.add('active');
                 }
             });
 
-            // Update content
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                el.classList.remove('active');
-                if (el.getAttribute('data-lang') === lang) {
-                    el.classList.add('active');
-                }
+            document.querySelectorAll('[data-lang]').forEach((el) => {
+                el.classList.toggle('active', el.getAttribute('data-lang') === lang);
             });
 
-            // Update page language
             document.documentElement.lang = lang;
-            
-            // Save preference
             localStorage.setItem('preferred-lang', lang);
         }
 
-        // Auto-detect or use saved preference
-        window.onload = () => {
+        window.addEventListener('load', () => {
             const saved = localStorage.getItem('preferred-lang');
             if (saved) {
                 switchLang(saved);
-            } else {
-                const browserLang = navigator.language;
-                if (browserLang.startsWith('zh-TW') || browserLang.startsWith('zh-HK')) switchLang('zh-Hant');
-                else if (browserLang.startsWith('zh')) switchLang('zh-Hans');
-                else if (browserLang.startsWith('ja')) switchLang('ja');
-                else switchLang('en');
+                return;
             }
-        };
+
+            const browserLang = navigator.language;
+            if (browserLang.startsWith('zh-TW') || browserLang.startsWith('zh-HK')) switchLang('zh-Hant');
+            else if (browserLang.startsWith('zh')) switchLang('zh-Hans');
+            else if (browserLang.startsWith('ja')) switchLang('ja');
+            else switchLang('en');
+        });
     </script>
 </body>
 </html>
