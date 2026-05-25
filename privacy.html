@@ -8,14 +8,19 @@
     <meta name="theme-color" content="#f7faf6">
     <style>
         :root {
-            --bg: #f7faf6;
-            --paper: #ffffff;
-            --ink: #101513;
-            --muted: #66756e;
-            --line: #dce6e0;
-            --green: #087c61;
+            --bg: #090d0f;
+            --bg-2: #101719;
+            --panel: #121a1d;
+            --panel-2: #182326;
+            --ink: #f4fbf7;
+            --muted: #a7b8b2;
+            --soft: #6f817a;
+            --line: rgba(214, 255, 236, 0.14);
+            --green: #18d6a6;
             --lime: #d8ff63;
-            --shadow: 0 24px 80px rgba(16, 21, 19, 0.12);
+            --orange: #ff982f;
+            --shadow: 0 36px 110px rgba(0, 0, 0, 0.44);
+            --radius: 24px;
         }
 
         * {
@@ -25,12 +30,12 @@
         body {
             margin: 0;
             background:
-                radial-gradient(circle at 12% 8%, rgba(216, 255, 99, 0.24), transparent 30%),
-                radial-gradient(circle at 88% 0%, rgba(8, 124, 97, 0.13), transparent 32%),
-                var(--bg);
+                linear-gradient(180deg, rgba(24, 214, 166, 0.07), transparent 560px),
+                linear-gradient(135deg, #080b0d 0%, #101719 46%, #07100d 100%);
             color: var(--ink);
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         a {
@@ -48,43 +53,65 @@
             justify-content: space-between;
             gap: 18px;
             padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(10, 16, 17, 0.86);
+            backdrop-filter: blur(18px);
         }
 
         .brand {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            font-size: 18px;
-            font-weight: 850;
+            font-size: 20px;
+            font-weight: 860;
             text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .brand-tmux {
+            color: var(--orange);
         }
 
         .brand-mark {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
             display: grid;
             place-items: center;
-            background: #101513;
-            color: var(--lime);
-            font-size: 13px;
-            font-weight: 900;
-            box-shadow: 0 12px 28px rgba(16, 21, 19, 0.18);
+            padding: 1px;
+            border: 1px solid rgba(244, 251, 247, 0.28);
+            border-radius: 11px;
+            background: rgba(244, 251, 247, 0.08);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                0 16px 34px rgba(0, 0, 0, 0.42);
+            overflow: hidden;
+        }
+
+        .brand-mark img {
+            width: 100%;
+            height: 100%;
+            border-radius: 9px;
+            object-fit: cover;
+            transform: scale(1.18);
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px;
-            border: 1px solid rgba(220, 230, 224, 0.9);
+            gap: 4px;
+            padding: 7px;
+            border: 1px solid var(--line);
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.74);
-            box-shadow: 0 8px 26px rgba(16, 21, 19, 0.06);
+            background: rgba(255, 255, 255, 0.045);
         }
 
         .nav-actions a,
         .lang-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             border: 0;
             background: transparent;
             color: var(--muted);
@@ -94,13 +121,14 @@
             padding: 9px 13px;
             border-radius: 999px;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .nav-actions a:hover,
         .lang-btn:hover,
         .lang-btn.active {
-            background: #edf5ef;
-            color: var(--green);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--ink);
         }
 
         .hero {
@@ -112,8 +140,8 @@
             display: inline-flex;
             align-items: center;
             color: var(--green);
-            background: rgba(8, 124, 97, 0.08);
-            border: 1px solid rgba(8, 124, 97, 0.14);
+            background: rgba(24, 214, 166, 0.08);
+            border: 1px solid rgba(24, 214, 166, 0.2);
             border-radius: 999px;
             padding: 8px 13px;
             font-size: 13px;
@@ -127,6 +155,7 @@
             line-height: 0.94;
             letter-spacing: 0;
             font-weight: 900;
+            overflow-wrap: anywhere;
         }
 
         .hero p {
@@ -135,13 +164,14 @@
             color: var(--muted);
             font-size: 20px;
             font-weight: 560;
+            overflow-wrap: anywhere;
         }
 
         .policy-card {
             margin: 42px auto 78px;
             padding: clamp(26px, 5vw, 58px);
-            border-radius: 34px;
-            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.045);
             border: 1px solid var(--line);
             box-shadow: var(--shadow);
         }
@@ -151,7 +181,7 @@
             margin-bottom: 26px;
             padding: 8px 12px;
             border-radius: 999px;
-            background: #edf5ef;
+            background: rgba(24, 214, 166, 0.08);
             color: var(--green);
             font-size: 13px;
             font-weight: 850;
@@ -164,6 +194,7 @@
             font-size: 28px;
             line-height: 1.1;
             letter-spacing: 0;
+            overflow-wrap: anywhere;
         }
 
         .policy-card h2:first-of-type {
@@ -177,6 +208,7 @@
             color: var(--muted);
             font-size: 17px;
             font-weight: 540;
+            overflow-wrap: anywhere;
         }
 
         .policy-card p {
@@ -199,6 +231,7 @@
         .policy-card a {
             color: var(--green);
             font-weight: 800;
+            overflow-wrap: anywhere;
         }
 
         .summary-grid {
@@ -210,8 +243,8 @@
 
         .summary-item {
             padding: 18px;
-            border-radius: 22px;
-            background: #f4f8f4;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.16);
             border: 1px solid var(--line);
         }
 
@@ -229,6 +262,7 @@
             font-size: 16px;
             font-weight: 850;
             line-height: 1.2;
+            overflow-wrap: anywhere;
         }
 
         footer {
@@ -245,6 +279,7 @@
         .footer-links {
             display: flex;
             gap: 18px;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
@@ -263,7 +298,8 @@
 
             .nav {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
+                position: static;
             }
 
             .nav-actions {
@@ -271,6 +307,7 @@
                 justify-content: center;
                 flex-wrap: wrap;
                 border-radius: 22px;
+                gap: 6px;
             }
 
             .hero {
@@ -301,14 +338,32 @@
                 align-items: flex-start;
             }
         }
+
+        @media (max-width: 380px) {
+            .nav-actions a,
+            .lang-btn {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            h1 {
+                font-size: clamp(42px, 13vw, 48px);
+            }
+
+            .hero p,
+            .policy-card p,
+            .policy-card li {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="shell">
         <nav class="nav" aria-label="Privacy navigation">
             <a class="brand" href="index.html">
-                <span class="brand-mark">&gt;A</span>
-                Agentmux
+                <span class="brand-mark"><img src="app-icon.png" alt=""></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="nav-actions">
                 <a href="index.html">
@@ -317,7 +372,7 @@
                     <span data-lang="zh-Hans">首页</span>
                     <span data-lang="ja">ホーム</span>
                 </a>
-                <a href="mailto:support@saxcave.cc">
+                <a href="mailto:atmux-support@saxcave.cc">
                     <span data-lang="en" class="active">Support</span>
                     <span data-lang="zh-Hant">支援</span>
                     <span data-lang="zh-Hans">支持</span>
@@ -341,7 +396,7 @@
                 <span data-lang="en" class="active">Privacy Policy</span>
                 <span data-lang="zh-Hant">隱私政策</span>
                 <span data-lang="zh-Hans">隐私政策</span>
-                <span data-lang="ja">プライバシーポリシー</span>
+                <span data-lang="ja">プライバシー<br>ポリシー</span>
             </h1>
             <p>
                 <span data-lang="en" class="active">Agentmux is a local-first developer tool. Your credentials, server settings, and terminal traffic stay under your control.</span>
@@ -353,7 +408,7 @@
 
         <main class="policy-card">
             <div data-lang="en" class="active">
-                <div class="last-updated">Last updated: 2026-05-02</div>
+                <div class="last-updated">Last updated: 2026-05-24</div>
                 <div class="summary-grid" aria-label="Privacy summary">
                     <div class="summary-item"><strong>01</strong><span>No personal data collection</span></div>
                     <div class="summary-item"><strong>02</strong><span>Credentials stay in Keychain</span></div>
@@ -367,22 +422,22 @@
                 <h2>2. Local Storage & Security</h2>
                 <ul>
                     <li><strong>SSH credentials</strong>: Passwords and private keys are stored only in the iOS system <strong>Keychain</strong>, using Apple-provided security mechanisms.</li>
-                    <li><strong>Server information</strong>: Server configurations and project paths are stored locally on your device via <strong>SwiftData</strong>.</li>
+                    <li><strong>Workspace information</strong>: Server configurations, project paths, recent sessions, and recent files are stored locally on your device via <strong>SwiftData</strong>.</li>
                     <li><strong>Terminal traffic</strong>: Communication between Agentmux and your server is encrypted through the <strong>SSH protocol</strong>. We do not intercept or log terminal output.</li>
                 </ul>
 
                 <h2>3. iCloud Synchronization</h2>
-                <p>If you enable iCloud Sync, supported server configuration data may sync across your own devices through <strong>Apple iCloud</strong>. We do not have access to that data.</p>
+                <p>If you enable iCloud Sync, supported workspace data such as server settings, recent sessions, and recent files may sync across your own devices through <strong>Apple iCloud</strong>. We do not have access to that data.</p>
 
                 <h2>4. Debug Logs</h2>
                 <p>Debug logs are stored locally on your device for troubleshooting. They are not transmitted automatically. You can clear them at any time.</p>
 
                 <h2>5. Contact</h2>
-                <p>Questions about this policy? Contact us at <a href="mailto:support@saxcave.cc">support@saxcave.cc</a>.</p>
+                <p>Questions about this policy? Contact us at <a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a>.</p>
             </div>
 
             <div data-lang="zh-Hant">
-                <div class="last-updated">最後更新：2026-05-02</div>
+                <div class="last-updated">最後更新：2026-05-24</div>
                 <div class="summary-grid" aria-label="隱私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集個人資料</span></div>
                     <div class="summary-item"><strong>02</strong><span>憑證留在 Keychain</span></div>
@@ -396,22 +451,22 @@
                 <h2>2. 本機儲存與安全</h2>
                 <ul>
                     <li><strong>SSH 憑證</strong>：密碼與私鑰只會儲存在 iOS 系統的 <strong>Keychain</strong>，並使用 Apple 提供的安全機制保護。</li>
-                    <li><strong>Server 資訊</strong>：server 設定與 project path 會透過 <strong>SwiftData</strong> 儲存在你的裝置本機。</li>
+                    <li><strong>Workspace 資訊</strong>：server 設定、project path、recent sessions 和 recent files 會透過 <strong>SwiftData</strong> 儲存在你的裝置本機。</li>
                     <li><strong>Terminal traffic</strong>：Agentmux 與你的 server 之間透過 <strong>SSH protocol</strong> 加密通訊。我們不會攔截或記錄 terminal output。</li>
                 </ul>
 
                 <h2>3. iCloud 同步</h2>
-                <p>如果你啟用 iCloud Sync，支援同步的 server 設定資料可能會透過 <strong>Apple iCloud</strong> 在你自己的裝置間同步。我們無法存取這些資料。</p>
+                <p>如果你啟用 iCloud Sync，支援同步的 workspace 資料，例如 server 設定、recent sessions 和 recent files，可能會透過 <strong>Apple iCloud</strong> 在你自己的裝置間同步。我們無法存取這些資料。</p>
 
                 <h2>4. Debug logs</h2>
                 <p>Debug logs 只會儲存在你的裝置本機，用於排查問題，不會自動傳送。你可以隨時清除這些 logs。</p>
 
                 <h2>5. 聯絡方式</h2>
-                <p>如果你對本政策有疑問，請聯絡 <a href="mailto:support@saxcave.cc">support@saxcave.cc</a>。</p>
+                <p>如果你對本政策有疑問，請聯絡 <a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a>。</p>
             </div>
 
             <div data-lang="zh-Hans">
-                <div class="last-updated">最后更新：2026-05-02</div>
+                <div class="last-updated">最后更新：2026-05-24</div>
                 <div class="summary-grid" aria-label="隐私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集个人资料</span></div>
                     <div class="summary-item"><strong>02</strong><span>凭据留在 Keychain</span></div>
@@ -425,22 +480,22 @@
                 <h2>2. 本地存储与安全</h2>
                 <ul>
                     <li><strong>SSH 凭据</strong>：密码与私钥只会存储在 iOS 系统的 <strong>Keychain</strong>，并使用 Apple 提供的安全机制保护。</li>
-                    <li><strong>Server 信息</strong>：server 设置与 project path 会通过 <strong>SwiftData</strong> 存储在你的设备本地。</li>
+                    <li><strong>Workspace 信息</strong>：server 设置、project path、recent sessions 和 recent files 会通过 <strong>SwiftData</strong> 存储在你的设备本地。</li>
                     <li><strong>Terminal traffic</strong>：Agentmux 与你的 server 之间通过 <strong>SSH protocol</strong> 加密通信。我们不会拦截或记录 terminal output。</li>
                 </ul>
 
                 <h2>3. iCloud 同步</h2>
-                <p>如果你启用 iCloud Sync，支持同步的 server 设置数据可能会通过 <strong>Apple iCloud</strong> 在你自己的设备间同步。我们无法访问这些数据。</p>
+                <p>如果你启用 iCloud Sync，支持同步的 workspace 数据，例如 server 设置、recent sessions 和 recent files，可能会通过 <strong>Apple iCloud</strong> 在你自己的设备间同步。我们无法访问这些数据。</p>
 
                 <h2>4. Debug logs</h2>
                 <p>Debug logs 只会存储在你的设备本地，用于排查问题，不会自动传送。你可以随时清除这些 logs。</p>
 
                 <h2>5. 联系方式</h2>
-                <p>如果你对本政策有疑问，请联系 <a href="mailto:support@saxcave.cc">support@saxcave.cc</a>。</p>
+                <p>如果你对本政策有疑问，请联系 <a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a>。</p>
             </div>
 
             <div data-lang="ja">
-                <div class="last-updated">最終更新日：2026-05-02</div>
+                <div class="last-updated">最終更新日：2026-05-24</div>
                 <div class="summary-grid" aria-label="プライバシー概要">
                     <div class="summary-item"><strong>01</strong><span>個人データを収集しません</span></div>
                     <div class="summary-item"><strong>02</strong><span>認証情報は Keychain に保存</span></div>
@@ -454,18 +509,18 @@
                 <h2>2. ローカル保存とセキュリティ</h2>
                 <ul>
                     <li><strong>SSH 認証情報</strong>：パスワードと秘密鍵は iOS の <strong>Keychain</strong> のみに保存され、Apple が提供するセキュリティ機構で保護されます。</li>
-                    <li><strong>Server 情報</strong>：server 設定と project path は <strong>SwiftData</strong> を通じてデバイス上に保存されます。</li>
+                    <li><strong>Workspace 情報</strong>：server 設定、project path、recent sessions、recent files は <strong>SwiftData</strong> を通じてデバイス上に保存されます。</li>
                     <li><strong>Terminal traffic</strong>：Agentmux と server の通信は <strong>SSH protocol</strong> で暗号化されます。当社が terminal output を傍受または記録することはありません。</li>
                 </ul>
 
                 <h2>3. iCloud 同期</h2>
-                <p>iCloud Sync を有効にした場合、対応する server 設定データは <strong>Apple iCloud</strong> を通じて自身のデバイス間で同期される場合があります。当社はこのデータにアクセスできません。</p>
+                <p>iCloud Sync を有効にした場合、server 設定、recent sessions、recent files などの対応する workspace data は <strong>Apple iCloud</strong> を通じて自身のデバイス間で同期される場合があります。当社はこのデータにアクセスできません。</p>
 
                 <h2>4. Debug logs</h2>
                 <p>Debug logs はトラブルシューティングのためにデバイス上にのみ保存され、自動送信されません。いつでも削除できます。</p>
 
                 <h2>5. お問い合わせ</h2>
-                <p>本ポリシーについて質問がある場合は、<a href="mailto:support@saxcave.cc">support@saxcave.cc</a> までご連絡ください。</p>
+                <p>本ポリシーについて質問がある場合は、<a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a> までご連絡ください。</p>
             </div>
         </main>
 
@@ -478,7 +533,7 @@
                     <span data-lang="zh-Hans">首页</span>
                     <span data-lang="ja">ホーム</span>
                 </a>
-                <a href="mailto:support@saxcave.cc">
+                <a href="mailto:atmux-support@saxcave.cc">
                     <span data-lang="en" class="active">Support</span>
                     <span data-lang="zh-Hant">支援</span>
                     <span data-lang="zh-Hans">支持</span>
