@@ -657,17 +657,35 @@
 
             .nav {
                 position: static;
-                flex-direction: column;
-                align-items: stretch;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                align-items: center;
+                gap: 12px;
             }
 
             .nav-links {
+                grid-column: 1 / -1;
                 width: 100%;
-                justify-content: center;
+                justify-content: flex-start;
                 gap: 6px;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                scrollbar-width: none;
+                flex-wrap: nowrap;
+                border-radius: 999px;
             }
 
-            .nav-cta,
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-cta {
+                width: auto;
+                min-height: 38px;
+                padding: 0 13px;
+                font-size: 13px;
+            }
+
             .primary-btn,
             .secondary-btn {
                 width: 100%;
