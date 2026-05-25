@@ -660,14 +660,26 @@
                 display: grid;
                 grid-template-columns: minmax(0, 1fr) auto;
                 align-items: center;
-                gap: 12px;
+                gap: 8px 12px;
+                padding: 12px 0;
+            }
+
+            .brand {
+                font-size: 18px;
+            }
+
+            .brand-mark {
+                width: 38px;
+                height: 38px;
             }
 
             .nav-links {
                 grid-column: 1 / -1;
+                grid-row: 2;
                 width: 100%;
                 justify-content: flex-start;
                 gap: 6px;
+                padding: 5px;
                 overflow-x: auto;
                 overscroll-behavior-x: contain;
                 scrollbar-width: none;
@@ -680,8 +692,10 @@
             }
 
             .nav-cta {
+                grid-column: 2;
+                grid-row: 1;
                 width: auto;
-                min-height: 38px;
+                min-height: 36px;
                 padding: 0 13px;
                 font-size: 13px;
             }
