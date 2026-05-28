@@ -515,11 +515,16 @@
                     <li><strong>Terminal traffic</strong>: Communication between Agentmux and your server is encrypted through the <strong>SSH protocol</strong>. We do not intercept or log terminal output.</li>
                 </ul>
 
-                <h2>3. iCloud Synchronization</h2>
-                <p>If you enable iCloud Sync, supported workspace data such as server settings, recent sessions, and recent files may sync across your own devices through <strong>Apple iCloud</strong>. We do not have access to that data.</p>
+                <h2>3. Command Transparency</h2>
+                <p>Agentmux executes necessary commands to provide its features:</p>
+                <ul>
+                    <li><strong>Automated Probes</strong>: We perform non-destructive environment checks (e.g., path detection, tmux status). These do not modify your system settings.</li>
+                    <li><strong>Agent Optimizations</strong>: When launching specific agents like Gemini, the app may temporarily adjust remote configs (e.g., <code>~/.gemini/settings.json</code>) to match your UI theme. These changes are transient and reverted automatically.</li>
+                    <li><strong>Security</strong>: All commands are rigorously escaped to prevent injection.</li>
+                </ul>
 
-                <h2>4. Debug Logs</h2>
-                <p>Debug logs are stored locally on your device for troubleshooting. They are not transmitted automatically. You can clear them at any time.</p>
+                <h2>4. iCloud Synchronization</h2>
+                <p>If you enable iCloud Sync, supported workspace data such as server settings, recent sessions, and recent files may sync across your own devices through <strong>Apple iCloud</strong>. We do not have access to that data.</p>
 
                 <h2>5. Contact</h2>
                 <p>Questions about this policy? Contact us at <a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a>.</p>
@@ -544,11 +549,16 @@
                     <li><strong>Terminal traffic</strong>：Agentmux 與你的 server 之間透過 <strong>SSH protocol</strong> 加密通訊。我們不會攔截或記錄 terminal output。</li>
                 </ul>
 
-                <h2>3. iCloud 同步</h2>
-                <p>如果你啟用 iCloud Sync，支援同步的 workspace 資料，例如 server 設定、recent sessions 和 recent files，可能會透過 <strong>Apple iCloud</strong> 在你自己的裝置間同步。我們無法存取這些資料。</p>
+                <h2>3. 指令透明度</h2>
+                <p>Agentmux 會執行必要的指令以提供功能：</p>
+                <ul>
+                    <li><strong>自動化探測</strong>：我們會執行不具破壞性的環境檢查（如路徑偵測、tmux 狀態）。這些指令不會修改您的系統設定。</li>
+                    <li><strong>Agent 優化</strong>：啟動 Gemini 等特定 Agent 時，App 可能會暫時調整遠端設定（如 <code>~/.gemini/settings.json</code>）以符合您的介面主題。這些變更是暫時性的，並會自動還原。</li>
+                    <li><strong>安全性</strong>：所有指令均經過嚴格轉義以防止注入。</li>
+                </ul>
 
-                <h2>4. Debug logs</h2>
-                <p>Debug logs 只會儲存在你的裝置本機，用於排查問題，不會自動傳送。你可以隨時清除這些 logs。</p>
+                <h2>4. iCloud 同步</h2>
+                <p>如果你啟用 iCloud Sync，支援同步的 workspace 資料，例如 server 設定、recent sessions 和 recent files，可能會透過 <strong>Apple iCloud</strong> 在你自己的裝置間同步。我們無法存取這些資料。</p>
 
                 <h2>5. 聯絡方式</h2>
                 <p>如果你對本政策有疑問，請聯絡 <a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a>。</p>
@@ -584,7 +594,7 @@
             </div>
 
             <div data-lang="ja">
-                <div class="last-updated">最終更新日：2026-05-24</div>
+                <div class="last-updated">最終更新日：2026-05-28</div>
                 <div class="summary-grid" aria-label="プライバシー概要">
                     <div class="summary-item"><strong>01</strong><span>個人データを収集しません</span></div>
                     <div class="summary-item"><strong>02</strong><span>認証情報は Keychain に保存</span></div>
@@ -602,11 +612,16 @@
                     <li><strong>Terminal traffic</strong>：Agentmux と server の通信は <strong>SSH protocol</strong> で暗号化されます。当社が terminal output を傍受または記録することはありません。</li>
                 </ul>
 
-                <h2>3. iCloud 同期</h2>
-                <p>iCloud Sync を有効にした場合、server 設定、recent sessions、recent files などの対応する workspace data は <strong>Apple iCloud</strong> を通じて自身のデバイス間で同期される場合があります。当社はこのデータにアクセスできません。</p>
+                <h2>3. コマンドの透明性</h2>
+                <p>Agentmux は、機能を提供するために必要なコマンドを実行します：</p>
+                <ul>
+                    <li><strong>自動化されたプローブ</strong>：環境チェック（パス検出、tmux ステータスなど）を非破壊的に実行します。これらはシステム設定を変更しません。</li>
+                    <li><strong>Agent の最適化</strong>：Gemini などの特定の Agent を起動する際、UI テーマに合わせるためにリモート設定（<code>~/.gemini/settings.json</code> など）を一時的に調整する場合があります。これらの変更は一時的なものであり、自動的に元に戻されます。</li>
+                    <li><strong>セキュリティ</strong>：すべてのコマンドは厳密にエスケープされています。</li>
+                </ul>
 
-                <h2>4. Debug logs</h2>
-                <p>Debug logs はトラブルシューティングのためにデバイス上にのみ保存され、自動送信されません。いつでも削除できます。</p>
+                <h2>4. iCloud 同期</h2>
+                <p>iCloud Sync を有効にした場合、server 設定、recent sessions、recent files などの対応する workspace data は <strong>Apple iCloud</strong> を通じて自身のデバイス間で同期される場合があります。当社はこのデータにアクセスできません。</p>
 
                 <h2>5. お問い合わせ</h2>
                 <p>本ポリシーについて質問がある場合は、<a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a> までご連絡ください。</p>
