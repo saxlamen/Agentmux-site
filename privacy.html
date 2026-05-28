@@ -27,6 +27,11 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
         body {
             margin: 0;
             background:
@@ -36,6 +41,8 @@
             font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         a {
@@ -43,7 +50,7 @@
         }
 
         .shell {
-            width: min(1040px, calc(100% - 40px));
+            width: min(1180px, calc(100% - 40px));
             margin: 0 auto;
         }
 
@@ -291,23 +298,50 @@
         [data-lang].active { display: initial; }
         div[data-lang].active { display: block; }
 
-        @media (max-width: 780px) {
+        @media (max-width: 980px) {
+            .nav {
+                align-items: flex-start;
+            }
+
+            .nav-actions {
+                max-width: 520px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                border-radius: 20px;
+            }
+
+            .hero {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 640px) {
             .shell {
-                width: min(100% - 28px, 1040px);
+                width: min(100% - 28px, 1180px);
             }
 
             .nav {
-                flex-direction: column;
-                align-items: stretch;
                 position: static;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                align-items: center;
+                gap: 12px;
+                padding: 12px 0;
             }
 
             .nav-actions {
                 width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-                border-radius: 22px;
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                scrollbar-width: none;
+                border-radius: 999px;
                 gap: 6px;
+            }
+
+            .nav-actions::-webkit-scrollbar {
+                display: none;
             }
 
             .hero {
@@ -362,24 +396,24 @@
     <div class="shell">
         <nav class="nav" aria-label="Privacy navigation">
             <a class="brand" href="index.html">
-                <span class="brand-mark"><img src="app-icon.png" alt=""></span>
+                <span class="brand-mark"><img src="app-icon.png" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="nav-actions">
                 <a href="index.html">
                     <span data-lang="en" class="active">Home</span>
-                    <span data-lang="zh-Hant">首頁</span>
+                    <span data-lang="zh-TW">首頁</span>
                     <span data-lang="zh-Hans">首页</span>
                     <span data-lang="ja">ホーム</span>
                 </a>
                 <a href="mailto:atmux-support@saxcave.cc">
                     <span data-lang="en" class="active">Support</span>
-                    <span data-lang="zh-Hant">支援</span>
+                    <span data-lang="zh-TW">支援</span>
                     <span data-lang="zh-Hans">支持</span>
                     <span data-lang="ja">サポート</span>
                 </a>
                 <button class="lang-btn active" type="button" onclick="switchLang('en')">EN</button>
-                <button class="lang-btn" type="button" onclick="switchLang('zh-Hant')">繁中</button>
+                <button class="lang-btn" type="button" onclick="switchLang('zh-TW')">繁中</button>
                 <button class="lang-btn" type="button" onclick="switchLang('zh-Hans')">简中</button>
                 <button class="lang-btn" type="button" onclick="switchLang('ja')">日本語</button>
             </div>
@@ -388,19 +422,19 @@
         <header class="hero">
             <div class="eyebrow">
                 <span data-lang="en" class="active">Privacy first by design</span>
-                <span data-lang="zh-Hant">從設計就以隱私為優先</span>
+                <span data-lang="zh-TW">從設計就以隱私為優先</span>
                 <span data-lang="zh-Hans">从设计就以隐私为优先</span>
                 <span data-lang="ja">プライバシーを前提に設計</span>
             </div>
             <h1>
                 <span data-lang="en" class="active">Privacy Policy</span>
-                <span data-lang="zh-Hant">隱私政策</span>
+                <span data-lang="zh-TW">隱私政策</span>
                 <span data-lang="zh-Hans">隐私政策</span>
                 <span data-lang="ja">プライバシー<br>ポリシー</span>
             </h1>
             <p>
                 <span data-lang="en" class="active">Agentmux is a local-first developer tool. Your credentials, server settings, and terminal traffic stay under your control.</span>
-                <span data-lang="zh-Hant">Agentmux 是 local-first 的開發工具。你的憑證、server 設定與 terminal traffic 都由你掌控。</span>
+                <span data-lang="zh-TW">Agentmux 是 local-first 的開發工具。你的憑證、server 設定與 terminal traffic 都由你掌控。</span>
                 <span data-lang="zh-Hans">Agentmux 是 local-first 的开发工具。你的凭据、server 设置与 terminal traffic 都由你掌控。</span>
                 <span data-lang="ja">Agentmux は local-first の開発ツールです。認証情報、server 設定、terminal traffic はあなたの管理下にあります。</span>
             </p>
@@ -436,7 +470,7 @@
                 <p>Questions about this policy? Contact us at <a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a>.</p>
             </div>
 
-            <div data-lang="zh-Hant">
+            <div data-lang="zh-TW">
                 <div class="last-updated">最後更新：2026-05-24</div>
                 <div class="summary-grid" aria-label="隱私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集個人資料</span></div>
@@ -529,13 +563,13 @@
             <div class="footer-links">
                 <a href="index.html">
                     <span data-lang="en" class="active">Home</span>
-                    <span data-lang="zh-Hant">首頁</span>
+                    <span data-lang="zh-TW">首頁</span>
                     <span data-lang="zh-Hans">首页</span>
                     <span data-lang="ja">ホーム</span>
                 </a>
                 <a href="mailto:atmux-support@saxcave.cc">
                     <span data-lang="en" class="active">Support</span>
-                    <span data-lang="zh-Hant">支援</span>
+                    <span data-lang="zh-TW">支援</span>
                     <span data-lang="zh-Hans">支持</span>
                     <span data-lang="ja">サポート</span>
                 </a>
@@ -549,7 +583,7 @@
                 btn.classList.remove('active');
                 if (
                     (lang === 'en' && btn.textContent.trim() === 'EN') ||
-                    (lang === 'zh-Hant' && btn.textContent.trim() === '繁中') ||
+                    (lang === 'zh-TW' && btn.textContent.trim() === '繁中') ||
                     (lang === 'zh-Hans' && btn.textContent.trim() === '简中') ||
                     (lang === 'ja' && btn.textContent.trim() === '日本語')
                 ) {
@@ -573,7 +607,7 @@
             }
 
             const browserLang = navigator.language;
-            if (browserLang.startsWith('zh-TW') || browserLang.startsWith('zh-HK')) switchLang('zh-Hant');
+            if (browserLang.startsWith('zh-TW') || browserLang.startsWith('zh-HK')) switchLang('zh-TW');
             else if (browserLang.startsWith('zh')) switchLang('zh-Hans');
             else if (browserLang.startsWith('ja')) switchLang('ja');
             else switchLang('en');
