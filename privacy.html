@@ -110,7 +110,7 @@
             transform: scale(1.18);
         }
 
-        .nav-actions {
+        .nav-links {
             display: flex;
             align-items: center;
             gap: 4px;
@@ -120,7 +120,7 @@
             background: rgba(255, 255, 255, 0.045);
         }
 
-        .nav-actions a,
+        .nav-links a,
         .lang-btn {
             display: inline-flex;
             align-items: center;
@@ -137,11 +137,30 @@
             white-space: nowrap;
         }
 
-        .nav-actions a:hover,
+        .nav-links a:hover,
         .lang-btn:hover,
         .lang-btn.active {
             background: rgba(255, 255, 255, 0.08);
             color: var(--ink);
+        }
+
+        .nav-cta,
+        .primary-btn,
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: 860;
+            border-radius: 999px;
+        }
+
+        .nav-cta {
+            min-height: 42px;
+            padding: 0 18px;
+            color: #06100d;
+            background: var(--lime);
+            font-size: 13px;
         }
 
         .hero {
@@ -333,25 +352,37 @@
 
             .nav-shell {
                 display: grid;
-                grid-template-columns: minmax(0, 1fr);
+                grid-template-columns: minmax(0, 1fr) auto;
                 align-items: center;
-                gap: 12px;
+                gap: 8px 12px;
                 padding: 12px 0;
             }
 
-            .nav-actions {
+            .nav-links {
+                grid-column: 1 / -1;
+                grid-row: 2;
                 width: 100%;
                 justify-content: flex-start;
-                flex-wrap: nowrap;
+                gap: 6px;
+                padding: 5px;
                 overflow-x: auto;
                 overscroll-behavior-x: contain;
                 scrollbar-width: none;
+                flex-wrap: nowrap;
                 border-radius: 999px;
-                gap: 6px;
             }
 
-            .nav-actions::-webkit-scrollbar {
+            .nav-links::-webkit-scrollbar {
                 display: none;
+            }
+
+            .nav-cta {
+                grid-column: 2;
+                grid-row: 1;
+                width: auto;
+                min-height: 36px;
+                padding: 0 13px;
+                font-size: 13px;
             }
 
             .hero {
@@ -409,7 +440,7 @@
                 <span class="brand-mark"><img src="app-icon.png" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
-            <div class="nav-actions">
+            <div class="nav-links">
                 <a href="index.html">
                     <span data-lang="en" class="active">Home</span>
                     <span data-lang="zh-TW">首頁</span>
@@ -427,6 +458,12 @@
                 <button class="lang-btn" type="button" onclick="switchLang('zh-Hans')">简中</button>
                 <button class="lang-btn" type="button" onclick="switchLang('ja')">日本語</button>
             </div>
+            <a class="nav-cta" href="https://testflight.apple.com/join/TB1bVUNz">
+                <span data-lang="en" class="active">Join TestFlight</span>
+                <span data-lang="zh-TW">加入 TestFlight</span>
+                <span data-lang="zh-Hans">加入 TestFlight</span>
+                <span data-lang="ja">TestFlight に参加</span>
+            </a>
         </div>
     </nav>
 
