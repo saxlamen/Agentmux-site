@@ -57,13 +57,18 @@
             position: sticky;
             top: 0;
             z-index: 20;
+            width: 100%;
+            background: rgba(10, 16, 17, 0.86);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav-shell {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 18px;
             padding: 18px 0;
-            background: rgba(10, 16, 17, 0.86);
-            backdrop-filter: blur(18px);
         }
 
         .brand {
@@ -601,7 +606,7 @@
         section[data-lang].active { display: block; }
 
         @media (max-width: 980px) {
-            .nav {
+            .nav-shell {
                 align-items: flex-start;
             }
 
@@ -662,6 +667,10 @@
 
             .nav {
                 position: static;
+                border-bottom: 0;
+            }
+
+            .nav-shell {
                 display: grid;
                 grid-template-columns: minmax(0, 1fr) auto;
                 align-items: center;
@@ -821,8 +830,8 @@
     </style>
 </head>
 <body>
-    <div class="shell">
-        <nav class="nav" aria-label="Main navigation">
+    <nav class="nav" aria-label="Main navigation">
+        <div class="shell nav-shell">
             <a class="brand" href="#">
                 <span class="brand-mark"><img src="app-icon.png" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
@@ -857,8 +866,10 @@
                 <span data-lang="zh-Hans">加入 TestFlight</span>
                 <span data-lang="ja">TestFlight に参加</span>
             </a>
-        </nav>
+        </div>
+    </nav>
 
+    <div class="shell">
         <main>
             <section class="hero">
                 <div>
