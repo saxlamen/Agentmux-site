@@ -497,7 +497,7 @@
 
         <main class="policy-card">
             <div data-lang="en" class="active">
-                <div class="last-updated">Last updated: 2026-05-29</div>
+                <div class="last-updated">Last updated: 2026-05-30</div>
                 <div class="summary-grid" aria-label="Privacy summary">
                     <div class="summary-item"><strong>01</strong><span>No personal data collection</span></div>
                     <div class="summary-item"><strong>02</strong><span>Credentials stay in Keychain</span></div>
@@ -526,6 +526,7 @@
                 <h2>4. Command Transparency & Security</h2>
                 <ul>
                     <li><strong>Automated Probes</strong>: To provide features like path detection and tmux management, Agentmux executes non-destructive probe commands (e.g., <code>PATH</code>, <code>tmux -V</code>). These do not modify your system settings.</li>
+                    <li><strong>Background Activity Probing</strong>: If you enable the "Background Activity Chime" feature, the App may periodically check the status of your terminal (e.g., querying TTY processes) while in the background. This is used solely to notify you when a long-running task completes. This monitoring is conducted directly over your encrypted SSH connection and no terminal data is collected or transmitted to external servers.</li>
                     <li><strong>Agent Optimizations</strong>: When launching specific agents (like Gemini), the App may temporarily adjust remote configurations (e.g., <code>~/.gemini/settings.json</code>) to match your UI theme. These changes are transient and reverted automatically.</li>
                     <li><strong>Security</strong>: All generated commands are rigorously escaped to prevent injection.</li>
                 </ul>
@@ -538,7 +539,7 @@
             </div>
 
             <div data-lang="zh-TW">
-                <div class="last-updated">最後更新：2026-05-29</div>
+                <div class="last-updated">最後更新：2026-05-30</div>
                 <div class="summary-grid" aria-label="隱私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集個人資料</span></div>
                     <div class="summary-item"><strong>02</strong><span>憑證留在 Keychain</span></div>
@@ -550,7 +551,7 @@
                 <p>Agentmux 是一款專為開發者設計的工具。我們 <strong>不會</strong> 收集、儲存或傳輸您的任何個人資料、伺服器憑據或終端流量至我們的伺服器。所有操作均在您的裝置本地或直接透過 SSH 在您的伺服器上進行。</p>
 
                 <h2>2. 用戶端 AI 橋接（選用）</h2>
-                <p>Agentmux 作為安全的用戶端 SSH 橋接工具，讓您能夠連線到您的遠端伺服器。本 App 本身並不直接提供、託管或運行 any AI 模型或服務。相反地，它提供橋樑，讓您能與您在自己伺服器上已安裝並配置好的 AI 程式碼助理（如 Claude、Gemini 等）與自訂助理進行互動。</p>
+                <p>Agentmux 作為安全的用戶端 SSH 橋接工具，讓您能夠連線到您的遠端伺服器。本 App 本身並不直接提供、託管或運行任何 AI 模型或服務。相反地，它提供橋樑，讓您能與您在自己伺服器上已安裝並配置好的 AI 程式碼助理（如 Claude、Gemini 等）與自訂助理進行互動。</p>
                 <ul>
                     <li><strong>處理哪些數據</strong>：當您選擇執行這些助理時，您在終端機與編輯器中輸入的提示詞、指令歷程以及選取的工作區檔案，將會透過您的 SSH 連線傳送，並在您的伺服器上執行代碼任務。</li>
                     <li><strong>傳送至何處</strong>：數據將直接在您的遠端伺服器上，由您使用自己的 API 金鑰所配置的第三方 AI 服務提供商（例如 Anthropic、Google、OpenAI 等）進行處理。</li>
@@ -567,6 +568,7 @@
                 <h2>4. 指令透明度與安全</h2>
                 <ul>
                     <li><strong>自動化探測</strong>：為了提供路徑偵測與 tmux 管理等功能，Agentmux 會執行不具破壞性的探測指令（如 <code>PATH</code>、<code>tmux -V</code>）。這些指令不會修改您的系統設定。</li>
+                    <li><strong>背景活動探測</strong>：如果您啟用了「背景活動提醒」功能，本應用程式可能會在背景運行時定期檢查您的終端機狀態（例如查詢 TTY 處理程序）。這僅用於在長時間運行的任務完成時通知您。此監測直接透過您的加密 SSH 連線進行，不會收集終端機數據或將其傳輸至外部伺服器。</li>
                     <li><strong>Agent 優化</strong>：啟動特定 Agent（如 Gemini）時，App 可能會暫時調整遠端設定（如 <code>~/.gemini/settings.json</code>）以符合您的介面主題。這些變更是暫時性的，並會自動還原。</li>
                     <li><strong>安全性</strong>：所有產生的指令均經過嚴格轉義以防止注入。</li>
                 </ul>
@@ -579,7 +581,7 @@
             </div>
 
             <div data-lang="zh-Hans">
-                <div class="last-updated">最后更新：2026-05-29</div>
+                <div class="last-updated">最后更新：2026-05-30</div>
                 <div class="summary-grid" aria-label="隐私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集个人资料</span></div>
                     <div class="summary-item"><strong>02</strong><span>凭据留在 Keychain</span></div>
@@ -608,19 +610,20 @@
                 <h2>4. 指令透明度与安全</h2>
                 <ul>
                     <li><strong>自动化探测</strong>：为了提供路径检测和 tmux 管理等功能，Agentmux 会执行不具破坏性的探测指令（如 <code>PATH</code>、<code>tmux -V</code>）。这些指令不会修改您的系统设置。</li>
+                    <li><strong>背景活动探测</strong>：如果您启用了“背景活动提醒”功能，本应用程序可能会在背景运行时定期检查您的终端状态（例如查询 TTY 处理程序）。这仅用于在长时间运行的任务完成时通知您。此监测直接通过您的加密 SSH 连接进行，不会收集终端数据或将其传输至外部服务器。</li>
                     <li><strong>Agent 优化</strong>：启动特定 Agent（如 Gemini）时，App 可能会暂时调整远端配置（如 <code>~/.gemini/settings.json</code>）以符合您的界面主题。这些变更是暂时性的，并会自动还原。</li>
                     <li><strong>安全性</strong>：所有生成的指令均经过严格转义以防止注入。</li>
                 </ul>
 
                 <h2>5. iCloud 同步（专业版功能）</h2>
-                <p>如果您启用了 iCloud同步，您的服务器配置将通过 <strong>Apple 的 iCloud 服务</strong> 在您自己的设备之间同步。我们无法访问这些数据。</p>
+                <p>如果您启用了 iCloud 同步，您的服务器配置将通过 <strong>Apple 的 iCloud 服务</strong> 在您自己的设备之间同步。我们无法访问这些数据。</p>
 
                 <h2>6. 联系我们</h2>
                 <p>如果您对本隐私政策有疑问，请通过以下方式联系我们：<a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a></p>
             </div>
 
             <div data-lang="ja">
-                <div class="last-updated">最終更新日：2026-05-29</div>
+                <div class="last-updated">最終更新日：2026-05-30</div>
                 <div class="summary-grid" aria-label="プライバシー概要">
                     <div class="summary-item"><strong>01</strong><span>個人データを収集しません</span></div>
                     <div class="summary-item"><strong>02</strong><span>認証情報は Keychain に保存</span></div>
@@ -649,6 +652,7 @@
                 <h2>4. コマンドの透明性とセキュリティ</h2>
                 <ul>
                     <li><strong>自動化されたプローブ</strong>：パス検出や tmux 管理などの機能を提供するため、Agentmux は非破壊的なプローブコマンド（例: <code>PATH</code>、<code>tmux -V</code>）を実行します。これらはお客様のシステム設定を変更しません。</li>
+                    <li><strong>バックグラウンド活動のプローブ</strong>：「バックグラウンド活動チャイム」機能を有効にすると、アプリはバックグラウンド実行中に定期的にターミナルの状態（TTYプロセスなど）をSSH経由で確認する場合があります。これはタスク完了の通知のみに使用され、データ収集や外部送信は行われません。</li>
                     <li><strong>エージェントの最適化</strong>：特定のエージェント（Gemini など）を起動する際、アプリは UI テーマに合わせるためにリモート設定（例: <code>~/.gemini/settings.json</code>）を一時的に調整する場合があります。これらの変更は一時的なものであり、自動的に元に戻されます。</li>
                     <li><strong>セキュリティ</strong>：生成されたすべてのコマンドは、インジェクションを防ぐために厳密にエスケープされます。</li>
                 </ul>

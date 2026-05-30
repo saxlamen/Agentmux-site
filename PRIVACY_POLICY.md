@@ -1,6 +1,6 @@
 # Privacy Policy / 隱私政策
 
-**Last Updated: 2026-05-29**
+**Last Updated: 2026-05-30**
 
 ## English Version
 
@@ -22,6 +22,7 @@ Agentmux acts as a secure, client-side SSH bridge to your remote server. The App
 
 ### 4. Command Transparency & Security
 - **Automated Probes**: To provide features like path detection and tmux management, Agentmux executes non-destructive probe commands (e.g., `PATH`, `tmux -V`). These do not modify your system settings.
+- **Background Activity Probing**: If you enable the "Background Activity Chime" feature, the App may periodically check the status of your terminal (e.g., querying TTY processes) while in the background. This is used solely to notify you when a long-running task completes. This monitoring is conducted directly over your encrypted SSH connection and no terminal data is collected or transmitted to external servers.
 - **Agent Optimizations**: When launching specific agents (like Gemini), the App may temporarily adjust remote configurations (e.g., `~/.gemini/settings.json`) to match your UI theme. These changes are transient and reverted automatically.
 - **Security**: All generated commands are rigorously escaped to prevent injection.
 
@@ -53,6 +54,7 @@ Agentmux 作為安全的用戶端 SSH 橋接工具，讓您能夠連線到您的
 
 ### 4. 指令透明度與安全
 - **自動化探測**：為了提供路徑偵測與 tmux 管理等功能，Agentmux 會執行不具破壞性的探測指令（如 `PATH`、`tmux -V`）。這些指令不會修改您的系統設定。
+- **背景活動探測**：如果您啟用了「背景活動提醒」功能，本應用程式可能會在背景運行時定期檢查您的終端機狀態（例如查詢 TTY 處理程序）。這僅用於在長時間運行的任務完成時通知您。此監測直接透過您的加密 SSH 連線進行，不會收集終端機數據或將其傳輸至外部伺服器。
 - **Agent 優化**：啟動特定 Agent（如 Gemini）時，App 可能會暫時調整遠端設定（如 `~/.gemini/settings.json`）以符合您的介面主題。這些變更是暫時性的，並會自動還原。
 - **安全性**：所有產生的指令均經過嚴格轉義以防止注入。
 
