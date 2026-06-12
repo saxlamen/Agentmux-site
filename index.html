@@ -61,7 +61,8 @@
         }
 
         a { color: inherit; }
-        img { display: block; max-width: 100%; }
+        img,
+        video { display: block; max-width: 100%; }
         br.mobile-break { display: none; }
 
         .shell {
@@ -283,7 +284,8 @@
             box-shadow: var(--shadow);
         }
 
-        .device-window img {
+        .device-window img,
+        .device-window video {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -300,7 +302,8 @@
             transform: rotate(-3.2deg);
         }
 
-        .ipad-shot img {
+        .ipad-shot img,
+        .ipad-shot video {
             object-position: center;
         }
 
@@ -367,6 +370,153 @@
             aspect-ratio: 1242 / 2688;
             object-fit: cover;
             object-position: top;
+        }
+
+        .demo {
+            padding: 18px 0 78px;
+        }
+
+        .demo-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            align-items: center;
+            gap: 24px;
+            border-top: 1px solid var(--line);
+            padding-top: 42px;
+        }
+
+        .demo-copy {
+            display: grid;
+            gap: 14px;
+            align-content: start;
+            max-width: 860px;
+        }
+
+        .demo-copy h2 {
+            margin: 0;
+            font-size: clamp(36px, 4.6vw, 64px);
+            line-height: 1;
+            letter-spacing: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .demo-copy p {
+            max-width: 720px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 19px;
+            font-weight: 560;
+            overflow-wrap: anywhere;
+        }
+
+        .demo-media {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(160px, 0.28fr);
+            align-items: end;
+            gap: 18px;
+        }
+
+        .demo-frame,
+        .demo-phone {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: #050607;
+            box-shadow: var(--shadow);
+        }
+
+        .demo-frame {
+            padding: 13px;
+            aspect-ratio: 4 / 3;
+            border: 1px solid #30383c;
+            border-radius: 30px;
+            background:
+                linear-gradient(145deg, #20272b 0%, #07090a 42%, #151a1d 100%);
+        }
+
+        .demo-phone {
+            justify-self: center;
+            width: min(260px, 100%);
+            padding: 9px;
+            aspect-ratio: 886 / 1920;
+            border: 1px solid #2b3134;
+            border-radius: 44px;
+            background:
+                linear-gradient(145deg, #242a2d 0%, #050607 45%, #171c1f 100%);
+        }
+
+        .demo-frame::before {
+            content: "";
+            position: absolute;
+            inset: 7px;
+            z-index: 2;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 23px;
+            box-shadow:
+                inset 0 0 0 1px rgba(0, 0, 0, 0.62),
+                inset 0 18px 42px rgba(255, 255, 255, 0.04),
+                inset 0 -26px 42px rgba(0, 0, 0, 0.32);
+        }
+
+        .demo-frame::after {
+            content: "";
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            z-index: 3;
+            width: 5px;
+            height: 5px;
+            border-radius: 999px;
+            background: #1b2225;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transform: translateX(-50%);
+        }
+
+        .demo-phone::before {
+            content: "";
+            position: absolute;
+            top: 17px;
+            left: 50%;
+            z-index: 3;
+            width: 76px;
+            height: 22px;
+            border-radius: 999px;
+            background: #030405;
+            box-shadow:
+                inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+                0 1px 3px rgba(0, 0, 0, 0.38);
+            transform: translateX(-50%);
+        }
+
+        .demo-phone::after {
+            content: "";
+            position: absolute;
+            inset: 7px;
+            z-index: 2;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 37px;
+            box-shadow:
+                inset 0 0 0 1px rgba(0, 0, 0, 0.65),
+                inset 0 16px 28px rgba(255, 255, 255, 0.045);
+        }
+
+        .demo-frame video,
+        .demo-phone video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-frame video {
+            border-radius: 19px;
+        }
+
+        .demo-phone video {
+            border-radius: 32px;
         }
 
         .section-head {
@@ -791,6 +941,60 @@
                 scroll-snap-align: start;
             }
 
+            .demo {
+                padding-bottom: 48px;
+            }
+
+            .demo-layout,
+            .demo-media {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-media {
+                gap: 14px;
+            }
+
+            .demo-frame {
+                padding: 8px;
+                border-radius: 22px;
+            }
+
+            .demo-frame::before {
+                inset: 5px;
+                border-radius: 17px;
+            }
+
+            .demo-frame::after {
+                top: 8px;
+                width: 4px;
+                height: 4px;
+            }
+
+            .demo-frame video {
+                border-radius: 14px;
+            }
+
+            .demo-phone {
+                width: min(190px, 62vw);
+                padding: 7px;
+                border-radius: 34px;
+            }
+
+            .demo-phone::before {
+                top: 13px;
+                width: 58px;
+                height: 17px;
+            }
+
+            .demo-phone::after {
+                inset: 5px;
+                border-radius: 29px;
+            }
+
+            .demo-phone video {
+                border-radius: 25px;
+            }
+
             .features,
             .showcase,
             .plans {
@@ -852,7 +1056,7 @@
     <nav class="nav" aria-label="Main navigation">
         <div class="shell nav-shell">
             <a class="brand" href="#">
-                <span class="brand-mark"><img src="app-icon.png" alt="Agentmux Icon"></span>
+                <span class="brand-mark"><img src="app-icon-192.png" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="nav-links">
@@ -949,6 +1153,43 @@
                     <div class="mini-shot"><img src="Serverview_tmux_agents.png" alt="Server tmux agents view" loading="lazy"></div>
                     <div class="mini-shot"><img src="FileExplorer.png" alt="Remote file explorer" loading="lazy"></div>
                     <div class="mini-shot"><img src="iphone-raw-preview-docs-instantly.png" alt="Markdown documentation preview" loading="lazy"></div>
+                </div>
+            </section>
+
+            <section class="demo" aria-label="Agentmux demo">
+                <div class="demo-layout">
+                    <div class="demo-copy">
+                        <div class="eyebrow">
+                            <span data-lang="en" class="active">30-second workflow</span>
+                            <span data-lang="zh-TW">30 秒看懂工作流</span>
+                            <span data-lang="zh-Hans">30 秒看懂工作流</span>
+                            <span data-lang="ja">30 秒で見る作業フロー</span>
+                        </div>
+                        <h2>
+                            <span data-lang="en" class="active">Open the project. Resume the agent.</span>
+                            <span data-lang="zh-TW">打開專案，接回 Agent。</span>
+                            <span data-lang="zh-Hans">打开项目，接回 Agent。</span>
+                            <span data-lang="ja">プロジェクトを開き、Agent の続きへ。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Agentmux keeps remote sessions, agents, and project context close together so a phone check can turn into real progress.</span>
+                            <span data-lang="zh-TW">Agentmux 把遠端工作階段、Agent 與專案上下文放在一起，手機上也能真的推進工作。</span>
+                            <span data-lang="zh-Hans">Agentmux 把远程会话、Agent 与项目上下文放在一起，手机上也能真正推进工作。</span>
+                            <span data-lang="ja">Agentmux はリモートセッション、Agent、プロジェクト文脈を近くに置き、スマホから実作業へすぐ戻れます。</span>
+                        </p>
+                    </div>
+                    <div class="demo-media" aria-hidden="true">
+                        <div class="demo-frame">
+                            <video autoplay muted loop playsinline preload="metadata" poster="ipad-raw-session-command-center.png">
+                                <source src="ipad-demo.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="demo-phone">
+                            <video autoplay muted loop playsinline preload="metadata" poster="iphone-raw-run-coding-agents-anywhere.png">
+                                <source src="iphone-demo.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </section>
 
