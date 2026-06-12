@@ -427,7 +427,6 @@
 
         .demo-frame {
             padding: 13px;
-            aspect-ratio: 4 / 3;
             border: 1px solid #30383c;
             border-radius: 30px;
             background:
@@ -438,7 +437,6 @@
             justify-self: center;
             width: min(260px, 100%);
             padding: 9px;
-            aspect-ratio: 886 / 1920;
             border: 1px solid #2b3134;
             border-radius: 44px;
             background:
@@ -505,17 +503,20 @@
         .demo-frame video,
         .demo-phone video {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
             border-radius: inherit;
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+            cursor: pointer;
         }
 
         .demo-frame video {
+            aspect-ratio: 4 / 3;
             border-radius: 19px;
         }
 
         .demo-phone video {
+            aspect-ratio: 886 / 1920;
             border-radius: 32px;
         }
 
@@ -822,7 +823,8 @@
             .feature-card:last-child { border-bottom: 0; }
 
             .showcase-row.reverse .showcase-copy { order: 0; }
-            .showcase-row.reverse .showcase-media { order: 1; }
+            .showcase-row.reverse .showcase-media,
+            .showcase-row.reverse .phone-media { order: 1; }
         }
 
         @media (max-width: 640px) {
@@ -1180,12 +1182,12 @@
                     </div>
                     <div class="demo-media" aria-hidden="true">
                         <div class="demo-frame">
-                            <video autoplay muted loop playsinline preload="metadata" poster="ipad-raw-session-command-center.png">
+                            <video autoplay muted loop playsinline preload="metadata" poster="ipad-raw-session-command-center.png" onclick="this.paused ? this.play() : this.pause();">
                                 <source src="ipad-demo.mp4" type="video/mp4">
                             </video>
                         </div>
                         <div class="demo-phone">
-                            <video autoplay muted loop playsinline preload="metadata" poster="iphone-raw-run-coding-agents-anywhere.png">
+                            <video autoplay muted loop playsinline preload="metadata" poster="iphone-raw-run-coding-agents-anywhere.png" onclick="this.paused ? this.play() : this.pause();">
                                 <source src="iphone-demo.mp4" type="video/mp4">
                             </video>
                         </div>
