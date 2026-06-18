@@ -170,11 +170,13 @@
         }
 
         .nav-cta {
+            width: 214px;
             min-height: 42px;
             padding: 0 18px;
             color: #06100d;
             background: var(--lime);
             font-size: 13px;
+            white-space: nowrap;
         }
 
         .hero {
@@ -337,6 +339,10 @@
         [data-lang].active { display: initial; }
         div[data-lang].active { display: block; }
 
+        .cta-label-short { display: none !important; }
+        .cta-label-long { display: none; }
+        .cta-label-long.active { display: initial; }
+
         @media (max-width: 980px) {
             .nav-shell {
                 align-items: flex-start;
@@ -393,10 +399,19 @@
             .nav-cta {
                 grid-column: 2;
                 grid-row: 1;
-                width: auto;
+                width: 104px;
                 min-height: 36px;
                 padding: 0 13px;
-                font-size: 13px;
+                font-size: 12px;
+            }
+
+            .cta-label-long,
+            .cta-label-long.active {
+                display: none !important;
+            }
+
+            .cta-label-short.active {
+                display: initial !important;
             }
 
             .hero {
@@ -478,11 +493,15 @@
                 <button class="lang-btn" type="button" onclick="switchLang('zh-Hans')">简中</button>
                 <button class="lang-btn" type="button" onclick="switchLang('ja')">日本語</button>
             </div>
-            <a class="nav-cta" href="https://testflight.apple.com/join/TB1bVUNz">
-                <span data-lang="en" class="active">Join TestFlight</span>
-                <span data-lang="zh-TW">加入 TestFlight</span>
-                <span data-lang="zh-Hans">加入 TestFlight</span>
-                <span data-lang="ja">TestFlight に参加</span>
+            <a class="nav-cta" href="https://apps.apple.com/app/id6766158521">
+                <span class="cta-label-long active" data-lang="en">Download on the App Store</span>
+                <span class="cta-label-long" data-lang="zh-TW">在 App Store 下載</span>
+                <span class="cta-label-long" data-lang="zh-Hans">在 App Store 下载</span>
+                <span class="cta-label-long" data-lang="ja">App Store でダウンロード</span>
+                <span class="cta-label-short active" data-lang="en">Download</span>
+                <span class="cta-label-short" data-lang="zh-TW">下載</span>
+                <span class="cta-label-short" data-lang="zh-Hans">下载</span>
+                <span class="cta-label-short" data-lang="ja">ダウンロード</span>
             </a>
         </div>
     </nav>
@@ -561,15 +580,15 @@
                 </div>
                 <p>Agentmux（下稱「我們」或「本應用程式」）重視並保護您的隱私。本政策說明我們如何處理資料安全與隱私。</p>
 
-                <h2>1. 不收集資料與用戶端運作</h2>
+                <h2>1. 不收集資料與客戶端運作</h2>
                 <p>Agentmux 是一款專為開發者設計的工具。我們 <strong>不會</strong> 收集、儲存或傳輸您的任何個人資料、伺服器憑證或終端機流量至我們的伺服器。所有操作都在您的裝置本機，或直接透過 SSH 在您的伺服器上進行。</p>
 
-                <h2>2. 用戶端 AI 橋接（選用）</h2>
-                <p>Agentmux 是安全的用戶端 SSH 橋接工具，讓您連線到自己的遠端伺服器。本應用程式本身不直接提供、託管或執行任何 AI 模型或服務；它只讓您與自己伺服器上已安裝並設定好的 AI 程式碼助理（如 Claude、Gemini 等）與自訂助理互動。</p>
+                <h2>2. 客戶端 AI 橋接（可選）</h2>
+                <p>Agentmux 是安全的客戶端 SSH 橋接工具，讓您連線到自己的遠端伺服器。本應用程式本身不直接提供、託管或執行任何 AI 模型或服務；它只讓您與自己伺服器上已安裝並設定好的 AI 程式碼助理（如 Claude、Gemini 等）與自訂助理互動。</p>
                 <ul>
                     <li><strong>處理哪些資料</strong>：當您選擇執行這些助理時，您在終端機與編輯器中輸入的提示詞、指令歷程以及選取的工作區檔案，將會透過您的 SSH 連線傳送，並在您的伺服器上執行程式碼任務。</li>
                     <li><strong>傳送至何處</strong>：資料會直接在您的遠端伺服器上，由您使用自己的 API 金鑰所設定的第三方 AI 服務提供商（例如 Anthropic、Google、OpenAI 等）處理。</li>
-                    <li><strong>無用戶端攔截</strong>：所有資料傳輸皆透過您的 SSH 連線點對點加密。Agentmux 不會截取、收集、記錄或追蹤任何程式碼工作區內容或 AI 輸入。使用這些功能即代表您授權將工作區資料傳送至您伺服器上設定的 AI 服務提供商。</li>
+                    <li><strong>App 不會攔截或留存</strong>：所有資料傳輸皆透過您的 SSH 連線加密進行。Agentmux 不會截取、收集、記錄或追蹤任何程式碼工作區內容或 AI 輸入。使用這些功能即代表您授權將工作區資料傳送至您伺服器上設定的 AI 服務提供商。</li>
                 </ul>
 
                 <h2>3. 本地儲存與安全</h2>
@@ -581,8 +600,8 @@
 
                 <h2>4. 指令透明度與安全</h2>
                 <ul>
-                    <li><strong>自動化探測</strong>：為了提供路徑偵測與 tmux 管理等功能，Agentmux 會執行不具破壞性的探測指令（如 <code>PATH</code>、<code>tmux -V</code>）。這些指令不會修改您的系統設定。</li>
-                    <li><strong>背景活動探測</strong>：如果您啟用了「背景活動提醒」功能，本應用程式可能會在背景執行時定期檢查您的終端機狀態（例如查詢 TTY 處理程序）。這僅用於在長時間執行的任務完成時通知您。此監測直接透過您的加密 SSH 連線進行，不會收集終端機資料或將其傳輸至外部伺服器。</li>
+                    <li><strong>自動化偵測</strong>：為了提供路徑偵測與 tmux 管理等功能，Agentmux 會執行不具破壞性的偵測指令（如 <code>PATH</code>、<code>tmux -V</code>）。這些指令不會修改您的系統設定。</li>
+                    <li><strong>背景活動偵測</strong>：如果您啟用了「背景活動提醒」功能，本應用程式可能會在背景執行時定期檢查您的終端機狀態（例如查詢 TTY 處理程序）。這僅用於在長時間執行的任務完成時通知您。此監測直接透過您的加密 SSH 連線進行，不會收集終端機資料或將其傳輸至外部伺服器。</li>
                     <li><strong>Agent 最佳化</strong>：啟動特定 Agent（如 Gemini）時，App 可能會暫時調整遠端設定（如 <code>~/.gemini/settings.json</code>）以符合您的介面主題。這些變更是暫時性的，並會自動還原。</li>
                     <li><strong>安全性</strong>：所有產生的指令均經過嚴格轉義以防止注入。</li>
                 </ul>

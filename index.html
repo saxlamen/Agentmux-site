@@ -169,11 +169,13 @@
         }
 
         .nav-cta {
+            width: 214px;
             min-height: 42px;
             padding: 0 18px;
             color: #06100d;
             background: var(--lime);
             font-size: 13px;
+            white-space: nowrap;
         }
 
         .hero {
@@ -243,6 +245,12 @@
             color: #06100d;
             background: var(--green);
             box-shadow: 0 18px 44px rgba(24, 214, 166, 0.22);
+        }
+
+        .primary-btn.download-cta {
+            width: 276px;
+            max-width: 100%;
+            white-space: nowrap;
         }
 
         .secondary-btn {
@@ -758,6 +766,10 @@
         div[data-lang].active,
         section[data-lang].active { display: block; }
 
+        .cta-label-short { display: none !important; }
+        .cta-label-long { display: none; }
+        .cta-label-long.active { display: initial; }
+
         @media (max-width: 980px) {
             .nav-shell {
                 align-items: flex-start;
@@ -862,10 +874,23 @@
             .nav-cta {
                 grid-column: 2;
                 grid-row: 1;
-                width: auto;
+                width: 104px;
                 min-height: 36px;
                 padding: 0 13px;
-                font-size: 13px;
+                font-size: 12px;
+            }
+
+            .cta-label-long,
+            .cta-label-long.active {
+                display: none !important;
+            }
+
+            .cta-label-short.active {
+                display: initial !important;
+            }
+
+            .primary-btn.download-cta {
+                width: 100%;
             }
 
             .primary-btn,
@@ -1065,11 +1090,15 @@
                 <button class="lang-btn" type="button" onclick="switchLang('zh-Hans')">简中</button>
                 <button class="lang-btn" type="button" onclick="switchLang('ja')">日本語</button>
             </div>
-            <a class="nav-cta" href="https://testflight.apple.com/join/TB1bVUNz">
-                <span data-lang="en" class="active">Join TestFlight</span>
-                <span data-lang="zh-TW">加入 TestFlight</span>
-                <span data-lang="zh-Hans">加入 TestFlight</span>
-                <span data-lang="ja">TestFlight に参加</span>
+            <a class="nav-cta" href="https://apps.apple.com/app/id6766158521">
+                <span class="cta-label-long active" data-lang="en">Download on the App Store</span>
+                <span class="cta-label-long" data-lang="zh-TW">在 App Store 下載</span>
+                <span class="cta-label-long" data-lang="zh-Hans">在 App Store 下载</span>
+                <span class="cta-label-long" data-lang="ja">App Store でダウンロード</span>
+                <span class="cta-label-short active" data-lang="en">Download</span>
+                <span class="cta-label-short" data-lang="zh-TW">下載</span>
+                <span class="cta-label-short" data-lang="zh-Hans">下载</span>
+                <span class="cta-label-short" data-lang="ja">ダウンロード</span>
             </a>
         </div>
     </nav>
@@ -1097,15 +1126,19 @@
                         <span data-lang="ja">Agentmux は iPhone と iPad をリモート開発の司令塔にします。tmux セッションに戻り、Claude、Codex、Gemini、OpenCode をすぐ起動できます。</span>
                     </p>
                     <div class="hero-actions">
-                        <a class="primary-btn" href="https://testflight.apple.com/join/TB1bVUNz">
-                            <span data-lang="en" class="active">Join the beta</span>
-                            <span data-lang="zh-TW">加入 Beta 測試</span>
-                            <span data-lang="zh-Hans">加入 Beta 测试</span>
-                            <span data-lang="ja">Beta に参加</span>
+                        <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521">
+                            <span class="cta-label-long active" data-lang="en">Download on the App Store</span>
+                            <span class="cta-label-long" data-lang="zh-TW">在 App Store 下載</span>
+                            <span class="cta-label-long" data-lang="zh-Hans">在 App Store 下载</span>
+                            <span class="cta-label-long" data-lang="ja">App Store でダウンロード</span>
+                            <span class="cta-label-short active" data-lang="en">Download</span>
+                            <span class="cta-label-short" data-lang="zh-TW">下載</span>
+                            <span class="cta-label-short" data-lang="zh-Hans">下载</span>
+                            <span class="cta-label-short" data-lang="ja">ダウンロード</span>
                         </a>
                         <a class="secondary-btn" href="#features">
                             <span data-lang="en" class="active">See the workflow</span>
-                            <span data-lang="zh-TW">看看工作流</span>
+                            <span data-lang="zh-TW">看看工作流程</span>
                             <span data-lang="zh-Hans">看看工作流</span>
                             <span data-lang="ja">作業フローを見る</span>
                         </a>
@@ -1143,7 +1176,7 @@
                     <div class="demo-copy">
                         <div class="eyebrow">
                             <span data-lang="en" class="active">30-second workflow</span>
-                            <span data-lang="zh-TW">30 秒看懂工作流</span>
+                            <span data-lang="zh-TW">30 秒看懂工作流程</span>
                             <span data-lang="zh-Hans">30 秒看懂工作流</span>
                             <span data-lang="ja">30 秒で見る作業フロー</span>
                         </div>
@@ -1155,7 +1188,7 @@
                         </h2>
                         <p>
                             <span data-lang="en" class="active">Agentmux keeps remote sessions, agents, and project context close together so a phone check can turn into real progress.</span>
-                            <span data-lang="zh-TW">Agentmux 把遠端工作階段、Agent 與專案上下文放在一起，手機上也能真的推進工作。</span>
+                            <span data-lang="zh-TW">Agentmux 把遠端工作階段、Agent 與專案脈絡整合在一起，在手機上也能真正推進進度。</span>
                             <span data-lang="zh-Hans">Agentmux 把远程会话、Agent 与项目上下文放在一起，手机上也能真正推进工作。</span>
                             <span data-lang="ja">Agentmux はリモートセッション、Agent、プロジェクト文脈を近くに置き、スマホから実作業へすぐ戻れます。</span>
                         </p>
@@ -1179,7 +1212,7 @@
                 <div class="section-head">
                     <div class="eyebrow">
                         <span data-lang="en" class="active">Built for real remote development sessions</span>
-                        <span data-lang="zh-TW">為真正的遠端開發工作階段設計</span>
+                        <span data-lang="zh-TW">專為實際的遠端開發工作階段設計</span>
                         <span data-lang="zh-Hans">为真正的远程开发会话设计</span>
                         <span data-lang="ja">実際のリモート開発セッションのために</span>
                     </div>
@@ -1191,7 +1224,7 @@
                     </h2>
                     <p>
                         <span data-lang="en" class="active">Not a tiny terminal with a keyboard bolted on. Agentmux is shaped around sessions, agents, files, edits, and docs.</span>
-                        <span data-lang="zh-TW">不是把終端機縮小塞進螢幕。Agentmux 是為真正的遠端工作流設計：工作階段、Agent、檔案、編輯、文件一次到位。</span>
+                        <span data-lang="zh-TW">不是把終端機縮小塞進螢幕。Agentmux 專為實際的遠端工作流程設計：工作階段、Agent、檔案、編輯、文件一次到位。</span>
                         <span data-lang="zh-Hans">不是把终端缩小塞进屏幕。Agentmux 是为真正的远程工作流设计：会话、Agent、文件、编辑、文档一次到位。</span>
                         <span data-lang="ja">小さなターミナルを押し込むだけではありません。セッション、エージェント、ファイル、編集、ドキュメントまで、実作業に合わせて設計しています。</span>
                     </p>
@@ -1223,7 +1256,7 @@
                         </h3>
                         <p>
                             <span data-lang="en" class="active">Reconnect to active work instead of rebuilding context after every network change.</span>
-                            <span data-lang="zh-TW">網路切換後不用重建上下文，打開 iPhone 或 iPad 就接回原本工作狀態。</span>
+                            <span data-lang="zh-TW">網路切換後不用重建脈絡，打開 iPhone 或 iPad 就接回原本工作狀態。</span>
                             <span data-lang="zh-Hans">网络切换后不用重建上下文，打开 iPhone 或 iPad 就接回原本工作状态。</span>
                             <span data-lang="ja">通信が変わっても作業文脈を失わず、iPhone や iPad からすぐ元の状態に戻れます。</span>
                         </p>
@@ -1252,13 +1285,13 @@
                         <strong>AGENT LAUNCHER</strong>
                         <h2>
                             <span data-lang="en" class="active">Claude, Codex, Gemini, OpenCode. One tap.</span>
-                            <span data-lang="zh-TW">想用哪個 agent，<br>點一下就開。</span>
+                            <span data-lang="zh-TW">想用哪個 Agent，<br>點一下就開。</span>
                             <span data-lang="zh-Hans">想用哪个 agent，<br>点一下就开。</span>
                             <span data-lang="ja">使いたい agent を、<br>すぐ呼び出せる。</span>
                         </h2>
                         <p>
                             <span data-lang="en" class="active">Agentmux keeps agent choices close to the project: launch a shell, open files, or start the right AI assistant without rebuilding context.</span>
-                            <span data-lang="zh-TW">Agentmux 把 Shell、檔案和 AI Agent 放在專案旁邊，少切換、少中斷，不用重新找上下文。</span>
+                            <span data-lang="zh-TW">Agentmux 把 Shell、檔案和 AI Agent 跟專案放在一起，少切換、少中斷，不必重新找脈絡。</span>
                             <span data-lang="zh-Hans">Agentmux 把 Shell、文件和 AI Agent 放在项目旁边，少切换、少中断，不用重新找上下文。</span>
                             <span data-lang="ja">Shell、ファイル、AI エージェントをプロジェクトのすぐそばに置き、文脈を失わずに作業を続けられます。</span>
                         </p>
@@ -1304,7 +1337,7 @@
                         </h2>
                         <p>
                             <span data-lang="en" class="active">Move through source files, builds, and Markdown docs without typing long paths. Pro adds branch switching, history, and batch file tools.</span>
-                            <span data-lang="zh-TW">原始碼、build、README 都能直接瀏覽，不用在終端機裡猜路徑。Pro 會加上分支切換、歷史紀錄和批次檔案工具。</span>
+                            <span data-lang="zh-TW">原始碼、build、README 都能直接瀏覽，不用在終端機裡猜路徑。Pro 支援分支切換、歷史紀錄和批次檔案工具。</span>
                             <span data-lang="zh-Hans">源码、build、README 都能直接浏览，不用在终端里猜路径。Pro 会加上分支切换、历史记录和批量文件工具。</span>
                             <span data-lang="ja">ソース、build、README まで、長いパスを打たずに移動できます。Pro ではブランチ切り替え、履歴、ファイル一括操作も使えます。</span>
                         </p>
@@ -1330,7 +1363,7 @@
                         </h2>
                         <p>
                             <span data-lang="en" class="active">Line numbers and syntax highlighting make source readable on the go. Pro turns that viewer into a remote editor with quick saves over SSH.</span>
-                            <span data-lang="zh-TW">行號與語法上色讓原始碼看起來清楚。Pro 會把檢視器變成可透過 SSH 快速儲存的遠端編輯器。</span>
+                            <span data-lang="zh-TW">行號與語法上色讓原始碼更易讀。Pro 能把檢視器變成可透過 SSH 快速儲存的遠端編輯器。</span>
                             <span data-lang="zh-Hans">行号与语法高亮让源码看起来清楚。Pro 会把查看器变成可通过 SSH 快速保存的远程编辑器。</span>
                             <span data-lang="ja">行番号とシンタックスハイライトでソースを読みやすく。Pro なら SSH 越しに保存できるリモートエディタになります。</span>
                         </p>
@@ -1343,19 +1376,19 @@
                     <div>
                         <div class="eyebrow">
                             <span data-lang="en" class="active">Free trial, then choose your workspace</span>
-                            <span data-lang="zh-TW">先完整試用，再選擇你的工作空間</span>
+                            <span data-lang="zh-TW">先完整試用，再決定是否升級</span>
                             <span data-lang="zh-Hans">先完整试用，再选择你的工作空间</span>
                             <span data-lang="ja">まず全機能を試用、そのあとワークスペースを選ぶ</span>
                         </div>
                         <h2>
                             <span data-lang="en" class="active">Pro is for people who live in remote projects.</span>
-                            <span data-lang="zh-TW">Pro 給真的<br>住在遠端專案裡的人。</span>
+                            <span data-lang="zh-TW">Pro 給每天泡在<br>遠端專案裡的開發者。</span>
                             <span data-lang="zh-Hans">Pro 给真的<br>住在远程项目里的人。</span>
                             <span data-lang="ja">Pro はリモートプロジェクトで<br>本気で作業する人へ。</span>
                         </h2>
                         <p>
                             <span data-lang="en" class="active">Agentmux includes a 14-day full-feature trial. After that, free users can keep a focused single-server SSH workflow; Pro unlocks the full workspace.</span>
-                            <span data-lang="zh-TW">Agentmux 提供 14 天完整功能試用。試用後免費版仍可使用單一主機的 SSH 工作流；Pro 則解鎖完整工作空間。</span>
+                            <span data-lang="zh-TW">Agentmux 提供 14 天完整功能試用。試用後免費版仍可使用單一主機的 SSH 工作流程；Pro 則解鎖完整功能。</span>
                             <span data-lang="zh-Hans">Agentmux 提供 14 天完整功能试用。试用后免费版仍可使用单一主机的 SSH 工作流；Pro 则解锁完整工作空间。</span>
                             <span data-lang="ja">Agentmux は 14 日間の全機能トライアル付き。試用後も単一サーバーの SSH ワークフローは使え、Pro でワークスペース全体をアンロックできます。</span>
                         </p>
@@ -1365,7 +1398,7 @@
                             <strong>Free</strong>
                             <span>
                                 <span data-lang="en" class="active">Single-server SSH, persistent sessions, and core terminal workflows.</span>
-                                <span data-lang="zh-TW">單一主機 SSH、不中斷工作階段，以及核心終端機工作流。</span>
+                                <span data-lang="zh-TW">單一主機 SSH、不中斷工作階段，以及核心終端機工作流程。</span>
                                 <span data-lang="zh-Hans">单一主机 SSH、不中断会话，以及核心终端工作流。</span>
                                 <span data-lang="ja">単一サーバー SSH、継続セッション、基本ターミナルワークフロー。</span>
                             </span>
@@ -1391,16 +1424,20 @@
                     <span data-lang="ja">開発マシンを、<br>そのまま持ち歩く。</span>
                 </h2>
                 <p>
-                    <span data-lang="en" class="active">Join TestFlight and try the full workspace across iPhone and iPad.</span>
-                    <span data-lang="zh-TW">加入 TestFlight，在 iPhone 與 iPad 上試用完整工作空間。</span>
-                    <span data-lang="zh-Hans">加入 TestFlight，在 iPhone 与 iPad 上试用完整工作空间。</span>
-                    <span data-lang="ja">TestFlight に参加して、iPhone と iPad でワークスペース全体を試せます。</span>
+                    <span data-lang="en" class="active">Download from the App Store and try the full workspace across iPhone and iPad.</span>
+                    <span data-lang="zh-TW">從 App Store 下載，在 iPhone 與 iPad 上試用完整功能。</span>
+                    <span data-lang="zh-Hans">从 App Store 下载，在 iPhone 与 iPad 上试用完整工作空间。</span>
+                    <span data-lang="ja">App Store からダウンロードして、iPhone と iPad でワークスペース全体を試せます。</span>
                 </p>
-                <a class="primary-btn" href="https://testflight.apple.com/join/TB1bVUNz">
-                    <span data-lang="en" class="active">Join TestFlight</span>
-                    <span data-lang="zh-TW">加入 TestFlight</span>
-                    <span data-lang="zh-Hans">加入 TestFlight</span>
-                    <span data-lang="ja">TestFlight に参加</span>
+                <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521">
+                    <span class="cta-label-long active" data-lang="en">Download on the App Store</span>
+                    <span class="cta-label-long" data-lang="zh-TW">在 App Store 下載</span>
+                    <span class="cta-label-long" data-lang="zh-Hans">在 App Store 下载</span>
+                    <span class="cta-label-long" data-lang="ja">App Store でダウンロード</span>
+                    <span class="cta-label-short active" data-lang="en">Download</span>
+                    <span class="cta-label-short" data-lang="zh-TW">下載</span>
+                    <span class="cta-label-short" data-lang="zh-Hans">下载</span>
+                    <span class="cta-label-short" data-lang="ja">ダウンロード</span>
                 </a>
             </section>
         </main>
