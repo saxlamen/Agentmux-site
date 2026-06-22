@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-22-launch-sale",
+  "timestamp": "2026-06-22T00:00:00Z",
+  "expiresAt": "2026-07-16T00:00:00Z",
+  "minAppVersion": "1.3.4",
+  "hideForPro": false,
+  "title": "Launch Special",
+  "message": "Lifetime Pro is $14.99 until Jul 15 — founding member pricing — standard pricing resumes after Jul 15.",
+  "localized": {
+    "zh-Hant": {
+      "title": "首發特惠",
+      "message": "終身專業版限時 $14.99，優惠至 7/15。創始會員價格，之後將恢復正式定價。",
+      "actionLabel": "查看優惠"
+    },
+    "zh-Hans": {
+      "title": "首发特惠",
+      "message": "终身专业版限时 $14.99，优惠至 7/15。创始会员价格，之后将恢复正式定价。",
+      "actionLabel": "查看优惠"
+    },
+    "ja": {
+      "title": "リリース記念セール",
+      "message": "Lifetime Pro が 7/15 まで $14.99。創設メンバー価格のうちにどうぞ。",
+      "actionLabel": "オファーを見る"
+    }
+  },
+  "action": {
+    "label": "View Offer",
+    "type": "paywall"
+  }
+}
