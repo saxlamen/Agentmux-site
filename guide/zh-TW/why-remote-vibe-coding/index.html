@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你的 AI 應該在你睡覺時工作 — Agentmux Guide</title>
+    <meta name="description" content="CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="你的 AI 應該在你睡覺時工作">
+    <meta property="og:description" content="CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="你的 AI 應該在你睡覺時工作">
+    <meta name="twitter:description" content="CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "你的 AI 應該在你睡覺時工作", "description": "CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/"}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/zh-TW/">指南首頁</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>你的 AI 應該在你睡覺時工作</h1>
+            <p>如果你已經在用 Claude Code、Codex 這類 CLI agent 寫 code，你大概已經感覺到一件怪事：明明是它在做事，被綁住的卻是你。這篇要講的就是那個綁定是什麼、為什麼可以解開，以及解開之後一天多出來的時間長什麼樣子。</p>
+
+<section id="the-cycle">
+  <h2>先看清楚時間花在哪裡</h2>
+
+  <p>一輪 CLI agent 的工作，節奏幾乎都是同一個樣子：</p>
+  <pre><code>你講 30 秒 → 它跑 5–20 分鐘 → 它需要你決定一件事 → 重複</code></pre>
+  <p>把一整天的比例攤開來看，結論會有點反直覺：真正吃掉時間的不是打字。你描述需求那 30 秒是全程最短的一段，之後就是純粹的等——等它讀完專案、等它改完十幾個檔案、等測試跑完。等到它停下來問「這個 migration 要不要順便處理？」，你回一句話，又是下一個五分鐘、二十分鐘。</p>
+  <p>一天下來，你真正輸出的內容可能不到十分鐘，但被佔掉的是好幾個小時。那幾個小時不是工作，是<strong>待命</strong>：你什麼都沒做，但你不能走開，因為它隨時會需要你回答一句話。</p>
+</section>
+
+<section id="the-binding">
+  <h2>傳統做法把待命綁死在一台筆電上</h2>
+
+  <p>問題在於，這種「待命」在預設的做法裡是有實體位置的。agent 跑在你筆電的終端機視窗裡，那個視窗連著那個 shell，那個 shell 連著那台開著的機器。於是你只有兩個選擇：</p>
+  <p><strong>坐著等。</strong>人留在椅子上，眼睛盯著一個大部分時間什麼都不會發生的畫面，只為了在它問問題時能在三十秒內回答。你付出的是一小時，換到的是三句回覆。</p>
+  <p><strong>或者關掉筆電。</strong>合上蓋子，process 被停掉或直接死掉，session 沒了，agent 累積的脈絡——它讀過哪些檔案、改到哪一步、為什麼選了這個做法——一起消失。晚點回來只能重新開一個，把整段重講一次，然後從頭跑。</p>
+  <p>兩個選擇都是在付同一筆代價。你不是被工作綁住，是被<strong>那台機器的所在位置</strong>綁住了。</p>
+</section>
+
+<section id="three-parts">
+  <h2>三個零件，各解開一個綁定</h2>
+
+  <p>這個綁定不是一整塊，它是三層疊起來的，而每一層都有一個已經存在幾十年的標準工具可以拆掉。這三樣東西單獨看都很普通，疊在一起才是重點：</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>零件</th><th>解開的綁定</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CLI</td>
+        <td>agent 是純文字程序，不需要圖形介面 → 可以住在<strong>別台機器</strong>上</td>
+      </tr>
+      <tr>
+        <td>tmux</td>
+        <td>session 釘在伺服器上，斷線照跑 → 待命<strong>不需要你在場</strong></td>
+      </tr>
+      <tr>
+        <td>SSH + Tailscale</td>
+        <td>從任何網路安全接回，不開公網 port、不需固定 IP → 待命<strong>不綁定裝置與位置</strong></td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>拆解的順序有意義。先有 CLI，agent 才可能離開你的筆電，搬到家裡那台從來沒關過的 Mac mini 上；有了 tmux，那個 session 才會釘在那台機器上，你的連線斷掉它照樣跑；有了 SSH 加 Tailscale，你才能從捷運上、從公司、從別人家的 Wi-Fi 安全地接回同一個 session，而且不用在路由器上開任何一個對外的 port。</p>
+  <p>少任何一個都不成立。只有 CLI 沒有 tmux，斷線 agent 就死；有 tmux 沒有安全的連外方式，你就只能在家裡的 Wi-Fi 下用它。</p>
+</section>
+
+<section id="the-payoff">
+  <h2>結論：待命的成本被壓到幾乎為零</h2>
+
+  <p>三層都拆掉之後，「待命」這件事的代價從<strong>一台筆電加一個固定位置</strong>，降到<strong>口袋裡的手機加十五秒</strong>。</p>
+  <p>這個差距不是量的差距，是質的差距。當接回來只要十五秒，你就不需要「安排一段時間來顧它」了：排隊的時候看一眼、走路等紅燈看一眼、睡前看一眼，回一句「用第二個方案」，然後把手機收回口袋。agent 繼續跑，你繼續過你的生活。</p>
+  <p>而且既然待命不再需要你在場，工作就可以放到你本來就不在場的時間去做。丟一個重構任務給它，去吃晚餐；睡前開一個測試修復的 session，早上起來看結果。你那台一直開著的機器本來整晚都閒著，現在它整晚都在替你工作。</p>
+</section>
+
+<section id="alternatives">
+  <h2>那其他做法呢？</h2>
+
+  <p>要遠端碰到自己的 agent，能走的路不只一條。把它們放在同一組標準底下比，差別會很清楚——尤其是最後一欄，那是最多人事後才發現被卡住的地方。</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>做法</th>
+        <th>待命成本</th>
+        <th>脈絡存活</th>
+        <th>需要的網路設定</th>
+        <th>能不能真的改檔案</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>帶著筆電</td>
+        <td>要有包包、位子和電源</td>
+        <td>合上蓋子就停</td>
+        <td>不用，但機器得跟著你走</td>
+        <td>能，改的是本機的檔案</td>
+      </tr>
+      <tr>
+        <td>VNC 遠端桌面</td>
+        <td>需要一塊夠大的螢幕，還要用手指操作滑鼠 UI</td>
+        <td>桌面 session 留著就活著</td>
+        <td>要打通 VNC 或另外架 VPN</td>
+        <td>能</td>
+      </tr>
+      <tr>
+        <td>網頁版 agent</td>
+        <td>低，開瀏覽器就好</td>
+        <td>活在對方的伺服器上</td>
+        <td>不用</td>
+        <td>改的是雲端沙箱裡的副本，不是你機器上那份</td>
+      </tr>
+      <tr>
+        <td>Codespaces 這類雲端環境</td>
+        <td>低，但要能開瀏覽器</td>
+        <td>閒置久了容器會被回收</td>
+        <td>不用，但要把專案放上雲端，並依用量計費</td>
+        <td>能，但改的是雲端容器裡的那份 repo</td>
+      </tr>
+      <tr>
+        <td>通用 SSH App</td>
+        <td>手機就行</td>
+        <td>靠 tmux，撐得住</td>
+        <td>要自己處理安全連外</td>
+        <td>能，但操作介面是照桌面終端機直接搬過來的</td>
+      </tr>
+      <tr>
+        <td>Agentmux</td>
+        <td>手機，十五秒接回</td>
+        <td>tmux 在伺服器上，跟手機在不在無關</td>
+        <td>Tailscale，不開公網 port</td>
+        <td>能，改的就是你自己機器上那一份</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>最後一欄是分水嶺。跑在別人雲端沙箱裡的 agent，改的永遠是一份副本：你的 <code>.env</code> 不在那裡、你剛裝的那個內部套件不在那裡、你那個只有本機跑得起來的資料庫也不在那裡。而 SSH 加 tmux 這條路，agent 就坐在你自己的機器上，用你自己的環境，改你自己的檔案——差別只在於，這次是你的手機在看著它。</p>
+</section>
+
+<p class="track-fallback">不確定該從哪裡開始？<a href="/guide/zh-TW/">先幫我判斷該走哪條路</a>。</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-next" href="/guide/zh-TW/why-not-gui-ide/">下一篇<span>為什麼不是 Cursor / VS Code</span></a></nav>
+        <aside class="guide-cta">
+            <p>14 天全功能試用，之後 Lifetime 買斷。</p>
+            <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">在 App Store 下載</a>
+        </aside>
+    </main>
+</body>
+</html>

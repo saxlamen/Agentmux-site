@@ -19,6 +19,14 @@
     }
   },
   "articles": {
+    "why-remote-vibe-coding": {
+      "title": "你的 AI 應該在你睡覺時工作",
+      "description": "CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。"
+    },
+    "why-not-gui-ide": {
+      "title": "為什麼不是 Cursor / VS Code",
+      "description": "GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。"
+    },
     "troubleshooting": {
       "title": "卡住了看這裡",
       "description": "連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。"
