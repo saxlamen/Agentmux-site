@@ -48,6 +48,43 @@ def _content_fragment(src: Path, lang: str, slug: str) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def langs_with(config: dict, slug: str) -> list:
+    matrix = config.get("content", {})
+    return [
+        lang["code"]
+        for lang in config["languages"]
+        if slug in matrix.get(lang["code"], [])
+    ]
+
+
+def hreflang_block(config: dict, slug: str) -> str:
+    origin = config["site"]["origin"].rstrip("/")
+    lines = [
+        '<link rel="alternate" hreflang="{0}" href="{1}">'.format(
+            code, article_url(origin, code, slug)
+        )
+        for code in langs_with(config, slug)
+    ]
+    lines.append(
+        '<link rel="alternate" hreflang="x-default" href="{0}/guide/">'.format(origin)
+    )
+    return "\n    ".join(lines)
+
+
+def verify_content(src: Path, config: dict) -> None:
+    missing = []
+    for lang_code, slugs in config.get("content", {}).items():
+        for slug in slugs:
+            path = src / "content" / slug / "{0}.html".format(lang_code)
+            if not path.exists():
+                missing.append(str(path))
+    if missing:
+        raise MissingContentError(
+            "config.json declares content that does not exist:\n  "
+            + "\n  ".join(sorted(missing))
+        )
+
+
 def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> None:
     template = (src / "templates" / "article.html").read_text(encoding="utf-8")
     strings = _load_strings(src, lang)
@@ -59,6 +96,7 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
         "description": meta["description"],
         "canonical": article_url(config["site"]["origin"], lang, slug),
         "content": _content_fragment(src, lang, slug),
+        "hreflang": hreflang_block(config, slug),
     }
     target = article_path(out, lang, slug)
     target.parent.mkdir(parents=True, exist_ok=True)

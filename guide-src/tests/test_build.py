@@ -124,5 +124,54 @@ class TestBuildArticle(BuildFixture):
         self.assertIn("<html lang=zh-Hant>", html)
 
 
+class TestHreflang(BuildFixture):
+    def test_only_lists_languages_that_have_the_slug(self):
+        config = make_config(
+            content={"zh-TW": ["what-is-tmux"], "en": []},
+            languages=[
+                {"code": "zh-TW", "htmlLang": "zh-Hant", "label": "繁體中文"},
+                {"code": "en", "htmlLang": "en", "label": "English"},
+            ],
+        )
+        block = build.hreflang_block(config, "what-is-tmux")
+        self.assertIn('hreflang="zh-TW"', block)
+        self.assertNotIn('hreflang="en"', block)
+
+    def test_includes_x_default_pointing_at_guide_root(self):
+        block = build.hreflang_block(make_config(), "what-is-tmux")
+        self.assertIn('hreflang="x-default"', block)
+        self.assertIn('href="https://example.test/guide/"', block)
+
+    def test_never_emits_link_to_nonexistent_page(self):
+        config = make_config(
+            content={"zh-TW": ["what-is-tmux"], "en": ["setup"]},
+            languages=[
+                {"code": "zh-TW", "htmlLang": "zh-Hant", "label": "繁體中文"},
+                {"code": "en", "htmlLang": "en", "label": "English"},
+            ],
+        )
+        block = build.hreflang_block(config, "what-is-tmux")
+        self.assertNotIn("/guide/en/what-is-tmux/", block)
+
+
+class TestVerifyContent(BuildFixture):
+    def test_passes_when_all_declared_content_exists(self):
+        build.verify_content(self.src, make_config())
+
+    def test_raises_when_declared_content_is_missing(self):
+        config = make_config(content={"zh-TW": ["what-is-tmux", "setup"]})
+        with self.assertRaises(build.MissingContentError) as ctx:
+            build.verify_content(self.src, config)
+        self.assertIn("setup", str(ctx.exception))
+
+    def test_error_lists_every_missing_file_not_just_the_first(self):
+        config = make_config(content={"zh-TW": ["what-is-tmux", "setup", "troubleshooting"]})
+        with self.assertRaises(build.MissingContentError) as ctx:
+            build.verify_content(self.src, config)
+        message = str(ctx.exception)
+        self.assertIn("setup", message)
+        self.assertIn("troubleshooting", message)
+
+
 if __name__ == "__main__":
     unittest.main()
