@@ -261,5 +261,42 @@ class TestSitemap(BuildFixture):
         ET.parse(str(self.tmp / "sitemap.xml"))
 
 
+class TestJsonLd(BuildFixture):
+    def test_emits_article_type(self):
+        meta = {"title": "T", "description": "D"}
+        block = build.article_jsonld(make_config(), "zh-TW", "what-is-tmux", meta)
+        self.assertIn('"@type": "Article"', block)
+        self.assertIn("application/ld+json", block)
+
+    def test_setup_page_also_emits_howto(self):
+        meta = {"title": "T", "description": "D"}
+        block = build.article_jsonld(make_config(), "zh-TW", "setup", meta)
+        self.assertIn('"HowTo"', block)
+
+    def test_non_setup_page_has_no_howto(self):
+        meta = {"title": "T", "description": "D"}
+        block = build.article_jsonld(make_config(), "zh-TW", "what-is-tmux", meta)
+        self.assertNotIn('"HowTo"', block)
+
+    def test_json_is_parseable(self):
+        meta = {"title": "引號\"測試", "description": "D"}
+        block = build.article_jsonld(make_config(), "zh-TW", "what-is-tmux", meta)
+        payload = block.split(">", 1)[1].rsplit("<", 1)[0]
+        json.loads(payload)
+
+
+class TestArticleMeta(BuildFixture):
+    def test_og_and_twitter_tags_present(self):
+        (self.src / "templates" / "article.html").write_text(
+            "{{ogTitle}}|{{ogDescription}}|{{ogUrl}}", encoding="utf-8"
+        )
+        build.build_article(self.src, self.out, make_config(), "zh-TW", "what-is-tmux")
+        html = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("讓 agent 在你關掉手機後繼續跑", html)
+        self.assertIn("https://example.test/guide/zh-TW/what-is-tmux/", html)
+
+
 if __name__ == "__main__":
     unittest.main()

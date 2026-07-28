@@ -71,6 +71,22 @@ def hreflang_block(config: dict, slug: str) -> str:
     return "\n    ".join(lines)
 
 
+def article_jsonld(config: dict, lang: str, slug: str, meta: dict) -> str:
+    url = article_url(config["site"]["origin"], lang, slug)
+    payload = {
+        "@context": "https://schema.org",
+        "@type": "HowTo" if slug == "setup" else "Article",
+        "headline": meta["title"],
+        "description": meta["description"],
+        "inLanguage": lang,
+        "mainEntityOfPage": url,
+        "url": url,
+    }
+    return '<script type="application/ld+json">{0}</script>'.format(
+        json.dumps(payload, ensure_ascii=False)
+    )
+
+
 def verify_content(src: Path, config: dict) -> None:
     missing = []
     for lang_code, slugs in config.get("content", {}).items():
@@ -99,6 +115,33 @@ def neighbors(config: dict, track: str, slug: str) -> tuple:
     return (prev_slug, next_slug)
 
 
+def _pager(config: dict, strings: dict, lang: str, slug: str) -> str:
+    tracks = track_of(config, slug)
+    if not tracks:
+        return ""
+    available = set(config.get("content", {}).get(lang, []))
+    parts = []
+    seen = set()
+    for track in tracks:
+        prev_slug, next_slug = neighbors(config, track, slug)
+        for label_key, target in (("prev", prev_slug), ("next", next_slug)):
+            if not target or target in seen or target not in available:
+                continue
+            seen.add(target)
+            parts.append(
+                '<a class="pager-{0}" href="/guide/{1}/{2}/">{3}<span>{4}</span></a>'.format(
+                    label_key,
+                    lang,
+                    target,
+                    strings["ui"][label_key],
+                    strings["articles"][target]["title"],
+                )
+            )
+    if not parts:
+        return ""
+    return '<nav class="guide-pager">' + "".join(parts) + "</nav>"
+
+
 def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> None:
     template = (src / "templates" / "article.html").read_text(encoding="utf-8")
     strings = _load_strings(src, lang)
@@ -111,6 +154,15 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
         "canonical": article_url(config["site"]["origin"], lang, slug),
         "content": _content_fragment(src, lang, slug),
         "hreflang": hreflang_block(config, slug),
+        "jsonld": article_jsonld(config, lang, slug, meta),
+        "ogTitle": meta["title"],
+        "ogDescription": meta["description"],
+        "ogUrl": article_url(config["site"]["origin"], lang, slug),
+        "guideHomeLabel": strings["ui"]["guideHome"],
+        "appStoreUrl": config["site"]["appStoreUrl"],
+        "ctaLine": strings["ui"]["ctaLine"],
+        "ctaButton": strings["ui"]["ctaButton"],
+        "pager": _pager(config, strings, lang, slug),
     }
     target = article_path(out, lang, slug)
     target.parent.mkdir(parents=True, exist_ok=True)

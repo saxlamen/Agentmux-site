@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{htmlLang}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} — Agentmux Guide</title>
+    <meta name="description" content="{{description}}">
+    <link rel="canonical" href="{{canonical}}">
+    {{hreflang}}
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ogTitle}}">
+    <meta property="og:description" content="{{ogDescription}}">
+    <meta property="og:url" content="{{ogUrl}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ogTitle}}">
+    <meta name="twitter:description" content="{{ogDescription}}">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    {{jsonld}}
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/{{lang}}/">{{guideHomeLabel}}</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>{{title}}</h1>
+            {{content}}
+        </article>
+        {{pager}}
+        <aside class="guide-cta">
+            <p>{{ctaLine}}</p>
+            <a class="primary-btn" href="{{appStoreUrl}}">{{ctaButton}}</a>
+        </aside>
+    </main>
+</body>
+</html>
