@@ -23,6 +23,26 @@
                                        text-align: left; font-size: 15px; color: var(--muted); }
 .guide-article th { color: var(--ink); }
 
+/* site.css sets `body { overflow-x: hidden }`, so anything that overflows is
+   clipped and unreachable rather than scrollable. Long unbreakable tokens are
+   guaranteed here — URLs, shell flags, file paths — so wrap them. Matches the
+   `overflow-wrap: anywhere` convention site.css already uses for body text. */
+.guide-article p,
+.guide-article li,
+.guide-article h1,
+.guide-article h2,
+.guide-article h3,
+.guide-article p code,
+.guide-pager a,
+.guide-pager a span,
+.guide-cta p,
+.track li,
+.lang-cards a { overflow-wrap: anywhere; }
+
+/* Backstop for a table the content forgot to wrap in .table-wrap: scroll it
+   instead of letting body's overflow-x: hidden clip the far columns away. */
+.guide-article > table { display: block; overflow-x: auto; }
+
 .guide-pager { display: flex; flex-wrap: wrap; gap: 12px; margin: 56px 0 0; }
 .guide-pager a { flex: 1 1 240px; display: block; padding: 16px 18px; text-decoration: none;
                  background: var(--panel); border: 1px solid var(--line);
