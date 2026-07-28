@@ -127,6 +127,32 @@ class TestWizardData(unittest.TestCase):
             ]
             self.assertTrue(gated, "no machine-only step for {0}".format(option))
 
+    def test_every_reach_option_has_a_step(self):
+        reach = [q for q in self.data["questions"] if q["id"] == "reach"][0]
+        for option in reach["options"]:
+            gated = [
+                s
+                for s in self.data["steps"]
+                if option in s.get("when", {}).get("reach", [])
+            ]
+            self.assertTrue(gated, "no step for reach={0}".format(option))
+
+    def test_every_lan_machine_is_told_how_to_find_its_address(self):
+        # A `lan` reader never goes through Tailscale, so a find-lan-address
+        # step is the only place they learn what to type into Agentmux.
+        # Without it they reach the final step with no address at all — and
+        # the machine-only and reach tests above both stay green, because
+        # enable-ssh-* and the Tailscale steps satisfy them independently.
+        for machine in ("mac", "linux"):
+            gated = [
+                s
+                for s in self.data["steps"]
+                if set(s.get("when", {})) == {"reach", "machine"}
+                and "lan" in s["when"]["reach"]
+                and machine in s["when"]["machine"]
+            ]
+            self.assertTrue(gated, "no address step for {0}+lan".format(machine))
+
 
 if __name__ == "__main__":
     unittest.main()
