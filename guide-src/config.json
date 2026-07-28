@@ -1,0 +1,42 @@
+{
+  "site": {
+    "origin": "https://agentmux.saxcave.cc",
+    "appStoreUrl": "https://apps.apple.com/app/id6766158521"
+  },
+  "languages": [
+    { "code": "zh-TW", "htmlLang": "zh-Hant", "label": "繁體中文" }
+  ],
+  "slugs": [
+    "why-remote-vibe-coding",
+    "why-not-gui-ide",
+    "what-is-cli",
+    "what-is-ssh",
+    "what-is-tmux",
+    "what-is-tailscale",
+    "why-agentmux",
+    "setup",
+    "troubleshooting"
+  ],
+  "tracks": {
+    "beginner": [
+      "why-remote-vibe-coding",
+      "why-not-gui-ide",
+      "what-is-cli",
+      "what-is-ssh",
+      "what-is-tmux",
+      "what-is-tailscale",
+      "why-agentmux",
+      "setup"
+    ],
+    "cliuser": [
+      "why-remote-vibe-coding",
+      "what-is-tmux",
+      "what-is-tailscale",
+      "why-agentmux",
+      "setup"
+    ]
+  },
+  "content": {
+    "zh-TW": []
+  }
+}
