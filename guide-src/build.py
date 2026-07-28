@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 
 TOKEN = re.compile(r"\{\{(\w+)\}\}")
+TABLE = re.compile(r"<table\b.*?</table>", re.DOTALL | re.IGNORECASE)
 
 
 class MissingContentError(Exception):
@@ -52,6 +53,26 @@ def _content_fragment(src: Path, lang: str, slug: str) -> str:
     if not path.exists():
         raise MissingContentError(str(path))
     return path.read_text(encoding="utf-8")
+
+
+def wrap_tables(fragment: str) -> str:
+    """Put every table inside a scroll container.
+
+    site.css sets `body { overflow-x: hidden }`, so a table wider than the
+    viewport is clipped and its far columns become unreachable rather than
+    scrollable. The scroll container has to be a separate element whose width
+    the parent constrains — putting overflow on the table itself does nothing,
+    because `min-width` widens that same box. Doing this at build time keeps it
+    off the content author's checklist.
+    """
+
+    def wrap(match):
+        table = match.group(0)
+        if 'class="table-wrap"' in fragment[max(0, match.start() - 120):match.start()]:
+            return table
+        return '<div class="table-wrap">' + table + "</div>"
+
+    return TABLE.sub(wrap, fragment)
 
 
 def langs_with(config: dict, slug: str) -> list:
@@ -158,7 +179,7 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
         "title": esc(meta["title"]),
         "description": esc(meta["description"]),
         "canonical": esc(article_url(config["site"]["origin"], lang, slug)),
-        "content": _content_fragment(src, lang, slug),
+        "content": wrap_tables(_content_fragment(src, lang, slug)),
         "hreflang": hreflang_block(config, slug),
         "jsonld": article_jsonld(config, lang, slug, meta),
         "ogTitle": esc(meta["title"]),

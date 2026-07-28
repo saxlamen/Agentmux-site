@@ -39,10 +39,6 @@
 .track li,
 .lang-cards a { overflow-wrap: anywhere; }
 
-/* Backstop for a table the content forgot to wrap in .table-wrap: scroll it
-   instead of letting body's overflow-x: hidden clip the far columns away. */
-.guide-article > table { display: block; overflow-x: auto; }
-
 .guide-pager { display: flex; flex-wrap: wrap; gap: 12px; margin: 56px 0 0; }
 .guide-pager a { flex: 1 1 240px; display: block; padding: 16px 18px; text-decoration: none;
                  background: var(--panel); border: 1px solid var(--line);

@@ -369,5 +369,74 @@ class TestEscaping(BuildFixture):
         self.assertNotIn("&lt;p&gt;", html_out)
 
 
+class TestWrapTables(unittest.TestCase):
+    def test_bare_table_gets_wrapped(self):
+        fragment = "<p>intro</p><table><tr><td>a</td></tr></table>"
+        result = build.wrap_tables(fragment)
+        self.assertIn(
+            '<div class="table-wrap"><table><tr><td>a</td></tr></table></div>',
+            result,
+        )
+
+    def test_already_wrapped_table_is_not_double_wrapped(self):
+        fragment = '<div class="table-wrap"><table><tr><td>a</td></tr></table></div>'
+        result = build.wrap_tables(fragment)
+        self.assertEqual(result, fragment)
+        self.assertEqual(result.count("table-wrap"), 1)
+
+    def test_two_separate_tables_both_get_wrapped(self):
+        fragment = "<table><tr><td>1</td></tr></table><p>between</p><table><tr><td>2</td></tr></table>"
+        result = build.wrap_tables(fragment)
+        self.assertEqual(result.count('<div class="table-wrap">'), 2)
+        self.assertIn(
+            '<div class="table-wrap"><table><tr><td>1</td></tr></table></div>', result
+        )
+        self.assertIn(
+            '<div class="table-wrap"><table><tr><td>2</td></tr></table></div>', result
+        )
+
+    def test_fragment_with_no_table_is_unchanged(self):
+        fragment = "<p>no tables here</p><pre><code>x = 1</code></pre>"
+        self.assertEqual(build.wrap_tables(fragment), fragment)
+
+
+class TestBuildArticleWrapsTables(BuildFixture):
+    def test_bare_table_in_content_ends_up_inside_table_wrap(self):
+        (self.src / "content" / "what-is-tmux" / "zh-TW.html").write_text(
+            "<p>intro</p>"
+            "<table><tr><th>指令</th><td>tmux new -s work</td></tr></table>",
+            encoding="utf-8",
+        )
+        (self.src / "templates" / "article.html").write_text(
+            "{{content}}", encoding="utf-8"
+        )
+        build.build_article(self.src, self.out, make_config(), "zh-TW", "what-is-tmux")
+        html_out = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            '<div class="table-wrap"><table><tr><th>指令</th>'
+            "<td>tmux new -s work</td></tr></table></div>",
+            html_out,
+        )
+
+    def test_table_inner_markup_survives_unescaped(self):
+        (self.src / "content" / "what-is-tmux" / "zh-TW.html").write_text(
+            "<table><tr><th>指令</th><td>tmux new -s work</td></tr></table>",
+            encoding="utf-8",
+        )
+        (self.src / "templates" / "article.html").write_text(
+            "{{content}}", encoding="utf-8"
+        )
+        build.build_article(self.src, self.out, make_config(), "zh-TW", "what-is-tmux")
+        html_out = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("<th>指令</th>", html_out)
+        self.assertIn("<td>tmux new -s work</td>", html_out)
+        self.assertNotIn("&lt;th&gt;", html_out)
+        self.assertNotIn("&lt;td&gt;", html_out)
+
+
 if __name__ == "__main__":
     unittest.main()
