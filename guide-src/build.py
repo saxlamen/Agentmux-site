@@ -115,3 +115,112 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
     target = article_path(out, lang, slug)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(render(template, page_vars), encoding="utf-8")
+
+
+def build_root_index(src: Path, out: Path, config: dict) -> None:
+    template = (src / "templates" / "root-index.html").read_text(encoding="utf-8")
+    links = "\n        ".join(
+        '<a class="lang-card" href="/guide/{0}/" hreflang="{0}">{1}</a>'.format(
+            lang["code"], lang["label"]
+        )
+        for lang in config["languages"]
+        if config.get("content", {}).get(lang["code"])
+    )
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "index.html").write_text(
+        render(template, {"languageLinks": links, "origin": config["site"]["origin"]}),
+        encoding="utf-8",
+    )
+
+
+def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
+    template = (src / "templates" / "track-index.html").read_text(encoding="utf-8")
+    strings = _load_strings(src, lang)
+    available = set(config.get("content", {}).get(lang, []))
+    blocks = []
+    for track_name, slugs in config["tracks"].items():
+        track_strings = strings["ui"]["tracks"][track_name]
+        items = "\n            ".join(
+            '<li><a href="/guide/{0}/{1}/">{2}</a></li>'.format(
+                lang, slug, strings["articles"][slug]["title"]
+            )
+            for slug in slugs
+            if slug in available
+        )
+        blocks.append(
+            '<section class="track" id="{0}">\n'
+            "          <h2>{1}</h2>\n"
+            "          <p>{2}</p>\n"
+            "          <ol>\n            {3}\n          </ol>\n"
+            "        </section>".format(
+                track_name, track_strings["title"], track_strings["blurb"], items
+            )
+        )
+    target = out / lang / "index.html"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(
+        render(
+            template,
+            {
+                "htmlLang": _language(config, lang)["htmlLang"],
+                "lang": lang,
+                "title": strings["ui"]["trackIndexTitle"],
+                "description": strings["ui"]["trackIndexDescription"],
+                "canonical": "{0}/guide/{1}/".format(
+                    config["site"]["origin"].rstrip("/"), lang
+                ),
+                "tracks": "\n        ".join(blocks),
+            },
+        ),
+        encoding="utf-8",
+    )
+
+
+def build_sitemap(out_root: Path, config: dict) -> None:
+    origin = config["site"]["origin"].rstrip("/")
+    urls = ["{0}/guide/".format(origin)]
+    matrix = config.get("content", {})
+    for lang in config["languages"]:
+        code = lang["code"]
+        if not matrix.get(code):
+            continue
+        urls.append("{0}/guide/{1}/".format(origin, code))
+        for slug in config["slugs"]:
+            if slug in matrix[code]:
+                urls.append(article_url(origin, code, slug))
+    body = "\n".join("  <url><loc>{0}</loc></url>".format(u) for u in urls)
+    out_root.mkdir(parents=True, exist_ok=True)
+    (out_root / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + body
+        + "\n</urlset>\n",
+        encoding="utf-8",
+    )
+
+
+def main() -> int:
+    src = Path(__file__).resolve().parent
+    web_root = src.parent
+    out = web_root / "guide"
+    config = load_config(src / "config.json")
+
+    verify_content(src, config)
+
+    matrix = config.get("content", {})
+    for lang in config["languages"]:
+        code = lang["code"]
+        if not matrix.get(code):
+            continue
+        for slug in config["slugs"]:
+            if slug in matrix[code]:
+                build_article(src, out, config, code, slug)
+        build_track_index(src, out, config, code)
+    build_root_index(src, out, config)
+    build_sitemap(web_root, config)
+    print("built {0} language(s)".format(len([l for l in config["languages"] if matrix.get(l["code"])])))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

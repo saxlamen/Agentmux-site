@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentmux Guide</title>
+    <meta name="description" content="Learn SSH, Tailscale, and CLI coding agents — then run them from your phone.">
+    <link rel="canonical" href="{{origin}}/guide/">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+</head>
+<body class="guide-root">
+    <main class="shell">
+        <h1>Agentmux Guide</h1>
+        <p>Choose your language.</p>
+        <nav class="lang-cards">
+        {{languageLinks}}
+        </nav>
+    </main>
+    <script>
+        (function () {
+            var saved = localStorage.getItem('preferred-lang');
+            var pick = saved || navigator.language || '';
+            var links = document.querySelectorAll('.lang-cards a');
+            for (var i = 0; i < links.length; i++) {
+                var code = links[i].getAttribute('hreflang');
+                if (pick === code || pick.indexOf(code.split('-')[0]) === 0) {
+                    location.replace(links[i].getAttribute('href'));
+                    return;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -220,5 +220,46 @@ class TestTrackOf(unittest.TestCase):
         )
 
 
+class TestRootIndex(BuildFixture):
+    def setUp(self):
+        super().setUp()
+        (self.src / "templates" / "root-index.html").write_text(
+            "<html>{{languageLinks}}</html>", encoding="utf-8"
+        )
+
+    def test_emits_real_anchor_per_language(self):
+        build.build_root_index(self.src, self.out, make_config())
+        html = (self.out / "index.html").read_text(encoding="utf-8")
+        self.assertIn('href="/guide/zh-TW/"', html)
+        self.assertIn("繁體中文", html)
+
+    def test_works_without_javascript(self):
+        build.build_root_index(self.src, self.out, make_config())
+        html = (self.out / "index.html").read_text(encoding="utf-8")
+        anchors = html.count("<a ")
+        self.assertGreaterEqual(anchors, 1)
+
+
+class TestSitemap(BuildFixture):
+    def test_lists_only_existing_pages(self):
+        config = make_config(content={"zh-TW": ["what-is-tmux"]})
+        build.build_sitemap(self.tmp, config)
+        xml = (self.tmp / "sitemap.xml").read_text(encoding="utf-8")
+        self.assertIn("https://example.test/guide/zh-TW/what-is-tmux/", xml)
+        self.assertNotIn("/guide/zh-TW/setup/", xml)
+
+    def test_includes_guide_root_and_track_index(self):
+        build.build_sitemap(self.tmp, make_config())
+        xml = (self.tmp / "sitemap.xml").read_text(encoding="utf-8")
+        self.assertIn("https://example.test/guide/", xml)
+        self.assertIn("https://example.test/guide/zh-TW/", xml)
+
+    def test_is_wellformed_xml(self):
+        import xml.etree.ElementTree as ET
+
+        build.build_sitemap(self.tmp, make_config())
+        ET.parse(str(self.tmp / "sitemap.xml"))
+
+
 if __name__ == "__main__":
     unittest.main()
