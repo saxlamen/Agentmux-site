@@ -173,5 +173,52 @@ class TestVerifyContent(BuildFixture):
         self.assertIn("troubleshooting", message)
 
 
+class TestNeighbors(unittest.TestCase):
+    def setUp(self):
+        self.config = {
+            "tracks": {
+                "beginner": ["a", "b", "c"],
+                "cliuser": ["a", "c"],
+            }
+        }
+
+    def test_middle_item_has_both_neighbors(self):
+        self.assertEqual(build.neighbors(self.config, "beginner", "b"), ("a", "c"))
+
+    def test_first_item_has_no_previous(self):
+        self.assertEqual(build.neighbors(self.config, "beginner", "a"), (None, "b"))
+
+    def test_last_item_has_no_next(self):
+        self.assertEqual(build.neighbors(self.config, "beginner", "c"), ("b", None))
+
+    def test_neighbors_differ_per_track(self):
+        self.assertEqual(build.neighbors(self.config, "cliuser", "a"), (None, "c"))
+
+    def test_slug_outside_track_has_no_neighbors(self):
+        self.assertEqual(build.neighbors(self.config, "beginner", "zzz"), (None, None))
+
+
+class TestTrackOf(unittest.TestCase):
+    def test_troubleshooting_belongs_to_no_track(self):
+        config = {
+            "tracks": {
+                "beginner": ["what-is-tmux", "setup"],
+                "cliuser": ["what-is-tmux", "setup"],
+            }
+        }
+        self.assertEqual(build.track_of(config, "troubleshooting"), [])
+
+    def test_shared_slug_belongs_to_both_tracks(self):
+        config = {
+            "tracks": {
+                "beginner": ["what-is-tmux", "setup"],
+                "cliuser": ["what-is-tmux", "setup"],
+            }
+        }
+        self.assertEqual(
+            sorted(build.track_of(config, "what-is-tmux")), ["beginner", "cliuser"]
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

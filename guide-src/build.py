@@ -85,6 +85,20 @@ def verify_content(src: Path, config: dict) -> None:
         )
 
 
+def track_of(config: dict, slug: str) -> list:
+    return [name for name, slugs in config["tracks"].items() if slug in slugs]
+
+
+def neighbors(config: dict, track: str, slug: str) -> tuple:
+    slugs = config["tracks"].get(track, [])
+    if slug not in slugs:
+        return (None, None)
+    i = slugs.index(slug)
+    prev_slug = slugs[i - 1] if i > 0 else None
+    next_slug = slugs[i + 1] if i < len(slugs) - 1 else None
+    return (prev_slug, next_slug)
+
+
 def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> None:
     template = (src / "templates" / "article.html").read_text(encoding="utf-8")
     strings = _load_strings(src, lang)
