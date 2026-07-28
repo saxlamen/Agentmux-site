@@ -70,28 +70,58 @@ class TestWizardData(unittest.TestCase):
                     "anchor {0} referenced by {1} does not exist".format(anchor, step["id"]),
                 )
 
-    def test_at_least_one_step_applies_to_every_answer_combination(self):
+    def _combos(self):
         questions = self.data["questions"]
 
-        def combos(index, acc):
+        def walk(index, acc):
             if index == len(questions):
                 yield dict(acc)
                 return
             q = questions[index]
             for opt in q["options"]:
                 acc[q["id"]] = opt
-                for c in combos(index + 1, acc):
+                for c in walk(index + 1, acc):
                     yield c
 
-        for answers in combos(0, {}):
-            matched = [
+        return walk(0, {})
+
+    def _matching(self, answers):
+        return [
+            s
+            for s in self.data["steps"]
+            if all(answers.get(k) in v for k, v in s.get("when", {}).items())
+        ]
+
+    def test_the_unconditional_steps_are_exactly_the_expected_two(self):
+        # The test below depends on knowing which steps match unconditionally.
+        # Pin that here so adding a third one cannot silently weaken it.
+        unconditional = [s["id"] for s in self.data["steps"] if not s.get("when")]
+        self.assertEqual(unconditional, ["tmux-handled", "add-server"])
+
+    def test_every_answer_combination_gets_a_conditional_step(self):
+        # Count ONLY steps whose `when` actually matched. `tmux-handled` and
+        # `add-server` match everything, so asserting "more than one step" can
+        # never fail — deleting every conditional step still leaves those two,
+        # and the suite would stay green while the wizard told a Mac user
+        # nothing about turning on SSH.
+        for answers in self._combos():
+            conditional = [s for s in self._matching(answers) if s.get("when")]
+            self.assertGreater(
+                len(conditional), 0, "no conditional step for {0}".format(answers)
+            )
+
+    def test_every_machine_option_has_its_own_setup_step(self):
+        # Whichever machine the reader picks, the plan must contain a step
+        # gated on that specific answer — otherwise they are never told how to
+        # get SSH running on it.
+        machine = [q for q in self.data["questions"] if q["id"] == "machine"][0]
+        for option in machine["options"]:
+            gated = [
                 s
                 for s in self.data["steps"]
-                if all(
-                    answers.get(k) in v for k, v in s.get("when", {}).items()
-                )
+                if option in s.get("when", {}).get("machine", [])
             ]
-            self.assertGreater(len(matched), 1, "thin plan for {0}".format(answers))
+            self.assertTrue(gated, "no machine step for {0}".format(option))
 
 
 if __name__ == "__main__":
