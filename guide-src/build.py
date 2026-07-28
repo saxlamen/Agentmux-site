@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import html
 import json
 import re
 from pathlib import Path
@@ -20,6 +21,11 @@ def load_config(path: Path) -> dict:
 
 def render(template: str, vars: dict) -> str:
     return TOKEN.sub(lambda m: str(vars.get(m.group(1), "")), template)
+
+
+def esc(value: str) -> str:
+    """Escape a value bound for an HTML attribute or element text."""
+    return html.escape(str(value), quote=True)
 
 
 def article_url(origin: str, lang: str, slug: str) -> str:
@@ -133,8 +139,8 @@ def _pager(config: dict, strings: dict, lang: str, slug: str) -> str:
                     label_key,
                     lang,
                     target,
-                    strings["ui"][label_key],
-                    strings["articles"][target]["title"],
+                    esc(strings["ui"][label_key]),
+                    esc(strings["articles"][target]["title"]),
                 )
             )
     if not parts:
@@ -147,21 +153,21 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
     strings = _load_strings(src, lang)
     meta = strings["articles"][slug]
     page_vars = {
-        "htmlLang": _language(config, lang)["htmlLang"],
-        "lang": lang,
-        "title": meta["title"],
-        "description": meta["description"],
-        "canonical": article_url(config["site"]["origin"], lang, slug),
+        "htmlLang": esc(_language(config, lang)["htmlLang"]),
+        "lang": esc(lang),
+        "title": esc(meta["title"]),
+        "description": esc(meta["description"]),
+        "canonical": esc(article_url(config["site"]["origin"], lang, slug)),
         "content": _content_fragment(src, lang, slug),
         "hreflang": hreflang_block(config, slug),
         "jsonld": article_jsonld(config, lang, slug, meta),
-        "ogTitle": meta["title"],
-        "ogDescription": meta["description"],
-        "ogUrl": article_url(config["site"]["origin"], lang, slug),
-        "guideHomeLabel": strings["ui"]["guideHome"],
-        "appStoreUrl": config["site"]["appStoreUrl"],
-        "ctaLine": strings["ui"]["ctaLine"],
-        "ctaButton": strings["ui"]["ctaButton"],
+        "ogTitle": esc(meta["title"]),
+        "ogDescription": esc(meta["description"]),
+        "ogUrl": esc(article_url(config["site"]["origin"], lang, slug)),
+        "guideHomeLabel": esc(strings["ui"]["guideHome"]),
+        "appStoreUrl": esc(config["site"]["appStoreUrl"]),
+        "ctaLine": esc(strings["ui"]["ctaLine"]),
+        "ctaButton": esc(strings["ui"]["ctaButton"]),
         "pager": _pager(config, strings, lang, slug),
     }
     target = article_path(out, lang, slug)
@@ -173,7 +179,7 @@ def build_root_index(src: Path, out: Path, config: dict) -> None:
     template = (src / "templates" / "root-index.html").read_text(encoding="utf-8")
     links = "\n        ".join(
         '<a class="lang-card" href="/guide/{0}/" hreflang="{0}">{1}</a>'.format(
-            lang["code"], lang["label"]
+            lang["code"], esc(lang["label"])
         )
         for lang in config["languages"]
         if config.get("content", {}).get(lang["code"])
@@ -194,7 +200,7 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
         track_strings = strings["ui"]["tracks"][track_name]
         items = "\n            ".join(
             '<li><a href="/guide/{0}/{1}/">{2}</a></li>'.format(
-                lang, slug, strings["articles"][slug]["title"]
+                lang, slug, esc(strings["articles"][slug]["title"])
             )
             for slug in slugs
             if slug in available
@@ -205,7 +211,7 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
             "          <p>{2}</p>\n"
             "          <ol>\n            {3}\n          </ol>\n"
             "        </section>".format(
-                track_name, track_strings["title"], track_strings["blurb"], items
+                track_name, esc(track_strings["title"]), esc(track_strings["blurb"]), items
             )
         )
     target = out / lang / "index.html"
@@ -214,12 +220,12 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
         render(
             template,
             {
-                "htmlLang": _language(config, lang)["htmlLang"],
-                "lang": lang,
-                "title": strings["ui"]["trackIndexTitle"],
-                "description": strings["ui"]["trackIndexDescription"],
-                "canonical": "{0}/guide/{1}/".format(
-                    config["site"]["origin"].rstrip("/"), lang
+                "htmlLang": esc(_language(config, lang)["htmlLang"]),
+                "lang": esc(lang),
+                "title": esc(strings["ui"]["trackIndexTitle"]),
+                "description": esc(strings["ui"]["trackIndexDescription"]),
+                "canonical": esc(
+                    "{0}/guide/{1}/".format(config["site"]["origin"].rstrip("/"), lang)
                 ),
                 "tracks": "\n        ".join(blocks),
             },

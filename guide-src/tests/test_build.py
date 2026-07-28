@@ -298,5 +298,76 @@ class TestArticleMeta(BuildFixture):
         self.assertIn("https://example.test/guide/zh-TW/what-is-tmux/", html)
 
 
+class TestEscaping(BuildFixture):
+    def _set_meta(self, title, description="D"):
+        strings = json.loads(
+            (self.src / "strings" / "zh-TW.json").read_text(encoding="utf-8")
+        )
+        strings["articles"]["what-is-tmux"]["title"] = title
+        strings["articles"]["what-is-tmux"]["description"] = description
+        (self.src / "strings" / "zh-TW.json").write_text(
+            json.dumps(strings, ensure_ascii=False), encoding="utf-8"
+        )
+
+    def test_quote_in_title_does_not_break_og_title_attribute(self):
+        self._set_meta('讓 agent 在你關掉手機後繼續跑"引號測試')
+        (self.src / "templates" / "article.html").write_text(
+            "<title>{{title}}</title>"
+            '<meta property="og:title" content="{{ogTitle}}">',
+            encoding="utf-8",
+        )
+        build.build_article(self.src, self.out, make_config(), "zh-TW", "what-is-tmux")
+        html_out = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            'content="讓 agent 在你關掉手機後繼續跑&quot;引號測試"', html_out
+        )
+        self.assertNotIn(
+            'content="讓 agent 在你關掉手機後繼續跑"引號測試"', html_out
+        )
+
+    def test_ampersand_and_lt_escaped_in_title_and_meta(self):
+        self._set_meta("A & B < C")
+        (self.src / "templates" / "article.html").write_text(
+            "<title>{{title}}</title>"
+            '<meta property="og:title" content="{{ogTitle}}">'
+            '<meta name="description" content="{{description}}">',
+            encoding="utf-8",
+        )
+        build.build_article(self.src, self.out, make_config(), "zh-TW", "what-is-tmux")
+        html_out = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("<title>A &amp; B &lt; C</title>", html_out)
+        self.assertIn('content="A &amp; B &lt; C"', html_out)
+
+    def test_jsonld_still_parses_when_title_has_quote(self):
+        self._set_meta('T"itle')
+        (self.src / "templates" / "article.html").write_text(
+            "{{jsonld}}", encoding="utf-8"
+        )
+        build.build_article(self.src, self.out, make_config(), "zh-TW", "what-is-tmux")
+        html_out = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        payload = html_out.split(">", 1)[1].rsplit("<", 1)[0]
+        json.loads(payload)
+
+    def test_content_fragment_is_not_escaped(self):
+        (self.src / "content" / "what-is-tmux" / "zh-TW.html").write_text(
+            "<p><strong>粗體</strong></p>", encoding="utf-8"
+        )
+        (self.src / "templates" / "article.html").write_text(
+            "{{content}}", encoding="utf-8"
+        )
+        build.build_article(self.src, self.out, make_config(), "zh-TW", "what-is-tmux")
+        html_out = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("<p><strong>粗體</strong></p>", html_out)
+        self.assertNotIn("&lt;p&gt;", html_out)
+
+
 if __name__ == "__main__":
     unittest.main()
