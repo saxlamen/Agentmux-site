@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>為什麼不是 Termius / Blink — Agentmux Guide</title>
+    <meta name="description" content="通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="為什麼不是 Termius / Blink">
+    <meta property="og:description" content="通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="為什麼不是 Termius / Blink">
+    <meta name="twitter:description" content="通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "為什麼不是 Termius / Blink", "description": "通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/"}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/zh-TW/">指南首頁</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>為什麼不是 Termius / Blink</h1>
+            <p>通用 SSH app 的設計假設是「你要打指令」。Agentmux 的假設是「你要接回一個正在跑的 agent」。這句話決定了接下來每一個功能怎麼設計——不是比介面好不好看，是比誰把「接回」這件事想得更透徹。以下五個功能，全部對照現行程式碼查證過，不是隨口列的功能清單。</p>
+
+<section id="tmux-first-reconnect">
+  <h2>tmux-first 自動重連</h2>
+  <p>Agentmux 連上伺服器後會直接把上面現有的 tmux session 列出來，點一下就接回去，不用自己記 <code>tmux ls</code>、<code>tmux attach -t</code> 這些指令。斷線之後重新連上，接的也是同一個 session，畫面接著上次的樣子繼續，不必手動重打 attach。</p>
+</section>
+
+<section id="background-live-activity">
+  <h2>背景維持 + Live Activity</h2>
+  <p>agent 常常一跑就是幾十分鐘，這段等待期就是為它設計的：動態島和鎖定畫面顯示目前進度，跑完可以播提示音——你不用把 App 開在最前面死盯著畫面等結果。</p>
+</section>
+
+<section id="editor-git-files">
+  <h2>Runestone 編輯器 + Git 工具 + Files app 整合</h2>
+  <p>要臨時改一行程式碼，不必在手機上跟 vim 肉搏——內建 Runestone 編輯器可以直接開檔案改。想看 README 或 agent 產出的說明文件，Ink 提供雙欄 Markdown 預覽，原始碼和排版同時看得到。Git 工具（切換分支、查 diff）和 Files app 整合是 Pro 功能，14 天試用期間也能用到。</p>
+</section>
+
+<section id="keychain-isolation">
+  <h2>Keychain 憑證隔離</h2>
+  <p>私鑰只存在 iOS 系統的 Keychain 裡，不會寫進本機資料庫；如果你開了 iCloud 同步，CloudKit 只同步伺服器名稱這類非敏感的 metadata，私鑰本身不會跟著跑到雲端。</p>
+</section>
+
+<section id="siri-shortcuts">
+  <h2>Siri／捷徑自動化</h2>
+  <p><code>GetCurrentSessionContextIntent</code> 讓你對 Siri 說「從 Agentmux 取得目前終端內容」，終端當下的畫面就被抓進 iOS 捷徑，可以接去記事本、訊息，或任何你自己組的自動化流程。<code>ContinueLastSessionIntent</code> 更直接——一句「在 Agentmux 繼續工作」就接回上一個 session。這類自動化，通用 SSH app 結構上做不到：它們沒有「session／專案／agent」這層語意模型可以暴露給系統。Agentmux 目前實作了 6 個 App Intent，涵蓋 Server、Project、TMUXSession、RecentSession 四種 entity。</p>
+</section>
+
+<section id="cjk-fixes">
+  <h2>對繁中使用者，這些修好的地方你會有感</h2>
+  <p>1.3.10 修掉三個英文圈使用者感受不到、但繁中讀者一看就懂的痛點：全形字選取時的對齊跑掉、連結跨行時複製會斷成好幾截、中日韓詞句裡帶一個斜線就被誤判成檔案路徑。這些都是實際處理過中日韓文字才會踩到的坑。</p>
+</section>
+
+<section id="when-not-to-use">
+  <h2>什麼時候該用 Termius 而不是 Agentmux</h2>
+  <ul>
+    <li>你在極不穩定的行動網路下工作，需要 <strong>Mosh</strong> 維持連線——Agentmux 目前只有標準 SSH，靠 tmux 自動重連彌補，但那不等於 Mosh。</li>
+    <li>你需要 <strong>Remote／Dynamic（SOCKS5）port forwarding</strong>——Agentmux 只有 Local。</li>
+    <li>你要在 iOS／Android／Windows／macOS／Linux 之間同步大量主機設定，或跟團隊共享主機清單。</li>
+    <li>你是 SRE／系統管理員，要管幾十上百台伺服器做維運。</li>
+  </ul>
+  <p>Agentmux 是為一個特定工作流最佳化的：<strong>在手機上接回正在跑的 coding agent。</strong>不是通用維運工具。</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" href="/guide/zh-TW/what-is-tailscale/">上一篇<span>不要對公網開 port</span></a></nav>
+        <aside class="guide-cta">
+            <p>14 天全功能試用，之後 Lifetime 買斷。</p>
+            <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">在 App Store 下載</a>
+        </aside>
+    </main>
+</body>
+</html>

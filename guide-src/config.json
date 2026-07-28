@@ -43,6 +43,8 @@
       "what-is-cli",
       "what-is-ssh",
       "what-is-tmux",
+      "what-is-tailscale",
+      "why-agentmux",
       "troubleshooting"
     ]
   }

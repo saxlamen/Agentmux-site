@@ -42,6 +42,14 @@
     "what-is-tmux": {
       "title": "讓 agent 在你關掉手機後繼續跑",
       "description": "SSH 斷線會讓你啟動的 process 收到 SIGHUP 而死。tmux 把 session 留在伺服器上，你只是接上去看，斷線也不會中斷 agent。"
+    },
+    "what-is-tailscale": {
+      "title": "不要對公網開 port",
+      "description": "把 SSH 開到公網會被掃描機器人 24 小時輪番敲門。Tailscale 用 WireGuard mesh 讓裝置之間直接建立加密連線，你家的機器多了一個只有你連得到的私有位址。"
+    },
+    "why-agentmux": {
+      "title": "為什麼不是 Termius / Blink",
+      "description": "通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。"
     }
   }
 }
