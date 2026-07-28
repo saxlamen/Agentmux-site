@@ -30,6 +30,18 @@
     "troubleshooting": {
       "title": "卡住了看這裡",
       "description": "連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。"
+    },
+    "what-is-cli": {
+      "title": "為什麼最強的 coding agent 都住在終端機裡",
+      "description": "CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。"
+    },
+    "what-is-ssh": {
+      "title": "一條通往另一台電腦的加密隧道",
+      "description": "SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。"
+    },
+    "what-is-tmux": {
+      "title": "讓 agent 在你關掉手機後繼續跑",
+      "description": "SSH 斷線會讓你啟動的 process 收到 SIGHUP 而死。tmux 把 session 留在伺服器上，你只是接上去看，斷線也不會中斷 agent。"
     }
   }
 }

@@ -37,6 +37,13 @@
     ]
   },
   "content": {
-    "zh-TW": ["why-remote-vibe-coding", "why-not-gui-ide", "troubleshooting"]
+    "zh-TW": [
+      "why-remote-vibe-coding",
+      "why-not-gui-ide",
+      "what-is-cli",
+      "what-is-ssh",
+      "what-is-tmux",
+      "troubleshooting"
+    ]
   }
 }
