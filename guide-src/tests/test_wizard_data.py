@@ -112,16 +112,20 @@ class TestWizardData(unittest.TestCase):
 
     def test_every_machine_option_has_its_own_setup_step(self):
         # Whichever machine the reader picks, the plan must contain a step
-        # gated on that specific answer — otherwise they are never told how to
-        # get SSH running on it.
+        # gated on machine ALONE — that is the step that gets SSH working on
+        # it. Requiring only "some step mentions this machine" is too weak:
+        # find-lan-address is gated on {reach: [lan], machine: [mac]}, so it
+        # would satisfy the mac case on its own and deleting enable-ssh-mac
+        # would go unnoticed.
         machine = [q for q in self.data["questions"] if q["id"] == "machine"][0]
         for option in machine["options"]:
             gated = [
                 s
                 for s in self.data["steps"]
-                if option in s.get("when", {}).get("machine", [])
+                if list(s.get("when", {})) == ["machine"]
+                and option in s["when"]["machine"]
             ]
-            self.assertTrue(gated, "no machine step for {0}".format(option))
+            self.assertTrue(gated, "no machine-only step for {0}".format(option))
 
 
 if __name__ == "__main__":
