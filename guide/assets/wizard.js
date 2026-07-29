@@ -51,6 +51,31 @@
         return n;
     }
 
+    function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            return navigator.clipboard.writeText(text);
+        }
+        // Non-HTTPS origins expose no async clipboard API. The legacy
+        // textarea + execCommand path still works there.
+        return new Promise(function (resolve, reject) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = false;
+            try {
+                ok = document.execCommand('copy');
+            } catch (e) {
+                ok = false;
+            }
+            document.body.removeChild(ta);
+            if (ok) { resolve(); } else { reject(new Error('copy unavailable')); }
+        });
+    }
+
     function renderQuestions() {
         root.innerHTML = '';
         data.questions.forEach(function (q) {
@@ -60,7 +85,9 @@
             q.options.forEach(function (opt) {
                 var btn = el('button', 'wizard-option', qs.options[opt]);
                 btn.type = 'button';
-                if (answers[q.id] === opt) btn.classList.add('is-selected');
+                var selected = answers[q.id] === opt;
+                if (selected) btn.classList.add('is-selected');
+                btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
                 btn.addEventListener('click', function () {
                     answers[q.id] = opt;
                     writeHash();
@@ -90,8 +117,11 @@
             var copy = el('button', 'wizard-copy', strings.ui.copy);
             copy.type = 'button';
             copy.addEventListener('click', function () {
-                navigator.clipboard.writeText(cmd).then(function () {
+                copyText(cmd).then(function () {
                     copy.textContent = strings.ui.copied;
+                    setTimeout(function () { copy.textContent = strings.ui.copy; }, 1500);
+                }).catch(function () {
+                    copy.textContent = strings.ui.copyFailed;
                     setTimeout(function () { copy.textContent = strings.ui.copy; }, 1500);
                 });
             });
@@ -146,9 +176,13 @@
         var share = el('button', 'wizard-share', strings.ui.share);
         share.type = 'button';
         share.addEventListener('click', function () {
-            navigator.clipboard.writeText(location.href);
-            share.textContent = strings.ui.copied;
-            setTimeout(function () { share.textContent = strings.ui.share; }, 1500);
+            copyText(location.href).then(function () {
+                share.textContent = strings.ui.copied;
+                setTimeout(function () { share.textContent = strings.ui.share; }, 1500);
+            }).catch(function () {
+                share.textContent = strings.ui.copyFailed;
+                setTimeout(function () { share.textContent = strings.ui.share; }, 1500);
+            });
         });
         actions.appendChild(share);
         root.appendChild(actions);
