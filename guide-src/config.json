@@ -36,6 +36,9 @@
       "setup"
     ]
   },
+  "trackExtended": {
+    "cliuser": ["why-not-gui-ide"]
+  },
   "content": {
     "zh-TW": [
       "why-remote-vibe-coding",

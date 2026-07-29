@@ -54,6 +54,7 @@ class BuildFixture(unittest.TestCase):
                 {
                     "ui": {
                         "guideHome": "指南首頁",
+                        "troubleshooting": "疑難排解",
                         "prev": "上一篇",
                         "next": "下一篇",
                         "ctaLine": "14 天全功能試用，之後 Lifetime 買斷。",

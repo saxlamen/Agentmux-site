@@ -89,7 +89,7 @@ Match All
   <h3>原因</h3>
   <p>目標機器上還沒有裝 tmux。這件事不需要你自己動手——Agentmux 會自動幫你裝：它會偵測這台機器用的是 apt、yum、dnf、pacman、apk（Alpine）還是 brew，然後透過 SSH 自動跑對應的安裝指令。多數情況下，你只要等它跑完就好。</p>
   <p>自動安裝失敗，最常見的原因是安裝指令裡帶了 <code>sudo</code>，但這條通道是非互動式的，<code>sudo</code> 沒有終端機可以問你密碼（見下面 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a>）；其次是在 Mac 上用 Homebrew 安裝，但連線身分是 root——Homebrew 設計上就是拒絕以 root 身分執行的。</p>
-  <p>還有一種少見但容易誤判的情況：tmux 其實已經裝了，只是裝在 Agentmux 探測 PATH 時沒看到的地方（例如 Linuxbrew 裝在 <code>~/.linuxbrew</code>，或你自己手動丟進 <code>~/bin</code>）。訊息看起來一樣是「找不到 tmux」，但本質是 PATH 沒找對地方，不是沒裝，可以參考下面 <a href="#agent-command-not-found">claude: command not found，但桌面終端機明明可以跑</a> 那節的做法處理。</p>
+  <p>還有一種少見但容易誤判的情況：tmux 其實已經裝了，只是裝在 Agentmux 探測 PATH 時沒看到的地方（例如 Linuxbrew 裝在 <code>~/.linuxbrew</code>，或用 MacPorts 裝在 <code>/opt/local/bin</code>）。訊息看起來一樣是「找不到 tmux」，但本質是 PATH 沒找對地方，不是沒裝，可以參考下面 <a href="#agent-command-not-found">claude: command not found，但桌面終端機明明可以跑</a> 那節的做法處理。</p>
 
   <h3>解法</h3>
   <p>先看 Agentmux 跳出的錯誤訊息。如果它提示你輸入 sudo 密碼、或提到啟用免密碼 sudo，直接在 Agentmux 裡把密碼填進去再試一次，通常是最快的路——不一定要自己另外開視窗處理。如果這個管道也失敗，或訊息提到終端機、TTY，再照 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a> 那節自己手動處理，處理完通常自動安裝就能成功，不需要再往下做。</p>
@@ -123,7 +123,7 @@ brew install tmux</code></pre>
   <p>其實不是 Agentmux 的問題，是 shell 本身的行為——這是最難自己想通的一個卡點，值得花點篇幅講清楚原理，之後遇到類似問題也能自己判斷。</p>
   <p>你平常在 Mac 上開的 Terminal，是一個「互動式登入 shell」。<code>claude</code> 之所以能被找到，通常是因為 nvm、npm 或安裝工具，在某個設定檔裡自動加了一行，把 <code>claude</code> 所在的目錄加進了 PATH。但「是哪個設定檔」在 zsh 和 bash 上不一樣，混著講容易誤導，分開說清楚：</p>
   <p><strong>zsh</strong>（Mac 的預設 shell）：互動式登入 shell 依序讀 <code>.zshenv</code> → <code>.zprofile</code> → <code>.zshrc</code> → <code>.zlogin</code>。而 <code>ssh 主機 claude</code> 這種執行單一指令的連線，開的是非互動、非登入的 zsh，只會讀 <code>.zshenv</code>，其餘全部跳過——包含大多數人放 PATH 設定的 <code>.zshrc</code>。</p>
-  <p><strong>bash</strong>：情況比較特別。互動式登入 shell 讀的是 <code>.bash_profile</code>（或 <code>.profile</code>），不是 <code>.bashrc</code>；你會覺得 bash 也讀 <code>.bashrc</code>，是因為大多數發行版預設的 <code>.bash_profile</code> 裡，會手動加一段「如果 <code>.bashrc</code> 存在就 source 它」。而當 bash 是被 sshd 直接叫起來執行單一指令時（也就是 <code>ssh 主機 claude</code> 這種用法），bash 手冊裡其實有一個專門給這個場景開的特例：它仍然會去讀 <code>~/.bashrc</code>，不是完全不讀。問題出在幾乎每個發行版預設的 <code>.bashrc</code>，開頭都放了一段判斷：</p>
+  <p><strong>bash</strong>：情況比較特別，而且這部分的行為因發行版而異，不是統一的 bash 標準行為。互動式登入 shell 讀的是 <code>.bash_profile</code>（或 <code>.profile</code>），不是 <code>.bashrc</code>；你會覺得 bash 也讀 <code>.bashrc</code>，是因為大多數發行版預設的 <code>.bash_profile</code> 裡，會手動加一段「如果 <code>.bashrc</code> 存在就 source 它」。至於 bash 被 sshd 直接叫起來執行單一指令時（也就是 <code>ssh 主機 claude</code> 這種用法）會不會讀 <code>~/.bashrc</code>，答案要看發行版：這是編譯時期加上去的 <code>SSH_SOURCE_BASHRC</code> 特例，Debian、Ubuntu 以及它們的衍生版有把這個 patch 補進去，非互動的單一指令 shell 也會讀 <code>~/.bashrc</code>；但 RHEL、Fedora、Arch 這類發行版用的是官方原始版本的 bash，沒有這個特例，同樣的情境下 <code>~/.bashrc</code> 根本不會被讀到。就算是在會讀的那些發行版上，幾乎每個預設的 <code>.bashrc</code>，開頭也都放了一段判斷：</p>
   <pre><code>case $- in
     *i*) ;;
       *) return;;
@@ -138,7 +138,7 @@ esac</code></pre>
   <p>會印出類似 <code>/Users/你的名字/.nvm/versions/node/v20.11.0/bin/claude</code> 這樣一整串路徑。把這串路徑填到 Agentmux 要求輸入 agent 指令的欄位，取代原本單純的 <code>claude</code>。如果你是用 nvm 安裝 node，這條路徑裡會包含目前的版本號，之後升級 node 版本這條路徑就會失效，需要重新用 <code>which claude</code> 抓一次；不想每次升級都要改，就用下面的長久做法。</p>
   <p>比較長久的做法，依你的 shell 分開處理，不要混用：</p>
   <p><strong>如果是 zsh</strong>（Mac 預設）：把設定 PATH 的那幾行（常見來自 nvm、pyenv，或你自己手動加的 <code>export PATH=...</code>）從 <code>.zshrc</code> 搬到 <code>~/.zshenv</code>，搬到 <code>~/.zprofile</code> 也可以，兩者 SSH 非互動執行和 Agentmux 探測 PATH 時都讀得到。</p>
-  <p><strong>如果是 bash</strong>：不要指望搬到 <code>~/.profile</code> 或 <code>~/.bash_profile</code> 就會生效——<code>ssh 主機 claude</code> 開的是非登入 shell，這兩個檔案都不會被讀到。正確做法是把 PATH 那幾行搬到 <code>~/.bashrc</code>，而且要放在檔案最前面那段 <code>case $- in ... esac</code> 判斷式「之前」，讓它在互動判斷擋下之前就先生效；不想動設定檔的話，退回用上面的絕對路徑做法一樣有效。</p>
+  <p><strong>如果是 bash</strong>：不要指望搬到 <code>~/.profile</code> 或 <code>~/.bash_profile</code> 就會生效——<code>ssh 主機 claude</code> 開的是非登入 shell，這兩個檔案都不會被讀到。如果你的機器是 Debian、Ubuntu 或它們的衍生版，把 PATH 那幾行搬到 <code>~/.bashrc</code>、放在檔案最前面那段 <code>case $- in ... esac</code> 判斷式「之前」，可以讓它在互動判斷擋下之前就先生效；但如果是 RHEL、Fedora、Arch 這類發行版，<code>~/.bashrc</code> 在這個情境下本來就不會被讀到，改這個檔案不會有任何效果。不確定自己的發行版屬於哪一種、或就是遇到這種情況，直接退回用上面的絕對路徑做法——這個做法不管哪個發行版都有效，是唯一能保證跨發行版都能用的解法。</p>
   <p>搬完之後，開一個新的 SSH 連線測試，確認真的生效了：</p>
   <pre><code>ssh 主機 'claude --version'</code></pre>
   <p>能印出版本號，就代表 PATH 這次真的在非互動 shell 裡也讀到了。</p>

@@ -187,6 +187,7 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
         "ogDescription": esc(meta["description"]),
         "ogUrl": esc(article_url(config["site"]["origin"], lang, slug)),
         "guideHomeLabel": esc(strings["ui"]["guideHome"]),
+        "troubleshootingLabel": esc(strings["ui"]["troubleshooting"]),
         "appStoreUrl": esc(config["site"]["appStoreUrl"]),
         "ctaLine": esc(strings["ui"]["ctaLine"]),
         "ctaButton": esc(strings["ui"]["ctaButton"]),
@@ -217,6 +218,7 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
     template = (src / "templates" / "track-index.html").read_text(encoding="utf-8")
     strings = _load_strings(src, lang)
     available = set(config.get("content", {}).get(lang, []))
+    extended_matrix = config.get("trackExtended", {})
     blocks = []
     for track_name, slugs in config["tracks"].items():
         track_strings = strings["ui"]["tracks"][track_name]
@@ -227,13 +229,29 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
             for slug in slugs
             if slug in available
         )
+        extended_slugs = [s for s in extended_matrix.get(track_name, []) if s in available]
+        extended_html = ""
+        if extended_slugs:
+            extended_links = "、".join(
+                '<a href="/guide/{0}/{1}/">{2}</a>'.format(
+                    lang, slug, esc(strings["articles"][slug]["title"])
+                )
+                for slug in extended_slugs
+            )
+            extended_html = '\n          <p class="track-extended"><strong>{0}：</strong>{1}</p>'.format(
+                esc(strings["ui"]["extendedReading"]), extended_links
+            )
         blocks.append(
             '<section class="track" id="{0}">\n'
             "          <h2>{1}</h2>\n"
             "          <p>{2}</p>\n"
-            "          <ol>\n            {3}\n          </ol>\n"
+            "          <ol>\n            {3}\n          </ol>{4}\n"
             "        </section>".format(
-                track_name, esc(track_strings["title"]), esc(track_strings["blurb"]), items
+                track_name,
+                esc(track_strings["title"]),
+                esc(track_strings["blurb"]),
+                items,
+                extended_html,
             )
         )
     target = out / lang / "index.html"

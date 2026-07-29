@@ -201,6 +201,10 @@
         answers = readHash();
         render();
     }).catch(function () {
-        root.textContent = '載入失敗，請重新整理。';
+        // This catch can fire because the strings file itself failed to
+        // load, so `strings` may still be null here — fall back to a
+        // hardcoded message rather than rendering "undefined".
+        var message = (strings && strings.ui && strings.ui.loadFailed) || '載入失敗，請重新整理。';
+        root.textContent = message;
     });
 })();

@@ -35,7 +35,8 @@
     "copied": "已複製",
     "copyFailed": "複製失敗，請手動選取文字複製",
     "restart": "重新選擇",
-    "share": "複製這份步驟的連結"
+    "share": "複製這份步驟的連結",
+    "loadFailed": "載入失敗，請重新整理。"
   },
   "steps": {
     "pick-machine": {

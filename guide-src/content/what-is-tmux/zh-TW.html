@@ -1,4 +1,4 @@
-<p>上一篇留了一個問題沒解：你關掉手機，那條 SSH 隧道斷掉，agent 也跟著死。這不是巧合，是機制使然：連線一斷，你這次登入用的虛擬終端機被關閉，作業系統核心會對接在這個終端機上的所有 process 送出一個 <strong>SIGHUP</strong>（hangup）訊號——這包含你的 shell，也包含你直接在這個 shell 裡跑起來的 agent 本身。沒有特別處理過這個訊號的 process，預設反應就是直接終止。於是你的 agent 沒有機會道別，就跟著那條斷掉的連線一起消失，跑到一半的東西全部作廢。</p>
+<p>你關掉手機，那條 SSH 隧道斷掉，agent 也跟著死。這不是巧合，是機制使然：連線一斷，你這次登入用的虛擬終端機被關閉，作業系統核心會對接在這個終端機上的所有 process 送出一個 <strong>SIGHUP</strong>（hangup）訊號——這包含你的 shell，也包含你直接在這個 shell 裡跑起來的 agent 本身。沒有特別處理過這個訊號的 process，預設反應就是直接終止。於是你的 agent 沒有機會道別，就跟著那條斷掉的連線一起消失，跑到一半的東西全部作廢。</p>
 
 <section id="session-elsewhere">
   <h2>tmux 讓 session 活在別的地方</h2>
