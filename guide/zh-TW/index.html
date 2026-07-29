@@ -17,28 +17,42 @@
           <h2>我沒開過終端機</h2>
           <p>會用 AI 寫 code，但沒碰過 SSH。從頭建立整套心智模型。</p>
           <ol>
-            <li><a href="/guide/zh-TW/why-remote-vibe-coding/">你的 AI 應該在你睡覺時工作</a></li>
-            <li><a href="/guide/zh-TW/why-not-gui-ide/">為什麼不是 Cursor / VS Code</a></li>
-            <li><a href="/guide/zh-TW/what-is-cli/">為什麼最強的 coding agent 都住在終端機裡</a></li>
-            <li><a href="/guide/zh-TW/what-is-ssh/">一條通往另一台電腦的加密隧道</a></li>
-            <li><a href="/guide/zh-TW/what-is-tmux/">讓 agent 在你關掉手機後繼續跑</a></li>
-            <li><a href="/guide/zh-TW/what-is-tailscale/">不要對公網開 port</a></li>
-            <li><a href="/guide/zh-TW/why-agentmux/">為什麼不是 Termius / Blink</a></li>
-            <li><a href="/guide/zh-TW/setup/">15 分鐘，讓你的 agent 開始整晚工作</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/why-remote-vibe-coding/">你的 AI 應該在你睡覺時工作</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/why-not-gui-ide/">為什麼不是 Cursor / VS Code</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/what-is-cli/">為什麼最強的 coding agent 都住在終端機裡</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/what-is-ssh/">一條通往另一台電腦的加密隧道</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/what-is-tmux/">讓 agent 在你關掉手機後繼續跑</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/what-is-tailscale/">不要對公網開 port</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/why-agentmux/">為什麼不是 Termius / Blink</a></li>
+            <li><a data-track="beginner" href="/guide/zh-TW/setup/">15 分鐘，讓你的 agent 開始整晚工作</a></li>
           </ol>
         </section>
         <section class="track" id="cliuser">
           <h2>我已經在跑 CLI agent</h2>
           <p>已經在 Mac 上用 Claude Code 或 Codex，只缺遠端接回來那一段。</p>
           <ol>
-            <li><a href="/guide/zh-TW/why-remote-vibe-coding/">你的 AI 應該在你睡覺時工作</a></li>
-            <li><a href="/guide/zh-TW/what-is-tmux/">讓 agent 在你關掉手機後繼續跑</a></li>
-            <li><a href="/guide/zh-TW/what-is-tailscale/">不要對公網開 port</a></li>
-            <li><a href="/guide/zh-TW/why-agentmux/">為什麼不是 Termius / Blink</a></li>
-            <li><a href="/guide/zh-TW/setup/">15 分鐘，讓你的 agent 開始整晚工作</a></li>
+            <li><a data-track="cliuser" href="/guide/zh-TW/why-remote-vibe-coding/">你的 AI 應該在你睡覺時工作</a></li>
+            <li><a data-track="cliuser" href="/guide/zh-TW/what-is-tmux/">讓 agent 在你關掉手機後繼續跑</a></li>
+            <li><a data-track="cliuser" href="/guide/zh-TW/what-is-tailscale/">不要對公網開 port</a></li>
+            <li><a data-track="cliuser" href="/guide/zh-TW/why-agentmux/">為什麼不是 Termius / Blink</a></li>
+            <li><a data-track="cliuser" href="/guide/zh-TW/setup/">15 分鐘，讓你的 agent 開始整晚工作</a></li>
           </ol>
-          <p class="track-extended"><strong>延伸閱讀：</strong><a href="/guide/zh-TW/why-not-gui-ide/">為什麼不是 Cursor / VS Code</a></p>
+          <p class="track-extended"><strong>延伸閱讀：</strong><a data-track="cliuser" href="/guide/zh-TW/why-not-gui-ide/">為什麼不是 Cursor / VS Code</a></p>
         </section>
     </main>
+    <script>
+        // 從哪一段點進文章，就當作讀者選了那條路線；文章頁的 pager 靠這個決定
+        // 要顯示哪一邊的鄰居。localStorage 被擋掉時靜靜略過就好。
+        (function () {
+            var links = document.querySelectorAll('a[data-track]');
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener('click', function () {
+                    try {
+                        localStorage.setItem('agentmux-guide-track', this.getAttribute('data-track'));
+                    } catch (e) {}
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import sys
 import tempfile
@@ -57,6 +58,18 @@ class BuildFixture(unittest.TestCase):
                         "troubleshooting": "疑難排解",
                         "prev": "上一篇",
                         "next": "下一篇",
+                        "pagerTrackFormat": "{0} · {1}",
+                        "pagerTrackJoin": "、",
+                        "tracks": {
+                            "beginner": {
+                                "title": "我沒開過終端機",
+                                "blurb": "從頭建立整套心智模型。",
+                            },
+                            "cliuser": {
+                                "title": "我已經在跑 CLI agent",
+                                "blurb": "只缺遠端接回來那一段。",
+                            },
+                        },
                         "ctaLine": "14 天全功能試用，之後 Lifetime 買斷。",
                         "ctaButton": "在 App Store 下載",
                     },
@@ -219,6 +232,189 @@ class TestTrackOf(unittest.TestCase):
         self.assertEqual(
             sorted(build.track_of(config, "what-is-tmux")), ["beginner", "cliuser"]
         )
+
+
+class TestPagerTrackLabels(unittest.TestCase):
+    """一篇文章屬於多條 track 時，鄰居不同會讓兩張卡撞成同一個標籤。"""
+
+    def setUp(self):
+        self.config = {
+            "tracks": {
+                "beginner": ["intro", "ssh", "tmux", "tailscale"],
+                "cliuser": ["intro", "tmux", "tailscale"],
+            },
+            "content": {"zh-TW": ["intro", "ssh", "tmux", "tailscale"]},
+        }
+        self.strings = {
+            "ui": {
+                "prev": "上一篇",
+                "next": "下一篇",
+                "pagerTrackFormat": "{0} · {1}",
+                "pagerTrackJoin": "、",
+                "tracks": {
+                    "beginner": {"title": "我沒開過終端機"},
+                    "cliuser": {"title": "我已經在跑 CLI agent"},
+                },
+            },
+            "articles": {
+                "intro": {"title": "你的 AI 應該在你睡覺時工作"},
+                "ssh": {"title": "一條通往另一台電腦的加密隧道"},
+                "tmux": {"title": "讓 agent 繼續跑"},
+                "tailscale": {"title": "不要對公網開 port"},
+            },
+        }
+
+    def test_colliding_prev_labels_name_their_track(self):
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        self.assertIn("上一篇 · 我沒開過終端機", html)
+        self.assertIn("上一篇 · 我已經在跑 CLI agent", html)
+
+    def test_colliding_next_labels_name_their_track(self):
+        html = build._pager(self.config, self.strings, "zh-TW", "intro")
+        self.assertIn("下一篇 · 我沒開過終端機", html)
+        self.assertIn("下一篇 · 我已經在跑 CLI agent", html)
+
+    def test_unambiguous_label_keeps_no_track_suffix(self):
+        # tmux 的 next 在兩條 track 都是 tailscale，只會有一張「下一篇」。
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        self.assertIn(">下一篇<span>不要對公網開 port</span>", html)
+
+    def test_shared_neighbour_still_renders_one_card(self):
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        self.assertEqual(html.count('href="/guide/zh-TW/tailscale/"'), 1)
+
+    def test_single_track_article_has_plain_labels(self):
+        html = build._pager(self.config, self.strings, "zh-TW", "ssh")
+        self.assertIn(">上一篇<span>", html)
+        self.assertIn(">下一篇<span>", html)
+        self.assertNotIn("·", html)
+
+    def test_all_prev_cards_come_before_all_next_cards(self):
+        # 逐條 track 收集會讓順序變成 prev→next→prev，讀起來像上下顛倒。
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        keys = re.findall(r'class="pager-(\w+)"', html)
+        self.assertEqual(keys, ["prev", "prev", "next"])
+
+    def test_order_within_a_direction_follows_track_order(self):
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        self.assertLess(
+            html.index('data-tracks="beginner"'), html.index('data-tracks="cliuser"')
+        )
+
+    def test_missing_translation_drops_the_card_before_labelling(self):
+        self.config["content"] = {"zh-TW": ["intro", "tmux", "tailscale"]}
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        # ssh 沒有譯文，beginner 的上一篇消失，剩下的單一「上一篇」不需要後綴。
+        self.assertNotIn("ssh", html)
+        self.assertIn(">上一篇<span>你的 AI 應該在你睡覺時工作</span>", html)
+
+
+class TestPagerTrackMemory(unittest.TestCase):
+    """pager 要帶足夠的資料，讓前端在讀者選過路線後收掉另一條的卡。"""
+
+    def setUp(self):
+        self.config = {
+            "tracks": {
+                "beginner": ["intro", "ssh", "tmux", "tailscale"],
+                "cliuser": ["intro", "tmux", "tailscale"],
+            },
+            "content": {"zh-TW": ["intro", "ssh", "tmux", "tailscale"]},
+        }
+        self.strings = {
+            "ui": {
+                "prev": "上一篇",
+                "next": "下一篇",
+                "pagerTrackFormat": "{0} · {1}",
+                "pagerTrackJoin": "、",
+                "tracks": {
+                    "beginner": {"title": "我沒開過終端機"},
+                    "cliuser": {"title": "我已經在跑 CLI agent"},
+                },
+            },
+            "articles": {
+                "intro": {"title": "你的 AI 應該在你睡覺時工作"},
+                "ssh": {"title": "一條通往另一台電腦的加密隧道"},
+                "tmux": {"title": "讓 agent 繼續跑"},
+                "tailscale": {"title": "不要對公網開 port"},
+            },
+        }
+
+    def test_each_card_declares_its_tracks(self):
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        self.assertIn('data-tracks="beginner"', html)
+        self.assertIn('data-tracks="cliuser"', html)
+
+    def test_shared_card_declares_both_tracks(self):
+        # tailscale 在兩條 track 都是 tmux 的下一篇，不該被任何一邊收掉。
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        self.assertIn('data-tracks="beginner cliuser"', html)
+
+    def test_card_carries_the_plain_label_for_restoring(self):
+        html = build._pager(self.config, self.strings, "zh-TW", "tmux")
+        self.assertIn('data-label="上一篇"', html)
+        self.assertIn('data-label="下一篇"', html)
+
+
+class TestTrackChoiceWiring(unittest.TestCase):
+    """選路線和用路線是兩份 inline script，共用的 storage key 必須一致。"""
+
+    SRC = Path(__file__).resolve().parents[1]
+    KEY = "agentmux-guide-track"
+
+    def _template(self, name):
+        return (self.SRC / "templates" / name).read_text(encoding="utf-8")
+
+    def test_track_index_writes_the_shared_key(self):
+        html = self._template("track-index.html")
+        self.assertIn("localStorage.setItem('{0}'".format(self.KEY), html)
+
+    def test_article_reads_the_shared_key(self):
+        html = self._template("article.html")
+        self.assertIn("localStorage.getItem('{0}')".format(self.KEY), html)
+
+    def test_no_other_storage_key_is_used(self):
+        both = self._template("track-index.html") + self._template("article.html")
+        keys = set(re.findall(r"localStorage\.(?:get|set)Item\('([^']+)'", both))
+        self.assertEqual(keys, {self.KEY})
+
+    def test_both_scripts_guard_blocked_storage(self):
+        for name in ("track-index.html", "article.html"):
+            self.assertIn("try {", self._template(name), name)
+
+
+class TestTrackIndexLinks(BuildFixture):
+    def setUp(self):
+        super().setUp()
+        (self.src / "templates" / "track-index.html").write_text(
+            "<html>{{tracks}}</html>", encoding="utf-8"
+        )
+        strings = json.loads(
+            (self.src / "strings" / "zh-TW.json").read_text(encoding="utf-8")
+        )
+        strings["ui"]["trackIndexTitle"] = "Agentmux 指南"
+        strings["ui"]["trackIndexDescription"] = "從零開始。"
+        strings["ui"]["extendedReading"] = "延伸閱讀"
+        (self.src / "strings" / "zh-TW.json").write_text(
+            json.dumps(strings, ensure_ascii=False), encoding="utf-8"
+        )
+
+    def test_article_links_record_their_track(self):
+        config = make_config()
+        build.build_track_index(self.src, self.out, config, "zh-TW")
+        html = (self.out / "zh-TW" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('<a data-track="beginner" href="/guide/zh-TW/what-is-tmux/">', html)
+        self.assertIn('<a data-track="cliuser" href="/guide/zh-TW/what-is-tmux/">', html)
+
+    def test_extended_reading_links_record_their_track(self):
+        config = make_config()
+        config["trackExtended"] = {"cliuser": ["setup"]}
+        config["content"] = {"zh-TW": ["what-is-tmux", "setup"]}
+        (self.src / "content" / "setup").mkdir(parents=True, exist_ok=True)
+        (self.src / "content" / "setup" / "zh-TW.html").write_text("<p>x</p>", encoding="utf-8")
+        build.build_track_index(self.src, self.out, config, "zh-TW")
+        html = (self.out / "zh-TW" / "index.html").read_text(encoding="utf-8")
+        extended = html.split("延伸閱讀")[1]
+        self.assertIn('data-track="cliuser"', extended)
 
 
 class TestRootIndex(BuildFixture):

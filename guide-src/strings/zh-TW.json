@@ -4,6 +4,8 @@
     "troubleshooting": "疑難排解",
     "prev": "上一篇",
     "next": "下一篇",
+    "pagerTrackFormat": "{0} · {1}",
+    "pagerTrackJoin": "、",
     "trackIndexTitle": "Agentmux 指南",
     "trackIndexDescription": "從零開始，學會讓 AI coding agent 在你自己的機器上整晚工作，再用手機接回來。",
     "extendedReading": "延伸閱讀",

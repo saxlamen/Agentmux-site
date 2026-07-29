@@ -232,6 +232,32 @@ esac</code></pre>
 
         </article>
         
+        <script>
+            // 讀者在指南首頁選過路線的話，pager 只留那條路線的鄰居，並把標籤
+            // 還原成不帶路線名的版本。同步執行，避免先閃出兩張卡再收掉一張。
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // 這篇不在讀者的路線上，或本來就沒有分岔，維持原樣。
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
         <aside class="guide-cta">
             <p>14 天全功能試用，之後 Lifetime 買斷。</p>
             <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">在 App Store 下載</a>

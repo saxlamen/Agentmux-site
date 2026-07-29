@@ -15,5 +15,19 @@
         <h1>{{title}}</h1>
         {{tracks}}
     </main>
+    <script>
+        // 從哪一段點進文章，就當作讀者選了那條路線；文章頁的 pager 靠這個決定
+        // 要顯示哪一邊的鄰居。localStorage 被擋掉時靜靜略過就好。
+        (function () {
+            var links = document.querySelectorAll('a[data-track]');
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener('click', function () {
+                    try {
+                        localStorage.setItem('agentmux-guide-track', this.getAttribute('data-track'));
+                    } catch (e) {}
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -148,25 +148,62 @@ def _pager(config: dict, strings: dict, lang: str, slug: str) -> str:
     if not tracks:
         return ""
     available = set(config.get("content", {}).get(lang, []))
-    parts = []
-    seen = set()
+
+    # 一篇文章可以同時屬於多條 track，每條 track 的鄰居未必相同。先收集所有
+    # 鄰居（同一個目標只留一張卡，但記住是哪幾條 track 指向它）。
+    entries = []
+    by_target = {}
     for track in tracks:
         prev_slug, next_slug = neighbors(config, track, slug)
         for label_key, target in (("prev", prev_slug), ("next", next_slug)):
-            if not target or target in seen or target not in available:
+            if not target or target not in available:
                 continue
-            seen.add(target)
-            parts.append(
-                '<a class="pager-{0}" href="/guide/{1}/{2}/">{3}<span>{4}</span></a>'.format(
-                    label_key,
-                    lang,
-                    target,
-                    esc(strings["ui"][label_key]),
-                    esc(strings["articles"][target]["title"]),
-                )
-            )
-    if not parts:
+            if target in by_target:
+                entry = by_target[target]
+                if track not in entry["tracks"]:
+                    entry["tracks"].append(track)
+                continue
+            entry = {"key": label_key, "target": target, "tracks": [track]}
+            by_target[target] = entry
+            entries.append(entry)
+    if not entries:
         return ""
+
+    # 上面是按 track 逐條收集的，攤平後會變成「上一篇→下一篇→上一篇」。
+    # 重排成所有 prev 在前、所有 next 在後，各組內維持 track 的宣告順序。
+    entries = [e for e in entries if e["key"] == "prev"] + [
+        e for e in entries if e["key"] == "next"
+    ]
+
+    # 兩張卡都叫「上一篇」時，光看標籤無從分辨走的是哪條 track，所以只在這種
+    # 情況補上路線名稱；不重複的標籤維持乾淨。
+    counts = {}
+    for entry in entries:
+        counts[entry["key"]] = counts.get(entry["key"], 0) + 1
+
+    parts = []
+    for entry in entries:
+        plain = strings["ui"][entry["key"]]
+        label = plain
+        if counts[entry["key"]] > 1:
+            names = strings["ui"]["pagerTrackJoin"].join(
+                strings["ui"]["tracks"][track]["title"] for track in entry["tracks"]
+            )
+            label = strings["ui"]["pagerTrackFormat"].format(label, names)
+        # data-tracks / data-label 讓 track.js 在讀者選過路線後收掉另一條的卡，
+        # 並把標籤還原成不帶路線名的版本。沒有 JS 時看到的就是上面的完整標籤。
+        parts.append(
+            '<a class="pager-{0}" data-tracks="{1}" data-label="{2}"'
+            ' href="/guide/{3}/{4}/">{5}<span>{6}</span></a>'.format(
+                entry["key"],
+                esc(" ".join(entry["tracks"])),
+                esc(plain),
+                lang,
+                entry["target"],
+                esc(label),
+                esc(strings["articles"][entry["target"]]["title"]),
+            )
+        )
     return '<nav class="guide-pager">' + "".join(parts) + "</nav>"
 
 
@@ -223,8 +260,8 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
     for track_name, slugs in config["tracks"].items():
         track_strings = strings["ui"]["tracks"][track_name]
         items = "\n            ".join(
-            '<li><a href="/guide/{0}/{1}/">{2}</a></li>'.format(
-                lang, slug, esc(strings["articles"][slug]["title"])
+            '<li><a data-track="{0}" href="/guide/{1}/{2}/">{3}</a></li>'.format(
+                esc(track_name), lang, slug, esc(strings["articles"][slug]["title"])
             )
             for slug in slugs
             if slug in available
@@ -233,8 +270,8 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
         extended_html = ""
         if extended_slugs:
             extended_links = "、".join(
-                '<a href="/guide/{0}/{1}/">{2}</a>'.format(
-                    lang, slug, esc(strings["articles"][slug]["title"])
+                '<a data-track="{0}" href="/guide/{1}/{2}/">{3}</a>'.format(
+                    esc(track_name), lang, slug, esc(strings["articles"][slug]["title"])
                 )
                 for slug in extended_slugs
             )
