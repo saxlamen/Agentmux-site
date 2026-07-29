@@ -82,7 +82,7 @@
 .wizard-why, .wizard-verify, .wizard-fail { color: var(--muted); font-size: 16px; line-height: 1.7; }
 .wizard-why strong, .wizard-verify strong, .wizard-fail strong { color: var(--ink); }
 .wizard-cmd { position: relative; }
-.wizard-cmd pre { overflow-x: auto; }
+.wizard-cmd pre { overflow-x: auto; padding-right: 72px; }
 .wizard-copy { position: absolute; top: 10px; right: 10px; cursor: pointer;
                background: var(--panel-2); color: var(--muted);
                border: 1px solid var(--line); border-radius: 8px;

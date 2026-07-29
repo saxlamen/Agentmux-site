@@ -3,7 +3,7 @@
 
     var root = document.getElementById('wizard');
     if (!root) return;
-    var lang = root.getAttribute('data-lang');
+    var lang = root.getAttribute('data-wizard-lang');
     var data = null;
     var strings = null;
     var answers = {};
