@@ -54,6 +54,56 @@ class TestWizardData(unittest.TestCase):
                         "{0}.{1} missing in {2}".format(step["id"], field, code),
                     )
 
+    def test_every_question_and_option_has_a_ui_label(self):
+        # steps.json declares the option ids, and the tests above demand a step
+        # per option — but nothing tied an option id to the label the reader
+        # actually sees. Deleting ui.questions.agent.options left every other
+        # test green while shipping unlabelled buttons.
+        for lang in self.config["languages"]:
+            path = SRC / "wizard" / "strings" / "{0}.json".format(lang["code"])
+            if not path.exists():
+                continue
+            # .get, not ["questions"]: deleting the whole block should report
+            # which question lost its label, not raise a bare KeyError.
+            ui = load(path)["ui"].get("questions", {})
+            for q in self.data["questions"]:
+                self.assertIn(q["id"], ui, "{0} unlabelled in {1}".format(q["id"], lang["code"]))
+                self.assertTrue(ui[q["id"]].get("label", "").strip())
+                options = ui[q["id"]].get("options", {})
+                for opt in q["options"]:
+                    self.assertTrue(
+                        options.get(opt, "").strip(),
+                        "no label for {0}.{1} in {2}".format(q["id"], opt, lang["code"]),
+                    )
+
+    def test_the_wizard_chrome_strings_exist(self):
+        # wizard.js reads these by name; a missing one renders as undefined.
+        required = ("why", "verify", "fail", "copy", "copied", "restart", "share")
+        for lang in self.config["languages"]:
+            path = SRC / "wizard" / "strings" / "{0}.json".format(lang["code"])
+            if not path.exists():
+                continue
+            ui = load(path)["ui"]
+            for key in required:
+                self.assertTrue(
+                    ui.get(key, "").strip(),
+                    "ui.{0} missing in {1}".format(key, lang["code"]),
+                )
+
+    def test_no_step_string_is_blank(self):
+        # The completeness test above only checks a field is present. Blanking
+        # every string to "" satisfied it and shipped an empty checklist.
+        for lang in self.config["languages"]:
+            path = SRC / "wizard" / "strings" / "{0}.json".format(lang["code"])
+            if not path.exists():
+                continue
+            for step_id, fields in load(path)["steps"].items():
+                for name, value in fields.items():
+                    self.assertTrue(
+                        value.strip(),
+                        "{0}.{1} is blank in {2}".format(step_id, name, lang["code"]),
+                    )
+
     def test_every_troubleshoot_anchor_exists_in_the_source_fragment(self):
         # Reads the source fragment, not the built page: anchors are authored
         # in the fragment and build.py embeds it verbatim, so this is the same
