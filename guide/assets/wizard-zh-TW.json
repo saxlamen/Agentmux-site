@@ -1,0 +1,107 @@
+{
+  "ui": {
+    "questions": {
+      "machine": {
+        "label": "你的那台機器是什麼？",
+        "options": {
+          "mac": "一台 Mac",
+          "linux": "一台 Linux 主機",
+          "vps": "雲端 VPS",
+          "none": "我還沒有"
+        }
+      },
+      "agent": {
+        "label": "你要跑哪個 agent？",
+        "options": {
+          "claude": "Claude Code",
+          "codex": "Codex",
+          "gemini": "Gemini CLI",
+          "opencode": "OpenCode",
+          "shell": "只要 shell"
+        }
+      },
+      "reach": {
+        "label": "你想從哪裡連？",
+        "options": {
+          "lan": "同一個 Wi-Fi 就好",
+          "anywhere": "任何地方"
+        }
+      }
+    },
+    "why": "為什麼要做這步",
+    "verify": "怎麼知道成功了",
+    "fail": "沒成功的話",
+    "copy": "複製",
+    "copied": "已複製",
+    "restart": "重新選擇",
+    "share": "複製這份步驟的連結"
+  },
+  "steps": {
+    "pick-machine": {
+      "title": "先決定要用哪一台機器",
+      "why": "精靈接下來的每一步，都假設你已經有一台隨時開著、連得到網路的機器可以讓 Agentmux 連過去——可以是一台平常就開著的 Mac、一台你自己管理的 Linux 主機，或是一台雲端 VPS，三選一就好。",
+      "verifyHint": "回頭改選上面的問題：你已經有、或者打算準備的是 Mac、Linux 主機，還是 VPS。",
+      "failHint": "如果三個都還沒有，最快上手的路通常是租一台最便宜的雲端 VPS，開通之後照下一步「Linux 主機」的設定做就可以。"
+    },
+    "enable-ssh-mac": {
+      "title": "在 Mac 上打開遠端登入",
+      "why": "Mac 預設沒有開 SSH 服務。這行指令等同在「系統設定 → 一般 → 共享」把「遠端登入」打開，讓 Agentmux 之後可以用 SSH 連進來。",
+      "verifyHint": "在同一台 Mac 上打開終端機貼上驗證指令，能印出你目前登入的使用者名稱（不是錯誤訊息），就代表 SSH 服務已經在跑了。",
+      "failHint": "如果驗證指令顯示 Connection refused，或者連線被拒絕，先確認共享設定裡「允許存取」的使用者清單有沒有包含你目前這個帳號。"
+    },
+    "enable-ssh-linux": {
+      "title": "在 Linux 主機上啟用 SSH 服務",
+      "why": "多數 Linux 發行版預設沒有預先裝好 SSH 服務，而且套件名稱、服務名稱、甚至啟動服務的工具都因發行版而異：Debian、Ubuntu、Fedora、RHEL、Arch 用的是 systemd，Alpine 用的則是 OpenRC，機器上根本沒有 systemctl 這個指令。所以下面四行各自都是完整、獨立的寫法，每一行都已經包含「安裝 → 設成開機自動啟動 → 立刻啟動」三件事——請只跑你這台機器對應的那一行，其餘三行整行跳過，不要從上到下全部貼一遍。",
+      "verifyHint": "跑驗證指令，healthy 的畫面依你的發行版有兩種長相：systemd 那幾種（Debian、Ubuntu、Fedora、RHEL、Arch）會印出一段 ssh.service 或 sshd.service 的狀態，其中有 Active: active (running) 這一行就代表正常在跑（畫面若進入分頁模式，按 q 離開）；Alpine 則只會印出一行類似 * status: started 的結果。看到其中一種就可以，不需要兩種都出現。",
+      "failHint": "如果裝好、服務也顯示在跑，卻還是連不上，通常不是這台機器本身的問題，而是中間的防火牆或雲端主機商的安全群組沒放行對應的 port，一段一段排查會比較快找到卡在哪。另外 Alpine 的精簡安裝預設沒有 sudo，如果跳出 sudo: not found，代表你多半已經是 root，把那一行開頭的 sudo 拿掉再跑一次就好。"
+    },
+    "vps-ssh-ready": {
+      "title": "確認 VPS 已經可以用 SSH 連",
+      "why": "雲端 VPS 幾乎都預設就開著 SSH 服務，廠商開通時通常會直接給你一組帳密或金鑰，不需要像自架機器一樣自己另外裝或手動開啟服務。",
+      "verifyHint": "用廠商給的帳密或金鑰連上去，跑一次驗證指令，能印出使用者名稱就代表這台機器已經可以正常使用 SSH。",
+      "failHint": "如果連不上，先檢查廠商後台的防火牆或安全群組規則有沒有放行 SSH 用的那個 port，這是 VPS 最常見的卡點，通常不是 SSH 設定本身出了問題。"
+    },
+    "install-agent": {
+      "title": "在機器上裝好你選的 agent",
+      "why": "Agentmux 接的是一個已經在你機器上跑得動的 CLI agent，App 本身不負責安裝或登入這個 agent——照你選的那個工具官方的安裝步驟，先在這台機器上把它裝好、登入好。",
+      "verifyHint": "跑驗證指令，看到印出一段路徑（不是空白或錯誤訊息），就代表至少有一個 agent 指令已經裝在這個帳號的 PATH 找得到的地方。",
+      "failHint": "如果指令在你自己開的終端機能跑，透過 SSH 卻找不到，多半是 PATH 只在你手動登入時才生效，不是沒裝好，通常換成絕對路徑就能解決。"
+    },
+    "tmux-handled": {
+      "title": "tmux — 不需要動作",
+      "why": "你不用學怎麼裝 tmux。Agentmux 連上去之後會自己看你的機器是 apt、dnf、pacman 還是 brew，然後幫你裝好。",
+      "verifyHint": "這步沒有要你做的事，直接看下一步。",
+      "failHint": "如果之後 app 顯示自動安裝失敗，多半是 sudo 需要 TTY。"
+    },
+    "tailscale-host": {
+      "title": "在這台機器上安裝並登入 Tailscale",
+      "why": "要從任何地方連回這台機器，又不想把 SSH 開放到公網被掃描機器人整天敲門，最簡單的做法是把這台機器加入你的 Tailscale 網路——裝好、登入同一個帳號之後，這台機器就會多一個只有你自己連得到的私有位址。",
+      "verifyHint": "跑驗證指令，清單裡看到這台機器、狀態顯示 active，就代表 Tailscale 已經在跑，而且成功連進你的網路了。",
+      "failHint": "如果狀態一直卡在等待中，或這台機器根本沒出現在清單裡，先確認是不是用同一個帳號登入的，帳號不一致是最常見的原因。"
+    },
+    "tailscale-ios": {
+      "title": "在 iPhone / iPad 上安裝並登入 Tailscale",
+      "why": "手機這一端也要裝 Tailscale App、登入同一個帳號，兩台裝置才會出現在同一個私有網路裡，Agentmux 才連得到你剛剛設定好的那台機器。",
+      "verifyHint": "打開 Tailscale App，確認清單裡看得到剛剛那台機器，狀態顯示綠燈、在線。",
+      "failHint": "如果手機這邊登入的帳號跟機器那邊不是同一個，兩台裝置永遠不會出現在彼此的清單裡，這是最容易漏掉的地方。"
+    },
+    "find-lan-address": {
+      "title": "找出 Mac 在區網裡的位址",
+      "why": "只想在同一個 Wi-Fi 底下連線、不用 Tailscale 的話，得先知道這台 Mac 在區網裡的 IP，SSH 才知道要連去哪個位址。",
+      "verifyHint": "跑這行指令，印出一串像 192.168.1.23 的位址，就是接下來要用的目標。",
+      "failHint": "如果什麼都沒印出來，代表這台 Mac 目前上網的網路介面不是 en0——打開「系統設定 → Wi-Fi → 詳細資訊」直接看 IP 位址，一樣找得到。"
+    },
+    "find-lan-address-linux": {
+      "title": "找出 Linux 主機在區網裡的位址",
+      "why": "跟 Mac 一樣，只在同一個 Wi-Fi 或區網底下連線時，得先知道這台 Linux 主機的 IP，SSH 才知道要連去哪裡。",
+      "verifyHint": "跑這行指令，會印出這台機器目前所有網路介面的 IP，通常第一個就是你要用的區網位址（像 192.168.x.x 開頭）。",
+      "failHint": "如果印出好幾個位址不確定該選哪個，通常要挑跟你手機同一個網段（例如同樣是 192.168.1.x）開頭的那一個。"
+    },
+    "add-server": {
+      "title": "在 Agentmux 裡新增這台伺服器",
+      "why": "前面幾步都是把「這台機器可以被連到」這件事準備好；這一步才是真正在 Agentmux 裡把它加進去——填主機位址、帳號，以及你剛剛確認過的連線方式。",
+      "verifyHint": "新增完成後 Agentmux 會嘗試連線一次；看到伺服器狀態顯示已連線、能看到終端機畫面，就代表整套設定成功了。",
+      "failHint": "如果新增後顯示連不上，回頭對照你剛剛選的答案，看看是機器那端的 SSH、agent 安裝，還是 Tailscale 沒設定好，八成是前面某一步漏掉了。"
+    }
+  }
+}

@@ -6,6 +6,7 @@ from __future__ import annotations
 import html
 import json
 import re
+import shutil
 from pathlib import Path
 
 TOKEN = re.compile(r"\{\{(\w+)\}\}")
@@ -295,6 +296,16 @@ def main() -> int:
             if slug in matrix[code]:
                 build_article(src, out, config, code, slug)
         build_track_index(src, out, config, code)
+
+    assets = out / "assets"
+    assets.mkdir(parents=True, exist_ok=True)
+    shutil.copy(src / "wizard.js", assets / "wizard.js")
+    shutil.copy(src / "wizard" / "steps.json", assets / "steps.json")
+    for lang in config["languages"]:
+        wstrings = src / "wizard" / "strings" / "{0}.json".format(lang["code"])
+        if wstrings.exists():
+            shutil.copy(wstrings, assets / "wizard-{0}.json".format(lang["code"]))
+
     build_root_index(src, out, config)
     build_sitemap(web_root, config)
     print("built {0} language(s)".format(len([l for l in config["languages"] if matrix.get(l["code"])])))

@@ -50,6 +50,10 @@
     "why-agentmux": {
       "title": "為什麼不是 Termius / Blink",
       "description": "通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。"
+    },
+    "setup": {
+      "title": "15 分鐘，讓你的 agent 開始整晚工作",
+      "description": "回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。"
     }
   }
 }
