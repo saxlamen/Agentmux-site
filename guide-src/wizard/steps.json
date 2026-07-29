@@ -20,13 +20,12 @@
       "id": "enable-ssh-linux",
       "when": { "machine": ["linux"] },
       "commands": [
-        "sudo apt-get update && sudo apt-get install -y openssh-server   # Debian / Ubuntu",
-        "sudo dnf install -y openssh-server                              # Fedora / RHEL",
-        "sudo pacman -S --noconfirm openssh                              # Arch",
-        "sudo apk add openssh                                            # Alpine",
-        "sudo systemctl enable --now ssh || sudo systemctl enable --now sshd"
+        "sudo apt-get update && sudo apt-get install -y openssh-server && sudo systemctl enable --now ssh    # Debian / Ubuntu",
+        "sudo dnf install -y openssh-server && sudo systemctl enable --now sshd                              # Fedora / RHEL",
+        "sudo pacman -S --noconfirm openssh && sudo systemctl enable --now sshd                              # Arch",
+        "sudo apk add openssh && sudo rc-update add sshd default && sudo rc-service sshd start               # Alpine (OpenRC)"
       ],
-      "verify": "systemctl status ssh || systemctl status sshd",
+      "verify": "systemctl status ssh || systemctl status sshd || rc-service sshd status",
       "troubleshoot": "cannot-connect"
     },
     {

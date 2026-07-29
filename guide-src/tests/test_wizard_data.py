@@ -127,6 +127,41 @@ class TestWizardData(unittest.TestCase):
             ]
             self.assertTrue(gated, "no machine-only step for {0}".format(option))
 
+    def test_every_agent_option_except_shell_has_an_install_step(self):
+        # The agent dimension free-rides on the other two: for any combination
+        # a machine-gated step always matches, so deleting install-agent
+        # outright leaves every other test green. `shell` is carved out by
+        # name because it legitimately needs no install step.
+        agent = [q for q in self.data["questions"] if q["id"] == "agent"][0]
+        for option in agent["options"]:
+            if option == "shell":
+                continue
+            gated = [
+                s
+                for s in self.data["steps"]
+                if option in s.get("when", {}).get("agent", [])
+            ]
+            self.assertTrue(gated, "no install step for agent={0}".format(option))
+
+    def test_shell_is_the_only_agent_option_without_an_install_step(self):
+        # Pins the carve-out above so a second exempt option cannot silently
+        # widen it and hide a dropped install step behind the exclusion.
+        #
+        # The expected list is derived from the options rather than hardcoded
+        # as ["shell"]: `shell` is an option, not a requirement, so dropping it
+        # from the question must stay legal. A hardcoded ["shell"] cannot tell
+        # "shell was removed as an option" from "shell was given an install
+        # step" — both leave `exempt` empty — and would fail the first case.
+        agent = [q for q in self.data["questions"] if q["id"] == "agent"][0]
+        exempt = [
+            o
+            for o in agent["options"]
+            if not any(
+                o in s.get("when", {}).get("agent", []) for s in self.data["steps"]
+            )
+        ]
+        self.assertEqual(exempt, [o for o in agent["options"] if o == "shell"])
+
     def test_every_reach_option_has_a_step(self):
         reach = [q for q in self.data["questions"] if q["id"] == "reach"][0]
         for option in reach["options"]:

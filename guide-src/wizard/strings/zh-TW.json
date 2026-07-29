@@ -51,9 +51,9 @@
     },
     "enable-ssh-linux": {
       "title": "在 Linux 主機上啟用 SSH 服務",
-      "why": "多數 Linux 發行版預設沒有預先裝好 SSH 服務，而且套件名稱、服務名稱在不同發行版之間並不一樣。指令依發行版分成四行，只要跑你機器對應的那一行、其餘跳過就好；最後一行負責啟動並設成開機自動執行，用 || 接了兩種可能的服務名稱，不用自己先判斷你的發行版叫哪一種。",
-      "verifyHint": "跑驗證指令，看到 Active: active (running) 這一行，就代表 SSH 服務正常在跑；ssh 和 sshd 兩個服務名稱都會被檢查一次，看到其中一個顯示這行結果即可，不用兩個都對。",
-      "failHint": "如果裝好、服務也顯示在跑，卻還是連不上，通常不是這台機器本身的問題，而是中間的防火牆或雲端主機商的安全群組沒放行對應的 port，一段一段排查會比較快找到卡在哪。"
+      "why": "多數 Linux 發行版預設沒有預先裝好 SSH 服務，而且套件名稱、服務名稱、甚至啟動服務的工具都因發行版而異：Debian、Ubuntu、Fedora、RHEL、Arch 用的是 systemd，Alpine 用的則是 OpenRC，機器上根本沒有 systemctl 這個指令。所以下面四行各自都是完整、獨立的寫法，每一行都已經包含「安裝 → 設成開機自動啟動 → 立刻啟動」三件事——請只跑你這台機器對應的那一行，其餘三行整行跳過，不要從上到下全部貼一遍。",
+      "verifyHint": "跑驗證指令，healthy 的畫面依你的發行版有兩種長相：systemd 那幾種（Debian、Ubuntu、Fedora、RHEL、Arch）會印出一段 ssh.service 或 sshd.service 的狀態，其中有 Active: active (running) 這一行就代表正常在跑（畫面若進入分頁模式，按 q 離開）；Alpine 則只會印出一行類似 * status: started 的結果。看到其中一種就可以，不需要兩種都出現。",
+      "failHint": "如果裝好、服務也顯示在跑，卻還是連不上，通常不是這台機器本身的問題，而是中間的防火牆或雲端主機商的安全群組沒放行對應的 port，一段一段排查會比較快找到卡在哪。另外 Alpine 的精簡安裝預設沒有 sudo，如果跳出 sudo: not found，代表你多半已經是 root，把那一行開頭的 sudo 拿掉再跑一次就好。"
     },
     "vps-ssh-ready": {
       "title": "確認 VPS 已經可以用 SSH 連",
