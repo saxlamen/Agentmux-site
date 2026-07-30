@@ -1,0 +1,110 @@
+{
+  "ui": {
+    "questions": {
+      "machine": {
+        "label": "What is the machine you'll connect to?",
+        "options": {
+          "mac": "A Mac",
+          "linux": "A Linux box",
+          "vps": "A cloud VPS",
+          "none": "I don't have one yet"
+        }
+      },
+      "agent": {
+        "label": "Which agent do you want to run?",
+        "options": {
+          "claude": "Claude Code",
+          "codex": "Codex",
+          "gemini": "Gemini CLI",
+          "opencode": "OpenCode",
+          "shell": "Just a shell"
+        }
+      },
+      "reach": {
+        "label": "Where will you connect from?",
+        "options": {
+          "lan": "Same Wi-Fi is fine",
+          "anywhere": "Anywhere"
+        }
+      }
+    },
+    "why": "Why this step",
+    "verify": "How you'll know it worked",
+    "fail": "If it didn't work",
+    "labelColon": ": ",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Copy failed — select the text and copy it manually",
+    "restart": "Start over",
+    "share": "Copy a link to this checklist",
+    "loadFailed": "Could not load the setup wizard. Please refresh."
+  },
+  "steps": {
+    "pick-machine": {
+      "title": "Decide which machine to use",
+      "why": "Every step after this one assumes you have a machine that stays on, stays online, and can accept a connection from Agentmux. A Mac you leave running, a Linux box you administer yourself, or a cloud VPS — any one of the three will do.",
+      "verifyHint": "Go back and answer the question above: whether the machine you have, or plan to get, is a Mac, a Linux box, or a VPS.",
+      "failHint": "If you have none of the three, the fastest route is usually to rent the cheapest cloud VPS you can find. Once it's provisioned, follow the Linux box instructions in the next step."
+    },
+    "enable-ssh-mac": {
+      "title": "Turn on Remote Login on the Mac",
+      "why": "macOS ships with the SSH service switched off. This command is the equivalent of enabling Remote Login under System Settings → General → Sharing, which is what lets Agentmux reach the machine over SSH later.",
+      "verifyHint": "Open Terminal on that same Mac and paste the verification command. If it prints the name of the user you're logged in as rather than an error, the SSH service is running.",
+      "failHint": "If the verification command says Connection refused, or the connection is rejected, check whether the account you're using is in the allowed-users list under the Sharing settings."
+    },
+    "enable-ssh-linux": {
+      "title": "Enable the SSH service on the Linux box",
+      "why": "Most distributions don't ship the SSH service preinstalled, and the package name, the service name, and even the tool that starts services all vary. Debian, Ubuntu, Fedora, RHEL, and Arch use systemd; Alpine uses OpenRC and has no systemctl command at all. So each of the four lines below is complete and self-contained — every one of them installs the service, enables it at boot, and starts it right away. Run only the line for your distribution and skip the other three entirely. Do not paste all of them in order.",
+      "verifyHint": "Run the verification command. A healthy result looks like one of two things depending on your distribution. On the systemd ones (Debian, Ubuntu, Fedora, RHEL, Arch) you'll get a status block for ssh.service or sshd.service containing the line Active: active (running) — press q if the output opens in a pager. On Alpine you'll get a single line along the lines of * status: started. Either one is fine; you don't need both.",
+      "failHint": "If the service is installed and reported as running but you still can't connect, the problem usually isn't this machine — it's a firewall in between, or a cloud provider security group that hasn't opened the port. Working through it one hop at a time is the quickest way to find where it stops. Also note that a minimal Alpine install has no sudo: if you see sudo: not found, you're almost certainly already root, so drop the leading sudo and run the line again."
+    },
+    "vps-ssh-ready": {
+      "title": "Confirm the VPS already accepts SSH",
+      "why": "Cloud VPS images almost always have the SSH service running from the start, and the provider usually hands you either a password or a key when it's provisioned. Unlike a machine you set up yourself, there's nothing to install or switch on.",
+      "verifyHint": "Connect with the credentials the provider gave you and run the verification command once. If it prints a username, SSH is working on this machine.",
+      "failHint": "If you can't connect, check the firewall or security group rules in the provider's console and make sure the SSH port is open. That's the most common snag with a VPS, and it usually isn't the SSH configuration itself."
+    },
+    "install-agent": {
+      "title": "Install the agent you picked on the machine",
+      "why": "Agentmux attaches to a CLI agent that already runs on your machine; the app doesn't install or sign in to that agent for you. Follow the official install instructions for the tool you chose and get it installed and signed in on this machine first.",
+      "verifyHint": "Run the verification command. If it prints a path rather than nothing or an error, at least one agent command is installed somewhere this account's PATH can find it.",
+      "failHint": "If the command works in a terminal you opened yourself but can't be found over SSH, it's usually because the PATH is only set up for interactive logins — not because the install failed. Using the absolute path normally solves it."
+    },
+    "tmux-handled": {
+      "title": "tmux — nothing to do",
+      "why": "You don't need to learn how to install tmux. Once Agentmux connects, it checks whether your machine uses apt, dnf, pacman, or brew, and installs it for you.",
+      "verifyHint": "There's nothing to do in this step. Move on to the next one.",
+      "failHint": "If the app later reports that the automatic install failed, the cause is usually that sudo wants a TTY."
+    },
+    "tailscale-host": {
+      "title": "Install Tailscale on the machine and sign in",
+      "why": "To reach this machine from anywhere without exposing SSH to the public internet and the bots that scan it all day, the simplest approach is to put the machine on your Tailscale network. Once it's installed and signed in to the same account, the machine gains a second, private address that only you can reach.",
+      "verifyHint": "Run the verification command. Seeing this machine in the list with a status of active means Tailscale is running and has joined your network.",
+      "failHint": "If the status is stuck waiting, or the machine doesn't appear in the list at all, check that both ends are signed in to the same account. A mismatched account is by far the most common cause."
+    },
+    "tailscale-ios": {
+      "title": "Install Tailscale on the iPhone or iPad and sign in",
+      "why": "The phone needs the Tailscale app too, signed in to the same account. Only then do both devices land on the same private network, which is what lets Agentmux reach the machine you just set up.",
+      "verifyHint": "Open the Tailscale app and confirm the machine appears in the list with a green, online status.",
+      "failHint": "If the phone is signed in to a different account than the machine, the two devices will never appear in each other's lists. This is the easiest thing to overlook."
+    },
+    "find-lan-address": {
+      "title": "Find the Mac's address on your local network",
+      "why": "If you only want to connect over the same Wi-Fi and skip Tailscale, you need the Mac's local IP first — otherwise SSH has no address to aim at.",
+      "verifyHint": "Run this command. It prints something like 192.168.1.23, and that's the address you'll use next.",
+      "failHint": "If nothing prints, this Mac isn't reaching the network through en0. Open System Settings → Wi-Fi → Details and read the IP address there instead."
+    },
+    "find-lan-address-linux": {
+      "title": "Find the Linux box's address on your local network",
+      "why": "Same as on the Mac: when you're connecting over the same Wi-Fi or local network, you need the machine's IP before SSH knows where to go.",
+      "verifyHint": "Run this command. It prints the IP for every network interface on the machine, and the first one is usually the local address you want — typically starting 192.168.x.x.",
+      "failHint": "If several addresses print and you're unsure which to use, pick the one on the same subnet as your phone — for example, also starting 192.168.1.x."
+    },
+    "add-server": {
+      "title": "Add the server in Agentmux",
+      "why": "Everything so far was about making the machine reachable. This step is where you actually add it in Agentmux: the host address, the account, and the connection method you just confirmed.",
+      "verifyHint": "Agentmux tries to connect as soon as you finish adding it. A server status of connected, plus a terminal you can see, means the whole setup worked.",
+      "failHint": "If it can't connect after you add it, go back over the answers you gave and check each one in turn — SSH on the machine, the agent install, or Tailscale. Nine times out of ten a step above was missed."
+    }
+  }
+}

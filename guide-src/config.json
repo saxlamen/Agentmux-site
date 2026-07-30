@@ -4,7 +4,8 @@
     "appStoreUrl": "https://apps.apple.com/app/id6766158521"
   },
   "languages": [
-    { "code": "zh-TW", "htmlLang": "zh-Hant", "label": "繁體中文" }
+    { "code": "zh-TW", "htmlLang": "zh-Hant", "label": "繁體中文" },
+    { "code": "en", "htmlLang": "en", "label": "English" }
   ],
   "slugs": [
     "why-remote-vibe-coding",
@@ -41,6 +42,17 @@
   },
   "content": {
     "zh-TW": [
+      "why-remote-vibe-coding",
+      "why-not-gui-ide",
+      "what-is-cli",
+      "what-is-ssh",
+      "what-is-tmux",
+      "what-is-tailscale",
+      "why-agentmux",
+      "setup",
+      "troubleshooting"
+    ],
+    "en": [
       "why-remote-vibe-coding",
       "why-not-gui-ide",
       "what-is-cli",

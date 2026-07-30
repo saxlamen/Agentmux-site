@@ -1,0 +1,122 @@
+<p>If you already write code with a CLI agent like Claude Code or Codex, you've probably noticed something odd: it's the one doing the work, but you're the one who's tied down. This article is about what that tie actually is, why it can be undone, and what your day looks like once it is.</p>
+
+<section id="the-cycle">
+  <h2>First, see where the time actually goes</h2>
+
+  <p>A round of work with a CLI agent almost always has the same rhythm:</p>
+  <pre><code>You talk for 30 seconds → it runs for 5–20 minutes → it needs you to decide something → repeat</code></pre>
+  <p>Lay a whole day out in those proportions and the conclusion is mildly counterintuitive: what eats the time isn't typing. Those 30 seconds describing what you want are the shortest part of the whole thing. Everything after is pure waiting — waiting while it reads the project, waiting while it edits a dozen files, waiting for the tests. Then it stops to ask "should I handle this migration while I'm here?", you answer in one line, and it's another five minutes, another twenty.</p>
+  <p>By the end of the day you might have produced less than ten minutes of actual input, and lost several hours. Those hours weren't work. They were <strong>standby</strong>: you did nothing, but you couldn't leave, because at any moment it was going to need one sentence from you.</p>
+</section>
+
+<section id="the-binding">
+  <h2>The usual setup nails standby to one laptop</h2>
+
+  <p>The trouble is that in the default arrangement, this standby has a physical location. The agent runs in a terminal window on your laptop, that window is tied to that shell, and that shell is tied to that one machine being awake. Which leaves you two options:</p>
+  <p><strong>Sit and wait.</strong> Stay in the chair, eyes on a screen where nothing happens most of the time, purely so you can answer within thirty seconds when it asks. You spend an hour and get three replies out of it.</p>
+  <p><strong>Or close the laptop.</strong> Shut the lid, the process is suspended or simply dies, the session is gone, and the context the agent had built up — which files it read, how far it got, why it chose this approach — goes with it. Coming back later means opening a new one, explaining the whole thing again, and starting from the top.</p>
+  <p>Both options pay the same bill. You aren't tied to the work; you're tied to <strong>where that machine happens to be</strong>.</p>
+</section>
+
+<section id="three-parts">
+  <h2>Three pieces, each undoing one tie</h2>
+
+  <p>The tie isn't one solid thing. It's three layers stacked up, and each layer has a standard tool, decades old, that takes it apart. Individually all three are unremarkable; the point is what they do stacked together:</p>
+
+  <table>
+    <thead>
+      <tr><th>Piece</th><th>The tie it undoes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CLI</td>
+        <td>The agent is a plain-text process with no need for a GUI → it can live on <strong>another machine</strong></td>
+      </tr>
+      <tr>
+        <td>tmux</td>
+        <td>The session is pinned to the server and survives a dropped connection → standby <strong>doesn't need you present</strong></td>
+      </tr>
+      <tr>
+        <td>SSH + Tailscale</td>
+        <td>Reattach securely from any network, with no public port and no static IP → standby <strong>isn't tied to a device or a place</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>The order matters. The CLI comes first, because only then can the agent leave your laptop for the Mac mini at home that's never been switched off. tmux comes next, because only then is the session pinned to that machine and able to keep running when your connection drops. SSH plus Tailscale comes last, because only then can you reattach to that same session from the train, from the office, from someone else's Wi-Fi — without opening a single outward port on your router.</p>
+  <p>Drop any one of them and it falls apart. CLI without tmux and the agent dies on disconnect. tmux without a secure way in and you can only use it on your home Wi-Fi.</p>
+</section>
+
+<section id="the-payoff">
+  <h2>The result: standby costs almost nothing</h2>
+
+  <p>With all three layers gone, the price of standby drops from <strong>a laptop plus a fixed location</strong> to <strong>the phone in your pocket plus fifteen seconds</strong>.</p>
+  <p>That's not a difference of degree, it's a difference in kind. When reattaching takes fifteen seconds, you no longer have to "set aside time to babysit it." You glance at it in a queue, at a crossing, before bed; you reply "use the second approach"; the phone goes back in your pocket. The agent keeps going and you keep living your life.</p>
+  <p>And since standby no longer requires you to be there, the work can move into the hours when you were never going to be there anyway. Hand it a refactor and go to dinner. Start a test-fixing session before bed and read the results in the morning. That machine of yours was sitting idle all night; now it spends the night working for you.</p>
+</section>
+
+<section id="alternatives">
+  <h2>What about the other approaches?</h2>
+
+  <p>There's more than one road to reaching your own agent remotely. Line them up against the same criteria and the differences get clear — especially the last column, which is where most people discover they're stuck only after the fact.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Approach</th>
+        <th>Cost of standby</th>
+        <th>Does context survive</th>
+        <th>Network setup needed</th>
+        <th>Can it really edit your files</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Carry the laptop</td>
+        <td>You need a bag, a seat, and power</td>
+        <td>Stops when you close the lid</td>
+        <td>None, but the machine has to travel with you</td>
+        <td>Yes — the files are local</td>
+      </tr>
+      <tr>
+        <td>VNC remote desktop</td>
+        <td>Needs a screen big enough, and a mouse UI driven by finger</td>
+        <td>Survives as long as the desktop session does</td>
+        <td>Punch through for VNC, or stand up a VPN</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>Browser-based agent</td>
+        <td>Low — just open a browser</td>
+        <td>Lives on someone else's server</td>
+        <td>None</td>
+        <td>It edits a copy in a cloud sandbox, not the one on your machine</td>
+      </tr>
+      <tr>
+        <td>Cloud environments like Codespaces</td>
+        <td>Low, but you need a browser</td>
+        <td>The container gets reclaimed after enough idle time</td>
+        <td>None, but the project goes to the cloud and you're billed by usage</td>
+        <td>Yes, but it's the repo inside the cloud container</td>
+      </tr>
+      <tr>
+        <td>General SSH app</td>
+        <td>A phone is enough</td>
+        <td>Holds up, thanks to tmux</td>
+        <td>Securing the way in is on you</td>
+        <td>Yes, but the interface is a desktop terminal moved across as-is</td>
+      </tr>
+      <tr>
+        <td>Agentmux</td>
+        <td>A phone, fifteen seconds to reattach</td>
+        <td>tmux is on the server, regardless of the phone</td>
+        <td>Tailscale, with no public port</td>
+        <td>Yes — the copy on your own machine</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>That last column is the watershed. An agent running in someone else's cloud sandbox is forever editing a copy: your <code>.env</code> isn't there, neither is that internal package you just installed, nor the database that only runs locally. On the SSH-plus-tmux road, the agent sits on your own machine, in your own environment, editing your own files — the only difference being that this time it's your phone watching it.</p>
+</section>
+
+<p class="track-fallback">Not sure where to start? <a href="/guide/en/">Help me pick a track</a>.</p>

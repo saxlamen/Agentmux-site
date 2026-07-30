@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why the strongest coding agents live in the terminal — Agentmux Guide</title>
+    <meta name="description" content="The CLI isn&#x27;t hard for its own sake — it&#x27;s where an agent gets full filesystem access and permission to execute. Browser agents can&#x27;t see your files and IDE plugins usually can&#x27;t run freely. This is a capability boundary, not a question of looks.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Why the strongest coding agents live in the terminal">
+    <meta property="og:description" content="The CLI isn&#x27;t hard for its own sake — it&#x27;s where an agent gets full filesystem access and permission to execute. Browser agents can&#x27;t see your files and IDE plugins usually can&#x27;t run freely. This is a capability boundary, not a question of looks.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Why the strongest coding agents live in the terminal">
+    <meta name="twitter:description" content="The CLI isn&#x27;t hard for its own sake — it&#x27;s where an agent gets full filesystem access and permission to execute. Browser agents can&#x27;t see your files and IDE plugins usually can&#x27;t run freely. This is a capability boundary, not a question of looks.">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Why the strongest coding agents live in the terminal", "description": "The CLI isn't hard for its own sake — it's where an agent gets full filesystem access and permission to execute. Browser agents can't see your files and IDE plugins usually can't run freely. This is a capability boundary, not a question of looks.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-cli/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-cli/"}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/en/">Guide home</a>
+        <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>Why the strongest coding agents live in the terminal</h1>
+            <p>"CLI" sounds like a punishment — no mouse, no buttons, just a blinking cursor. Yet every one of the strongest coding agents of the last few years, from Claude Code to Codex, lives there. Not because the people who build them are purists, but because the terminal hands them something no other interface can: <strong>full filesystem access and permission to execute</strong>.</p>
+
+<section id="terminal">
+  <h2>What a terminal actually is</h2>
+  <p>Strip it down and a terminal is simple: a program that does two things. It accepts the text you type, and it prints text back. No layers, no buttons — characters in, characters out. That simplicity is exactly why an agent can drive one end to end. Every command it types is indistinguishable from one you'd type yourself, and every error it reads is word for word the error you would have seen.</p>
+</section>
+
+<section id="capability-boundary">
+  <h2>A capability boundary, not a question of looks</h2>
+  <p>A browser-based agent can't see a single file on your computer; it lives inside a tab. An IDE plugin can see the files you have open, but it's usually confined to making suggestions — it can't touch git, can't run your tests, and certainly can't install packages. A CLI agent is different. It holds exactly the permissions you hold when you type commands yourself: it can read the whole repo, run <code>git commit</code>, run the test suite, install dependencies. Claude Code, Codex, Gemini CLI, and OpenCode are all in this category — agents that can issue commands to the entire machine, rather than spectators stuck in a sandbox, able to see but not act. This gap isn't a vendor's design choice meant to please anyone. It's the permission set they inherit automatically once they pick the terminal as their interface.</p>
+</section>
+
+<section id="concrete-example">
+  <h2>What that looks like in practice</h2>
+  <p>Running for real, it goes like this. You say "fix this bug." The agent reads the relevant files, edits the code, runs <code>npm test</code>, sees one test still red, goes back and edits again, runs it again — until everything is green, and you never clicked a button. That loop can finish on its own precisely because the agent has the terminal's full execution rights. Move it to a browser tab or an IDE plugin and the loop stalls at step two, waiting for you to come back and press the next thing.</p>
+</section>
+
+<p>These agents can run on a different machine — but first you have to be able to reach it.</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/why-not-gui-ide/">Previous<span>Why not Cursor or VS Code</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-ssh/">Next<span>An encrypted tunnel to another computer</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14-day full-feature trial, then a one-time Lifetime purchase.</p>
+            <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">Download on the App Store</a>
+        </aside>
+    </main>
+</body>
+</html>

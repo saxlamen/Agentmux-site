@@ -1,0 +1,20 @@
+<p>You put your phone away, the SSH tunnel drops, and the agent dies with it. That's not a coincidence, it's mechanics. When the connection goes, the pseudo-terminal your login was using is closed, and the kernel sends a <strong>SIGHUP</strong> (hangup) signal to every process attached to it — your shell included, and the agent you started directly inside that shell along with it. Any process that hasn't gone out of its way to handle that signal terminates by default. So your agent vanishes with the connection, without a chance to say goodbye, and everything half-finished is thrown away.</p>
+
+<section id="session-elsewhere">
+  <h2>tmux lets the session live somewhere else</h2>
+  <p>This is the problem tmux solves. It opens a session on the server, and your agent runs inside that session rather than inside the SSH connection that keeps dropping. When your phone attaches, all it's doing is opening a window onto what that session currently looks like. When the connection drops, the window is what disappears — the session, and the agent running in it, stay on the server and carry on, uninterrupted.</p>
+</section>
+
+<section id="detach-attach">
+  <h2>Detach and attach are the same as turning off a television</h2>
+  <p>The mental model is a lot like a TV. Switch it off and the picture in your living room is gone, but the broadcast never stopped — it kept going the whole time. Turn it back on and you're on the same channel, picking up wherever it has got to. In tmux those two actions are called <strong>detach</strong> (close the window) and <strong>attach</strong> (open it again), and neither has anything to do with what's actually running on the machine.</p>
+</section>
+
+<section id="what-it-means-for-agents">
+  <h2>What this means for an agent</h2>
+  <p>Here's the payoff. You lose signal on the train, again in a lift, again switching Wi-Fi — and as long as you're attaching to the same tmux session, you can drop ten times without the agent being interrupted once. It doesn't know you ever disconnected, because it was never living inside your connection to begin with.</p>
+</section>
+
+<p>Knowing what tmux is for is enough. <strong>Agentmux handles the installing</strong> — once it connects, it works out whether your machine uses apt, dnf, pacman, or brew, and sets it up for you.</p>
+
+<p>So the agent survives now. That leaves one last question: how do you get in from outside?</p>

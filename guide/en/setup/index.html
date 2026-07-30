@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15 minutes to an agent that works all night — Agentmux Guide</title>
+    <meta name="description" content="Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/setup/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/setup/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/setup/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="15 minutes to an agent that works all night">
+    <meta property="og:description" content="Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/setup/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="15 minutes to an agent that works all night">
+    <meta name="twitter:description" content="Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "HowTo", "headline": "15 minutes to an agent that works all night", "description": "Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/setup/", "url": "https://agentmux.saxcave.cc/guide/en/setup/"}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/en/">Guide home</a>
+        <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>15 minutes to an agent that works all night</h1>
+            <p>Answer three questions and I'll give you a checklist built for your setup. Every step tells you <strong>why you're doing it</strong>, <strong>what the command is</strong>, <strong>how to confirm it worked</strong>, and <strong>where to look if it didn't</strong>.</p>
+<div id="wizard" data-wizard-lang="en" data-load-failed="Could not load the setup wizard. Please refresh.">
+    <noscript><p>The setup wizard needs JavaScript. You can also go straight to the <a href="/guide/en/troubleshooting/">troubleshooting</a> page.</p></noscript>
+</div>
+<script src="/guide/assets/wizard.js" defer></script>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="Previous" href="/guide/en/why-agentmux/">Previous<span>Why not Termius or Blink</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14-day full-feature trial, then a one-time Lifetime purchase.</p>
+            <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">Download on the App Store</a>
+        </aside>
+    </main>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "ui": {
+    "guideHome": "Guide home",
+    "troubleshooting": "Troubleshooting",
+    "prev": "Previous",
+    "next": "Next",
+    "pagerTrackFormat": "{0} · {1}",
+    "listJoin": ", ",
+    "labelColon": ": ",
+    "trackIndexTitle": "Agentmux Guide",
+    "trackIndexDescription": "Start from nothing and end with an AI coding agent working through the night on your own machine, reachable from your phone.",
+    "extendedReading": "Further reading",
+    "ctaLine": "14-day full-feature trial, then a one-time Lifetime purchase.",
+    "ctaButton": "Download on the App Store",
+    "tracks": {
+      "beginner": {
+        "title": "I've never opened a terminal",
+        "blurb": "You write code with AI but have never touched SSH. Build the whole mental model from scratch."
+      },
+      "cliuser": {
+        "title": "I already run CLI agents",
+        "blurb": "Claude Code or Codex is already running on your Mac. You just need the part where you reach it from anywhere."
+      }
+    }
+  },
+  "articles": {
+    "why-remote-vibe-coding": {
+      "title": "Your AI should be working while you sleep",
+      "description": "What a CLI agent really costs you is not typing time — it's standby time. The CLI, tmux, and SSH plus Tailscale each undo one layer of that, taking standby from a single laptop down to the phone in your pocket."
+    },
+    "why-not-gui-ide": {
+      "title": "Why not Cursor or VS Code",
+      "description": "An agent inside a GUI IDE is tied to a process that needs a screen. A CLI agent's interface is a byte stream you can reattach to. That's an architectural difference, not a matter of taste."
+    },
+    "troubleshooting": {
+      "title": "Stuck? Start here",
+      "description": "Can't connect, key rejected, tmux not found, agent command missing — the eight things that most often go wrong when setting up remote development, and how to fix each one."
+    },
+    "what-is-cli": {
+      "title": "Why the strongest coding agents live in the terminal",
+      "description": "The CLI isn't hard for its own sake — it's where an agent gets full filesystem access and permission to execute. Browser agents can't see your files and IDE plugins usually can't run freely. This is a capability boundary, not a question of looks."
+    },
+    "what-is-ssh": {
+      "title": "An encrypted tunnel to another computer",
+      "description": "SSH opens an encrypted channel between your device and another machine. You're connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords."
+    },
+    "what-is-tmux": {
+      "title": "Keep the agent running after you put your phone away",
+      "description": "When SSH drops, the processes you started get SIGHUP and die. tmux leaves the session living on the server so you're only ever attaching to it — and a dropped connection no longer interrupts the agent."
+    },
+    "what-is-tailscale": {
+      "title": "Don't open a port to the public internet",
+      "description": "Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach."
+    },
+    "why-agentmux": {
+      "title": "Why not Termius or Blink",
+      "description": "General SSH apps assume you came to type commands. Agentmux assumes you came to rejoin an agent that's already running. Five capabilities verified against the source, plus an honest list of cases where Termius is the better tool."
+    },
+    "setup": {
+      "title": "15 minutes to an agent that works all night",
+      "description": "Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from."
+    }
+  }
+}

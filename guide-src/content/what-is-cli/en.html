@@ -1,0 +1,18 @@
+<p>"CLI" sounds like a punishment — no mouse, no buttons, just a blinking cursor. Yet every one of the strongest coding agents of the last few years, from Claude Code to Codex, lives there. Not because the people who build them are purists, but because the terminal hands them something no other interface can: <strong>full filesystem access and permission to execute</strong>.</p>
+
+<section id="terminal">
+  <h2>What a terminal actually is</h2>
+  <p>Strip it down and a terminal is simple: a program that does two things. It accepts the text you type, and it prints text back. No layers, no buttons — characters in, characters out. That simplicity is exactly why an agent can drive one end to end. Every command it types is indistinguishable from one you'd type yourself, and every error it reads is word for word the error you would have seen.</p>
+</section>
+
+<section id="capability-boundary">
+  <h2>A capability boundary, not a question of looks</h2>
+  <p>A browser-based agent can't see a single file on your computer; it lives inside a tab. An IDE plugin can see the files you have open, but it's usually confined to making suggestions — it can't touch git, can't run your tests, and certainly can't install packages. A CLI agent is different. It holds exactly the permissions you hold when you type commands yourself: it can read the whole repo, run <code>git commit</code>, run the test suite, install dependencies. Claude Code, Codex, Gemini CLI, and OpenCode are all in this category — agents that can issue commands to the entire machine, rather than spectators stuck in a sandbox, able to see but not act. This gap isn't a vendor's design choice meant to please anyone. It's the permission set they inherit automatically once they pick the terminal as their interface.</p>
+</section>
+
+<section id="concrete-example">
+  <h2>What that looks like in practice</h2>
+  <p>Running for real, it goes like this. You say "fix this bug." The agent reads the relevant files, edits the code, runs <code>npm test</code>, sees one test still red, goes back and edits again, runs it again — until everything is green, and you never clicked a button. That loop can finish on its own precisely because the agent has the terminal's full execution rights. Move it to a browser tab or an IDE plugin and the loop stalls at step two, waiting for you to come back and press the next thing.</p>
+</section>
+
+<p>These agents can run on a different machine — but first you have to be able to reach it.</p>

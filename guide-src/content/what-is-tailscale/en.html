@@ -1,0 +1,18 @@
+<p>The previous article left one question open: how do you get in from outside? The answer is not to expose port 22 on your home machine to the internet — that's about the fastest way to get yourself into trouble. There are vast numbers of scanning bots knocking on port 22 across every IP in the world, around the clock. Once your address is on the public internet, the first login attempts usually arrive before the next day. Worse, your home connection almost certainly has a dynamic IP that changes every so often, and your machine is very likely behind NAT, sharing the single outward address your ISP handed out with everything else on the same Wi-Fi. There was never a "public address" there to open in the first place.</p>
+
+<section id="the-old-way">
+  <h2>How painful the traditional fix is</h2>
+  <p>Before tools like this existed, opening that path meant going into the router yourself: setting up port forwarding so some public port is routed to the machine at home; adding a DDNS service to bind a hostname to whatever the current IP happens to be, or paying your ISP for a static one, so the address changing doesn't lock you out; and then maintaining firewall rules by hand to turn away everyone who shows up who isn't you. Every step has to be right. Get any one of them wrong and you either can't get in, or you've exposed your entire home network.</p>
+</section>
+
+<section id="what-tailscale-does">
+  <h2>What Tailscale does</h2>
+  <p>Tailscale takes all of that away. It's a WireGuard mesh: install it on each device, sign in to the same account, and the devices build an encrypted link directly between themselves without going through any public entry point — no port sits on the internet waiting to be scanned. You don't connect using that opaque, shifting IP either. MagicDNS gives each device a name you can remember, and Tailscale handles the resolution. Devices behind NAT, an IP that changed, you on home Wi-Fi one minute and mobile data the next — the NAT traversal details are all handled behind the scenes.</p>
+</section>
+
+<section id="mental-model">
+  <h2>The mental model: one more address, reachable only by you</h2>
+  <p>Think of it as your machine at home gaining a private address — one that only devices signed in to the same Tailscale account can see or reach. The scanning bots and the random IPs have no idea it exists, because it has never appeared on the public internet. Your SSH connections from here on go to that private address, not to a port 22 that gets knocked on all day.</p>
+</section>
+
+<p>That's all three pieces. Which leaves the question of what you use on the phone to attach.</p>

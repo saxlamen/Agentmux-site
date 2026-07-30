@@ -1,0 +1,18 @@
+<p>The previous article argued that an agent can run commands freely in a terminal — provided there's a terminal for it to run in. That terminal doesn't have to be on your phone. It can be the Mac mini that's always on at home, or the workstation at the office, as long as you can reach it. That's what SSH (Secure Shell) is for: it opens an encrypted tunnel between your device and another machine, carrying the text you type over and the text it prints back, in a form that none of the hops in between can read.</p>
+
+<section id="another-machine">
+  <h2>Why "another machine" rather than a cloud service</h2>
+  <p>Browser agents and cloud IDEs will also connect you to a machine; the difference is whose machine it is. SSH connects you to your own. Your files are there. Your API keys are there. Every package you've installed and every environment variable you've set is there. You don't have to move anything onto someone else's server, every byte the agent touches is still yours, and the changes stay where they were made — there's nothing to sync back afterwards.</p>
+</section>
+
+<section id="keys-vs-passwords">
+  <h2>Keys aren't the safer option — they're the easier one</h2>
+  <p>SSH supports both password and key authentication, and the choice is often framed as a trade-off between security and convenience. It isn't: keys are simultaneously safer and less work. A private key stays on your device, a public key goes on the other machine, and the two verify each other at login without you typing anything. Passwords can be brute-forced; the length of a key makes that approach useless in practice. Set it up once and every connection afterwards follows the same path — it doesn't get more tedious over time.</p>
+</section>
+
+<section id="not-a-server">
+  <h2>You don't need to turn your computer into a server</h2>
+  <p>People hear "SSH" and picture data centres and server racks, but all you're doing is flipping a switch. On a Mac it's System Settings → General → Sharing → Remote Login. On Linux it's usually starting a service called <code>sshd</code>, which most distributions already ship. Once the switch is on, nothing about what that machine was doing changes. It's still your everyday computer — it just has one more door you can knock on from outside.</p>
+</section>
+
+<p>But the moment you put your phone away, the tunnel drops — and the agent dies with it. Unless…</p>

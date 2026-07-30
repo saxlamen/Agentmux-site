@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentmux Guide</title>
+    <meta name="description" content="Start from nothing and end with an AI coding agent working through the night on your own machine, reachable from your phone.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+</head>
+<body class="guide">
+    <main class="shell guide-shell">
+        <h1>Agentmux Guide</h1>
+        <section class="track" id="beginner">
+          <h2>I&#x27;ve never opened a terminal</h2>
+          <p>You write code with AI but have never touched SSH. Build the whole mental model from scratch.</p>
+          <ol>
+            <li><a data-track="beginner" href="/guide/en/why-remote-vibe-coding/">Your AI should be working while you sleep</a></li>
+            <li><a data-track="beginner" href="/guide/en/why-not-gui-ide/">Why not Cursor or VS Code</a></li>
+            <li><a data-track="beginner" href="/guide/en/what-is-cli/">Why the strongest coding agents live in the terminal</a></li>
+            <li><a data-track="beginner" href="/guide/en/what-is-ssh/">An encrypted tunnel to another computer</a></li>
+            <li><a data-track="beginner" href="/guide/en/what-is-tmux/">Keep the agent running after you put your phone away</a></li>
+            <li><a data-track="beginner" href="/guide/en/what-is-tailscale/">Don&#x27;t open a port to the public internet</a></li>
+            <li><a data-track="beginner" href="/guide/en/why-agentmux/">Why not Termius or Blink</a></li>
+            <li><a data-track="beginner" href="/guide/en/setup/">15 minutes to an agent that works all night</a></li>
+          </ol>
+        </section>
+        <section class="track" id="cliuser">
+          <h2>I already run CLI agents</h2>
+          <p>Claude Code or Codex is already running on your Mac. You just need the part where you reach it from anywhere.</p>
+          <ol>
+            <li><a data-track="cliuser" href="/guide/en/why-remote-vibe-coding/">Your AI should be working while you sleep</a></li>
+            <li><a data-track="cliuser" href="/guide/en/what-is-tmux/">Keep the agent running after you put your phone away</a></li>
+            <li><a data-track="cliuser" href="/guide/en/what-is-tailscale/">Don&#x27;t open a port to the public internet</a></li>
+            <li><a data-track="cliuser" href="/guide/en/why-agentmux/">Why not Termius or Blink</a></li>
+            <li><a data-track="cliuser" href="/guide/en/setup/">15 minutes to an agent that works all night</a></li>
+          </ol>
+          <p class="track-extended"><strong>Further reading: </strong><a data-track="cliuser" href="/guide/en/why-not-gui-ide/">Why not Cursor or VS Code</a></p>
+        </section>
+    </main>
+    <script>
+        // Whichever section the reader clicks through from counts as their
+        // chosen track; the pager on each article uses it to decide which
+        // neighbours to show. Skip quietly when localStorage is blocked.
+        (function () {
+            var links = document.querySelectorAll('a[data-track]');
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener('click', function () {
+                    try {
+                        localStorage.setItem('agentmux-guide-track', this.getAttribute('data-track'));
+                    } catch (e) {}
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
