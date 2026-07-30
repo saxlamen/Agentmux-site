@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An encrypted tunnel to another computer — Agentmux Guide</title>
+    <meta name="description" content="SSH opens an encrypted channel between your device and another machine. You&#x27;re connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="An encrypted tunnel to another computer">
+    <meta property="og:description" content="SSH opens an encrypted channel between your device and another machine. You&#x27;re connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="An encrypted tunnel to another computer">
+    <meta name="twitter:description" content="SSH opens an encrypted channel between your device and another machine. You&#x27;re connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "An encrypted tunnel to another computer", "description": "SSH opens an encrypted channel between your device and another machine. You're connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/"}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/en/">Guide home</a>
+        <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>An encrypted tunnel to another computer</h1>
+            <p>The previous article argued that an agent can run commands freely in a terminal — provided there's a terminal for it to run in. That terminal doesn't have to be on your phone. It can be the Mac mini that's always on at home, or the workstation at the office, as long as you can reach it. That's what SSH (Secure Shell) is for: it opens an encrypted tunnel between your device and another machine, carrying the text you type over and the text it prints back, in a form that none of the hops in between can read.</p>
+
+<section id="another-machine">
+  <h2>Why "another machine" rather than a cloud service</h2>
+  <p>Browser agents and cloud IDEs will also connect you to a machine; the difference is whose machine it is. SSH connects you to your own. Your files are there. Your API keys are there. Every package you've installed and every environment variable you've set is there. You don't have to move anything onto someone else's server, every byte the agent touches is still yours, and the changes stay where they were made — there's nothing to sync back afterwards.</p>
+</section>
+
+<section id="keys-vs-passwords">
+  <h2>Keys aren't the safer option — they're the easier one</h2>
+  <p>SSH supports both password and key authentication, and the choice is often framed as a trade-off between security and convenience. It isn't: keys are simultaneously safer and less work. A private key stays on your device, a public key goes on the other machine, and the two verify each other at login without you typing anything. Passwords can be brute-forced; the length of a key makes that approach useless in practice. Set it up once and every connection afterwards follows the same path — it doesn't get more tedious over time.</p>
+</section>
+
+<section id="not-a-server">
+  <h2>You don't need to turn your computer into a server</h2>
+  <p>People hear "SSH" and picture data centres and server racks, but all you're doing is flipping a switch. On a Mac it's System Settings → General → Sharing → Remote Login. On Linux it's usually starting a service called <code>sshd</code>, which most distributions already ship. Once the switch is on, nothing about what that machine was doing changes. It's still your everyday computer — it just has one more door you can knock on from outside.</p>
+</section>
+
+<p>But the moment you put your phone away, the tunnel drops — and the agent dies with it. Unless…</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/what-is-cli/">Previous<span>Why the strongest coding agents live in the terminal</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-tmux/">Next<span>Keep the agent running after you put your phone away</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14-day full-feature trial, then a one-time Lifetime purchase.</p>
+            <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">Download on the App Store</a>
+        </aside>
+    </main>
+</body>
+</html>

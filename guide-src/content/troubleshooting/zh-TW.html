@@ -1,0 +1,200 @@
+<p>照著前面幾篇設定，十次有八九次會一次就通。剩下那一兩次卡住的地方，通常就是這八種。找到你看到的錯誤訊息，跳過去看就好，不用整篇從頭讀。</p>
+
+<section id="cannot-connect">
+  <h2>連線逾時（Operation timed out）</h2>
+
+  <h3>症狀</h3>
+  <p>打了 <code>ssh 使用者@主機</code> 之後畫面卡住不動，等了半天，最後跳出 <code>Operation timed out</code> 或 <code>Connection timed out</code>，沒有任何輸入密碼的機會。</p>
+
+  <h3>原因</h3>
+  <ul>
+    <li>host 名稱打錯字（例如打成 <code>my-serverr</code>）：這種情況 SSH 通常會立刻回報 <code>Could not resolve hostname</code>，不會卡著逾時——看到這個訊息就直接檢查拼字，不是本節要處理的狀況。真正會卡著逾時的，是 IP 打錯（少一段、打錯一個數字），連到一個根本沒人回應的地址。</li>
+    <li>對方的 SSH 不是開在標準的 22 port，你少打了 <code>-p</code>。</li>
+    <li>目標機器正在睡眠，或乾脆是關機的。</li>
+    <li>中間有防火牆（家用路由器、公司網路、飯店 Wi-Fi）擋掉了這個連線，連機器都還沒收到你的請求。</li>
+  </ul>
+
+  <h3>解法</h3>
+  <p>不要用猜的，一段一段確認。先確認機器本身有沒有回應：</p>
+  <pre><code>ping 主機位址</code></pre>
+  <p>如果 <code>ping</code> 完全沒有回應，先檢查 IP 有沒有打錯，以及對方機器是不是還在睡眠或關機。（有些機器會刻意擋 <code>ping</code>，這時 <code>ping</code> 不通不代表機器真的連不到，直接跳下一步。）</p>
+  <p>接著確認 SSH 這個 port 有沒有真的開著在監聽：</p>
+  <pre><code>nc -vzw 5 主機位址 22</code></pre>
+  <p>把 <code>22</code> 換成對方實際使用的 port，<code>-w 5</code> 是設定最多等 5 秒，避免遇到被擋掉的 port 時整個指令卡住不動、看不出結果。如果看到 <code>succeeded</code> 或 <code>open</code>，代表 port 是通的，問題出在別的地方；如果是 <code>Connection refused</code>，代表機器收得到但沒有服務在那個 port 上聽；如果又是逾時，代表中間有東西（通常是防火牆）把封包整個擋掉了，這時候要檢查的是路由器設定或所在網路的限制，而不是伺服器本身。</p>
+</section>
+
+<section id="permission-denied-publickey">
+  <h2>Permission denied (publickey)</h2>
+
+  <h3>症狀</h3>
+  <p>SSH 連線一發出去馬上被拒絕，畫面直接印出 <code>Permission denied (publickey).</code>，連輸入密碼的機會都沒有。</p>
+
+  <h3>原因</h3>
+  <p>伺服器不接受你目前這把金鑰。最常見的原因是公鑰根本沒有放到伺服器上；另一種容易被忽略的原因是 <code>~/.ssh</code> 這個資料夾或 <code>authorized_keys</code> 檔案的權限設定太寬鬆——SSH 對這件事非常嚴格，只要權限不對，它會直接整個忽略這個檔案，跟金鑰內容對不對無關。</p>
+
+  <h3>解法</h3>
+  <p>如果你還沒把公鑰放上去過，最快的方式是用 <code>ssh-copy-id</code>：它會先用密碼登入一次，自動把你本機的公鑰加進伺服器的 <code>authorized_keys</code>。</p>
+  <pre><code>ssh-copy-id 使用者@主機</code></pre>
+  <p>這個做法的前提是伺服器的密碼登入還開著；如果密碼登入已經被關掉（見下面 <a href="#password-rejected">密碼正確卻被拒絕</a> 那節），就需要請能存取這台機器主控台的人，直接把公鑰內容貼進 <code>~/.ssh/authorized_keys</code>。</p>
+  <p>如果公鑰確實已經在裡面（一行一把，內容要完整、不能被截斷）卻還是被拒絕，多半是權限設定太寬鬆，SSH 因此直接整個忽略這個檔案。檢查是否符合下表——特別容易漏掉的是最後一行：即使 <code>~/.ssh</code> 和 <code>authorized_keys</code> 權限都對，只要你的家目錄本身「群組」或「其他人」可寫，<code>StrictModes</code> 一樣會拒絕：</p>
+  <table>
+    <thead>
+      <tr><th>路徑</th><th>需要的權限</th><th>指令</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>~/.ssh</code></td><td><code>700</code></td><td><code>chmod 700 ~/.ssh</code></td></tr>
+      <tr><td><code>~/.ssh/authorized_keys</code></td><td><code>600</code></td><td><code>chmod 600 ~/.ssh/authorized_keys</code></td></tr>
+      <tr><td><code>~</code>（家目錄本身）</td><td>群組、其他人不可寫</td><td><code>chmod go-w ~</code></td></tr>
+    </tbody>
+  </table>
+  <p>改完權限後再試一次連線。如果還是不行，可以在本機加上 <code>-v</code> 看詳細過程，確認 SSH 真的有把你預期的那把金鑰送出去：</p>
+  <pre><code>ssh -v 使用者@主機</code></pre>
+  <p>輸出會有五、六十行，不用整段細看，只要找兩行：看到 <code>Offering public key: ...</code>，代表你的金鑰真的有被送出去，不是本機這邊沒送；如果緊接著看到 <code>Authentications that can continue: publickey</code>，代表伺服器收到了這把金鑰，但沒有接受它——問題出在伺服器那邊（金鑰沒放對、或權限不對），照上面的步驟繼續查就對了。</p>
+</section>
+
+<section id="password-rejected">
+  <h2>密碼正確卻被拒絕</h2>
+
+  <h3>症狀</h3>
+  <p>你很確定密碼打對了（甚至是複製貼上的），但 SSH 一直跳回 <code>Permission denied, please try again.</code>，或者根本沒有讓你輸入密碼的畫面就結束了。</p>
+
+  <h3>原因</h3>
+  <p>這通常跟密碼對不對完全無關。伺服器的 SSH 設定裡把密碼登入整個關掉了（<code>PasswordAuthentication no</code>），這是很常見的安全性設定，目的是強迫所有人都用金鑰登入，防止密碼被暴力猜測。設定一旦是這樣，就算密碼一百次都打對，伺服器也不會接受。</p>
+  <p>這裡有一個很容易踩到的坑，也是這節卡住最久的地方：新一點的系統（Ubuntu 22.10 之後、Debian 12、以及幾乎所有雲端主機的預設映像檔）會在 <code>sshd_config</code> 最上面放一行 <code>Include /etc/ssh/sshd_config.d/*.conf</code>，把那個資料夾裡的設定檔全部讀進來——而且 sshd 是「先讀到哪個值就用哪個」，不是後面的蓋掉前面的。如果 <code>/etc/ssh/sshd_config.d/</code> 底下有一個像 <code>50-cloud-init.conf</code> 的檔案，裡面同樣寫著 <code>PasswordAuthentication no</code>，它會比你剛剛在主檔案改的那行更早生效，你等於白改：存檔、重啟、還是被拒絕。</p>
+
+  <h3>解法</h3>
+  <p>優先做法：改用金鑰登入（做法見上面 <a href="#permission-denied-publickey">Permission denied (publickey)</a> 那節，把你的公鑰放到伺服器的 <code>authorized_keys</code>）。</p>
+  <p>如果你有這台伺服器的管理權限、也確定想開放密碼登入，才去改設定。先確認有沒有其他檔案會蓋掉你等一下要改的值：</p>
+  <pre><code>sudo grep -r PasswordAuthentication /etc/ssh/sshd_config /etc/ssh/sshd_config.d/</code></pre>
+  <p>如果 <code>/etc/ssh/sshd_config.d/</code> 底下也有檔案設定了 <code>PasswordAuthentication</code>，把那個值一起改掉（或直接註解掉那一行），確認乾淨之後，才編輯 <code>/etc/ssh/sshd_config</code>，把 <code>PasswordAuthentication</code> 那一行改成 <code>yes</code>。</p>
+  <p><strong>先不要關掉你現在這個連線視窗。</strong>改壞 sshd 設定有可能讓你之後完全連不進這台機器，在確認新設定沒問題之前，留著這個視窗當退路。存檔後先驗證語法有沒有寫錯：</p>
+  <pre><code>sudo sshd -t</code></pre>
+  <p>沒有印出任何錯誤，才重新啟動服務讓設定生效：</p>
+  <pre><code>sudo systemctl restart ssh</code></pre>
+  <p>部分發行版的服務名稱是 <code>sshd</code> 而不是 <code>ssh</code>，如果上面那行找不到服務，改試 <code>sudo systemctl restart sshd</code>。接著開一個全新的連線視窗（不是你剛剛留著當退路的那個）確認真的能用密碼登入，成功了才可以放心關掉舊的視窗。</p>
+  <p>既然整套環境都建立在 Tailscale 上，比起把密碼登入對整個網際網路開放，更安全的做法是只允許來自 Tailscale 網段的連線使用密碼，其餘來源仍然只能用金鑰，在 <code>sshd_config</code> 尾端加一段：</p>
+  <pre><code>Match Address 100.64.0.0/10
+    PasswordAuthentication yes
+
+Match All
+    PasswordAuthentication no</code></pre>
+</section>
+
+<section id="tmux-not-found">
+  <h2>找不到 tmux</h2>
+
+  <h3>症狀</h3>
+  <p>Agentmux 提示找不到 tmux，或者你自己連上去手動打 <code>tmux</code> 時看到 <code>command not found: tmux</code>。</p>
+
+  <h3>原因</h3>
+  <p>目標機器上還沒有裝 tmux。這件事不需要你自己動手——Agentmux 會自動幫你裝：它會偵測這台機器用的是 apt、yum、dnf、pacman、apk（Alpine）還是 brew，然後透過 SSH 自動跑對應的安裝指令。多數情況下，你只要等它跑完就好。</p>
+  <p>自動安裝失敗，最常見的原因是安裝指令裡帶了 <code>sudo</code>，但這條通道是非互動式的，<code>sudo</code> 沒有終端機可以問你密碼（見下面 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a>）；其次是在 Mac 上用 Homebrew 安裝，但連線身分是 root——Homebrew 設計上就是拒絕以 root 身分執行的。</p>
+  <p>還有一種少見但容易誤判的情況：tmux 其實已經裝了，只是裝在 Agentmux 探測 PATH 時沒看到的地方（例如 Linuxbrew 裝在 <code>~/.linuxbrew</code>，或用 MacPorts 裝在 <code>/opt/local/bin</code>）。訊息看起來一樣是「找不到 tmux」，但本質是 PATH 沒找對地方，不是沒裝，可以參考下面 <a href="#agent-command-not-found">claude: command not found，但桌面終端機明明可以跑</a> 那節的做法處理。</p>
+
+  <h3>解法</h3>
+  <p>先看 Agentmux 跳出的錯誤訊息。如果它提示你輸入 sudo 密碼、或提到啟用免密碼 sudo，直接在 Agentmux 裡把密碼填進去再試一次，通常是最快的路——不一定要自己另外開視窗處理。如果這個管道也失敗，或訊息提到終端機、TTY，再照 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a> 那節自己手動處理，處理完通常自動安裝就能成功，不需要再往下做。</p>
+  <p>只有排除 <code>sudo</code> 問題之後還是裝不起來，才手動安裝：</p>
+  <pre><code># Debian / Ubuntu
+sudo apt install -y tmux
+
+# RHEL / CentOS
+sudo yum install -y tmux
+
+# Fedora
+sudo dnf install -y tmux
+
+# Arch
+sudo pacman -S tmux
+
+# Alpine
+sudo apk add tmux
+
+# Mac（不要用 root 身分執行）
+brew install tmux</code></pre>
+</section>
+
+<section id="agent-command-not-found">
+  <h2>claude: command not found，但桌面終端機明明可以跑</h2>
+
+  <h3>症狀</h3>
+  <p>你在 Mac 自己開的 Terminal 裡打 <code>claude</code>，指令正常執行；但透過 Agentmux 連進去、或直接 <code>ssh 主機 claude</code>，卻看到 <code>claude: command not found</code>（或 <code>bash: claude: command not found</code>）。同一台機器、同一個帳號，結果卻不一樣，很容易讓人以為是 Agentmux 壞了。</p>
+
+  <h3>原因</h3>
+  <p>其實不是 Agentmux 的問題，是 shell 本身的行為——這是最難自己想通的一個卡點，值得花點篇幅講清楚原理，之後遇到類似問題也能自己判斷。</p>
+  <p>你平常在 Mac 上開的 Terminal，是一個「互動式登入 shell」。<code>claude</code> 之所以能被找到，通常是因為 nvm、npm 或安裝工具，在某個設定檔裡自動加了一行，把 <code>claude</code> 所在的目錄加進了 PATH。但「是哪個設定檔」在 zsh 和 bash 上不一樣，混著講容易誤導，分開說清楚：</p>
+  <p><strong>zsh</strong>（Mac 的預設 shell）：互動式登入 shell 依序讀 <code>.zshenv</code> → <code>.zprofile</code> → <code>.zshrc</code> → <code>.zlogin</code>。而 <code>ssh 主機 claude</code> 這種執行單一指令的連線，開的是非互動、非登入的 zsh，只會讀 <code>.zshenv</code>，其餘全部跳過——包含大多數人放 PATH 設定的 <code>.zshrc</code>。</p>
+  <p><strong>bash</strong>：情況比較特別，而且這部分的行為因發行版而異，不是統一的 bash 標準行為。互動式登入 shell 讀的是 <code>.bash_profile</code>（或 <code>.profile</code>），不是 <code>.bashrc</code>；你會覺得 bash 也讀 <code>.bashrc</code>，是因為大多數發行版預設的 <code>.bash_profile</code> 裡，會手動加一段「如果 <code>.bashrc</code> 存在就 source 它」。至於 bash 被 sshd 直接叫起來執行單一指令時（也就是 <code>ssh 主機 claude</code> 這種用法）會不會讀 <code>~/.bashrc</code>，答案要看發行版：這是編譯時期加上去的 <code>SSH_SOURCE_BASHRC</code> 特例，Debian、Ubuntu 以及它們的衍生版有把這個 patch 補進去，非互動的單一指令 shell 也會讀 <code>~/.bashrc</code>；但 RHEL、Fedora、Arch 這類發行版用的是官方原始版本的 bash，沒有這個特例，同樣的情境下 <code>~/.bashrc</code> 根本不會被讀到。就算是在會讀的那些發行版上，幾乎每個預設的 <code>.bashrc</code>，開頭也都放了一段判斷：</p>
+  <pre><code>case $- in
+    *i*) ;;
+      *) return;;
+esac</code></pre>
+  <p>意思是「如果現在不是互動模式，就直接結束，不要往下讀」。這段判斷通常寫在檔案最前面，所以即使 bash 真的把 <code>.bashrc</code> 打開了，也會在讀到你加的 PATH 那行之前就先跳出去，效果跟沒讀到一樣。</p>
+  <p>不管是 zsh 還是 bash，結果都一樣：設定 PATH 的那一行只在你自己開 Terminal 時被執行過，SSH 執行單一指令時沒被讀到，PATH 裡自然沒有 <code>claude</code> 的位置，shell 當然說找不到。這跟 <code>claude</code> 有沒有裝好完全無關——它一直都在，只是這次沒人告訴這個 shell 去哪裡找。這也不是為了刁難誰：非互動執行時跳過這些設定檔，是刻意的設計，用意是避免每次跑一段遠端指令，都要先載入一堆給人互動用的別名、提示字元設定，增加出錯的機會。</p>
+  <p>額外補充一點：Agentmux 自己在 Mac 上探測 PATH 時，用的是 <code>zsh -lc</code>（登入但非互動），一樣跳過 <code>.zshrc</code>，只讀 <code>.zshenv</code> 和 <code>.zprofile</code>。所以對 Mac 上的 zsh 使用者來說，把 PATH 設定搬到這兩個檔案，不只是讓你自己手動 SSH 能找到指令，也正是 Agentmux 自己能不能偵測到 agent 指令位置的關鍵。</p>
+
+  <h3>解法</h3>
+  <p>最快的做法：找出 <code>claude</code> 的絕對路徑，之後直接用絕對路徑呼叫，不要依賴 PATH。在你自己的 Terminal（也就是平常跑得動 <code>claude</code> 的那個視窗）執行：</p>
+  <pre><code>which claude</code></pre>
+  <p>會印出類似 <code>/Users/你的名字/.nvm/versions/node/v20.11.0/bin/claude</code> 這樣一整串路徑。把這串路徑填到 Agentmux 要求輸入 agent 指令的欄位，取代原本單純的 <code>claude</code>。如果你是用 nvm 安裝 node，這條路徑裡會包含目前的版本號，之後升級 node 版本這條路徑就會失效，需要重新用 <code>which claude</code> 抓一次；不想每次升級都要改，就用下面的長久做法。</p>
+  <p>比較長久的做法，依你的 shell 分開處理，不要混用：</p>
+  <p><strong>如果是 zsh</strong>（Mac 預設）：把設定 PATH 的那幾行（常見來自 nvm、pyenv，或你自己手動加的 <code>export PATH=...</code>）從 <code>.zshrc</code> 搬到 <code>~/.zshenv</code>，搬到 <code>~/.zprofile</code> 也可以，兩者 SSH 非互動執行和 Agentmux 探測 PATH 時都讀得到。</p>
+  <p><strong>如果是 bash</strong>：不要指望搬到 <code>~/.profile</code> 或 <code>~/.bash_profile</code> 就會生效——<code>ssh 主機 claude</code> 開的是非登入 shell，這兩個檔案都不會被讀到。如果你的機器是 Debian、Ubuntu 或它們的衍生版，把 PATH 那幾行搬到 <code>~/.bashrc</code>、放在檔案最前面那段 <code>case $- in ... esac</code> 判斷式「之前」，可以讓它在互動判斷擋下之前就先生效；但如果是 RHEL、Fedora、Arch 這類發行版，<code>~/.bashrc</code> 在這個情境下本來就不會被讀到，改這個檔案不會有任何效果。不確定自己的發行版屬於哪一種、或就是遇到這種情況，直接退回用上面的絕對路徑做法——這個做法不管哪個發行版都有效，是唯一能保證跨發行版都能用的解法。</p>
+  <p>搬完之後，開一個新的 SSH 連線測試，確認真的生效了：</p>
+  <pre><code>ssh 主機 'claude --version'</code></pre>
+  <p>能印出版本號，就代表 PATH 這次真的在非互動 shell 裡也讀到了。</p>
+</section>
+
+<section id="tailscale-connected-but-ssh-fails">
+  <h2>Tailscale 顯示已連線，SSH 仍連不到</h2>
+
+  <h3>症狀</h3>
+  <p>手機上的 Tailscale App 顯示兩台裝置都是綠燈、在線，但用 Agentmux 或直接 <code>ssh</code> 連過去，還是失敗或整個逾時。</p>
+
+  <h3>原因</h3>
+  <ul>
+    <li>連線用的是區網 IP（像 <code>192.168.x.x</code>），而不是 Tailscale 給的 MagicDNS 名稱或 <code>100.x</code> 開頭的 Tailscale IP。區網 IP 只有在同一個 Wi-Fi 底下才連得到，手機一旦切到行動網路或離開那個網路，這組 IP 就完全無效。</li>
+    <li>對方裝置的狀態其實剛斷線或正在睡眠，Tailscale App 上顯示的「在線」還沒更新。</li>
+    <li>Tailscale 本身正常運作，但目標機器上的 SSH 服務根本沒開或沒啟動——Tailscale 只負責把兩台機器的網路打通，不負責幫你把 SSH 服務打開。</li>
+    <li>最常見的真正原因其實是 node key 過期：目標機器需要重新驗證，App 裡看起來還是綠燈「已連線」，實際上這台機器已經不在網路裡了。到 Tailscale 的後台管理主控台（admin console）查那台機器是不是被標成需要重新登入或類似的過期狀態，重新驗證一次通常就能解決。</li>
+  </ul>
+
+  <h3>解法</h3>
+  <p>iOS 上的 Tailscale 沒有指令列可以打，<code>tailscale status</code> 只能在目標機器（要被連線的那台 Mac 或 Linux 機器）上執行：</p>
+  <pre><code>tailscale status</code></pre>
+  <p>在目標機器上確認清單裡手機那個節點也顯示在線；手機這邊就打開 Tailscale App，確認清單裡目標機器的狀態同樣正常（沒有變灰，也沒有需要重新登入之類的警示）。都正常的話，連線時一律使用 MagicDNS 名稱（例如 <code>mac-mini.tail1234.ts.net</code>）或 <code>tailscale status</code> 列出的 <code>100.x</code> IP，不要用區網 IP——這樣不管你人在家裡的 Wi-Fi 還是外面用行動網路，位址都一樣有效。確認以上都沒問題後，再到目標機器檢查 SSH 服務本身是否啟動（Linux 用 <code>sudo systemctl status ssh</code>；Mac 請見下面 <a href="#mac-remote-login">Mac 開了遠端登入卻連不上</a> 那節）。</p>
+</section>
+
+<section id="mac-remote-login">
+  <h2>Mac 開了遠端登入卻連不上</h2>
+
+  <h3>症狀</h3>
+  <p>已經在系統設定裡打開「遠端登入」，Mac 也確定連著網路，但 SSH 還是連不上；或者連得上卻被拒絕，而你很確定密碼或金鑰都是對的。</p>
+
+  <h3>原因</h3>
+  <ul>
+    <li>「遠端登入」預設只允許「特定使用者」清單裡的帳號登入，你目前用來連線的那個帳號可能根本不在那份允許清單裡。</li>
+    <li>Mac 進入睡眠之後，網路介面也會跟著休眠，SSH 連線自然連不到——這跟遠端登入有沒有打開無關，純粹是機器當下對網路請求沒反應。</li>
+  </ul>
+
+  <h3>解法</h3>
+  <p>打開「系統設定 → 一般 → 共享」（macOS Ventura 之後的路徑；Ventura 之前是「系統偏好設定 → 共享」，沒有「一般」這一層），找到「遠端登入」，確認開關是打開的，再點進去檢查「允許存取」的使用者清單裡有沒有你要連線的那個帳號（或者直接選「所有使用者」）。</p>
+  <p>接著打開「系統設定 → 電池」（如果是筆電）或「系統設定 → 節能」（如果是 Mac mini、Mac Studio、iMac 這類長期開機當伺服器用的桌機——例如上面範例裡的 <code>mac-mini.tail1234.ts.net</code> 正是這種機型），把「電腦閒置時進入睡眠」的時間調長或關閉；如果有「網路喚醒」（面板上通常寫「喚醒以供網路存取」）這個選項，一併打開，讓 Mac 就算進入睡眠，也能因為收到網路連線請求而醒過來回應 SSH。</p>
+</section>
+
+<section id="sudo-needs-tty">
+  <h2>sudo: a terminal is required to read the password</h2>
+
+  <h3>症狀</h3>
+  <p>透過 Agentmux 或 SSH 執行一段包含 <code>sudo</code> 的指令時，指令直接失敗，印出 <code>sudo: a terminal is required to read the password</code>，完全沒有跑起來的跡象。</p>
+
+  <h3>原因</h3>
+  <p><code>sudo</code> 正常情況下會在終端機上跳出「輸入密碼：」的提示，等你打完密碼才繼續往下跑。但當這段指令是透過非互動的管道執行——例如 SSH 遠端執行單一指令、或 Agentmux 背後幫你自動跑的安裝流程——根本沒有一個真正的終端機（TTY）可以顯示密碼提示，也沒有地方讓你打字。<code>sudo</code> 發現自己沒有 TTY 可用，就直接拒絕，不會傻等一個永遠不會來的輸入。</p>
+  <p>這裡有個常見的誤會：以為只要「剛剛才手動用 sudo 打過密碼」，之後一段時間內的 sudo 就都不用再問了。現代 sudo 預設會把「已經驗證過」這件事記錄下來，但這筆記錄綁的是當下那個 TTY（<code>tty_tickets</code>），不是你的帳號或這台機器整體。也就是說，就算你剛剛在一個互動式 SSH 視窗裡輸入過密碼，Agentmux 之後自動跑指令時開的是另一條全新、沒有 TTY 的 SSH 連線，對 sudo 來說查的是完全不同的一筆記錄，一樣會被要求重新輸入密碼——不是「快取過期」了，而是它查的從來就不是同一筆。</p>
+
+  <h3>解法</h3>
+  <p>先看 Agentmux 跳出的提示：它在自動安裝失敗時，通常會直接請你輸入 sudo 密碼、或改成啟用免密碼 sudo，再重試一次。如果看到這個欄位，直接在 Agentmux 裡把密碼填進去，往往比自己另外處理更快。</p>
+  <p>如果這個管道不可用，最直接的做法是：自己手動 SSH 登入那台機器，開一個正常的互動式 session，在裡面手動執行一次同樣的指令（例如 <code>sudo apt install -y tmux</code>）並輸入密碼，直接把事情做完。這個做法會成功，不是因為它幫 Agentmux 之後的自動流程解鎖了什麼——如上面所說，兩邊查的 TTY 記錄不是同一筆——而是單純你自己已經用互動的方式把該裝的東西裝好了。Agentmux 或下一次的非互動指令再檢查一次，會發現東西已經在了，不需要重裝，卡點自然就消失。</p>
+  <p>如果你需要讓某個特定指令長期都能透過非互動管道免密碼執行，可以用 <code>sudo visudo</code> 幫它加上 <code>NOPASSWD</code> 規則，只針對那一條指令放行，例如：</p>
+  <pre><code>你的帳號 ALL=(ALL) NOPASSWD: /usr/bin/apt</code></pre>
+  <p>這個安全取捨比看起來嚴重：把 <code>NOPASSWD</code> 開給 apt 這類套件管理員，實際上幾乎等於開放完整 root——apt 可以被要求安裝任意套件，而 <code>APT::Update::Pre-Invoke</code> 這類 hook 還能在安裝過程中以 root 身分執行任意指令。這不是「限定範圍、低風險」的放行，只是換了一種寫法的免密碼 root，範圍並沒有想像中那麼窄。只有在你清楚知道這個代價、也刻意接受的情況下才這樣設定；多數情況下，寧可回到上面「先手動裝一次」的做法，也不要直接放行 <code>NOPASSWD: ALL</code>，那等於整台機器的 <code>sudo</code> 都不再需要密碼。</p>
+</section>

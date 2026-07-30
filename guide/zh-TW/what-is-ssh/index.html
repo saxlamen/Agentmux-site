@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一條通往另一台電腦的加密隧道 — Agentmux Guide</title>
+    <meta name="description" content="SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="一條通往另一台電腦的加密隧道">
+    <meta property="og:description" content="SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="一條通往另一台電腦的加密隧道">
+    <meta name="twitter:description" content="SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "一條通往另一台電腦的加密隧道", "description": "SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/"}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/zh-TW/">指南首頁</a>
+        <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>一條通往另一台電腦的加密隧道</h1>
+            <p>上一篇說到，agent 能在終端機裡自由執行指令，前提是要有一個終端機讓它跑。但那個終端機不必是你手機上的——它可以在你家裡那台一直開著的 Mac mini 上、公司那台工作站上，只要你能連得過去。SSH（Secure Shell）做的就是這件事：在你的裝置和另一台機器之間，開一條加密的隧道，把你打的文字送過去，把對方印出來的文字帶回來，中間經過的任何一個節點都看不懂內容。</p>
+
+<section id="another-machine">
+  <h2>為什麼是「另一台機器」，不是雲端服務</h2>
+  <p>網頁版 agent 或雲端 IDE 也能讓你「連上一台機器」，差別在那台機器是誰的。SSH 連的是你自己的機器——你的檔案在那裡、你的 API key 在那裡、你裝過的套件和設好的環境變數全部都在那裡。你不用把任何東西搬到別人的伺服器上，agent 動的每一個位元組，都還是你自己那份，改完之後也留在原地，不需要你事後再同步回來。</p>
+</section>
+
+<section id="keys-vs-passwords">
+  <h2>金鑰不是比較安全的那個選項，是比較省事的那個</h2>
+  <p>SSH 支援密碼登入，也支援金鑰登入，這兩個常被講成一個要在安全跟方便之間做的取捨——但金鑰其實同時比較安全、又比較省事：一把私鑰留在你的裝置上，一把公鑰放到對方機器，登入時兩把鑰匙互相驗證，你完全不用打字；密碼可以被暴力猜測，金鑰的長度讓那條路實務上行不通。設定一次，之後每次連線都是這個流程，不會隨著時間變得更麻煩。</p>
+</section>
+
+<section id="not-a-server">
+  <h2>不需要把電腦「架成伺服器」</h2>
+  <p>很多人聽到 SSH 就想到機房和伺服器機櫃，但你要做的只是打開一個開關——Mac 上是「系統設定 → 一般 → 共享 → 遠端登入」，Linux 上通常是啟動一個叫 <code>sshd</code> 的服務，多數發行版預設就已經裝好。開關打開之後，那台機器本來在做的事一件都不會變，還是你平常那台電腦，只是多了一扇你可以從外面敲的門。</p>
+</section>
+
+<p>但你關掉手機的那一刻，那條隧道就斷了——agent 也跟著死。除非……</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="上一篇" href="/guide/zh-TW/what-is-cli/">上一篇<span>為什麼最強的 coding agent 都住在終端機裡</span></a><a class="pager-next" data-tracks="beginner" data-label="下一篇" href="/guide/zh-TW/what-is-tmux/">下一篇<span>讓 agent 在你關掉手機後繼續跑</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14 天全功能試用，之後 Lifetime 買斷。</p>
+            <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">在 App Store 下載</a>
+        </aside>
+    </main>
+</body>
+</html>

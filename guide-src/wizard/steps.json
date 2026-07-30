@@ -1,0 +1,73 @@
+{
+  "questions": [
+    { "id": "machine", "options": ["mac", "linux", "vps", "none"] },
+    { "id": "agent", "options": ["claude", "codex", "gemini", "opencode", "shell"] },
+    { "id": "reach", "options": ["lan", "anywhere"] }
+  ],
+  "steps": [
+    {
+      "id": "pick-machine",
+      "when": { "machine": ["none"] }
+    },
+    {
+      "id": "enable-ssh-mac",
+      "when": { "machine": ["mac"] },
+      "commands": ["sudo systemsetup -setremotelogin on"],
+      "verify": "ssh localhost whoami",
+      "troubleshoot": "mac-remote-login"
+    },
+    {
+      "id": "enable-ssh-linux",
+      "when": { "machine": ["linux"] },
+      "commands": [
+        "sudo apt-get update && sudo apt-get install -y openssh-server && sudo systemctl enable --now ssh    # Debian / Ubuntu",
+        "sudo dnf install -y openssh-server && sudo systemctl enable --now sshd                              # Fedora / RHEL",
+        "sudo pacman -S --noconfirm openssh && sudo systemctl enable --now sshd                              # Arch",
+        "sudo apk add openssh && sudo rc-update add sshd default && sudo rc-service sshd start               # Alpine (OpenRC)"
+      ],
+      "verify": "systemctl status ssh || systemctl status sshd || rc-service sshd status",
+      "troubleshoot": "cannot-connect"
+    },
+    {
+      "id": "vps-ssh-ready",
+      "when": { "machine": ["vps"] },
+      "verify": "whoami",
+      "troubleshoot": "cannot-connect"
+    },
+    {
+      "id": "install-agent",
+      "when": { "agent": ["claude", "codex", "gemini", "opencode"] },
+      "verify": "which claude || which codex || which gemini || which opencode",
+      "troubleshoot": "agent-command-not-found"
+    },
+    {
+      "id": "tmux-handled"
+    },
+    {
+      "id": "tailscale-host",
+      "when": { "reach": ["anywhere"] },
+      "verify": "tailscale status",
+      "troubleshoot": "tailscale-connected-but-ssh-fails"
+    },
+    {
+      "id": "tailscale-ios",
+      "when": { "reach": ["anywhere"] },
+      "troubleshoot": "tailscale-connected-but-ssh-fails"
+    },
+    {
+      "id": "find-lan-address",
+      "when": { "reach": ["lan"], "machine": ["mac"] },
+      "commands": ["ipconfig getifaddr en0"],
+      "troubleshoot": "cannot-connect"
+    },
+    {
+      "id": "find-lan-address-linux",
+      "when": { "reach": ["lan"], "machine": ["linux"] },
+      "commands": ["hostname -I"],
+      "troubleshoot": "cannot-connect"
+    },
+    {
+      "id": "add-server"
+    }
+  ]
+}

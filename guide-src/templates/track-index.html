@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{htmlLang}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
+    <link rel="canonical" href="{{canonical}}">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+</head>
+<body class="guide">
+    <main class="shell guide-shell">
+        <h1>{{title}}</h1>
+        {{tracks}}
+    </main>
+    <script>
+        // Whichever section the reader clicks through from counts as their
+        // chosen track; the pager on each article uses it to decide which
+        // neighbours to show. Skip quietly when localStorage is blocked.
+        (function () {
+            var links = document.querySelectorAll('a[data-track]');
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener('click', function () {
+                    try {
+                        localStorage.setItem('agentmux-guide-track', this.getAttribute('data-track'));
+                    } catch (e) {}
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Don&#x27;t open a port to the public internet — Agentmux Guide</title>
+    <meta name="description" content="Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Don&#x27;t open a port to the public internet">
+    <meta property="og:description" content="Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Don&#x27;t open a port to the public internet">
+    <meta name="twitter:description" content="Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Don't open a port to the public internet", "description": "Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/"}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <a class="brand" href="/"><span class="brand-word">Agen<span class="brand-tmux">tmux</span></span></a>
+        <a href="/guide/en/">Guide home</a>
+        <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>Don&#x27;t open a port to the public internet</h1>
+            <p>The previous article left one question open: how do you get in from outside? The answer is not to expose port 22 on your home machine to the internet — that's about the fastest way to get yourself into trouble. There are vast numbers of scanning bots knocking on port 22 across every IP in the world, around the clock. Once your address is on the public internet, the first login attempts usually arrive before the next day. Worse, your home connection almost certainly has a dynamic IP that changes every so often, and your machine is very likely behind NAT, sharing the single outward address your ISP handed out with everything else on the same Wi-Fi. There was never a "public address" there to open in the first place.</p>
+
+<section id="the-old-way">
+  <h2>How painful the traditional fix is</h2>
+  <p>Before tools like this existed, opening that path meant going into the router yourself: setting up port forwarding so some public port is routed to the machine at home; adding a DDNS service to bind a hostname to whatever the current IP happens to be, or paying your ISP for a static one, so the address changing doesn't lock you out; and then maintaining firewall rules by hand to turn away everyone who shows up who isn't you. Every step has to be right. Get any one of them wrong and you either can't get in, or you've exposed your entire home network.</p>
+</section>
+
+<section id="what-tailscale-does">
+  <h2>What Tailscale does</h2>
+  <p>Tailscale takes all of that away. It's a WireGuard mesh: install it on each device, sign in to the same account, and the devices build an encrypted link directly between themselves without going through any public entry point — no port sits on the internet waiting to be scanned. You don't connect using that opaque, shifting IP either. MagicDNS gives each device a name you can remember, and Tailscale handles the resolution. Devices behind NAT, an IP that changed, you on home Wi-Fi one minute and mobile data the next — the NAT traversal details are all handled behind the scenes.</p>
+</section>
+
+<section id="mental-model">
+  <h2>The mental model: one more address, reachable only by you</h2>
+  <p>Think of it as your machine at home gaining a private address — one that only devices signed in to the same Tailscale account can see or reach. The scanning bots and the random IPs have no idea it exists, because it has never appeared on the public internet. Your SSH connections from here on go to that private address, not to a port 22 that gets knocked on all day.</p>
+</section>
+
+<p>That's all three pieces. Which leaves the question of what you use on the phone to attach.</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="Previous" href="/guide/en/what-is-tmux/">Previous<span>Keep the agent running after you put your phone away</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="Next" href="/guide/en/why-agentmux/">Next<span>Why not Termius or Blink</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14-day full-feature trial, then a one-time Lifetime purchase.</p>
+            <a class="primary-btn" href="https://apps.apple.com/app/id6766158521">Download on the App Store</a>
+        </aside>
+    </main>
+</body>
+</html>

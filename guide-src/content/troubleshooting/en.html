@@ -1,0 +1,200 @@
+<p>Follow the previous articles and it works first time eight or nine times out of ten. When it doesn't, it's almost always one of these eight. Find the error message you're seeing and jump straight to it — there's no need to read this page from the top.</p>
+
+<section id="cannot-connect">
+  <h2>Connection timed out (Operation timed out)</h2>
+
+  <h3>Symptom</h3>
+  <p>You run <code>ssh user@host</code> and the screen just sits there. After a long wait you get <code>Operation timed out</code> or <code>Connection timed out</code>, never having been offered a password prompt.</p>
+
+  <h3>Causes</h3>
+  <ul>
+    <li>A typo in the hostname (say <code>my-serverr</code>). SSH normally reports <code>Could not resolve hostname</code> immediately for that rather than hanging until it times out — if you see that message, go check the spelling; it isn't what this section covers. What genuinely hangs is a wrong IP: a missing octet, one wrong digit, an address where nothing is listening.</li>
+    <li>SSH isn't on the standard port 22 on the other end and you left out <code>-p</code>.</li>
+    <li>The target machine is asleep, or simply switched off.</li>
+    <li>A firewall in between (home router, corporate network, hotel Wi-Fi) is dropping the connection, so the machine never even receives your request.</li>
+  </ul>
+
+  <h3>Fix</h3>
+  <p>Don't guess — confirm one hop at a time. First check whether the machine responds at all:</p>
+  <pre><code>ping host-address</code></pre>
+  <p>If <code>ping</code> gets nothing back, check the IP for typos and whether the machine is asleep or powered off. (Some machines block <code>ping</code> deliberately, in which case a failed <code>ping</code> doesn't mean the machine is unreachable — go straight to the next step.)</p>
+  <p>Next, check whether anything is actually listening on the SSH port:</p>
+  <pre><code>nc -vzw 5 host-address 22</code></pre>
+  <p>Replace <code>22</code> with the port the other end really uses. The <code>-w 5</code> caps the wait at five seconds so a blocked port doesn't leave the command hanging with nothing to show you. <code>succeeded</code> or <code>open</code> means the port is reachable and the problem lies elsewhere. <code>Connection refused</code> means the machine received you but nothing is listening on that port. Another timeout means something in between — usually a firewall — is dropping the packets entirely, and what you need to look at is the router configuration or the restrictions on the network you're on, not the server.</p>
+</section>
+
+<section id="permission-denied-publickey">
+  <h2>Permission denied (publickey)</h2>
+
+  <h3>Symptom</h3>
+  <p>The connection is refused the instant you make it, printing <code>Permission denied (publickey).</code> without ever offering you a password prompt.</p>
+
+  <h3>Cause</h3>
+  <p>The server won't accept the key you're presenting. Most often the public key was never placed on the server at all. The other cause, easy to overlook, is that the permissions on <code>~/.ssh</code> or on <code>authorized_keys</code> are too loose — SSH is extremely strict about this, and if the permissions are wrong it ignores the file completely, regardless of whether the key inside is correct.</p>
+
+  <h3>Fix</h3>
+  <p>If you've never copied the public key across, the quickest route is <code>ssh-copy-id</code>: it logs in once with a password and appends your local public key to the server's <code>authorized_keys</code>.</p>
+  <pre><code>ssh-copy-id user@host</code></pre>
+  <p>That assumes password login is still enabled on the server. If it has already been turned off (see <a href="#password-rejected">Password is correct but rejected</a> below), you'll need someone with console access to that machine to paste the public key into <code>~/.ssh/authorized_keys</code> directly.</p>
+  <p>If the key really is in there — one per line, complete, not truncated — and you're still refused, the permissions are probably too loose and SSH is therefore ignoring the whole file. Check them against the table below. The last row is the one people miss: even with <code>~/.ssh</code> and <code>authorized_keys</code> both correct, if your home directory itself is group- or world-writable, <code>StrictModes</code> will still refuse.</p>
+  <table>
+    <thead>
+      <tr><th>Path</th><th>Required permissions</th><th>Command</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>~/.ssh</code></td><td><code>700</code></td><td><code>chmod 700 ~/.ssh</code></td></tr>
+      <tr><td><code>~/.ssh/authorized_keys</code></td><td><code>600</code></td><td><code>chmod 600 ~/.ssh/authorized_keys</code></td></tr>
+      <tr><td><code>~</code> (the home directory itself)</td><td>Not writable by group or others</td><td><code>chmod go-w ~</code></td></tr>
+    </tbody>
+  </table>
+  <p>Try connecting again once the permissions are fixed. If it still fails, add <code>-v</code> locally to watch the exchange and confirm SSH is really offering the key you think it is:</p>
+  <pre><code>ssh -v user@host</code></pre>
+  <p>The output runs to fifty or sixty lines; you don't need to read it closely, just find two. <code>Offering public key: ...</code> means your key really was sent, so the problem isn't on your end. If that's immediately followed by <code>Authentications that can continue: publickey</code>, the server received the key and declined it — the problem is on the server (key in the wrong place, or wrong permissions), so carry on with the steps above.</p>
+</section>
+
+<section id="password-rejected">
+  <h2>Password is correct but rejected</h2>
+
+  <h3>Symptom</h3>
+  <p>You're certain the password is right — you may even have pasted it — but SSH keeps returning <code>Permission denied, please try again.</code>, or ends without ever prompting you for one.</p>
+
+  <h3>Cause</h3>
+  <p>This usually has nothing to do with whether the password is correct. The server's SSH configuration has password authentication switched off entirely (<code>PasswordAuthentication no</code>), a very common hardening choice meant to force everyone onto keys and take brute-force guessing off the table. With that set, a correct password will be refused a hundred times out of a hundred.</p>
+  <p>There's a trap here that costs more time than anything else in this section. Newer systems (Ubuntu after 22.10, Debian 12, and nearly every cloud provider's default image) put a line near the top of <code>sshd_config</code> reading <code>Include /etc/ssh/sshd_config.d/*.conf</code>, pulling in every config file in that directory — and sshd takes the <em>first</em> value it reads for a setting, rather than letting later ones override earlier ones. If <code>/etc/ssh/sshd_config.d/</code> holds a file like <code>50-cloud-init.conf</code> that also says <code>PasswordAuthentication no</code>, that takes effect before the line you just edited in the main file. You save, you restart, and you're still refused.</p>
+
+  <h3>Fix</h3>
+  <p>The preferred fix is to switch to key authentication — see <a href="#permission-denied-publickey">Permission denied (publickey)</a> above for getting your public key into the server's <code>authorized_keys</code>.</p>
+  <p>Only change the configuration if you administer this server and have decided you do want password login. First find out whether another file will override the value you're about to edit:</p>
+  <pre><code>sudo grep -r PasswordAuthentication /etc/ssh/sshd_config /etc/ssh/sshd_config.d/</code></pre>
+  <p>If a file under <code>/etc/ssh/sshd_config.d/</code> also sets <code>PasswordAuthentication</code>, change that value too (or comment the line out). Once that's clean, edit <code>/etc/ssh/sshd_config</code> and set <code>PasswordAuthentication</code> to <code>yes</code>.</p>
+  <p><strong>Don't close your current connection yet.</strong> A broken sshd configuration can lock you out of the machine completely, so keep this window as your way back in until the new configuration is confirmed working. After saving, check the syntax first:</p>
+  <pre><code>sudo sshd -t</code></pre>
+  <p>Only once that prints no errors should you restart the service to apply it:</p>
+  <pre><code>sudo systemctl restart ssh</code></pre>
+  <p>On some distributions the service is called <code>sshd</code> rather than <code>ssh</code>; if the line above can't find it, try <code>sudo systemctl restart sshd</code>. Then open a brand-new connection — not the one you kept as a fallback — and confirm password login really works. Only then is it safe to close the old window.</p>
+  <p>Since this whole setup is built on Tailscale, a safer option than opening password login to the entire internet is to allow passwords only from the Tailscale range and require keys everywhere else. Add this at the end of <code>sshd_config</code>:</p>
+  <pre><code>Match Address 100.64.0.0/10
+    PasswordAuthentication yes
+
+Match All
+    PasswordAuthentication no</code></pre>
+</section>
+
+<section id="tmux-not-found">
+  <h2>tmux not found</h2>
+
+  <h3>Symptom</h3>
+  <p>Agentmux reports that it can't find tmux, or you connect yourself, type <code>tmux</code>, and get <code>command not found: tmux</code>.</p>
+
+  <h3>Cause</h3>
+  <p>tmux isn't installed on the target machine yet. This isn't something you have to handle — Agentmux installs it for you: it detects whether the machine uses apt, yum, dnf, pacman, apk (Alpine), or brew, then runs the matching install command over SSH. In most cases you just wait for it to finish.</p>
+  <p>When the automatic install fails, the most common reason is that the install command includes <code>sudo</code> but the channel is non-interactive, so <code>sudo</code> has no terminal on which to ask for a password (see <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a> below). The second most common is installing via Homebrew on a Mac while connected as root — Homebrew refuses to run as root by design.</p>
+  <p>There's also a rarer case that's easy to misread: tmux <em>is</em> installed, just somewhere Agentmux didn't see when it probed the PATH (Linuxbrew under <code>~/.linuxbrew</code>, say, or MacPorts under <code>/opt/local/bin</code>). The message looks identical, but the real problem is the PATH rather than a missing install, so handle it the way described in <a href="#agent-command-not-found">claude: command not found, but it runs fine in the desktop terminal</a> below.</p>
+
+  <h3>Fix</h3>
+  <p>Start with the error Agentmux showed you. If it asks for a sudo password, or mentions enabling passwordless sudo, entering the password in Agentmux and retrying is usually the fastest path — you don't necessarily need to open a separate window. If that channel also fails, or the message mentions a terminal or TTY, work through <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a> yourself; once that's sorted the automatic install normally succeeds and you can stop there.</p>
+  <p>Install by hand only if it still won't install after the <code>sudo</code> problem is ruled out:</p>
+  <pre><code># Debian / Ubuntu
+sudo apt install -y tmux
+
+# RHEL / CentOS
+sudo yum install -y tmux
+
+# Fedora
+sudo dnf install -y tmux
+
+# Arch
+sudo pacman -S tmux
+
+# Alpine
+sudo apk add tmux
+
+# Mac (do not run as root)
+brew install tmux</code></pre>
+</section>
+
+<section id="agent-command-not-found">
+  <h2>claude: command not found, but it runs fine in the desktop terminal</h2>
+
+  <h3>Symptom</h3>
+  <p>You type <code>claude</code> in Terminal on the Mac and it runs. Connect through Agentmux, or run <code>ssh host claude</code> directly, and you get <code>claude: command not found</code> (or <code>bash: claude: command not found</code>). Same machine, same account, different result — which makes it very easy to assume Agentmux is broken.</p>
+
+  <h3>Cause</h3>
+  <p>It isn't Agentmux; it's how shells behave. This is the hardest one to reason out on your own, so it's worth the space to explain the mechanism — after which you'll be able to diagnose anything similar yourself.</p>
+  <p>The Terminal you open on the Mac is an <em>interactive login shell</em>. The reason <code>claude</code> can be found there is usually that nvm, npm, or an installer added a line to some startup file putting the directory containing <code>claude</code> on the PATH. But <em>which</em> startup file differs between zsh and bash, and mixing them up is misleading, so here they are separately:</p>
+  <p><strong>zsh</strong> (the default on macOS): an interactive login shell reads <code>.zshenv</code> → <code>.zprofile</code> → <code>.zshrc</code> → <code>.zlogin</code>, in that order. A connection that runs a single command, like <code>ssh host claude</code>, starts a non-interactive, non-login zsh that reads only <code>.zshenv</code> and skips everything else — including <code>.zshrc</code>, which is where most people's PATH setup lives.</p>
+  <p><strong>bash</strong>: this case is stranger, and the behaviour varies by distribution rather than being uniform bash behaviour. An interactive login shell reads <code>.bash_profile</code> (or <code>.profile</code>), not <code>.bashrc</code>; the reason you think bash reads <code>.bashrc</code> too is that most distributions' default <code>.bash_profile</code> contains a snippet that sources <code>.bashrc</code> if it exists. As for whether bash reads <code>~/.bashrc</code> when sshd invokes it to run a single command — the <code>ssh host claude</code> case — that depends on the distribution. It's a compile-time special case called <code>SSH_SOURCE_BASHRC</code>: Debian, Ubuntu, and their derivatives carry that patch, so even a non-interactive single-command shell reads <code>~/.bashrc</code>. Distributions like RHEL, Fedora, and Arch ship upstream bash without it, and in the same situation <code>~/.bashrc</code> is never read at all. Even on the ones that do read it, almost every default <code>.bashrc</code> opens with:</p>
+  <pre><code>case $- in
+    *i*) ;;
+      *) return;;
+esac</code></pre>
+  <p>which means "if this isn't interactive, stop here and read no further." That check is usually right at the top of the file, so even when bash does open <code>.bashrc</code>, it bails out before reaching the PATH line you added — the same outcome as never reading it.</p>
+  <p>zsh or bash, the result is identical: the line that sets the PATH only ever ran when you opened Terminal yourself. It wasn't read when SSH ran a single command, so the PATH has no entry for <code>claude</code>, and the shell quite correctly says it can't find it. This has nothing to do with whether <code>claude</code> is installed — it was there the whole time; nobody told this particular shell where to look. Nor is it there to make life difficult: skipping those startup files for non-interactive runs is deliberate, so that every remote command doesn't first have to load a pile of interactive aliases and prompt configuration and gain more ways to go wrong.</p>
+  <p>One more detail: when Agentmux probes the PATH on a Mac it uses <code>zsh -lc</code> (login but not interactive), which likewise skips <code>.zshrc</code> and reads only <code>.zshenv</code> and <code>.zprofile</code>. So for zsh users on a Mac, moving the PATH setup into those two files doesn't just fix your own manual SSH — it's exactly what determines whether Agentmux can locate the agent command in the first place.</p>
+
+  <h3>Fix</h3>
+  <p>The quickest option: find the absolute path to <code>claude</code> and call it by that path instead of relying on the PATH. In your own Terminal — the window where <code>claude</code> already works — run:</p>
+  <pre><code>which claude</code></pre>
+  <p>That prints something like <code>/Users/yourname/.nvm/versions/node/v20.11.0/bin/claude</code>. Put that full path into the field where Agentmux asks for the agent command, in place of plain <code>claude</code>. If you installed node with nvm, that path contains the current version number, so it will break the next time you upgrade node and you'll need to run <code>which claude</code> again. If you'd rather not redo it on every upgrade, use the durable fix below.</p>
+  <p>The durable fix depends on your shell — don't mix the two:</p>
+  <p><strong>On zsh</strong> (the macOS default): move the lines that set the PATH — typically from nvm, pyenv, or an <code>export PATH=...</code> you added yourself — out of <code>.zshrc</code> and into <code>~/.zshenv</code>. <code>~/.zprofile</code> works too; both are read by non-interactive SSH runs and by Agentmux when it probes the PATH.</p>
+  <p><strong>On bash</strong>: don't expect moving them to <code>~/.profile</code> or <code>~/.bash_profile</code> to help — <code>ssh host claude</code> starts a non-login shell and neither file is read. On Debian, Ubuntu, or a derivative, moving the PATH lines into <code>~/.bashrc</code> <em>above</em> the <code>case $- in ... esac</code> block at the top of the file lets them take effect before the interactive check bails out. On RHEL, Fedora, Arch, and similar, <code>~/.bashrc</code> isn't read in this situation at all, so editing it changes nothing. If you're not sure which camp your distribution is in, or you hit exactly this, fall back to the absolute-path approach above — it works everywhere, and it's the only fix guaranteed to hold across distributions.</p>
+  <p>Once you've moved them, open a fresh SSH connection and confirm it took effect:</p>
+  <pre><code>ssh host 'claude --version'</code></pre>
+  <p>A version number means the PATH really is being read in a non-interactive shell this time.</p>
+</section>
+
+<section id="tailscale-connected-but-ssh-fails">
+  <h2>Tailscale says connected, SSH still can't reach it</h2>
+
+  <h3>Symptom</h3>
+  <p>The Tailscale app on your phone shows both devices green and online, but connecting with Agentmux or plain <code>ssh</code> still fails or times out entirely.</p>
+
+  <h3>Causes</h3>
+  <ul>
+    <li>You're connecting to a local network IP (something like <code>192.168.x.x</code>) rather than the MagicDNS name or the <code>100.x</code> Tailscale IP. A local IP only works on that same Wi-Fi; the moment the phone switches to mobile data or leaves that network, the address is meaningless.</li>
+    <li>The other device has just dropped off or gone to sleep, and the "online" state in the app hasn't caught up.</li>
+    <li>Tailscale is working fine, but the SSH service on the target machine was never enabled or started. Tailscale only connects the two machines' networks; it doesn't turn SSH on for you.</li>
+    <li>The most common real cause is an expired node key: the target machine needs to reauthenticate, and while the app still shows a green "connected", the machine is effectively no longer on the network. Check the Tailscale admin console to see whether that machine is flagged as needing to sign in again or similarly expired — reauthenticating usually resolves it.</li>
+  </ul>
+
+  <h3>Fix</h3>
+  <p>Tailscale on iOS has no command line, so <code>tailscale status</code> can only be run on the target machine — the Mac or Linux box you're connecting to:</p>
+  <pre><code>tailscale status</code></pre>
+  <p>On the target machine, confirm the phone's node also shows as online. On the phone, open the Tailscale app and confirm the target machine looks healthy too — not greyed out, and with no "needs to sign in again" style warning. If both look right, always connect using the MagicDNS name (for example <code>mac-mini.tail1234.ts.net</code>) or the <code>100.x</code> IP from <code>tailscale status</code>, never the local network IP — that way the address stays valid whether you're on home Wi-Fi or mobile data. Once all of that checks out, go to the target machine and check the SSH service itself is running (on Linux, <code>sudo systemctl status ssh</code>; on a Mac, see <a href="#mac-remote-login">Remote Login is on but the Mac still won't accept connections</a> below).</p>
+</section>
+
+<section id="mac-remote-login">
+  <h2>Remote Login is on but the Mac still won't accept connections</h2>
+
+  <h3>Symptom</h3>
+  <p>Remote Login is enabled in System Settings and the Mac is definitely on the network, but SSH still can't connect — or it connects and is refused, and you're certain the password or key is correct.</p>
+
+  <h3>Causes</h3>
+  <ul>
+    <li>Remote Login defaults to allowing only the accounts in its "Only these users" list, and the account you're connecting as may not be on it.</li>
+    <li>Once the Mac goes to sleep the network interface sleeps with it, so SSH has nothing to reach. This has nothing to do with whether Remote Login is on; the machine simply isn't answering network requests.</li>
+  </ul>
+
+  <h3>Fix</h3>
+  <p>Open System Settings → General → Sharing (the path on macOS Ventura and later; before Ventura it's System Preferences → Sharing, with no "General" level), find Remote Login, confirm the switch is on, then look inside at the list of users allowed access and check that the account you're connecting as is there — or select "All users".</p>
+  <p>Next open System Settings → Battery on a laptop, or System Settings → Energy Saver on a desktop that stays on as a server — a Mac mini, Mac Studio, or iMac, which is exactly what <code>mac-mini.tail1234.ts.net</code> in the example above would be. Increase or disable the idle sleep timer, and if there's a wake-for-network option (usually labelled "Wake for network access"), turn that on as well so the Mac can wake in response to an incoming connection and answer SSH even from sleep.</p>
+</section>
+
+<section id="sudo-needs-tty">
+  <h2>sudo: a terminal is required to read the password</h2>
+
+  <h3>Symptom</h3>
+  <p>Running a command containing <code>sudo</code> through Agentmux or SSH fails immediately with <code>sudo: a terminal is required to read the password</code>, showing no sign of having run at all.</p>
+
+  <h3>Cause</h3>
+  <p>Normally <code>sudo</code> prints a password prompt to the terminal and waits for you to type before continuing. When the command arrives over a non-interactive channel — SSH running a single remote command, or an install that Agentmux runs for you in the background — there's no real terminal (TTY) to show a prompt on and nowhere for you to type. Finding no TTY available, <code>sudo</code> refuses outright rather than waiting forever for input that will never come.</p>
+  <p>There's a common misconception here: that having just entered a sudo password manually means sudo won't ask again for a while. Modern sudo does record that you've authenticated, but that record is tied to the TTY you were on (<code>tty_tickets</code>), not to your account or to the machine as a whole. So even if you typed your password in an interactive SSH window moments ago, when Agentmux later runs a command it opens a fresh SSH connection with no TTY, and as far as sudo is concerned that's an entirely different record — you'll be asked again. The cache didn't expire; it was never the same record being consulted.</p>
+
+  <h3>Fix</h3>
+  <p>Start with what Agentmux is telling you: when an automatic install fails it usually offers to take a sudo password, or suggests enabling passwordless sudo, and then retries. If you see that field, entering the password there is often faster than handling it yourself.</p>
+  <p>If that channel isn't available, the most direct route is to SSH into the machine yourself, get a normal interactive session, and run the same command there by hand (<code>sudo apt install -y tmux</code>, for instance), entering the password and finishing the job. That works — but not because it unlocked anything for Agentmux's later automated runs. As explained above, the two consult different TTY records. It works simply because you installed the thing interactively yourself. When Agentmux or the next non-interactive command checks again, it finds the software already present, nothing needs installing, and the obstacle is gone.</p>
+  <p>If you need one specific command to run passwordless over non-interactive channels long-term, <code>sudo visudo</code> can add a <code>NOPASSWD</code> rule scoped to just that command:</p>
+  <pre><code>youraccount ALL=(ALL) NOPASSWD: /usr/bin/apt</code></pre>
+  <p>That security trade-off is worse than it looks. Granting <code>NOPASSWD</code> to a package manager like apt is very nearly equivalent to granting full root: apt can be asked to install arbitrary packages, and hooks such as <code>APT::Update::Pre-Invoke</code> can run arbitrary commands as root during the install. This is not a narrow, low-risk exception — it's passwordless root written a different way, and the scope is far wider than it appears. Only configure it if you understand that cost and are deliberately accepting it. In most cases, prefer going back to installing once by hand as described above, and never grant a blanket <code>NOPASSWD: ALL</code>, which removes the password requirement from <code>sudo</code> across the entire machine.</p>
+</section>
