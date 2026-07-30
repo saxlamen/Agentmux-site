@@ -59,7 +59,8 @@ class BuildFixture(unittest.TestCase):
                         "prev": "上一篇",
                         "next": "下一篇",
                         "pagerTrackFormat": "{0} · {1}",
-                        "pagerTrackJoin": "、",
+                        "listJoin": "、",
+                        "labelColon": "：",
                         "tracks": {
                             "beginner": {
                                 "title": "我沒開過終端機",
@@ -250,7 +251,8 @@ class TestPagerTrackLabels(unittest.TestCase):
                 "prev": "上一篇",
                 "next": "下一篇",
                 "pagerTrackFormat": "{0} · {1}",
-                "pagerTrackJoin": "、",
+                "listJoin": "、",
+                "labelColon": "：",
                 "tracks": {
                     "beginner": {"title": "我沒開過終端機"},
                     "cliuser": {"title": "我已經在跑 CLI agent"},
@@ -325,7 +327,8 @@ class TestPagerTrackMemory(unittest.TestCase):
                 "prev": "上一篇",
                 "next": "下一篇",
                 "pagerTrackFormat": "{0} · {1}",
-                "pagerTrackJoin": "、",
+                "listJoin": "、",
+                "labelColon": "：",
                 "tracks": {
                     "beginner": {"title": "我沒開過終端機"},
                     "cliuser": {"title": "我已經在跑 CLI agent"},

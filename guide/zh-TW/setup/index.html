@@ -30,7 +30,7 @@
         <article class="guide-article">
             <h1>15 分鐘，讓你的 agent 開始整晚工作</h1>
             <p>回答三個問題，我給你一份只屬於你的步驟清單。每一步都會告訴你<strong>為什麼要做</strong>、<strong>指令是什麼</strong>、<strong>怎麼確認成功了</strong>，還有<strong>沒成功的話去哪裡看</strong>。</p>
-<div id="wizard" data-wizard-lang="zh-TW">
+<div id="wizard" data-wizard-lang="zh-TW" data-load-failed="載入失敗，請重新整理。">
     <noscript><p>這個安裝精靈需要 JavaScript。你也可以直接看<a href="/guide/zh-TW/troubleshooting/">疑難排解</a>頁。</p></noscript>
 </div>
 <script src="/guide/assets/wizard.js" defer></script>
@@ -38,8 +38,9 @@
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="上一篇" href="/guide/zh-TW/why-agentmux/">上一篇<span>為什麼不是 Termius / Blink</span></a></nav>
         <script>
-            // 讀者在指南首頁選過路線的話，pager 只留那條路線的鄰居，並把標籤
-            // 還原成不帶路線名的版本。同步執行，避免先閃出兩張卡再收掉一張。
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
             (function () {
                 var nav = document.querySelector('.guide-pager');
                 if (!nav) return;
@@ -53,7 +54,8 @@
                         keep.push(cards[i]);
                     }
                 }
-                // 這篇不在讀者的路線上，或本來就沒有分岔，維持原樣。
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
                 if (!keep.length || keep.length === cards.length) return;
                 for (var j = 0; j < cards.length; j++) {
                     if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);

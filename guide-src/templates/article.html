@@ -32,8 +32,9 @@
         </article>
         {{pager}}
         <script>
-            // 讀者在指南首頁選過路線的話，pager 只留那條路線的鄰居，並把標籤
-            // 還原成不帶路線名的版本。同步執行，避免先閃出兩張卡再收掉一張。
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
             (function () {
                 var nav = document.querySelector('.guide-pager');
                 if (!nav) return;
@@ -47,7 +48,8 @@
                         keep.push(cards[i]);
                     }
                 }
-                // 這篇不在讀者的路線上，或本來就沒有分岔，維持原樣。
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
                 if (!keep.length || keep.length === cards.length) return;
                 for (var j = 0; j < cards.length; j++) {
                     if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);

@@ -31,6 +31,7 @@
     "why": "為什麼要做這步",
     "verify": "怎麼知道成功了",
     "fail": "沒成功的話",
+    "labelColon": "：",
     "copy": "複製",
     "copied": "已複製",
     "copyFailed": "複製失敗，請手動選取文字複製",

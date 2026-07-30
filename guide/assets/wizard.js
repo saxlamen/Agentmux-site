@@ -105,7 +105,7 @@
         card.appendChild(el('h3', 'wizard-step-title', index + '. ' + s.title));
 
         var why = el('p', 'wizard-why');
-        why.appendChild(el('strong', null, strings.ui.why + '：'));
+        why.appendChild(el('strong', null, strings.ui.why + strings.ui.labelColon));
         why.appendChild(document.createTextNode(' ' + s.why));
         card.appendChild(why);
 
@@ -130,7 +130,7 @@
         });
 
         var verify = el('p', 'wizard-verify');
-        verify.appendChild(el('strong', null, strings.ui.verify + '：'));
+        verify.appendChild(el('strong', null, strings.ui.verify + strings.ui.labelColon));
         verify.appendChild(document.createTextNode(' ' + s.verifyHint));
         if (step.verify) {
             var v = el('pre');
@@ -142,7 +142,7 @@
         }
 
         var fail = el('p', 'wizard-fail');
-        fail.appendChild(el('strong', null, strings.ui.fail + '：'));
+        fail.appendChild(el('strong', null, strings.ui.fail + strings.ui.labelColon));
         fail.appendChild(document.createTextNode(' ' + s.failHint + ' '));
         if (step.troubleshoot) {
             var link = el('a', null, '→');
@@ -202,9 +202,12 @@
         render();
     }).catch(function () {
         // This catch can fire because the strings file itself failed to
-        // load, so `strings` may still be null here — fall back to a
-        // hardcoded message rather than rendering "undefined".
-        var message = (strings && strings.ui && strings.ui.loadFailed) || '載入失敗，請重新整理。';
+        // load, so `strings` may still be null here. The container carries a
+        // server-rendered copy of the message for exactly this case — a
+        // hardcoded literal here would show one language on every page.
+        var message = (strings && strings.ui && strings.ui.loadFailed)
+            || root.getAttribute('data-load-failed')
+            || 'Could not load the setup wizard. Please refresh.';
         root.textContent = message;
     });
 })();

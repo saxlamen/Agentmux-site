@@ -186,7 +186,7 @@ def _pager(config: dict, strings: dict, lang: str, slug: str) -> str:
         plain = strings["ui"][entry["key"]]
         label = plain
         if counts[entry["key"]] > 1:
-            names = strings["ui"]["pagerTrackJoin"].join(
+            names = strings["ui"]["listJoin"].join(
                 strings["ui"]["tracks"][track]["title"] for track in entry["tracks"]
             )
             label = strings["ui"]["pagerTrackFormat"].format(label, names)
@@ -269,14 +269,16 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
         extended_slugs = [s for s in extended_matrix.get(track_name, []) if s in available]
         extended_html = ""
         if extended_slugs:
-            extended_links = "、".join(
+            extended_links = strings["ui"]["listJoin"].join(
                 '<a data-track="{0}" href="/guide/{1}/{2}/">{3}</a>'.format(
                     esc(track_name), lang, slug, esc(strings["articles"][slug]["title"])
                 )
                 for slug in extended_slugs
             )
-            extended_html = '\n          <p class="track-extended"><strong>{0}：</strong>{1}</p>'.format(
-                esc(strings["ui"]["extendedReading"]), extended_links
+            extended_html = '\n          <p class="track-extended"><strong>{0}{1}</strong>{2}</p>'.format(
+                esc(strings["ui"]["extendedReading"]),
+                esc(strings["ui"]["labelColon"]),
+                extended_links,
             )
         blocks.append(
             '<section class="track" id="{0}">\n'
