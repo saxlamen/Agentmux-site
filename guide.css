@@ -17,6 +17,17 @@
 .guide-article code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; }
 .guide-article p code { background: var(--panel); padding: 2px 6px; border-radius: 5px; }
 
+/* A collapsed aside for readers the main path doesn't fit — the wizard opens
+   it and scrolls to it. `display: inline` on the heading keeps it on the
+   marker's line; a block-level h2 inside summary drops below the triangle. */
+.guide-article details { border: 1px solid var(--line); border-radius: 12px;
+                         padding: 4px 20px; margin: 44px 0 0; }
+.guide-article details[open] { padding-bottom: 20px; }
+.guide-article summary { cursor: pointer; padding: 16px 0; }
+.guide-article summary h2 { display: inline; font-size: clamp(19px, 2.6vw, 24px); margin: 0; }
+.guide-article details > :first-of-type { margin-top: 20px; }
+.guide-article details > :last-child { margin-bottom: 0; }
+
 .guide-article .table-wrap { overflow-x: auto; }
 .guide-article table { border-collapse: collapse; width: 100%; min-width: 480px; }
 .guide-article th, .guide-article td { border: 1px solid var(--line); padding: 10px 12px;

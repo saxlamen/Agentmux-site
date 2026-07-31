@@ -37,6 +37,28 @@
         return data.questions.every(function (q) { return answers[q.id]; });
     }
 
+    // Some options answer the reader with prose instead of a checklist — the
+    // machine question offers Windows, which this guide handles through a
+    // section on the page rather than steps of its own. steps.json maps those
+    // option ids to an anchor so the behaviour stays in the data.
+    function explainAnchor() {
+        for (var i = 0; i < data.questions.length; i++) {
+            var map = data.questions[i].explain;
+            var picked = answers[data.questions[i].id];
+            if (map && picked && map[picked]) return map[picked];
+        }
+        return null;
+    }
+
+    function openExplainer(anchor, scroll) {
+        var target = document.getElementById(anchor);
+        if (!target) return;
+        // The section ships collapsed so it doesn't sit between the questions
+        // and the plan for everyone else.
+        if (target.tagName === 'DETAILS') target.open = true;
+        if (scroll) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     function applies(step) {
         var when = step.when || {};
         return Object.keys(when).every(function (k) {
@@ -92,6 +114,8 @@
                     answers[q.id] = opt;
                     writeHash();
                     render();
+                    var explain = (q.explain || {})[opt];
+                    if (explain) openExplainer(explain, true);
                 });
                 box.appendChild(btn);
             });
@@ -189,6 +213,11 @@
     }
 
     function render() {
+        // An explainer answer never produces a plan. Without this, picking
+        // Windows and filling in the other two would render whichever steps
+        // happen not to be machine-gated — a partial checklist that reads as
+        // if Windows were supported.
+        if (explainAnchor()) { renderQuestions(); return; }
         if (complete()) renderPlan(); else renderQuestions();
     }
 
@@ -200,6 +229,11 @@
         strings = res[1];
         answers = readHash();
         render();
+        // A shared link can carry an explainer answer. Open the section so the
+        // page doesn't look like the wizard simply ignored the choice, but only
+        // scroll when the URL actually pointed at it.
+        var restored = explainAnchor();
+        if (restored) openExplainer(restored, location.hash === '#' + restored);
     }).catch(function () {
         // This catch can fire because the strings file itself failed to
         // load, so `strings` may still be null here. The container carries a

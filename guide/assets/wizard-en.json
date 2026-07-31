@@ -7,6 +7,7 @@
           "mac": "A Mac",
           "linux": "A Linux box",
           "vps": "A cloud VPS",
+          "windows": "A Windows PC",
           "none": "I don't have one yet"
         }
       },

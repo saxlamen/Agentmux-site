@@ -36,10 +36,10 @@
 </div>
 <script src="/guide/assets/wizard.js" defer></script>
 
-<section id="windows">
-  <h2>如果你用的是 Windows？</h2>
+<details id="windows" class="windows-note">
+  <summary><h2>如果你用的是 Windows？</h2></summary>
 
-  <p>上面的第一題沒有 Windows 這個選項，這不是漏掉。先講結論：這條路走得通，但要透過 WSL2，而且會比 Mac 或 Linux 多幾道手續。如果你的目的只是盡快讓 agent 開始整晚工作，租一台最便宜的雲端 VPS、照上面「雲端 VPS」那條路走，通常比在 Windows 上打通還快 — 這不是敷衍，是對多數人來說真的比較省時間的選擇。</p>
+  <p>你在上面選了 Windows，所以精靈沒有給你步驟清單 — 這不是還沒做，是因為這條路的形狀跟其他三種不一樣，給你一份半套的清單只會害你。先講結論：走得通，但要透過 WSL2，而且會比 Mac 或 Linux 多幾道手續。如果你的目的只是盡快讓 agent 開始整晚工作，租一台最便宜的雲端 VPS、照上面「雲端 VPS」那條路走，通常比在 Windows 上打通還快 — 這不是敷衍，是對多數人來說真的比較省時間的選擇。</p>
 
   <h3>為什麼不能直接用原生 Windows</h3>
 
@@ -63,7 +63,7 @@
   <h3>還有一條路：把 Windows 留著當客戶端</h3>
 
   <p>值得說清楚的是，這裡討論的 Windows 一直都是「那台被連線的機器」。如果你的 Windows 只是你平常在用的電腦，那台要跑 agent 的機器是別的（家裡的 Mac mini、公司的 Linux 主機、或一台 VPS），那上面這些問題一個都不會遇到 — 這份指南對你來說是完整成立的，因為真正要設定的從來不是你手上這台。</p>
-</section>
+</details>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="上一篇" href="/guide/zh-TW/why-agentmux/">上一篇<span>為什麼不是 Termius / Blink</span></a></nav>

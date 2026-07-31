@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -148,13 +149,24 @@ class TestWizardData(unittest.TestCase):
         unconditional = [s["id"] for s in self.data["steps"] if not s.get("when")]
         self.assertEqual(unconditional, ["tmux-handled", "add-server"])
 
+    def _explained(self):
+        """Option ids that answer with prose instead of steps, per question."""
+        return {q["id"]: dict(q.get("explain", {})) for q in self.data["questions"]}
+
     def test_every_answer_combination_gets_a_conditional_step(self):
         # Count ONLY steps whose `when` actually matched. `tmux-handled` and
         # `add-server` match everything, so asserting "more than one step" can
         # never fail — deleting every conditional step still leaves those two,
         # and the suite would stay green while the wizard told a Mac user
         # nothing about turning on SSH.
+        #
+        # Combinations containing an explainer option are skipped: the wizard
+        # renders no plan at all for those, so demanding a step would be
+        # demanding the thing the explainer exists to avoid.
+        explained = self._explained()
         for answers in self._combos():
+            if any(answers[q] in explained[q] for q in answers):
+                continue
             conditional = [s for s in self._matching(answers) if s.get("when")]
             self.assertGreater(
                 len(conditional), 0, "no conditional step for {0}".format(answers)
@@ -168,7 +180,10 @@ class TestWizardData(unittest.TestCase):
         # would satisfy the mac case on its own and deleting enable-ssh-mac
         # would go unnoticed.
         machine = [q for q in self.data["questions"] if q["id"] == "machine"][0]
+        explain = machine.get("explain", {})
         for option in machine["options"]:
+            if option in explain:
+                continue
             gated = [
                 s
                 for s in self.data["steps"]
@@ -176,6 +191,84 @@ class TestWizardData(unittest.TestCase):
                 and option in s["when"]["machine"]
             ]
             self.assertTrue(gated, "no machine-only step for {0}".format(option))
+
+    def test_only_declared_explainers_lack_a_machine_setup_step(self):
+        # Pins the carve-out above. Without this, adding an option to `explain`
+        # is enough to exempt it from needing steps, so a machine that simply
+        # lost its setup step could be hidden by declaring it an explainer.
+        machine = [q for q in self.data["questions"] if q["id"] == "machine"][0]
+        stepless = [
+            o
+            for o in machine["options"]
+            if not any(
+                list(s.get("when", {})) == ["machine"] and o in s["when"]["machine"]
+                for s in self.data["steps"]
+            )
+        ]
+        self.assertEqual(sorted(stepless), sorted(machine.get("explain", {})))
+
+    def test_no_step_is_gated_on_an_explainer_option(self):
+        # An explainer never renders a plan, so a step gated on one would be
+        # unreachable — and would read in the data as though that option were
+        # supported.
+        explained = self._explained()
+        for step in self.data["steps"]:
+            for key, values in step.get("when", {}).items():
+                for value in values:
+                    self.assertNotIn(
+                        value,
+                        explained[key],
+                        "{0} is gated on explainer {1}={2}".format(step["id"], key, value),
+                    )
+
+    def test_every_explainer_anchor_exists_in_the_setup_fragment(self):
+        # The wizard only ships on the setup page, so that is where its
+        # explainer anchors have to resolve. Checked in every language: a
+        # section that exists only in zh-TW would scroll English readers
+        # nowhere.
+        anchors = sorted(
+            {a for m in self._explained().values() for a in m.values()}
+        )
+        self.assertTrue(anchors, "no explainer anchors declared")
+        for lang in self.config["languages"]:
+            fragment = SRC / "content" / "setup" / "{0}.html".format(lang["code"])
+            if not fragment.exists():
+                continue
+            html = fragment.read_text(encoding="utf-8")
+            for anchor in anchors:
+                self.assertIn(
+                    'id="{0}"'.format(anchor),
+                    html,
+                    "explainer anchor {0} missing in {1}".format(anchor, lang["code"]),
+                )
+
+    def test_explainer_targets_are_collapsed_by_default(self):
+        # wizard.js opens the target by setting `.open`, which only does
+        # anything on a <details>. A plain <section> would leave the reader
+        # scrolled to a heading with the explanation still hidden — or, worse,
+        # permanently expanded for everyone the wizard did route elsewhere.
+        anchors = {a for m in self._explained().values() for a in m.values()}
+        for lang in self.config["languages"]:
+            fragment = SRC / "content" / "setup" / "{0}.html".format(lang["code"])
+            if not fragment.exists():
+                continue
+            html = fragment.read_text(encoding="utf-8")
+            for anchor in anchors:
+                # Match the whole opening tag rather than scanning outwards
+                # from the id: attribute order is free, so `<details open
+                # id="x">` has to be caught as readily as `<details id="x"
+                # open>`.
+                tag = re.search(
+                    r'<details\b[^>]*\bid="{0}"[^>]*>'.format(anchor), html
+                )
+                self.assertTrue(
+                    tag, "{0} is not a <details> in {1}".format(anchor, lang["code"])
+                )
+                self.assertNotRegex(
+                    tag.group(0),
+                    r"\bopen\b",
+                    "{0} ships expanded in {1}".format(anchor, lang["code"]),
+                )
 
     def test_every_agent_option_except_shell_has_an_install_step(self):
         # The agent dimension free-rides on the other two: for any combination

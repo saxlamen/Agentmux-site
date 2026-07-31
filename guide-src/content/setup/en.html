@@ -4,10 +4,10 @@
 </div>
 <script src="/guide/assets/wizard.js" defer></script>
 
-<section id="windows">
-  <h2>Using Windows?</h2>
+<details id="windows" class="windows-note">
+  <summary><h2>Using Windows?</h2></summary>
 
-  <p>There's no Windows option in the first question above, and that isn't an oversight. The short version: this works, but it has to go through WSL2, and it takes a few more steps than a Mac or a Linux box. If your goal is simply to get an agent working through the night as soon as possible, renting the cheapest cloud VPS you can find and following the VPS path above is usually faster than getting Windows there — that's not a brush-off, it genuinely saves most people time.</p>
+  <p>You picked Windows above, which is why the wizard didn't hand you a checklist — not because one is missing, but because this path is a different shape from the other three, and half a checklist would do you more harm than none. The short version: it works, but it has to go through WSL2, and it takes a few more steps than a Mac or a Linux box. If your goal is simply to get an agent working through the night as soon as possible, renting the cheapest cloud VPS you can find and following the VPS path above is usually faster than getting Windows there — that's not a brush-off, it genuinely saves most people time.</p>
 
   <h3>Why native Windows won't do</h3>
 
@@ -31,4 +31,4 @@
   <h3>One more option: keep Windows as the client</h3>
 
   <p>Worth being explicit about: the Windows discussed here is always <em>the machine you connect to</em>. If your Windows PC is just the computer you use day to day, and the machine that runs the agent is something else — a Mac mini at home, a Linux box at the office, a VPS — then none of the above applies to you. This guide works for you exactly as written, because the machine you actually need to set up was never the one in front of you.</p>
-</section>
+</details>
