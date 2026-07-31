@@ -30,24 +30,29 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>為什麼最強的 coding agent 都住在終端機裡</h1>
-            <p>「CLI」聽起來像是一種懲罰——沒有滑鼠、沒有按鈕，只有一個閃爍的游標。但這幾年最強的 coding agent，從 Claude Code 到 Codex，全部住在這裡。不是因為做 CLI 的人比較硬派，是因為終端機給了它們別的介面給不了的東西：<strong>完整的檔案系統存取與執行權限</strong>。</p>
+            <p>「CLI」聽起來像一種懲罰。沒有滑鼠、沒有按鈕，只有一個閃爍的游標。但這幾年最強的 coding agent 全都住在這裡——Claude Code、Codex，一個不缺。</p>
+<p>不是因為做 CLI 的人比較硬派。是終端機給了它們別的介面給不了的東西：<strong>完整的檔案系統存取與執行權限</strong>。</p>
 
 <section id="terminal">
   <h2>終端機到底是什麼</h2>
-  <p>終端機說穿了很單純：一個只做兩件事的程式——接受你打進去的文字，把結果印回螢幕上的文字。沒有圖層、沒有按鈕，輸入輸出兩端都是字元。正因為單純到這個程度，它才能被 agent 完整地操作：agent 打進去的每一行指令，跟你自己手動打的沒有兩樣，它看到的錯誤訊息，也跟你會看到的一字不差。</p>
+  <p>終端機只做兩件事：接受你打進去的文字，把結果印回螢幕。沒有圖層，沒有按鈕。進去是字元，出來也是字元。</p>
+  <p>簡單到這個程度，agent 才操作得動。它打的每一行指令跟你手動打的沒有兩樣。它看到的錯誤訊息，跟你會看到的一字不差。</p>
 </section>
 
 <section id="capability-boundary">
   <h2>能力邊界，不是介面美醜</h2>
-  <p>網頁版的 agent 看不到你電腦裡的任何一個檔案，它只活在瀏覽器分頁裡；IDE 外掛看得到你打開的檔案，但通常被限制在「建議」層級，改不動 git、跑不動測試、更別說裝套件。CLI agent 不一樣——它跟你自己打指令時擁有的是同一組權限：能讀整個 repo，能執行 <code>git commit</code>，能跑測試套件，能裝依賴。Claude Code、Codex、Gemini CLI、OpenCode，全部是這一類：一個能對整台機器下指令的 agent，而不是一個困在沙盒裡看得到、動不了的旁觀者。這個差別不是廠商刻意設計出來討好誰，是它們選了終端機作為介面之後，自動就繼承到的權限。</p>
+  <p>網頁版的 agent 看不到你電腦裡的任何一個檔案，它只活在瀏覽器分頁裡。IDE 外掛看得到你打開的檔案，但通常卡在「建議」層級——改不動 git，跑不動測試，更別說裝套件。</p>
+  <p>CLI agent 拿的是你自己打指令時那組權限。能讀整個 repo，能下 <code>git commit</code>，能跑測試套件，能裝依賴。Claude Code、Codex、Gemini CLI、OpenCode 全是這一類：能對整台機器下指令的 agent，不是困在沙盒裡看得到動不了的旁觀者。</p>
+  <p>這個差別沒有廠商刻意設計來討好誰。選了終端機當介面，這組權限就跟著來了。</p>
 </section>
 
 <section id="concrete-example">
   <h2>一個具體的樣子</h2>
-  <p>實際跑起來是這樣：你丟一句「把這個 bug 修好」，agent 自己讀相關檔案、改 code、下 <code>npm test</code>、看到某個測試還是紅的、回頭再改一次、再跑一次——直到全部綠燈，全程你沒點過一個按鈕。這條迴圈能自己跑完，前提就是它有終端機那組完整的執行權限；換成網頁版或 IDE 外掛，這條迴圈在第二步就會卡住，等你回來按下一步。</p>
+  <p>你丟一句「把這個 bug 修好」。agent 讀相關檔案、改 code、下 <code>npm test</code>、看到某個測試還是紅的、回頭再改、再跑一次。直到全部綠燈。全程你沒點過一個按鈕。</p>
+  <p>這條迴圈跑得完，靠的就是終端機那組執行權限。換成網頁版或 IDE 外掛，它在第二步就卡住，等你回來按下一步。</p>
 </section>
 
-<p>這些 agent 可以跑在別台機器上——但你要先能連過去。</p>
+<p>這些 agent 可以跑在別台機器上。前提是你連得過去。</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="上一篇" href="/guide/zh-TW/why-not-gui-ide/">上一篇<span>為什麼不是 Cursor / VS Code</span></a><a class="pager-next" data-tracks="beginner" data-label="下一篇" href="/guide/zh-TW/what-is-ssh/">下一篇<span>一條通往另一台電腦的加密隧道</span></a></nav>

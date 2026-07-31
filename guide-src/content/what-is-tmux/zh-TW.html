@@ -1,20 +1,23 @@
-<p>你關掉手機，那條 SSH 隧道斷掉，agent 也跟著死。這不是巧合，是機制使然：連線一斷，你這次登入用的虛擬終端機被關閉，作業系統核心會對接在這個終端機上的所有 process 送出一個 <strong>SIGHUP</strong>（hangup）訊號——這包含你的 shell，也包含你直接在這個 shell 裡跑起來的 agent 本身。沒有特別處理過這個訊號的 process，預設反應就是直接終止。於是你的 agent 沒有機會道別，就跟著那條斷掉的連線一起消失，跑到一半的東西全部作廢。</p>
+<p>你關掉手機，SSH 隧道斷掉，agent 跟著死。這不是巧合，是機制。</p>
+<p>連線一斷，你這次登入用的虛擬終端機被關閉。作業系統核心會對接在這個終端機上的所有 process 送出 <strong>SIGHUP</strong>（hangup）——包含你的 shell，也包含你直接在這個 shell 裡跑起來的 agent。沒有特別處理過這個訊號的 process，預設反應就是終止。於是 agent 沒機會道別，跟著那條斷掉的連線一起消失，跑到一半的東西全部作廢。</p>
 
 <section id="session-elsewhere">
   <h2>tmux 讓 session 活在別的地方</h2>
-  <p>tmux 解決的是這件事：它在伺服器上開一個獨立的 session，你的 agent 跑在這個 session 裡，不是跑在你那條會斷的 SSH 連線裡。你的手機接上去，只是打開一扇窗「看」這個 session 現在的畫面；斷線的時候，消失的是那扇窗，session 本身連同裡面在跑的 agent，繼續留在伺服器上跑，什麼都沒被中斷。</p>
+  <p>tmux 在伺服器上開一個獨立的 session。你的 agent 跑在那裡面，不是跑在你那條會斷的 SSH 連線裡。</p>
+  <p>手機接上去，只是打開一扇窗看這個 session 現在長什麼樣。斷線的時候，消失的是那扇窗。session 和裡面的 agent 繼續留在伺服器上跑，什麼都沒被中斷。</p>
 </section>
 
 <section id="detach-attach">
   <h2>detach、attach，跟關掉電視是同一件事</h2>
-  <p>tmux 的操作心智模型很像電視：你把電視關掉，你客廳看到的畫面沒了，但頻道那邊的節目沒停，一直在播；你回來打開電視，接的是同一個頻道，從它現在播到的地方繼續看。tmux 裡這兩個動作叫 <strong>detach</strong>（把窗關掉）和 <strong>attach</strong>（把窗打開），跟你那台機器上真正在跑的東西完全是兩回事。</p>
+  <p>把電視關掉，客廳裡的畫面沒了。節目沒停，一直在播。你回來打開，接的是同一個頻道，從它現在播到的地方看下去。</p>
+  <p>tmux 把這兩個動作叫 <strong>detach</strong> 和 <strong>attach</strong>——關窗、開窗。兩個都碰不到機器上真正在跑的東西。</p>
 </section>
 
 <section id="what-it-means-for-agents">
   <h2>對 agent 來說，這代表什麼</h2>
-  <p>意義就在這裡：你在捷運上訊號斷了、進電梯斷了、切換 Wi-Fi 斷了，只要你接的是同一個 tmux session，斷線十次，agent 一次都沒中斷過。它不知道你斷過線，因為它從頭到尾就沒活在你那條連線裡。</p>
+  <p>你在捷運上訊號斷了。進電梯斷了。切 Wi-Fi 又斷了。只要接的是同一個 tmux session，斷線十次，agent 一次都沒中斷。它不知道你斷過線，因為它從頭到尾就沒活在你那條連線裡。</p>
 </section>
 
 <p>你只需要知道 tmux 是幹嘛的就夠了。<strong>裝的部分 Agentmux 會處理</strong>——它連上去之後會自己看你的機器是 apt、dnf、pacman 還是 brew，然後幫你裝好。</p>
 
-<p>現在 agent 不會死了。剩下最後一個問題：從外面怎麼連得進去？</p>
+<p>現在 agent 不會死了。剩最後一個問題：從外面怎麼連進去？</p>
