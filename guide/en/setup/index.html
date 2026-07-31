@@ -39,30 +39,31 @@
 <details id="windows" class="windows-note">
   <summary><h2>Using Windows?</h2></summary>
 
-  <p>You picked Windows above, which is why the wizard didn't hand you a checklist — not because one is missing, but because this path is a different shape from the other three, and half a checklist would do you more harm than none. The short version: it works, but it has to go through WSL2, and it takes a few more steps than a Mac or a Linux box. If your goal is simply to get an agent working through the night as soon as possible, renting the cheapest cloud VPS you can find and following the VPS path above is usually faster than getting Windows there — that's not a brush-off, it genuinely saves most people time.</p>
+  <p>You picked Windows, so the wizard did not hand you a checklist. Not because one is missing. This path is a different shape from the other three, and half a checklist would do you more harm than none.</p>
+  <p>It works, but it goes through WSL2 and takes a few more steps than a Mac or a Linux box. If all you want is an agent working through the night, rent the cheapest cloud VPS you can find and take the VPS path above. That is usually faster than getting Windows there, and it is not a brush-off — it saves most people an evening.</p>
 
   <h3>Why native Windows won't do</h3>
 
-  <p>This guide rests on three pieces: the CLI, tmux, and SSH. SSH is a non-issue — Windows 10 and 11 both ship an OpenSSH Server you can switch on, and you'll be able to connect and get a PowerShell prompt.</p>
-  <p>The problem is tmux: <strong>there is no native Windows build</strong>, and tmux happens to be the load-bearing piece of this whole guide. Without it, the moment your connection drops the agent gets SIGHUP and dies with it (<a href="/guide/en/what-is-tmux/">here's the mechanism</a>), and "put your phone away and it keeps running" — the central promise here — stops being true. You'd end up with a Windows machine you can SSH into, but not the thing this guide is actually offering.</p>
-  <p>As for whether the agents themselves run on Windows: support varies by tool and changes quickly, so there's deliberately no list here — check the official documentation for the one you plan to use. But note the order of the argument: <strong>even if your agent runs perfectly on native Windows, the tmux problem above is unchanged.</strong> Whether an agent can run and whether it survives a disconnect are two different questions.</p>
+  <p>This guide rests on three pieces: the CLI, tmux, SSH. SSH is fine. Windows 10 and 11 both ship an OpenSSH Server you can switch on, and you will get a PowerShell prompt.</p>
+  <p>tmux is the problem. <strong>There is no native Windows build</strong>, and tmux is the load-bearing piece of this whole guide. Without it your connection drops, the agent gets SIGHUP, and it dies (<a href="/guide/en/what-is-tmux/">the mechanism</a>). "Put your phone away and it keeps running" stops being true. You would have a Windows machine you can SSH into, which is not what this guide is offering.</p>
+  <p>Whether the agents themselves run on Windows varies by tool and changes quickly, so there is deliberately no list here. Check the documentation for the one you plan to use. Note the order of the argument though: <strong>an agent running perfectly on native Windows does not touch the tmux problem.</strong> Running and surviving a disconnect are separate questions.</p>
 
   <h3>The recommended route: WSL2</h3>
 
-  <p>Inside WSL2 you have a complete Linux, and tmux, sshd, and the agents all behave the way they do on real Linux. Once a distribution is installed, every step of the "Linux box" path above applies — you can go back up and answer the first question as a Linux box.</p>
+  <p>Inside WSL2 you have a complete Linux. tmux, sshd, and the agents behave the way they do on real Linux. Install a distribution and every step of the "Linux box" path applies — go back up and answer the first question that way.</p>
 
   <h3>Three snags that don't exist on Mac or Linux</h3>
 
-  <p>None of these is a dead end, but they're worth knowing in advance so you don't assume you've made a mistake somewhere:</p>
+  <p>None is a dead end. Knowing them in advance saves you assuming you broke something:</p>
   <ul>
-    <li><strong>Networking.</strong> WSL2 runs in a virtual machine with its own IP, behind NAT, so the sshd inside it isn't reachable from outside that Windows host by default. Two ways around it: set up <code>netsh interface portproxy</code> on the Windows side to forward the port in (though WSL's IP can change on every restart, so you'll be redoing it), or turn on mirrored networking with <code>networkingMode=mirrored</code> in <code>.wslconfig</code>, which lets WSL share the host's network interfaces and removes the port-forwarding step entirely. The second is much cleaner but needs a reasonably recent Windows 11.</li>
-    <li><strong>WSL doesn't stay running on its own.</strong> Once the last process exits, the distribution shuts down within seconds and the virtual machine goes with it. But this guide wants a machine that's <em>always on</em> — you need WSL to start at boot and stay up even with nobody logged in, which usually means a scheduled task or a keepalive. On a Mac or a Linux box this simply isn't a thing you have to think about; it's specific to WSL.</li>
-    <li><strong>systemd is opt-in.</strong> Older WSL has no systemd at all — the <code>systemctl</code> command doesn't exist — so the systemd commands in the wizard's "enable the SSH service on the Linux box" step will fail outright. Newer versions can turn it on with <code>systemd=true</code> in <code>/etc/wsl.conf</code>, but it's off by default and older installations won't have it.</li>
+    <li><strong>Networking.</strong> WSL2 runs in a virtual machine with its own IP, behind NAT. The sshd inside it is not reachable from outside that Windows host by default. Two ways around it. Set up <code>netsh interface portproxy</code> on the Windows side to forward the port in — though WSL's IP can change on every restart, so you will be redoing it. Or turn on mirrored networking with <code>networkingMode=mirrored</code> in <code>.wslconfig</code>, which lets WSL share the host's interfaces and drops the port-forwarding step entirely. The second is much cleaner and needs a reasonably recent Windows 11.</li>
+    <li><strong>WSL doesn't stay running on its own.</strong> When the last process exits, the distribution shuts down within seconds and takes the virtual machine with it. This guide wants a machine that is <em>always on</em>, so WSL has to start at boot and stay up with nobody logged in — usually a scheduled task or a keepalive. On a Mac or a Linux box there is nothing here to think about. This one is WSL's alone.</li>
+    <li><strong>systemd is opt-in.</strong> Older WSL has no systemd at all; <code>systemctl</code> does not exist. The systemd commands in the wizard's "enable the SSH service on the Linux box" step fail outright. Newer versions turn it on with <code>systemd=true</code> in <code>/etc/wsl.conf</code>, but it is off by default and older installations will not have it.</li>
   </ul>
 
   <h3>One more option: keep Windows as the client</h3>
 
-  <p>Worth being explicit about: the Windows discussed here is always <em>the machine you connect to</em>. If your Windows PC is just the computer you use day to day, and the machine that runs the agent is something else — a Mac mini at home, a Linux box at the office, a VPS — then none of the above applies to you. This guide works for you exactly as written, because the machine you actually need to set up was never the one in front of you.</p>
+  <p>The Windows discussed here is always <em>the machine you connect to</em>. If your Windows PC is the computer you work at, and the agent runs somewhere else — a Mac mini at home, a Linux box at the office, a VPS — none of the above applies. The guide works for you as written. The machine you need to set up was never the one in front of you.</p>
 </details>
 
         </article>

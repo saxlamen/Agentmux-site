@@ -30,24 +30,28 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>An encrypted tunnel to another computer</h1>
-            <p>The previous article argued that an agent can run commands freely in a terminal — provided there's a terminal for it to run in. That terminal doesn't have to be on your phone. It can be the Mac mini that's always on at home, or the workstation at the office, as long as you can reach it. That's what SSH (Secure Shell) is for: it opens an encrypted tunnel between your device and another machine, carrying the text you type over and the text it prints back, in a form that none of the hops in between can read.</p>
+            <p>An agent can run commands freely in a terminal, as the last article argued. It still needs a terminal to run in. That terminal does not have to be on your phone — it can be the Mac mini that never gets switched off at home, or the workstation at the office, as long as you can reach it.</p>
+<p>Reaching it is what SSH is for. It opens an encrypted tunnel between your device and another machine, carrying the text you type over and the text it prints back. None of the hops in between can read any of it.</p>
 
 <section id="another-machine">
   <h2>Why "another machine" rather than a cloud service</h2>
-  <p>Browser agents and cloud IDEs will also connect you to a machine; the difference is whose machine it is. SSH connects you to your own. Your files are there. Your API keys are there. Every package you've installed and every environment variable you've set is there. You don't have to move anything onto someone else's server, every byte the agent touches is still yours, and the changes stay where they were made — there's nothing to sync back afterwards.</p>
+  <p>Browser agents and cloud IDEs connect you to a machine too. The difference is whose machine it is.</p>
+  <p>SSH connects you to your own. Your files are there. Your API keys are there. Every package you installed, every environment variable you set. Nothing has to move onto someone else's server, and the changes stay where they were made — there is nothing to sync back afterwards.</p>
 </section>
 
 <section id="keys-vs-passwords">
   <h2>Keys aren't the safer option — they're the easier one</h2>
-  <p>SSH supports both password and key authentication, and the choice is often framed as a trade-off between security and convenience. It isn't: keys are simultaneously safer and less work. A private key stays on your device, a public key goes on the other machine, and the two verify each other at login without you typing anything. Passwords can be brute-forced; the length of a key makes that approach useless in practice. Set it up once and every connection afterwards follows the same path — it doesn't get more tedious over time.</p>
+  <p>SSH takes passwords or keys, and the choice gets framed as security versus convenience. It is not a trade-off. Keys win on both.</p>
+  <p>A private key stays on your device. A public key goes on the other machine. At login the two verify each other and you type nothing. Passwords can be brute-forced; the length of a key puts that out of reach. Set it up once and every connection afterwards runs the same way.</p>
 </section>
 
 <section id="not-a-server">
   <h2>You don't need to turn your computer into a server</h2>
-  <p>People hear "SSH" and picture data centres and server racks, but all you're doing is flipping a switch. On a Mac it's System Settings → General → Sharing → Remote Login. On Linux it's usually starting a service called <code>sshd</code>, which most distributions already ship. Once the switch is on, nothing about what that machine was doing changes. It's still your everyday computer — it just has one more door you can knock on from outside.</p>
+  <p>People hear "SSH" and picture racks in a data centre. You are flipping a switch. On a Mac it is System Settings → General → Sharing → Remote Login. On Linux it is usually starting a service called <code>sshd</code>, which most distributions already ship.</p>
+  <p>Nothing else about the machine changes. It is still your everyday computer, with one more door you can knock on from outside.</p>
 </section>
 
-<p>But the moment you put your phone away, the tunnel drops — and the agent dies with it. Unless…</p>
+<p>Then you put your phone away, the tunnel drops, and the agent dies with it. Unless…</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/what-is-cli/">Previous<span>Why the strongest coding agents live in the terminal</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-tmux/">Next<span>Keep the agent running after you put your phone away</span></a></nav>

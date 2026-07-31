@@ -30,36 +30,38 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Why not Termius or Blink</h1>
-            <p>A general SSH app is designed on the assumption that you came to type commands. Agentmux assumes you came to rejoin an agent that's already running. That one sentence decides how every feature below is built — this isn't a comparison of how the interfaces look, it's a comparison of who thought harder about reattaching. All five capabilities below were verified against the current source, not listed from memory.</p>
+            <p>A general SSH app assumes you came to type commands. Agentmux assumes you came to rejoin an agent that is already running. That assumption decides everything below.</p>
+<p>So this is not a comparison of how the interfaces look. It is a comparison of who thought harder about reattaching. All five capabilities were verified against the current source, not listed from memory.</p>
 
 <section id="tmux-first-reconnect">
   <h2>tmux-first reconnection</h2>
-  <p>When Agentmux connects to a server, it lists the tmux sessions already running on it. One tap reattaches — no need to remember <code>tmux ls</code> or <code>tmux attach -t</code>. Reconnect after a dropped connection and you land on that same session, with the screen exactly as you left it, without retyping attach.</p>
+  <p>Connect to a server and Agentmux lists the tmux sessions already running on it. One tap reattaches. No <code>tmux ls</code>, no <code>tmux attach -t</code> to remember. Reconnect after a drop and you land on the same session, screen as you left it, without retyping anything.</p>
 </section>
 
 <section id="background-live-activity">
   <h2>Background survival and Live Activity</h2>
-  <p>Agents routinely run for tens of minutes, and that waiting period is what this is built for: the Dynamic Island and Lock Screen show current progress, and a sound can play when it finishes. You don't have to keep the app in the foreground, staring at it for a result.</p>
+  <p>Agents routinely run for tens of minutes. That waiting period is what this is built for. The Dynamic Island and Lock Screen show progress, and a sound can play when it finishes — so the app does not have to sit in the foreground while you stare at it.</p>
 </section>
 
 <section id="editor-git-files">
   <h2>Runestone editor, Git tools, and Files app integration</h2>
-  <p>Changing one line of code doesn't mean wrestling vim on a phone — the built-in Runestone editor opens the file and edits it directly. For a README or the notes an agent produced, Ink gives you a two-column Markdown preview with the source and the rendered version side by side. Git tools (switching branches, reading diffs) and Files app integration are Pro features, and they're available during the 14-day trial too.</p>
+  <p>Changing one line of code does not mean wrestling vim on a phone. The built-in Runestone editor opens the file and edits it. For a README or notes an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools — switching branches, reading diffs — and Files app integration are Pro features, available during the 14-day trial.</p>
 </section>
 
 <section id="keychain-isolation">
   <h2>Credential isolation in the Keychain</h2>
-  <p>Private keys live only in the iOS Keychain and are never written to the local database. If you turn on iCloud sync, CloudKit syncs non-sensitive metadata such as server names — the private keys themselves don't travel to the cloud.</p>
+  <p>Private keys live in the iOS Keychain and are never written to the local database. Turn on iCloud sync and CloudKit carries non-sensitive metadata such as server names. The keys stay put.</p>
 </section>
 
 <section id="siri-shortcuts">
   <h2>Siri and Shortcuts automation</h2>
-  <p><code>GetCurrentSessionContextIntent</code> lets you tell Siri "get the current terminal contents from Agentmux," and whatever is on the terminal right then is pulled into iOS Shortcuts, ready to pipe into Notes, Messages, or any automation you assemble yourself. <code>ContinueLastSessionIntent</code> is more direct still — "continue working in Agentmux" reattaches to your last session. General SSH apps can't do this structurally: they have no semantic model of sessions, projects, and agents to expose to the system. Agentmux currently implements 6 App Intents across four entity types: Server, Project, TMUXSession, and RecentSession.</p>
+  <p><code>GetCurrentSessionContextIntent</code> lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal right then lands in iOS Shortcuts, ready to pipe into Notes, Messages, or anything you assemble yourself. <code>ContinueLastSessionIntent</code> is blunter: "continue working in Agentmux" reattaches to your last session.</p>
+  <p>General SSH apps cannot do this, structurally. They have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 6 App Intents across four entity types — Server, Project, TMUXSession, RecentSession.</p>
 </section>
 
 <section id="cjk-fixes">
   <h2>Fixes you'll feel if you read CJK</h2>
-  <p>Version 1.3.10 fixed three things that English-only users never notice but a Chinese, Japanese, or Korean reader spots immediately: selection alignment drifting on full-width characters, copying a link that wraps across lines breaking it into several pieces, and a single slash inside CJK text being misread as a file path. These are the kind of holes you only fall into once you've genuinely handled CJK text.</p>
+  <p>Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once. Selection alignment drifting on full-width characters. A link that wraps across lines breaking into several pieces when copied. A single slash inside CJK text read as a file path. You only fall into these once you have actually handled CJK text.</p>
 </section>
 
 <section id="when-not-to-use">
@@ -70,7 +72,7 @@
     <li>You want to sync a large host configuration across iOS, Android, Windows, macOS, and Linux, or share a host list with a team.</li>
     <li>You're an SRE or sysadmin running operations across dozens or hundreds of servers.</li>
   </ul>
-  <p>Agentmux is optimised for one specific workflow: <strong>rejoining a running coding agent from your phone.</strong> It isn't a general-purpose operations tool.</p>
+  <p>Agentmux is built for one workflow: <strong>rejoining a running coding agent from your phone.</strong> It is not a general-purpose operations tool.</p>
 </section>
 
         </article>

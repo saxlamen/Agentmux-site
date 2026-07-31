@@ -30,24 +30,28 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Why the strongest coding agents live in the terminal</h1>
-            <p>"CLI" sounds like a punishment — no mouse, no buttons, just a blinking cursor. Yet every one of the strongest coding agents of the last few years, from Claude Code to Codex, lives there. Not because the people who build them are purists, but because the terminal hands them something no other interface can: <strong>full filesystem access and permission to execute</strong>.</p>
+            <p>"CLI" sounds like a punishment. No mouse, no buttons, just a blinking cursor. Yet that is where the strongest coding agents of the last few years live — Claude Code, Codex, all of them. Not because the people who build them are purists. Because the terminal hands them something no other interface can: <strong>full filesystem access and permission to execute</strong>.</p>
 
 <section id="terminal">
   <h2>What a terminal actually is</h2>
-  <p>Strip it down and a terminal is simple: a program that does two things. It accepts the text you type, and it prints text back. No layers, no buttons — characters in, characters out. That simplicity is exactly why an agent can drive one end to end. Every command it types is indistinguishable from one you'd type yourself, and every error it reads is word for word the error you would have seen.</p>
+  <p>Strip it down and a terminal does two things. It takes the text you type, and it prints text back. No layers, no buttons. Characters in, characters out.</p>
+  <p>That is why an agent can drive one end to end. Every command it types is the same as one you would type. Every error it reads is the error you would have seen, word for word.</p>
 </section>
 
 <section id="capability-boundary">
   <h2>A capability boundary, not a question of looks</h2>
-  <p>A browser-based agent can't see a single file on your computer; it lives inside a tab. An IDE plugin can see the files you have open, but it's usually confined to making suggestions — it can't touch git, can't run your tests, and certainly can't install packages. A CLI agent is different. It holds exactly the permissions you hold when you type commands yourself: it can read the whole repo, run <code>git commit</code>, run the test suite, install dependencies. Claude Code, Codex, Gemini CLI, and OpenCode are all in this category — agents that can issue commands to the entire machine, rather than spectators stuck in a sandbox, able to see but not act. This gap isn't a vendor's design choice meant to please anyone. It's the permission set they inherit automatically once they pick the terminal as their interface.</p>
+  <p>A browser agent cannot see a single file on your computer. It lives in a tab. An IDE plugin sees the files you have open, but it is usually confined to suggesting — no touching git, no running the tests, and certainly no installing packages.</p>
+  <p>A CLI agent holds the permissions you hold. It reads the whole repo, runs <code>git commit</code>, runs the test suite, installs dependencies. Claude Code, Codex, Gemini CLI, OpenCode: same category. Agents that can command the machine, not spectators in a sandbox who can see but not act.</p>
+  <p>No vendor designed this gap to please anyone. It is the permission set that comes with choosing the terminal as your interface.</p>
 </section>
 
 <section id="concrete-example">
   <h2>What that looks like in practice</h2>
-  <p>Running for real, it goes like this. You say "fix this bug." The agent reads the relevant files, edits the code, runs <code>npm test</code>, sees one test still red, goes back and edits again, runs it again — until everything is green, and you never clicked a button. That loop can finish on its own precisely because the agent has the terminal's full execution rights. Move it to a browser tab or an IDE plugin and the loop stalls at step two, waiting for you to come back and press the next thing.</p>
+  <p>You say "fix this bug." The agent reads the relevant files, edits the code, runs <code>npm test</code>, sees one test still red, edits again, runs again. Until everything is green. You never clicked a button.</p>
+  <p>The loop finishes on its own because the agent has the terminal's execution rights. Put it in a browser tab or an IDE plugin and it stalls at step two, waiting for you to come back and press the next thing.</p>
 </section>
 
-<p>These agents can run on a different machine — but first you have to be able to reach it.</p>
+<p>These agents can run on a different machine. First you have to be able to reach it.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/why-not-gui-ide/">Previous<span>Why not Cursor or VS Code</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-ssh/">Next<span>An encrypted tunnel to another computer</span></a></nav>
