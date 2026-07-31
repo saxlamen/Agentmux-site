@@ -1,5 +1,34 @@
-<p>回答三個問題，我給你一份只屬於你的步驟清單。每一步都會告訴你<strong>為什麼要做</strong>、<strong>指令是什麼</strong>、<strong>怎麼確認成功了</strong>，還有<strong>沒成功的話去哪裡看</strong>。</p>
+<p>回答三個問題，我給你一份只屬於你的步驟清單。每一步都會告訴你<strong>為什麼要做</strong>、<strong>指令是什麼</strong>、<strong>怎麼確認成功了</strong>，還有<strong>沒成功的話去哪裡看</strong>。（那台機器是 Windows？<a href="#windows">先看這一節</a>。）</p>
 <div id="wizard" data-wizard-lang="zh-TW" data-load-failed="載入失敗，請重新整理。">
     <noscript><p>這個安裝精靈需要 JavaScript。你也可以直接看<a href="/guide/zh-TW/troubleshooting/">疑難排解</a>頁。</p></noscript>
 </div>
 <script src="/guide/assets/wizard.js" defer></script>
+
+<section id="windows">
+  <h2>如果你用的是 Windows？</h2>
+
+  <p>上面的第一題沒有 Windows 這個選項，這不是漏掉。先講結論：這條路走得通，但要透過 WSL2，而且會比 Mac 或 Linux 多幾道手續。如果你的目的只是盡快讓 agent 開始整晚工作，租一台最便宜的雲端 VPS、照上面「雲端 VPS」那條路走，通常比在 Windows 上打通還快 — 這不是敷衍，是對多數人來說真的比較省時間的選擇。</p>
+
+  <h3>為什麼不能直接用原生 Windows</h3>
+
+  <p>這份指南靠三個零件：CLI、tmux、SSH。SSH 完全沒問題 — Windows 10 和 11 都內建 OpenSSH Server，打開之後就能連進去拿到 PowerShell。</p>
+  <p>問題出在 tmux：<strong>它沒有原生 Windows 版本</strong>，而它剛好是整份指南的承重牆。少了 tmux，你的連線一斷，agent 就會收到 SIGHUP 跟著死掉（<a href="/guide/zh-TW/what-is-tmux/">機制在這裡</a>），「關掉手機它繼續跑」這個核心承諾就不成立。你會得到一個能 SSH 進去的 Windows，但得不到這份指南真正要給你的東西。</p>
+  <p>至於 agent 本身的 Windows 支援，各家不一而且變動得很快，這裡刻意不列清單 — 請以你要用的那個工具的官方文件為準。但要注意順序：<strong>就算你的 agent 在原生 Windows 上跑得很好，上面 tmux 那個問題還是在。</strong>agent 能不能跑，跟斷線後能不能活下來，是兩件事。</p>
+
+  <h3>建議的做法：WSL2</h3>
+
+  <p>WSL2 裡面就是一個完整的 Linux，tmux、sshd 和 agent 的行為都跟真的 Linux 一樣。裝好一個發行版之後，前面「Linux 主機」那條路的每一步都適用，你可以直接回到上面把第一題選成 Linux 主機。</p>
+
+  <h3>但 WSL 有三個 Mac 和 Linux 不會遇到的坑</h3>
+
+  <p>這三個都不是不能解，但值得先知道，免得卡住的時候以為是自己哪裡做錯了：</p>
+  <ul>
+    <li><strong>網路。</strong>WSL2 跑在一個有自己 IP 的虛擬機裡、藏在 NAT 後面，所以裡面的 sshd 從這台 Windows 之外預設是連不到的。兩種解法：在 Windows 端設 <code>netsh interface portproxy</code> 把 port 轉進去（但 WSL 的 IP 每次重開都可能變，要重設），或是在 <code>.wslconfig</code> 裡開鏡像網路模式 <code>networkingMode=mirrored</code>，讓 WSL 直接共用主機的網路介面，port 轉發那一步就整個不需要了。後者乾淨很多，但需要比較新的 Windows 11。</li>
+    <li><strong>WSL 不會自己一直開著。</strong>最後一個 process 結束之後，發行版會在幾秒內關掉，虛擬機也跟著收掉。但這份指南要的是一台<em>常開</em>的機器 — 你需要讓 WSL 在開機時、甚至沒有人登入的情況下就跑起來並持續留著，通常是靠一個排程工作或 keepalive 來做。這在 Mac 和 Linux 上根本不是一個要處理的問題，是 WSL 獨有的。</li>
+    <li><strong>systemd 是選用的。</strong>比較舊的 WSL 沒有 systemd，<code>systemctl</code> 這個指令根本不存在，所以精靈裡「在 Linux 主機上啟用 SSH 服務」那步給的 systemd 指令會直接失敗。新版可以在 <code>/etc/wsl.conf</code> 裡加上 <code>systemd=true</code> 打開，但它預設不開，舊的安裝更不會有。</li>
+  </ul>
+
+  <h3>還有一條路：把 Windows 留著當客戶端</h3>
+
+  <p>值得說清楚的是，這裡討論的 Windows 一直都是「那台被連線的機器」。如果你的 Windows 只是你平常在用的電腦，那台要跑 agent 的機器是別的（家裡的 Mac mini、公司的 Linux 主機、或一台 VPS），那上面這些問題一個都不會遇到 — 這份指南對你來說是完整成立的，因為真正要設定的從來不是你手上這台。</p>
+</section>
