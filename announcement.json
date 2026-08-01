@@ -1,30 +1,60 @@
 {
-  "id": "2026-06-22-launch-sale",
-  "timestamp": "2026-06-22T00:00:00Z",
-  "expiresAt": "2026-07-16T00:00:00Z",
-  "minAppVersion": "1.3.4",
+  "id": "2026-08-01-two-finger-swipe-v1311",
+  "timestamp": "2026-08-01T00:00:00Z",
+  "expiresAt": "2026-08-15T23:59:59Z",
+  "minAppVersion": "1.3.11",
   "hideForPro": false,
-  "title": "Launch Special",
-  "message": "Lifetime Pro is $14.99 until Jul 15 — founding member pricing — standard pricing resumes after Jul 15.",
+  "title": "Two-Finger Swipe Feature & Fix",
+  "message": "Agentmux supports Two-Finger Horizontal Swipe to switch Session tabs or tmux windows (configurable in Settings). In v1.3.11, tmux window switching is now powered by native tmux commands, resolving previous arrow key up/down issues.",
   "localized": {
     "zh-Hant": {
-      "title": "首發特惠",
-      "message": "終身專業版限時 $14.99，優惠至 7/15。創始會員價格，之後將恢復正式定價。",
-      "actionLabel": "查看優惠"
+      "title": "雙指滑動功能介紹與修復",
+      "message": "Agentmux 支援「雙指水平滑動」快速切換 Session 分頁或 tmux 視窗（可在「設定」中切換模式）。v1.3.11 已修復切換 tmux 視窗功能，改用原生 tmux 指令驅動，不再誤觸方向鍵上下！",
+      "actionLabel": "了解更多"
     },
     "zh-Hans": {
-      "title": "首发特惠",
-      "message": "终身专业版限时 $14.99，优惠至 7/15。创始会员价格，之后将恢复正式定价。",
-      "actionLabel": "查看优惠"
+      "title": "双指滑动功能介绍与修复",
+      "message": "Agentmux 支持「双指水平滑动」快速切换 Session 标签页或 tmux 窗口（可在「设置」中切换模式）。v1.3.11 已修复切换 tmux 窗口功能，改用原生 tmux 指令驱动，不再误触方向键上下！",
+      "actionLabel": "了解更多"
     },
     "ja": {
-      "title": "リリース記念セール",
-      "message": "Lifetime Pro が 7/15 まで $14.99。創設メンバー価格のうちにどうぞ。",
-      "actionLabel": "オファーを見る"
+      "title": "2本指スワイプ機能と修正のお知らせ",
+      "message": "Agentmux では「2本指左右スワイプ」で Session タブや tmux ウィンドウを素早く切り替えられます（設定画面でモード変更可能）。v1.3.11 では tmux ウィンドウ切り替えを tmux コマンドで直接実行するよう修正し、矢印キーの誤動作を解消しました！",
+      "actionLabel": "詳細を見る"
+    },
+    "ko": {
+      "title": "두 손가락 스와이프 기능 및 수정 안내",
+      "message": "Agentmux는 세션 탭 또는 tmux 창을 빠르게 전환할 수 있는 '두 손가락 가로 스와이프'를 지원합니다(설정에서 전환 가능). v1.3.11에서는 tmux 창 전환이 원활하게 작동하도록 네이티브 tmux 명령으로 수정하여 위/아래 화살표 키 오류를 해결했습니다!",
+      "actionLabel": "자세히 보기"
+    },
+    "de": {
+      "title": "Zwei-Finger-Wischen & Fehlerbehebung",
+      "message": "Agentmux unterstützt Zwei-Finger-Wischen zum schnellen Wechseln zwischen Session-Tabs oder tmux-Fenstern (in den Einstellungen anpassbar). In v1.3.11 nutzt das Umschalten von tmux-Fenstern nun direkte tmux-Befehle, wodurch Pfeiltasten-Fehler behoben wurden!",
+      "actionLabel": "Mehr erfahren"
+    },
+    "fr": {
+      "title": "Balayage à deux doigts & Correction",
+      "message": "Agentmux prend en charge le balayage horizontal à deux doigts pour changer d'onglet de session ou de fenêtre tmux (configurable dans les Réglages). Dans la v1.3.11, le changement de fenêtre tmux utilise des commandes tmux directes, résolvant les problèmes de flèches haut/bas !",
+      "actionLabel": "En savoir plus"
+    },
+    "es": {
+      "title": "Deslizamiento con dos dedos y corrección",
+      "message": "Agentmux admite el deslizamiento horizontal con dos dedos para cambiar de pestaña de sesión o ventana de tmux (configurable en Ajustes). En la v1.3.11, el cambio de ventanas de tmux utiliza comandos tmux directos, solucionando los errores de las teclas de dirección arriba/abajo.",
+      "actionLabel": "Más información"
+    },
+    "pt-BR": {
+      "title": "Deslize com Dois Dedos e Correção",
+      "message": "O Agentmux suporta deslize horizontal com dois dedos para alternar abas de sessão ou janelas do tmux (configurável em Ajustes). Na v1.3.11, a alternância de janelas do tmux usa comandos diretos do tmux, corrigindo problemas com as setas para cima/para baixo!",
+      "actionLabel": "Saiba mais"
+    },
+    "ru": {
+      "title": "Смах двумя пальцами и исправление",
+      "message": "Agentmux поддерживает горизонтальный смах двумя пальцами для быстрого переключения вкладок сеанса или окон tmux (настраивается в Настройках). В v1.3.11 переключение окон tmux использует прямые команды tmux, что устраняет ошибки с клавишами стрелок вверх/вниз!",
+      "actionLabel": "Подробнее"
     }
   },
   "action": {
-    "label": "View Offer",
-    "type": "paywall"
+    "label": "Learn More",
+    "type": "none"
   }
 }
