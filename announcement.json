@@ -1,61 +1,65 @@
 {
-  "id": "2026-08-01-two-finger-swipe-v1311",
+  "id": "2026-08-13-android-100-welcome",
   "schemaVersion": 1,
-  "timestamp": "2026-08-01T00:00:00Z",
-  "expiresAt": "2026-08-15T23:59:59Z",
-  "minAppVersion": "1.3.11",
+  "timestamp": "2026-08-13T00:00:00Z",
+  "expiresAt": "2026-08-13T23:59:59Z",
+  "minAppVersions": {
+    "android": "1.0.0",
+    "ios": "1.3.14"
+  },
   "hideForPro": false,
-  "title": "Two-Finger Swipe Feature & Fix",
-  "message": "Agentmux supports Two-Finger Horizontal Swipe to switch Session tabs or tmux windows (configurable in Settings). In v1.3.11, tmux window switching is now powered by native tmux commands, resolving previous arrow key up/down issues.",
+  "platforms": ["android"],
+  "title": "Welcome to Agentmux on Android",
+  "message": "Agentmux is now available on Android! Connect to your servers, switch tmux windows with a tap, and run commands on the go.",
   "localized": {
     "zh-Hant": {
-      "title": "雙指滑動功能介紹與修復",
-      "message": "Agentmux 支援「雙指水平滑動」快速切換 Session 分頁或 tmux 視窗（可在「設定」中切換模式）。v1.3.11 已修復切換 tmux 視窗功能，改用原生 tmux 指令驅動，不再誤觸方向鍵上下！",
-      "actionLabel": "了解更多"
+      "title": "歡迎使用 Android 版 Agentmux",
+      "message": "Agentmux Android 版正式上線！隨時隨地連上你的伺服器、一鍵切換 tmux 視窗，帶著終端機到處走。",
+      "actionLabel": "開始使用"
     },
     "zh-Hans": {
-      "title": "双指滑动功能介绍与修复",
-      "message": "Agentmux 支持「双指水平滑动」快速切换 Session 标签页或 tmux 窗口（可在「设置」中切换模式）。v1.3.11 已修复切换 tmux 窗口功能，改用原生 tmux 指令驱动，不再误触方向键上下！",
-      "actionLabel": "了解更多"
+      "title": "欢迎使用 Android 版 Agentmux",
+      "message": "Agentmux Android 版正式上线！随时随地连上你的服务器、一键切换 tmux 窗口，带着终端到处走。",
+      "actionLabel": "开始使用"
     },
     "ja": {
-      "title": "2本指スワイプ機能と修正のお知らせ",
-      "message": "Agentmux では「2本指左右スワイプ」で Session タブや tmux ウィンドウを素早く切り替えられます（設定画面でモード変更可能）。v1.3.11 では tmux ウィンドウ切り替えを tmux コマンドで直接実行するよう修正し、矢印キーの誤動作を解消しました！",
-      "actionLabel": "詳細を見る"
+      "title": "Android 版 Agentmux へようこそ",
+      "message": "Agentmux の Android 版が登場！サーバーに接続して、ワンタップで tmux ウィンドウを切り替え、どこでもコマンドを実行できます。",
+      "actionLabel": "はじめる"
     },
     "ko": {
-      "title": "두 손가락 스와이프 기능 및 수정 안내",
-      "message": "Agentmux는 세션 탭 또는 tmux 창을 빠르게 전환할 수 있는 '두 손가락 가로 스와이프'를 지원합니다(설정에서 전환 가능). v1.3.11에서는 tmux 창 전환이 원활하게 작동하도록 네이티브 tmux 명령으로 수정하여 위/아래 화살표 키 오류를 해결했습니다!",
-      "actionLabel": "자세히 보기"
+      "title": "Android용 Agentmux에 오신 것을 환영합니다",
+      "message": "Agentmux Android 버전이 출시되었습니다! 언제 어디서나 서버에 연결하고, 한 번의 탭으로 tmux 창을 전환하며 명령을 실행하세요.",
+      "actionLabel": "시작하기"
     },
     "de": {
-      "title": "Zwei-Finger-Wischen & Fehlerbehebung",
-      "message": "Agentmux unterstützt Zwei-Finger-Wischen zum schnellen Wechseln zwischen Session-Tabs oder tmux-Fenstern (in den Einstellungen anpassbar). In v1.3.11 nutzt das Umschalten von tmux-Fenstern nun direkte tmux-Befehle, wodurch Pfeiltasten-Fehler behoben wurden!",
-      "actionLabel": "Mehr erfahren"
+      "title": "Willkommen bei Agentmux für Android",
+      "message": "Agentmux ist jetzt für Android verfügbar! Verbinde dich mit deinen Servern, wechsle tmux-Fenster mit einem Tipp und führe Befehle unterwegs aus.",
+      "actionLabel": "Loslegen"
     },
     "fr": {
-      "title": "Balayage à deux doigts & Correction",
-      "message": "Agentmux prend en charge le balayage horizontal à deux doigts pour changer d'onglet de session ou de fenêtre tmux (configurable dans les Réglages). Dans la v1.3.11, le changement de fenêtre tmux utilise des commandes tmux directes, résolvant les problèmes de flèches haut/bas !",
-      "actionLabel": "En savoir plus"
+      "title": "Bienvenue dans Agentmux sur Android",
+      "message": "Agentmux est désormais disponible sur Android ! Connectez-vous à vos serveurs, changez de fenêtre tmux en un geste et exécutez vos commandes partout.",
+      "actionLabel": "Commencer"
     },
     "es": {
-      "title": "Deslizamiento con dos dedos y corrección",
-      "message": "Agentmux admite el deslizamiento horizontal con dos dedos para cambiar de pestaña de sesión o ventana de tmux (configurable en Ajustes). En la v1.3.11, el cambio de ventanas de tmux utiliza comandos tmux directos, solucionando los errores de las teclas de dirección arriba/abajo.",
-      "actionLabel": "Más información"
+      "title": "Bienvenido a Agentmux en Android",
+      "message": "¡Agentmux ya está disponible en Android! Conéctate a tus servidores, cambia de ventana tmux con un toque y ejecuta comandos dondequiera que vayas.",
+      "actionLabel": "Comenzar"
     },
     "pt-BR": {
-      "title": "Deslize com Dois Dedos e Correção",
-      "message": "O Agentmux suporta deslize horizontal com dois dedos para alternar abas de sessão ou janelas do tmux (configurável em Ajustes). Na v1.3.11, a alternância de janelas do tmux usa comandos diretos do tmux, corrigindo problemas com as setas para cima/para baixo!",
-      "actionLabel": "Saiba mais"
+      "title": "Bem-vindo ao Agentmux no Android",
+      "message": "O Agentmux agora está disponível no Android! Conecte-se aos seus servidores, alterne janelas tmux com um toque e execute comandos em qualquer lugar.",
+      "actionLabel": "Começar"
     },
     "ru": {
-      "title": "Смах двумя пальцами и исправление",
-      "message": "Agentmux поддерживает горизонтальный смах двумя пальцами для быстрого переключения вкладок сеанса или окон tmux (настраивается в Настройках). В v1.3.11 переключение окон tmux использует прямые команды tmux, что устраняет ошибки с клавишами стрелок вверх/вниз!",
-      "actionLabel": "Подробнее"
+      "title": "Добро пожаловать в Agentmux на Android",
+      "message": "Agentmux теперь доступен на Android! Подключайтесь к своим серверам, переключайте окна tmux одним касанием и выполняйте команды где угодно.",
+      "actionLabel": "Начать"
     }
   },
   "action": {
-    "label": "Learn More",
+    "label": "Get Started",
     "type": "none"
   }
 }
