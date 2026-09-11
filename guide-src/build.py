@@ -211,6 +211,14 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
     template = (src / "templates" / "article.html").read_text(encoding="utf-8")
     strings = _load_strings(src, lang)
     meta = strings["articles"][slug]
+    other_code = "en" if lang == "zh-TW" else "zh-TW"
+    other_label = "English" if lang == "zh-TW" else "繁體中文"
+    matrix = config.get("content", {})
+    if slug in matrix.get(other_code, []):
+        other_url = "/guide/{0}/{1}/".format(other_code, slug)
+    else:
+        other_url = "/guide/{0}/".format(other_code)
+
     page_vars = {
         "htmlLang": esc(_language(config, lang)["htmlLang"]),
         "lang": esc(lang),
@@ -225,9 +233,17 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
         "ogUrl": esc(article_url(config["site"]["origin"], lang, slug)),
         "guideHomeLabel": esc(strings["ui"]["guideHome"]),
         "troubleshootingLabel": esc(strings["ui"]["troubleshooting"]),
+        "homeLabel": esc(strings["ui"].get("home", "首頁" if lang == "zh-TW" else "Home")),
+        "privacyLabel": esc(strings["ui"].get("privacy", "隱私政策" if lang == "zh-TW" else "Privacy")),
+        "supportLabel": esc(strings["ui"].get("support", "技術支援" if lang == "zh-TW" else "Support")),
+        "otherLangUrl": esc(other_url),
+        "otherLangLabel": esc(other_label),
         "appStoreUrl": esc(config["site"]["appStoreUrl"]),
+        "playStoreUrl": esc(config["site"].get("playStoreUrl", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux")),
         "ctaLine": esc(strings["ui"]["ctaLine"]),
         "ctaButton": esc(strings["ui"]["ctaButton"]),
+        "ctaAppStore": esc(strings["ui"].get("ctaAppStore", strings["ui"]["ctaButton"])),
+        "ctaPlayStore": esc(strings["ui"].get("ctaPlayStore", "Google Play")),
         "pager": _pager(config, strings, lang, slug),
     }
     target = article_path(out, lang, slug)
@@ -256,6 +272,9 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
     strings = _load_strings(src, lang)
     available = set(config.get("content", {}).get(lang, []))
     extended_matrix = config.get("trackExtended", {})
+    other_code = "en" if lang == "zh-TW" else "zh-TW"
+    other_label = "English" if lang == "zh-TW" else "繁體中文"
+    other_url = "/guide/{0}/".format(other_code)
     blocks = []
     for track_name, slugs in config["tracks"].items():
         track_strings = strings["ui"]["tracks"][track_name]
@@ -307,6 +326,13 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
                     "{0}/guide/{1}/".format(config["site"]["origin"].rstrip("/"), lang)
                 ),
                 "tracks": "\n        ".join(blocks),
+                "guideHomeLabel": esc(strings["ui"]["guideHome"]),
+                "troubleshootingLabel": esc(strings["ui"]["troubleshooting"]),
+                "homeLabel": esc(strings["ui"].get("home", "首頁" if lang == "zh-TW" else "Home")),
+                "privacyLabel": esc(strings["ui"].get("privacy", "隱私政策" if lang == "zh-TW" else "Privacy")),
+                "supportLabel": esc(strings["ui"].get("support", "技術支援" if lang == "zh-TW" else "Support")),
+                "otherLangUrl": esc(other_url),
+                "otherLangLabel": esc(other_label),
             },
         ),
         encoding="utf-8",
@@ -315,7 +341,11 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
 
 def build_sitemap(out_root: Path, config: dict) -> None:
     origin = config["site"]["origin"].rstrip("/")
-    urls = ["{0}/guide/".format(origin)]
+    urls = [
+        "{0}/".format(origin),
+        "{0}/privacy.html".format(origin),
+        "{0}/guide/".format(origin),
+    ]
     matrix = config.get("content", {})
     for lang in config["languages"]:
         code = lang["code"]

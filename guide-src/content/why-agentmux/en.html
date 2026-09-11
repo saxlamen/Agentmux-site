@@ -17,8 +17,8 @@
 </section>
 
 <section id="keychain-isolation">
-  <h2>Credential isolation in the Keychain</h2>
-  <p>Private keys live in the iOS Keychain and are never written to the local database. Turn on iCloud sync and CloudKit carries non-sensitive metadata such as server names. The keys stay put.</p>
+  <h2>Hardware-backed credential isolation</h2>
+  <p>Private keys live in native secure storage (the iOS Keychain / Android Keystore) and are never written to the local database. On iOS, if you turn on iCloud sync, CloudKit carries non-sensitive metadata such as server names. The keys stay put.</p>
 </section>
 
 <section id="siri-shortcuts">

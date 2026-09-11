@@ -166,7 +166,7 @@ esac</code></pre>
   </ul>
 
   <h3>Fix</h3>
-  <p>Tailscale on iOS has no command line, so <code>tailscale status</code> can only be run on the target machine — the Mac or Linux box you're connecting to:</p>
+  <p>Tailscale on mobile has no command line, so <code>tailscale status</code> can only be run on the target machine — the Mac or Linux box you're connecting to:</p>
   <pre><code>tailscale status</code></pre>
   <p>On the target machine, confirm the phone's node shows as online. On the phone, open the Tailscale app and confirm the target machine looks healthy — not greyed out, no "needs to sign in again" warning.</p>
   <p>If both look right, connect using the MagicDNS name (<code>mac-mini.tail1234.ts.net</code>, for example) or the <code>100.x</code> IP from <code>tailscale status</code>. Never the local network IP. That way the address holds whether you are on home Wi-Fi or mobile data.</p>

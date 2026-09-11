@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>{{title}} — Agentmux</title>
     <meta name="description" content="{{description}}">
     <link rel="canonical" href="{{canonical}}">
     <link rel="stylesheet" href="/site.css">
@@ -11,10 +11,31 @@
     <meta name="theme-color" content="#090d0f">
 </head>
 <body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/{{lang}}/">{{guideHomeLabel}}</a>
+                <a href="/guide/{{lang}}/troubleshooting/">{{troubleshootingLabel}}</a>
+                <a class="lang-switch" href="{{otherLangUrl}}">{{otherLangLabel}}</a>
+            </div>
+        </div>
+    </nav>
     <main class="shell guide-shell">
         <h1>{{title}}</h1>
         {{tracks}}
     </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">{{homeLabel}}</a>
+            <a href="/privacy.html">{{privacyLabel}}</a>
+            <a href="mailto:atmux-support@saxcave.cc">{{supportLabel}}</a>
+        </div>
+    </footer>
     <script>
         // Whichever section the reader clicks through from counts as their
         // chosen track; the pager on each article uses it to decide which

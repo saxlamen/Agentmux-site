@@ -1,7 +1,8 @@
 {
   "site": {
     "origin": "https://agentmux.saxcave.cc",
-    "appStoreUrl": "https://apps.apple.com/app/id6766158521"
+    "appStoreUrl": "https://apps.apple.com/app/id6766158521",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"
   },
   "languages": [
     { "code": "zh-TW", "htmlLang": "zh-Hant", "label": "繁體中文" },

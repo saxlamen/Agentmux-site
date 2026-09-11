@@ -166,7 +166,7 @@ esac</code></pre>
   </ul>
 
   <h3>解法</h3>
-  <p>iOS 上的 Tailscale 沒有指令列可以打，<code>tailscale status</code> 只能在目標機器（要被連線的那台 Mac 或 Linux 機器）上執行：</p>
+  <p>手機上的 Tailscale 沒有指令列可以打，<code>tailscale status</code> 只能在目標機器（要被連線的那台 Mac 或 Linux 機器）上執行：</p>
   <pre><code>tailscale status</code></pre>
   <p>在目標機器上確認清單裡手機那個節點顯示在線。手機這邊打開 Tailscale App，確認目標機器的狀態同樣正常——沒有變灰，也沒有需要重新登入之類的警示。</p>
   <p>兩邊都正常的話，連線時一律用 MagicDNS 名稱（例如 <code>mac-mini.tail1234.ts.net</code>）或 <code>tailscale status</code> 列出的 <code>100.x</code> IP，不要用區網 IP。這樣不管你在家裡的 Wi-Fi 還是外面用行動網路，位址都有效。</p>

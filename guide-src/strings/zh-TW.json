@@ -10,8 +10,13 @@
     "trackIndexTitle": "Agentmux 指南",
     "trackIndexDescription": "從零開始，學會讓 AI coding agent 在你自己的機器上整晚工作，再用手機接回來。",
     "extendedReading": "延伸閱讀",
-    "ctaLine": "14 天全功能試用，之後 Lifetime 買斷。",
+    "ctaLine": "14 天全功能試用，支援 iOS 與 Android。",
     "ctaButton": "在 App Store 下載",
+    "ctaAppStore": "App Store 下載",
+    "ctaPlayStore": "Google Play 下載",
+    "home": "首頁",
+    "privacy": "隱私政策",
+    "support": "技術支援",
     "tracks": {
       "beginner": {
         "title": "我沒開過終端機",

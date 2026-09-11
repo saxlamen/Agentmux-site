@@ -1,8 +1,49 @@
 .guide-shell { max-width: 820px; margin: 0 auto; padding: 0 20px 96px; }
-.guide-nav { display: flex; gap: 20px; align-items: center;
-             padding: 18px 20px; border-bottom: 1px solid var(--line); }
-.guide-nav a { color: var(--muted); text-decoration: none; }
-.guide-nav a:hover { color: var(--ink); }
+.guide-nav { border-bottom: 1px solid var(--line); }
+.guide-nav-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.guide-nav-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.guide-nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 560; }
+.guide-nav-links a:hover { color: var(--ink); }
+.guide-nav-links .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: background 0.15s ease;
+}
+.guide-nav-links .lang-switch:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.guide-footer {
+    max-width: 820px;
+    margin: 48px auto 0;
+    padding: 24px 20px 60px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    color: var(--soft);
+    font-size: 14px;
+}
+.guide-footer-links { display: flex; gap: 20px; }
+.guide-footer-links a { color: var(--soft); text-decoration: none; }
+.guide-footer-links a:hover { color: var(--ink); }
 
 .guide-article { max-width: 68ch; }
 .guide-article h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.15; margin: 40px 0 24px; }
@@ -59,6 +100,8 @@
 .guide-cta { margin-top: 40px; padding: 26px; border: 1px solid var(--line);
              border-radius: var(--radius); background: var(--panel); }
 .guide-cta p { color: var(--ink); margin: 0 0 16px; }
+.guide-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.guide-cta-actions .primary-btn { min-height: 46px; padding: 0 20px; font-size: 15px; }
 
 .lang-cards { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 .lang-cards a { padding: 14px 22px; border: 1px solid var(--line); border-radius: var(--radius);

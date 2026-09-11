@@ -17,8 +17,8 @@
 </section>
 
 <section id="keychain-isolation">
-  <h2>Keychain 憑證隔離</h2>
-  <p>私鑰只存在 iOS 系統的 Keychain 裡，不會寫進本機資料庫。開了 iCloud 同步的話，CloudKit 帶走的是伺服器名稱這類非敏感 metadata。私鑰留在原地。</p>
+  <h2>憑證硬體隔離（Keychain / Keystore）</h2>
+  <p>私鑰在 iOS 只存在系統的 Keychain 裡，在 Android 則透過 Android Keystore 硬體加密保護，不會寫進本機資料庫。開了 iCloud 同步的話（iOS），CloudKit 帶走的是伺服器名稱這類非敏感 metadata。私鑰留在原地。</p>
 </section>
 
 <section id="siri-shortcuts">

@@ -10,8 +10,13 @@
     "trackIndexTitle": "Agentmux Guide",
     "trackIndexDescription": "Start from nothing and end with an AI coding agent working through the night on your own machine, reachable from your phone.",
     "extendedReading": "Further reading",
-    "ctaLine": "14-day full-feature trial, then a one-time Lifetime purchase.",
+    "ctaLine": "14-day full-feature trial, available on iOS and Android.",
     "ctaButton": "Download on the App Store",
+    "ctaAppStore": "App Store",
+    "ctaPlayStore": "Google Play",
+    "home": "Home",
+    "privacy": "Privacy",
+    "support": "Support",
     "tracks": {
       "beginner": {
         "title": "I've never opened a terminal",
