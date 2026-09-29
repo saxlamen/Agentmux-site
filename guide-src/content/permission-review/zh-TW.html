@@ -1,0 +1,111 @@
+<p>Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛好不在螢幕前，整個任務就卡在那裡等你。AI 自動權限審查就是替你看這些權限提示的：危險的擋下來交給你，安全的給建議或直接幫你按下去。</p>
+<p>它只做一件事：回答 agent 的權限提示，而且每次只按一個鍵。它不會替你打指令，也不會去碰畫面上以外的東西。</p>
+
+<figure class="flow" aria-label="自動權限審查的判斷流程">
+  <ol>
+    <li><strong>Agent 停下來等你</strong><span>Agentmux 偵測到權限提示</span></li>
+    <li><strong>看清楚畫面</strong><span>找出目前的提示，遮蔽敏感資訊</span></li>
+    <li><strong>黑名單</strong><span>命中危險指令</span><em>交給你</em></li>
+    <li><strong>白名單</strong><span>命中你允許的指令，直接決定按哪個鍵</span></li>
+    <li><strong>AI 判斷</strong><span>允許、拒絕，或看不懂</span><em>拒絕或不確定：交給你</em></li>
+    <li><strong>送出前再確認一次</strong><span>畫面變了就不送</span><em>交給你</em></li>
+    <li><strong>建議你，或幫你按</strong><span>看你選的模式</span></li>
+  </ol>
+</figure>
+
+<section id="when-it-starts">
+  <h2>什麼時候會啟動</h2>
+  <p>只有在 agent 停下來等你回應時才會啟動。Agentmux 本來就會辨識 Claude Code、Codex 這類 agent 的狀態，當畫面出現「要不要允許」「選 1 還是 2」這種提示，工作階段就會被標記成等待中，審查也從這一刻開始。</p>
+  <p>同時要符合這幾個條件：</p>
+  <ul>
+    <li>「設定」裡的 AI 自動權限審查開關是開的。</li>
+    <li>這個工作階段選了「顧問」或「自動回覆」模式，不是「關閉」。</li>
+    <li>你是 Pro 使用者，或還在試用期內。</li>
+  </ul>
+  <p>同一個提示只會判斷一次，不會每隔幾秒就重問一遍。你只要自己在終端裡按了鍵或打了字，進行中的判斷就會立刻取消，以你的操作為準。</p>
+  <p>不在畫面上的工作階段也一樣會被審查，你切到別的分頁時，它照樣在背景幫你看著。</p>
+</section>
+
+<section id="read-the-screen">
+  <h2>第一步：看清楚畫面</h2>
+  <p>它先從畫面上找出「目前這一個」提示：要執行的指令、問題本身，還有可以選的選項。更早以前捲上去的舊內容不算數。</p>
+  <p>要送給 AI 之前，畫面裡看起來像密碼、API key、token 的內容會先被遮蔽掉。如果遮蔽失敗，原始內容不會送出，這次也不會幫你按任何鍵。</p>
+</section>
+
+<section id="blacklist">
+  <h2>第一關：黑名單</h2>
+  <p>黑名單在你的手機上直接比對，永遠第一個檢查，命中了就不會送給 AI，直接交給你處理。內建的規則涵蓋最危險的幾類操作：</p>
+  <ul>
+    <li>對 <code>/</code>、<code>~</code> 或家目錄執行 <code>rm -rf</code></li>
+    <li><code>sudo</code></li>
+    <li><code>git push --force</code>（<code>--force-with-lease</code> 不算）</li>
+    <li><code>DROP TABLE</code>、<code>DROP DATABASE</code>、<code>TRUNCATE TABLE</code></li>
+    <li>把網路下載的內容直接丟給 shell 執行，例如 <code>curl … | sh</code></li>
+    <li><code>mkfs</code>、<code>dd if=</code> 這類直接寫入磁碟的指令</li>
+  </ul>
+  <p>這些內建規則可以編輯或移除，你也可以加上自己的規則。</p>
+</section>
+
+<section id="allowlist">
+  <h2>第二關：白名單</h2>
+  <p>有些指令你每天都在按「允許」，例如跑測試或 build。把它們加進白名單，下次命中時它就直接在手機上決定要按哪個鍵，不用等 AI，也不花 API 用量。</p>
+  <p>另外，在「自動回覆」模式下，還可以對單一工作階段開啟「允許此工作階段中的所有命令」：跳過 AI 判斷，但黑名單照樣有效，工作階段結束就自動關掉。</p>
+  <p>白名單命中了、但畫面上找不到一個明確、安全的按鍵可以按時，一樣交給你。</p>
+</section>
+
+<section id="ai-judgment">
+  <h2>第三關：AI 判斷</h2>
+  <p>黑名單和白名單都沒命中的提示，才會送給 AI。AI 會看到遮蔽過的畫面內容，以及你寫的<strong>主要意圖</strong>，也就是你這次要 agent 做的事，例如「修好登入頁的測試」。</p>
+  <p>你可以選兩種引擎：</p>
+  <ul>
+    <li><strong>JEV 決策引擎</strong>（透過 OpenRouter 或 TypeSafe）：專為終端提示設計，回應快。判斷分三級：純讀取的安全操作允許；符合主要意圖的指令允許；其他像是不相關、看不懂或風險高的，全部交給你。看起來可疑或像是惡意注入的內容會直接拒絕。</li>
+    <li><strong>OpenAI 相容的 LLM</strong>：OpenAI、OpenRouter，或是你自己架在本機的模型都可以。</li>
+  </ul>
+  <p>AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會繼續往下走，而且 AI 必須明確指出要按畫面上的哪一個選項。「永遠允許」「不要再問」這種永久授權的選項，它不會選。</p>
+</section>
+
+<section id="finish">
+  <h2>最後：建議你，或幫你按</h2>
+  <p>每個工作階段可以分別選模式：</p>
+  <ul>
+    <li><strong>顧問</strong>（預設）：只給建議。畫面上方會跳出提示，告訴你它建議按什麼，旁邊有「採納」按鈕，按下去才會送出。</li>
+    <li><strong>自動回覆</strong>：判斷為允許時直接幫你按，並跳出提示告訴你它按了什麼。</li>
+  </ul>
+  <p>不管哪一種，真正送出按鍵之前都會重新看一次畫面：提示換了、選項順序變了、游標不在目標上，就不送。這樣可以避免判斷的那幾秒內畫面變了，結果按錯了選項。</p>
+  <p>自動回覆送出一個鍵之後，同一個工作階段會先停 3 秒才會再送下一個。</p>
+</section>
+
+<section id="handed-to-you">
+  <h2>哪些情況一定交給你</h2>
+  <ul>
+    <li>命中黑名單。</li>
+    <li>AI 判斷為拒絕或不確定。</li>
+    <li>看不出這個提示該按哪個鍵。</li>
+    <li>要選的是「永遠允許」這類永久授權。</li>
+    <li>送出前發現畫面已經變了。</li>
+    <li>敏感資訊遮蔽失敗。</li>
+  </ul>
+  <p>交給你的時候，Agentmux 會照平常的方式提醒你，就跟沒開審查時一樣。</p>
+</section>
+
+<section id="get-started">
+  <h2>開始使用</h2>
+  <p>開始前請準備好其中一種：</p>
+  <ul>
+    <li>JEV 引擎的 API key，透過 <a href="https://openrouter.ai/keys">OpenRouter</a> 或 TypeSafe 取得。</li>
+    <li>你自己的 OpenAI 相容 LLM 端點，例如 OpenAI 的 API，或架在自己電腦上的模型。</li>
+  </ul>
+  <ol>
+    <li>打開「設定」→「AI 自動權限審查」，打開開關。第一次會看到資料分享的說明，按下同意後會直接帶你進入「進階設定」。</li>
+    <li>在「進階設定」選擇引擎、填入你的 API key，按「測試 AI 端點連線」確認可以用。</li>
+    <li>回到設定頁，寫下你的主要意圖。每個工作階段也可以寫自己的。</li>
+    <li>連到伺服器、啟動 agent，點終端工具列上的自動權限審查按鈕，選擇「顧問」或「自動回覆」。</li>
+  </ol>
+  <p>AI 自動權限審查目前只在 iOS 版提供。</p>
+  <p>建議先用顧問模式跑幾天，看看它的建議合不合你的習慣，再考慮對特定工作階段開自動回覆。</p>
+</section>
+
+<section id="privacy">
+  <h2>資料去哪裡</h2>
+  <p>只有遮蔽過的畫面片段和你的主要意圖，會送到你自己設定的 AI 服務，用的是你自己的 API key。Agentmux 不提供、也不經手任何 AI 服務。每次判斷的紀錄只存在你的裝置上，可以在稽核記錄裡查看或清除，模型的推理內容不會保存。</p>
+</section>

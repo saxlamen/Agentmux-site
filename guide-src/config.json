@@ -17,6 +17,7 @@
     "what-is-tailscale",
     "why-agentmux",
     "setup",
+    "permission-review",
     "troubleshooting"
   ],
   "tracks": {
@@ -51,6 +52,7 @@
       "what-is-tailscale",
       "why-agentmux",
       "setup",
+      "permission-review",
       "troubleshooting"
     ],
     "en": [
