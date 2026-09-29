@@ -64,6 +64,10 @@
     "setup": {
       "title": "15 minutes to an agent that works all night",
       "description": "Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from."
+    },
+    "permission-review": {
+      "title": "AI Permission Review: who answers when your agent asks",
+      "description": "When an agent stops to ask \"Run this?\", AI Permission Review blocks dangerous commands with a blacklist, lets through the ones you trust with an allowlist, sends the rest to AI, and then suggests or presses the key depending on your mode. Every step, from trigger to decision."
     }
   }
 }

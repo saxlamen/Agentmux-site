@@ -1,0 +1,111 @@
+<p>Halfway through a task, the agent stops to ask "Run this command?" — and you happen to be away from the screen. The whole job sits there waiting for you. AI Permission Review reads these permission prompts for you: dangerous ones are held for you, safe ones get a suggestion or a key press on your behalf.</p>
+<p>It does exactly one thing: answer the agent's permission prompts, one key at a time. It never types commands for you and never touches anything beyond what's on screen.</p>
+
+<figure class="flow" aria-label="How Permission Review decides">
+  <ol>
+    <li><strong>The agent stops and waits</strong><span>Agentmux detects a permission prompt</span></li>
+    <li><strong>Read the screen</strong><span>Find the current prompt and redact sensitive text</span></li>
+    <li><strong>Blacklist</strong><span>A dangerous command matched</span><em>Handed to you</em></li>
+    <li><strong>Allowlist</strong><span>A command you trust matched; pick the key locally</span></li>
+    <li><strong>AI judgment</strong><span>Allow, deny, or unsure</span><em>Deny or unsure: handed to you</em></li>
+    <li><strong>Re-check before sending</strong><span>If the screen changed, nothing is sent</span><em>Handed to you</em></li>
+    <li><strong>Suggest, or press for you</strong><span>Depends on the mode you picked</span></li>
+  </ol>
+</figure>
+
+<section id="when-it-starts">
+  <h2>When it starts</h2>
+  <p>It only starts when an agent stops and waits for you. Agentmux already tracks the state of agents like Claude Code and Codex. When a prompt such as "Allow this?" or "Pick 1 or 2" appears, the session is marked as waiting, and the review begins at that moment.</p>
+  <p>These also need to be true:</p>
+  <ul>
+    <li>The AI Permission Review switch in Settings is on.</li>
+    <li>The session's mode is Advisor or Auto Reply, not Off.</li>
+    <li>You have Pro, or you're still in the free trial.</li>
+  </ul>
+  <p>Each prompt is judged once; it doesn't re-ask every few seconds. As soon as you press a key or type in the terminal yourself, any judgment in progress is cancelled and your input wins.</p>
+  <p>Sessions that aren't on screen are reviewed too. When you switch to another tab, it keeps watching in the background.</p>
+</section>
+
+<section id="read-the-screen">
+  <h2>Step one: read the screen</h2>
+  <p>It first picks out the current prompt on screen: the command to run, the question itself, and the choices you can pick. Older content that has scrolled up doesn't count.</p>
+  <p>Before anything goes to the AI, text that looks like a password, API key, or token is redacted. If redaction fails, the original text is not sent, and no key is pressed this time.</p>
+</section>
+
+<section id="blacklist">
+  <h2>First check: the blacklist</h2>
+  <p>The blacklist is matched right on your phone and always runs first. A match is never sent to the AI; it's handed straight to you. The built-in rules cover the most dangerous kinds of operations:</p>
+  <ul>
+    <li><code>rm -rf</code> on <code>/</code>, <code>~</code>, or your home directory</li>
+    <li><code>sudo</code></li>
+    <li><code>git push --force</code> (<code>--force-with-lease</code> doesn't count)</li>
+    <li><code>DROP TABLE</code>, <code>DROP DATABASE</code>, <code>TRUNCATE TABLE</code></li>
+    <li>Piping something downloaded straight into a shell, like <code>curl … | sh</code></li>
+    <li>Commands that write directly to a disk, like <code>mkfs</code> and <code>dd if=</code></li>
+  </ul>
+  <p>You can edit or remove these built-in rules, and add your own.</p>
+</section>
+
+<section id="allowlist">
+  <h2>Second check: the allowlist</h2>
+  <p>Some commands you approve every day, like running tests or a build. Add them to the allowlist, and the next match is decided right on your phone — which key to press, with no wait for the AI and no API usage.</p>
+  <p>In Auto Reply mode, you can also turn on "Allow all commands in this session" for a single session. It skips AI judgment, but the blacklist still applies, and it turns off when the session ends.</p>
+  <p>If the allowlist matches but there's no clear, safe key to press on screen, the prompt is handed to you.</p>
+</section>
+
+<section id="ai-judgment">
+  <h2>Third check: AI judgment</h2>
+  <p>Only prompts that match neither list go to the AI. It sees the redacted screen and your <strong>Main Intent</strong> — what you want the agent to do this time, such as "fix the login page tests".</p>
+  <p>You can choose between two engines:</p>
+  <ul>
+    <li><strong>JEV decision engine</strong> (through OpenRouter or TypeSafe): built for terminal prompts, and fast. It judges in three levels: read-only, safe operations are allowed; commands that match your Main Intent are allowed; everything else — unrelated, unclear, or high-risk — is handed to you. Anything that looks suspicious or like a malicious injection is denied outright.</li>
+    <li><strong>An OpenAI-compatible LLM</strong>: OpenAI, OpenRouter, or a model you run on your own machine.</li>
+  </ul>
+  <p>The AI reaches one of three conclusions: allow, deny, or unsure. Only "allow" goes further, and the AI has to name exactly which option on screen to pick. It never picks a permanent choice such as "Always allow" or "Don't ask again".</p>
+</section>
+
+<section id="finish">
+  <h2>Finally: suggest, or press for you</h2>
+  <p>Each session has its own mode:</p>
+  <ul>
+    <li><strong>Advisor</strong> (default): suggestions only. A notice at the top of the screen tells you what it recommends, with an Accept button next to it. Nothing is sent until you tap it.</li>
+    <li><strong>Auto Reply</strong>: when the verdict is allow, it presses the key for you and shows a notice saying what it pressed.</li>
+  </ul>
+  <p>Either way, it looks at the screen again right before sending a key. If the prompt changed, the options moved, or the cursor isn't on the target, nothing is sent. This keeps a change in the few seconds of judgment from turning into the wrong choice.</p>
+  <p>After Auto Reply sends a key, it waits 3 seconds before it can send another in the same session.</p>
+</section>
+
+<section id="handed-to-you">
+  <h2>When it always hands the prompt to you</h2>
+  <ul>
+    <li>A blacklist rule matched.</li>
+    <li>The AI said deny, or wasn't sure.</li>
+    <li>It can't tell which key the prompt wants.</li>
+    <li>The choice is a permanent grant like "Always allow".</li>
+    <li>The screen changed before the key was sent.</li>
+    <li>Redacting sensitive text failed.</li>
+  </ul>
+  <p>When that happens, Agentmux alerts you the usual way, exactly as it would with the review turned off.</p>
+</section>
+
+<section id="get-started">
+  <h2>Getting started</h2>
+  <p>Before you start, have one of these ready:</p>
+  <ul>
+    <li>An API key for the JEV engine, from <a href="https://openrouter.ai/keys">OpenRouter</a> or TypeSafe.</li>
+    <li>Your own OpenAI-compatible LLM endpoint, such as the OpenAI API or a model running on your own computer.</li>
+  </ul>
+  <ol>
+    <li>Open Settings → AI Permission Review and turn on the switch. The first time, you'll see an explanation of what data is shared. Tap to agree, and you're taken straight to Advanced Settings.</li>
+    <li>In Advanced Settings, choose an engine, enter your API key, and tap "Test AI Endpoint Connection" to make sure it works.</li>
+    <li>Back in Settings, write down your Main Intent. Each session can have its own, too.</li>
+    <li>Connect to a server, start an agent, tap the Permission Review button in the terminal toolbar, and choose Advisor or Auto Reply.</li>
+  </ol>
+  <p>AI Permission Review is currently available on iOS only.</p>
+  <p>Try Advisor for a few days first to see whether its suggestions match how you work, before turning on Auto Reply for specific sessions.</p>
+</section>
+
+<section id="privacy">
+  <h2>Where your data goes</h2>
+  <p>Only redacted screen excerpts and your Main Intent are sent, to the AI service you set up, using your own API key. Agentmux doesn't provide or relay any AI service. A record of each decision stays on your device only; you can review or clear it in the audit log. Model reasoning is never stored.</p>
+</section>
