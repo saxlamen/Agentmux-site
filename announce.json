@@ -1,52 +1,66 @@
 {
-  "id": "2026-09-16-ios-terminal-performance",
+  "id": "2026-09-29-permission-review",
   "schemaVersion": 2,
-  "timestamp": "2026-09-16T00:00:00Z",
-  "publishAt": "2026-09-16T00:00:00Z",
-  "expiresAt": "2026-10-31T23:59:59Z",
+  "timestamp": "2026-09-29T00:00:00Z",
+  "publishAt": "2026-09-29T00:00:00Z",
+  "expiresAt": "2026-11-15T23:59:59Z",
   "minAppVersions": {
-    "ios": "1.4.4"
+    "ios": "1.4.5"
   },
   "hideForPro": false,
   "platforms": ["ios"],
-  "title": "A Smoother Terminal Experience",
-  "message": "Smooth scrolling and Metal GPU rendering are now enabled by default for a faster, more fluid terminal. If you notice scrolling or display issues, turn either option off in Settings → Advanced Terminal and let the developer know.",
+  "title": "New: AI Permission Review",
+  "message": "Let AI review your agent's permission prompts: dangerous commands are held for you, and safe steps get a suggestion or an automatic reply. Use the JEV engine through OpenRouter or TypeSafe, or your own OpenAI-compatible LLM endpoint. Turn it on in Settings → AI Permission Review.",
+  "action": {
+    "label": "Learn how it works",
+    "type": "url",
+    "url": "https://agentmux.saxcave.cc/guide/en/permission-review/"
+  },
   "localized": {
     "zh-Hant": {
-      "title": "更流暢的終端機體驗",
-      "message": "平滑滾動與 Metal GPU 渲染現在預設開啟，讓終端機操作與畫面更新更加流暢。如果遇到滾動或顯示異常，可前往「設定 → 進階終端機」分別關閉，並回報給作者。"
+      "title": "新功能：AI 自動權限審查",
+      "message": "讓 AI 替你看 agent 的權限提示：危險指令擋下來交給你，安全的步驟給建議或自動回覆。可使用 OpenRouter 或 TypeSafe 的 JEV 引擎，或你自己的 OpenAI 相容 LLM 端點。前往「設定 → AI 自動權限審查」開啟。",
+      "actionLabel": "了解運作方式"
     },
     "zh-Hans": {
-      "title": "更流畅的终端体验",
-      "message": "平滑滚动与 Metal GPU 渲染现在默认开启，让终端操作和画面更新更加流畅。如果遇到滚动或显示异常，可前往“设置 → 高级终端机”分别关闭，并反馈给作者。"
+      "title": "新功能：AI 自动权限审查",
+      "message": "让 AI 替你看 agent 的权限提示：危险命令拦下来交给你，安全的步骤给出建议或自动回复。可使用 OpenRouter 或 TypeSafe 的 JEV 引擎，或你自己的 OpenAI 兼容 LLM 端点。前往“设置 → AI 自动权限审查”开启。",
+      "actionLabel": "了解运作方式"
     },
     "ja": {
-      "title": "より滑らかなターミナル体験",
-      "message": "スムーズスクロールと Metal GPU レンダリングがデフォルトで有効になり、ターミナルの操作と描画がより滑らかになりました。スクロールや表示に問題がある場合は、「設定 → ターミナルの詳細設定」で各機能を無効にして、開発者にお知らせください。"
+      "title": "新機能：AI 自動権限レビュー",
+      "message": "エージェントの権限確認を AI がチェックします。危険なコマンドはブロックしてあなたに任せ、安全な操作は提案または自動で応答します。OpenRouter または TypeSafe の JEV エンジン、あるいはご自身の OpenAI 互換 LLM エンドポイントを利用できます。「設定 → AI 自動権限レビュー」で有効にしてください。",
+      "actionLabel": "仕組みを見る"
     },
     "ko": {
-      "title": "더 부드러운 터미널 경험",
-      "message": "부드러운 스크롤과 Metal GPU 렌더링이 기본으로 활성화되어 터미널 조작과 화면 갱신이 더욱 매끄러워졌습니다. 스크롤이나 표시에 문제가 있으면 설정 → 고급 터미널에서 각 기능을 끄고 개발자에게 알려 주세요."
+      "title": "새 기능: AI 자동 권한 검토",
+      "message": "AI가 에이전트의 권한 프롬프트를 대신 확인합니다. 위험한 명령은 차단해 사용자에게 넘기고, 안전한 단계는 제안하거나 자동으로 응답합니다. OpenRouter 또는 TypeSafe의 JEV 엔진이나 직접 운영하는 OpenAI 호환 LLM 엔드포인트를 사용할 수 있습니다. 설정 → AI 자동 권한 검토에서 켜세요.",
+      "actionLabel": "작동 방식 보기"
     },
     "de": {
-      "title": "Ein flüssigeres Terminal-Erlebnis",
-      "message": "Flüssiges Scrollen und Metal-GPU-Rendering sind jetzt standardmäßig aktiviert und sorgen für ein schnelleres, flüssigeres Terminal. Falls Probleme beim Scrollen oder bei der Anzeige auftreten, können die Optionen unter Einstellungen → Erweitertes Terminal einzeln deaktiviert und dem Entwickler gemeldet werden."
+      "title": "Neu: KI-Berechtigungsprüfung",
+      "message": "Die KI prüft die Berechtigungsabfragen deines Agenten: Gefährliche Befehle werden dir überlassen, sichere Schritte bekommen einen Vorschlag oder eine automatische Antwort. Nutze die JEV-Engine über OpenRouter oder TypeSafe oder deinen eigenen OpenAI-kompatiblen LLM-Endpunkt. Aktivierbar unter Einstellungen → KI-Berechtigungsprüfung.",
+      "actionLabel": "So funktioniert es"
     },
     "fr": {
-      "title": "Une expérience de terminal plus fluide",
-      "message": "Le défilement fluide et le rendu GPU Metal sont désormais activés par défaut pour un terminal plus rapide et plus réactif. En cas de problème de défilement ou d’affichage, désactivez chaque option dans Réglages → Terminal avancé et informez le développeur."
+      "title": "Nouveau : vérification automatique des autorisations par IA",
+      "message": "L’IA examine les demandes d’autorisation de votre agent : les commandes dangereuses vous sont laissées, les étapes sûres reçoivent une suggestion ou une réponse automatique. Utilisez le moteur JEV via OpenRouter ou TypeSafe, ou votre propre point de terminaison LLM compatible OpenAI. À activer dans Réglages → Vérification automatique des autorisations par IA.",
+      "actionLabel": "Voir comment ça marche"
     },
     "es": {
-      "title": "Una experiencia de terminal más fluida",
-      "message": "El desplazamiento suave y el renderizado GPU Metal ahora están activados de forma predeterminada para ofrecer un terminal más rápido y fluido. Si notas problemas de desplazamiento o visualización, desactiva cada opción en Ajustes → Terminal avanzado e informa al desarrollador."
+      "title": "Nuevo: revisión automática de permisos con IA",
+      "message": "La IA revisa los avisos de permiso de tu agente: los comandos peligrosos quedan en tus manos y los pasos seguros reciben una sugerencia o una respuesta automática. Usa el motor JEV a través de OpenRouter o TypeSafe, o tu propio endpoint de LLM compatible con OpenAI. Actívala en Ajustes → Revisión automática de permisos con IA.",
+      "actionLabel": "Ver cómo funciona"
     },
     "pt-BR": {
-      "title": "Uma experiência de terminal mais fluida",
-      "message": "A rolagem suave e a renderização GPU Metal agora vêm ativadas por padrão para deixar o terminal mais rápido e fluido. Se houver problemas de rolagem ou exibição, desative cada opção em Ajustes → Terminal avançado e avise o desenvolvedor."
+      "title": "Novo: revisão automática de permissões com IA",
+      "message": "A IA analisa os pedidos de permissão do seu agente: comandos perigosos ficam com você e etapas seguras recebem uma sugestão ou uma resposta automática. Use o mecanismo JEV via OpenRouter ou TypeSafe, ou seu próprio endpoint de LLM compatível com OpenAI. Ative em Ajustes → Revisão automática de permissões com IA.",
+      "actionLabel": "Ver como funciona"
     },
     "ru": {
-      "title": "Более плавная работа терминала",
-      "message": "Плавная прокрутка и рендеринг Metal GPU теперь включены по умолчанию, чтобы терминал работал быстрее и плавнее. При проблемах с прокруткой или отображением отключите соответствующие параметры в разделе «Настройки → Расширенные настройки терминала» и сообщите разработчику."
+      "title": "Новое: AI-автопроверка разрешений",
+      "message": "AI проверяет запросы разрешений вашего агента: опасные команды остаются за вами, а для безопасных шагов предлагается ответ или отправляется автоматически. Используйте движок JEV через OpenRouter или TypeSafe либо свою OpenAI-совместимую конечную точку LLM. Включается в разделе «Настройки → AI-автопроверка разрешений».",
+      "actionLabel": "Как это работает"
     }
   }
 }
