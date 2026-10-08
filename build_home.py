@@ -17,8 +17,8 @@ ROOT_DIR = Path(__file__).resolve().parent
 LANG_CONFIG = {
     "en": {
         "html_lang": "en",
-        "title": "Agentmux - Run SSH, tmux, and AI agents on iOS & Android",
-        "description": "Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.",
+        "title": "Agentmux - Run SSH, tmux & Claude Code on iOS & Android",
+        "description": "Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.",
         "canonical": "https://agentmux.saxcave.cc/",
         "out_dir": "",
         "guide_href": "/guide/en/",
@@ -26,8 +26,8 @@ LANG_CONFIG = {
     },
     "zh-TW": {
         "html_lang": "zh-TW",
-        "title": "Agentmux - 在 iPhone、iPad 與 Android 上掌控 SSH、tmux 與 AI Agent",
-        "description": "Agentmux 把手機與平板變成遠端專案指揮中心：接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，並可瀏覽檔案、閱讀原始碼與遠端編輯。現已支援 iOS 與 Android。",
+        "title": "Agentmux - 在 iPhone、iPad 上掌控 SSH、tmux 與 Claude Code",
+        "description": "專為行動裝置打造的 SSH 與 tmux 工具：在 iPhone、iPad 上執行 Claude Code、Codex 等 AI Coding Agents，斷線自動重連，隨時推進遠端專案。",
         "canonical": "https://agentmux.saxcave.cc/zh-TW/",
         "out_dir": "zh-TW",
         "guide_href": "/guide/zh-TW/",
@@ -35,8 +35,8 @@ LANG_CONFIG = {
     },
     "zh-Hans": {
         "html_lang": "zh-Hans",
-        "title": "Agentmux - 在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 AI Agent",
-        "description": "Agentmux 把手机与平板变成远程项目指挥中心：接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，并可浏览文件、阅读源码与远程编辑。现已支持 iOS 与 Android。",
+        "title": "Agentmux - 在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 Claude Code",
+        "description": "专为移动端打造的 SSH 与 tmux 工具：在 iPhone、iPad 上运行 Claude Code、Codex 等 AI 编码智能体，断线自动重连，随时推进远程项目。",
         "canonical": "https://agentmux.saxcave.cc/zh-Hans/",
         "out_dir": "zh-Hans",
         "guide_href": "/guide/zh-TW/",
@@ -44,8 +44,8 @@ LANG_CONFIG = {
     },
     "ja": {
         "html_lang": "ja",
-        "title": "Agentmux - iPhone、iPad、Android から SSH、tmux、AI エージェントを操作",
-        "description": "Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッション、Claude、Codex、Gemini、OpenCode、ファイル閲覧、ソース確認、リモート編集に対応。iOS と Android の両方で利用可能です。",
+        "title": "Agentmux - iPhone・iPad から SSH・tmux・Claude Code を操作",
+        "description": "スマホやタブレットで快適に動く SSH & tmux クライアント。外出先でも iPhone・iPad から Claude Code やコーディングエージェントの作業をそのまま継続できます。",
         "canonical": "https://agentmux.saxcave.cc/ja/",
         "out_dir": "ja",
         "guide_href": "/guide/en/",
@@ -137,6 +137,13 @@ def make_script(target_lang: str) -> str:
 
         window.addEventListener('load', () => {
             setupNavCta();
+            const params = new URLSearchParams(window.location.search);
+            const qLang = params.get('lang');
+            if (qLang === 'zh-TW') return location.replace('/zh-TW/');
+            if (qLang === 'zh-Hans') return location.replace('/zh-Hans/');
+            if (qLang === 'ja') return location.replace('/ja/');
+            if (qLang === 'en') return location.replace('/');
+
             const saved = localStorage.getItem('preferred-lang');
             if (saved) {
                 if (saved === 'zh-TW') return location.replace('/zh-TW/');

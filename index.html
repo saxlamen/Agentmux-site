@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentmux - Run SSH, tmux, and AI agents on iOS & Android</title>
-    <meta id="meta-description" name="description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <title>Agentmux - Run SSH, tmux & Claude Code on iOS & Android</title>
+    <meta id="meta-description" name="description" content="Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/zh-TW/">
     <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/zh-Hans/">
     <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/ja/">
-    <meta id="og-title" property="og:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS & Android">
-    <meta id="og-description" property="og:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <meta id="og-title" property="og:title" content="Agentmux - Run SSH, tmux & Claude Code on iOS & Android">
+    <meta id="og-description" property="og:description" content="Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agentmux.saxcave.cc/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta id="twitter-title" name="twitter:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS & Android">
-    <meta id="twitter-description" name="twitter:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <meta id="twitter-title" name="twitter:title" content="Agentmux - Run SSH, tmux & Claude Code on iOS & Android">
+    <meta id="twitter-description" name="twitter:description" content="Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
     <link rel="stylesheet" href="/site.css">
@@ -341,6 +341,13 @@
 
         window.addEventListener('load', () => {
             setupNavCta();
+            const params = new URLSearchParams(window.location.search);
+            const qLang = params.get('lang');
+            if (qLang === 'zh-TW') return location.replace('/zh-TW/');
+            if (qLang === 'zh-Hans') return location.replace('/zh-Hans/');
+            if (qLang === 'ja') return location.replace('/ja/');
+            if (qLang === 'en') return location.replace('/');
+
             const saved = localStorage.getItem('preferred-lang');
             if (saved) {
                 if (saved === 'zh-TW') return location.replace('/zh-TW/');
