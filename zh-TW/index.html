@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentmux - Run SSH, tmux, and AI agents on iOS & Android</title>
-    <meta id="meta-description" name="description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
-    <link rel="canonical" href="https://agentmux.saxcave.cc/">
+    <title>Agentmux - 在 iPhone、iPad 與 Android 上掌控 SSH、tmux 與 AI Agent</title>
+    <meta id="meta-description" name="description" content="Agentmux 把手機與平板變成遠端專案指揮中心：接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，並可瀏覽檔案、閱讀原始碼與遠端編輯。現已支援 iOS 與 Android。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/zh-TW/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/zh-TW/">
     <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/zh-Hans/">
     <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/ja/">
-    <meta id="og-title" property="og:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS & Android">
-    <meta id="og-description" property="og:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <meta id="og-title" property="og:title" content="Agentmux - 在 iPhone、iPad 與 Android 上掌控 SSH、tmux 與 AI Agent">
+    <meta id="og-description" property="og:description" content="Agentmux 把手機與平板變成遠端專案指揮中心：接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，並可瀏覽檔案、閱讀原始碼與遠端編輯。現已支援 iOS 與 Android。">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://agentmux.saxcave.cc/">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/zh-TW/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta id="twitter-title" name="twitter:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS & Android">
-    <meta id="twitter-description" name="twitter:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <meta id="twitter-title" name="twitter:title" content="Agentmux - 在 iPhone、iPad 與 Android 上掌控 SSH、tmux 與 AI Agent">
+    <meta id="twitter-description" name="twitter:description" content="Agentmux 把手機與平板變成遠端專案指揮中心：接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，並可瀏覽檔案、閱讀原始碼與遠端編輯。現已支援 iOS 與 Android。">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
     <link rel="stylesheet" href="/site.css">
@@ -31,27 +31,32 @@
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="nav-links">
-                <a href="/guide/en/">
-                    <span class="active">Guide</span>
+                <a href="/guide/zh-TW/">
+                    
+                    <span class="active">指南</span>
                 </a>
                 <a href="#features">
-                    <span class="active">Features</span>
+                    
+                    <span class="active">功能</span>
                 </a>
                 <a href="#plans">
-                    <span class="active">Plans</span>
+                    
+                    <span class="active">方案</span>
                 </a>
-                <a href="/privacy.html?lang=en">
-                    <span class="active">Privacy</span>
+                <a href="/privacy.html?lang=zh-TW">
+                    
+                    <span class="active">隱私</span>
                 </a>
-                <a class="lang-btn active" href="/" hreflang="en" onclick="localStorage.setItem('preferred-lang', 'en')">EN</a>
-                <a class="lang-btn" href="/zh-TW/" hreflang="zh-TW" onclick="localStorage.setItem('preferred-lang', 'zh-TW')">繁中</a>
+                <a class="lang-btn" href="/" hreflang="en" onclick="localStorage.setItem('preferred-lang', 'en')">EN</a>
+                <a class="lang-btn active" href="/zh-TW/" hreflang="zh-TW" onclick="localStorage.setItem('preferred-lang', 'zh-TW')">繁中</a>
                 <a class="lang-btn" href="/zh-Hans/" hreflang="zh-Hans" onclick="localStorage.setItem('preferred-lang', 'zh-Hans')">简中</a>
                 <a class="lang-btn" href="/ja/" hreflang="ja" onclick="localStorage.setItem('preferred-lang', 'ja')">日本語</a>
             </div>
             <a class="nav-cta" href="#download" id="nav-download-btn">
-                <span class="cta-label-long active">Get the App</span>
+                
+                <span class="cta-label-long active">下載 App</span>
 
-                <span class="cta-label-short active">Download</span>
+                <span class="cta-label-short active">下載</span>
             </a>
         </div>
     </nav>
@@ -61,13 +66,16 @@
             <section class="hero">
                 <div>
                     <div class="eyebrow">
-                        <span class="active">Run SSH, tmux, and AI agents on iOS &amp; Android</span>
+                        
+                        <span class="active">在 iPhone、iPad 與 Android 上掌控 SSH、tmux 與 AI Agent</span>
                     </div>
                     <h1>
-                        <span class="active">Your coding agents, <span class="accent">wherever SSH lives.</span></span>
+                        
+                        <span class="active">把 AI Agents<br><span class="accent">接上 SSH。</span></span>
                     </h1>
                     <p class="hero-copy">
-                        <span class="active">Agentmux turns your phone and tablet into a command center for remote projects, persistent tmux sessions, and AI coding agents like Claude, Codex, Gemini, and OpenCode.</span>
+                        
+                        <span class="active">Agentmux 把手機與平板變成遠端專案指揮中心：接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，臨時修程式碼也不慌。</span>
                     </p>
                     <div class="hero-actions" id="download">
                         <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
@@ -83,7 +91,8 @@
                             <span>Google Play</span>
                         </a>
                         <a class="secondary-btn" href="#features">
-                            <span class="active">See the workflow</span>
+                            
+                            <span class="active">看看工作流程</span>
                         </a>
                     </div>
                     <div class="proof" aria-label="Supported workflows">
@@ -118,13 +127,16 @@
                 <div class="demo-layout">
                     <div class="demo-copy">
                         <div class="eyebrow">
-                            <span class="active">30-second workflow</span>
+                            
+                            <span class="active">30 秒看懂工作流程</span>
                         </div>
                         <h2>
-                            <span class="active">Open the project. Resume the agent.</span>
+                            
+                            <span class="active">打開專案，接回 Agent。</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux keeps remote sessions, agents, and project context close together so a phone check can turn into real progress.</span>
+                            
+                            <span class="active">Agentmux 把遠端工作階段、Agent 與專案脈絡整合在一起，在手機上也能真正推進進度。</span>
                         </p>
                     </div>
                     <div class="demo-media" aria-hidden="true">
@@ -145,13 +157,16 @@
             <section id="features" class="features">
                 <div class="section-head">
                     <div class="eyebrow">
-                        <span class="active">Built for real remote development sessions</span>
+                        
+                        <span class="active">專為實際的遠端開發工作階段設計</span>
                     </div>
                     <h2>
-                        <span class="active">The SSH app for the agent era.</span>
+                        
+                        <span class="active">Agent 時代的<br>SSH app。</span>
                     </h2>
                     <p>
-                        <span class="active">Not a tiny terminal with a keyboard bolted on. Agentmux is shaped around sessions, agents, files, edits, and docs.</span>
+                        
+                        <span class="active">不是把終端機縮小塞進螢幕。Agentmux 專為實際的遠端工作流程設計：工作階段、Agent、檔案、編輯、文件一次到位。</span>
                     </p>
                 </div>
 
@@ -159,28 +174,34 @@
                     <article class="feature-card">
                         <strong>01</strong>
                         <h3>
-                            <span class="active">One-tap agent launch</span>
+                            
+                            <span class="active">Agent 一鍵啟動</span>
                         </h3>
                         <p>
-                            <span class="active">Start Shell, Claude, Codex, Gemini, OpenCode, and Pro custom agents from one project menu.</span>
+                            
+                            <span class="active">Shell、Claude、Codex、Gemini、OpenCode，加上 Pro 自訂 Agent，全都從同一個專案選單啟動。</span>
                         </p>
                     </article>
                     <article class="feature-card">
                         <strong>02</strong>
                         <h3>
-                            <span class="active">Persistent tmux sessions</span>
+                            
+                            <span class="active">tmux 工作階段<br class="mobile-break">不斷線</span>
                         </h3>
                         <p>
-                            <span class="active">Reconnect to active work instead of rebuilding context after every network change.</span>
+                            
+                            <span class="active">網路切換後不用重建脈絡，打開手機或平板就接回原本工作狀態。</span>
                         </p>
                     </article>
                     <article class="feature-card">
                         <strong>03</strong>
                         <h3>
-                            <span class="active">Files, code, and docs</span>
+                            
+                            <span class="active">檔案、程式碼、文件</span>
                         </h3>
                         <p>
-                            <span class="active">Browse remote projects, read source with syntax highlighting, and unlock Pro when you need to edit and save.</span>
+                            
+                            <span class="active">瀏覽遠端專案、用語法上色閱讀原始碼，需要修改與儲存時再解鎖 Pro。</span>
                         </p>
                     </article>
                 </div>
@@ -191,10 +212,12 @@
                     <div class="showcase-copy">
                         <strong>AGENT LAUNCHER</strong>
                         <h2>
-                            <span class="active">Claude, Codex, Gemini, OpenCode. One tap.</span>
+                            
+                            <span class="active">想用哪個 Agent，<br>點一下就開。</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux keeps agent choices close to the project: launch a shell, open files, or start the right AI assistant without rebuilding context.</span>
+                            
+                            <span class="active">Agentmux 把 Shell、檔案和 AI Agent 跟專案放在一起，少切換、少中斷，不必重新找脈絡。</span>
                         </p>
                     </div>
                     <div class="showcase-media">
@@ -213,10 +236,12 @@
                     <div class="showcase-copy">
                         <strong>SESSION HUB</strong>
                         <h2>
-                            <span class="active">Pick up every server where you left off.</span>
+                            
+                            <span class="active">每台主機、每個工作階段，<br>都接得回來。</span>
                         </h2>
                         <p>
-                            <span class="active">Reconnect to tmux-backed work across Macs, Linux boxes, and remote projects without rebuilding context.</span>
+                            
+                            <span class="active">Mac、Linux、遠端專案和 tmux 工作狀態，打開手機或平板就能繼續。</span>
                         </p>
                     </div>
                 </article>
@@ -225,10 +250,12 @@
                     <div class="showcase-copy">
                         <strong>PROJECT FILES</strong>
                         <h2>
-                            <span class="active">Browse project folders on a bigger canvas.</span>
+                            
+                            <span class="active">遠端專案，<br>放到平板大螢幕上更清楚。</span>
                         </h2>
                         <p>
-                            <span class="active">Move through source files, builds, and Markdown docs without typing long paths. Pro adds branch switching, history, and batch file tools.</span>
+                            
+                            <span class="active">原始碼、build、README 都能直接瀏覽，不用在終端機裡猜路徑。Pro 支援分支切換、歷史紀錄和批次檔案工具。</span>
                         </p>
                     </div>
                     <div class="showcase-media">
@@ -245,10 +272,12 @@
                     <div class="showcase-copy">
                         <strong>REMOTE EDITOR</strong>
                         <h2>
-                            <span class="active">Edit remote code without leaving SSH.</span>
+                            
+                            <span class="active">遠端檔案，<br>直接改、直接存。</span>
                         </h2>
                         <p>
-                            <span class="active">Line numbers and syntax highlighting make source readable on the go. Pro turns that viewer into a remote editor with quick saves over SSH.</span>
+                            
+                            <span class="active">行號與語法上色讓原始碼更易讀。Pro 能把檢視器變成可透過 SSH 快速儲存的遠端編輯器。</span>
                         </p>
                     </div>
                 </article>
@@ -258,26 +287,31 @@
                 <div class="plan-panel">
                     <div>
                         <div class="eyebrow">
-                            <span class="active">Free trial, then choose your workspace</span>
+                            
+                            <span class="active">先完整試用，再決定是否升級</span>
                         </div>
                         <h2>
-                            <span class="active">Pro is for people who live in remote projects.</span>
+                            
+                            <span class="active">Pro 給每天泡在<br>遠端專案裡的開發者。</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux includes a 14-day full-feature trial. After that, free users can keep a focused single-server SSH workflow; Pro unlocks the full workspace.</span>
+                            
+                            <span class="active">Agentmux 提供 14 天完整功能試用。試用後免費版仍可使用單一主機的 SSH 工作流程；Pro 則解鎖完整功能。</span>
                         </p>
                     </div>
                     <div class="plan-list">
                         <div class="plan-item">
                             <strong>Free</strong>
                             <span>
-                                <span class="active">Single-server SSH, persistent sessions, and core terminal workflows.</span>
+                                
+                                <span class="active">單一主機 SSH、不中斷工作階段，以及核心終端機工作流程。</span>
                             </span>
                         </div>
                         <div class="plan-item">
                             <strong>Pro</strong>
                             <span>
-                                <span class="active">Multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.</span>
+                                
+                                <span class="active">多台主機、自訂 Agent、遠端編輯、檔案歷史紀錄、分支工具與批次操作。</span>
                             </span>
                         </div>
                     </div>
@@ -286,10 +320,12 @@
 
             <section class="final-cta">
                 <h2>
-                    <span class="active">Take your dev box with you.</span>
+                    
+                    <span class="active">把你的開發主機<br>帶著走。</span>
                 </h2>
                 <p>
-                    <span class="active">Available on iOS, iPadOS, and Android. Connect to your servers and keep coding agents running anywhere.</span>
+                    
+                    <span class="active">現已支援 iOS、iPadOS 與 Android。隨時連線伺服器，讓 AI coding agents 在哪都能繼續工作。</span>
                 </p>
                 <div class="final-cta-actions">
                     <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
@@ -311,11 +347,13 @@
         <footer>
             <div>© 2026 Agentmux</div>
             <div class="footer-links">
-                <a href="/privacy.html?lang=en">
-                    <span class="active">Privacy</span>
+                <a href="/privacy.html?lang=zh-TW">
+                    
+                    <span class="active">隱私政策</span>
                 </a>
                 <a href="mailto:atmux-support@saxcave.cc">
-                    <span class="active">Support</span>
+                    
+                    <span class="active">技術支援</span>
                 </a>
             </div>
         </footer>
@@ -341,21 +379,7 @@
 
         window.addEventListener('load', () => {
             setupNavCta();
-            const saved = localStorage.getItem('preferred-lang');
-            if (saved) {
-                if (saved === 'zh-TW') return location.replace('/zh-TW/');
-                if (saved === 'zh-Hans') return location.replace('/zh-Hans/');
-                if (saved === 'ja') return location.replace('/ja/');
-                if (saved === 'en') return;
-            }
-            const nav = (navigator.language || '').toLowerCase();
-            if (nav.startsWith('zh-tw') || nav.startsWith('zh-hk') || nav.startsWith('zh-mo') || nav.startsWith('zh-hant')) {
-                location.replace('/zh-TW/');
-            } else if (nav.startsWith('zh')) {
-                location.replace('/zh-Hans/');
-            } else if (nav.startsWith('ja')) {
-                location.replace('/ja/');
-            }
+            localStorage.setItem('preferred-lang', 'zh-TW');
         });
     </script>
 </body>

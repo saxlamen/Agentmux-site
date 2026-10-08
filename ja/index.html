@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentmux - Run SSH, tmux, and AI agents on iOS & Android</title>
-    <meta id="meta-description" name="description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
-    <link rel="canonical" href="https://agentmux.saxcave.cc/">
+    <title>Agentmux - iPhone、iPad、Android から SSH、tmux、AI エージェントを操作</title>
+    <meta id="meta-description" name="description" content="Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッション、Claude、Codex、Gemini、OpenCode、ファイル閲覧、ソース確認、リモート編集に対応。iOS と Android の両方で利用可能です。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/ja/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/zh-TW/">
     <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/zh-Hans/">
     <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/ja/">
-    <meta id="og-title" property="og:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS & Android">
-    <meta id="og-description" property="og:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <meta id="og-title" property="og:title" content="Agentmux - iPhone、iPad、Android から SSH、tmux、AI エージェントを操作">
+    <meta id="og-description" property="og:description" content="Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッション、Claude、Codex、Gemini、OpenCode、ファイル閲覧、ソース確認、リモート編集に対応。iOS と Android の両方で利用可能です。">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://agentmux.saxcave.cc/">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/ja/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta id="twitter-title" name="twitter:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS & Android">
-    <meta id="twitter-description" name="twitter:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <meta id="twitter-title" name="twitter:title" content="Agentmux - iPhone、iPad、Android から SSH、tmux、AI エージェントを操作">
+    <meta id="twitter-description" name="twitter:description" content="Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッション、Claude、Codex、Gemini、OpenCode、ファイル閲覧、ソース確認、リモート編集に対応。iOS と Android の両方で利用可能です。">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
     <link rel="stylesheet" href="/site.css">
@@ -32,26 +32,31 @@
             </a>
             <div class="nav-links">
                 <a href="/guide/en/">
-                    <span class="active">Guide</span>
+
+                    <span class="active">ガイド</span>
                 </a>
                 <a href="#features">
-                    <span class="active">Features</span>
+
+                    <span class="active">機能</span>
                 </a>
                 <a href="#plans">
-                    <span class="active">Plans</span>
+
+                    <span class="active">プラン</span>
                 </a>
-                <a href="/privacy.html?lang=en">
-                    <span class="active">Privacy</span>
+                <a href="/privacy.html?lang=ja">
+
+                    <span class="active">プライバシー</span>
                 </a>
-                <a class="lang-btn active" href="/" hreflang="en" onclick="localStorage.setItem('preferred-lang', 'en')">EN</a>
+                <a class="lang-btn" href="/" hreflang="en" onclick="localStorage.setItem('preferred-lang', 'en')">EN</a>
                 <a class="lang-btn" href="/zh-TW/" hreflang="zh-TW" onclick="localStorage.setItem('preferred-lang', 'zh-TW')">繁中</a>
                 <a class="lang-btn" href="/zh-Hans/" hreflang="zh-Hans" onclick="localStorage.setItem('preferred-lang', 'zh-Hans')">简中</a>
-                <a class="lang-btn" href="/ja/" hreflang="ja" onclick="localStorage.setItem('preferred-lang', 'ja')">日本語</a>
+                <a class="lang-btn active" href="/ja/" hreflang="ja" onclick="localStorage.setItem('preferred-lang', 'ja')">日本語</a>
             </div>
             <a class="nav-cta" href="#download" id="nav-download-btn">
-                <span class="cta-label-long active">Get the App</span>
 
-                <span class="cta-label-short active">Download</span>
+                <span class="cta-label-long active">アプリを入手</span>
+
+                <span class="cta-label-short active">入手</span>
             </a>
         </div>
     </nav>
@@ -61,13 +66,16 @@
             <section class="hero">
                 <div>
                     <div class="eyebrow">
-                        <span class="active">Run SSH, tmux, and AI agents on iOS &amp; Android</span>
+
+                        <span class="active">iPhone、iPad、Android から SSH、tmux、AI エージェントを操作</span>
                     </div>
                     <h1>
-                        <span class="active">Your coding agents, <span class="accent">wherever SSH lives.</span></span>
+
+                        <span class="active">AI Agents を<br><span class="accent">SSH の先へ。</span></span>
                     </h1>
                     <p class="hero-copy">
-                        <span class="active">Agentmux turns your phone and tablet into a command center for remote projects, persistent tmux sessions, and AI coding agents like Claude, Codex, Gemini, and OpenCode.</span>
+
+                        <span class="active">Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッションに戻り、Claude、Codex、Gemini、OpenCode をすぐ起動できます。</span>
                     </p>
                     <div class="hero-actions" id="download">
                         <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
@@ -83,7 +91,8 @@
                             <span>Google Play</span>
                         </a>
                         <a class="secondary-btn" href="#features">
-                            <span class="active">See the workflow</span>
+
+                            <span class="active">作業フローを見る</span>
                         </a>
                     </div>
                     <div class="proof" aria-label="Supported workflows">
@@ -118,13 +127,16 @@
                 <div class="demo-layout">
                     <div class="demo-copy">
                         <div class="eyebrow">
-                            <span class="active">30-second workflow</span>
+
+                            <span class="active">30 秒で見る作業フロー</span>
                         </div>
                         <h2>
-                            <span class="active">Open the project. Resume the agent.</span>
+
+                            <span class="active">プロジェクトを開き、Agent の続きへ。</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux keeps remote sessions, agents, and project context close together so a phone check can turn into real progress.</span>
+
+                            <span class="active">Agentmux はリモートセッション、Agent、プロジェクト文脈を近くに置き、スマホから実作業へすぐ戻れます。</span>
                         </p>
                     </div>
                     <div class="demo-media" aria-hidden="true">
@@ -145,13 +157,16 @@
             <section id="features" class="features">
                 <div class="section-head">
                     <div class="eyebrow">
-                        <span class="active">Built for real remote development sessions</span>
+
+                        <span class="active">実際のリモート開発セッションのために</span>
                     </div>
                     <h2>
-                        <span class="active">The SSH app for the agent era.</span>
+
+                        <span class="active">エージェント時代の<br>SSH アプリ。</span>
                     </h2>
                     <p>
-                        <span class="active">Not a tiny terminal with a keyboard bolted on. Agentmux is shaped around sessions, agents, files, edits, and docs.</span>
+
+                        <span class="active">小さなターミナルを押し込むだけではありません。セッション、エージェント、ファイル、編集、ドキュメントまで、実作業に合わせて設計しています。</span>
                     </p>
                 </div>
 
@@ -159,28 +174,34 @@
                     <article class="feature-card">
                         <strong>01</strong>
                         <h3>
-                            <span class="active">One-tap agent launch</span>
+
+                            <span class="active">Agent をすぐ起動</span>
                         </h3>
                         <p>
-                            <span class="active">Start Shell, Claude, Codex, Gemini, OpenCode, and Pro custom agents from one project menu.</span>
+
+                            <span class="active">Shell、Claude、Codex、Gemini、OpenCode、Pro のカスタムエージェントをプロジェクトメニューからすぐ起動。</span>
                         </p>
                     </article>
                     <article class="feature-card">
                         <strong>02</strong>
                         <h3>
-                            <span class="active">Persistent tmux sessions</span>
+
+                            <span class="active">tmux セッション<br class="mobile-break">を維持</span>
                         </h3>
                         <p>
-                            <span class="active">Reconnect to active work instead of rebuilding context after every network change.</span>
+
+                            <span class="active">通信が変わっても作業文脈を失わず、スマホやタブレットからすぐ元の状態に戻れます。</span>
                         </p>
                     </article>
                     <article class="feature-card">
                         <strong>03</strong>
                         <h3>
-                            <span class="active">Files, code, and docs</span>
+
+                            <span class="active">ファイル、コード、ドキュメント</span>
                         </h3>
                         <p>
-                            <span class="active">Browse remote projects, read source with syntax highlighting, and unlock Pro when you need to edit and save.</span>
+
+                            <span class="active">リモートプロジェクトを開き、シンタックスハイライトでソースを確認。編集と保存は Pro でアンロック。</span>
                         </p>
                     </article>
                 </div>
@@ -191,10 +212,12 @@
                     <div class="showcase-copy">
                         <strong>AGENT LAUNCHER</strong>
                         <h2>
-                            <span class="active">Claude, Codex, Gemini, OpenCode. One tap.</span>
+
+                            <span class="active">使いたい agent を、<br>すぐ呼び出せる。</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux keeps agent choices close to the project: launch a shell, open files, or start the right AI assistant without rebuilding context.</span>
+
+                            <span class="active">Shell、ファイル、AI エージェントをプロジェクトのすぐそばに置き、文脈を失わずに作業を続けられます。</span>
                         </p>
                     </div>
                     <div class="showcase-media">
@@ -213,10 +236,12 @@
                     <div class="showcase-copy">
                         <strong>SESSION HUB</strong>
                         <h2>
-                            <span class="active">Pick up every server where you left off.</span>
+
+                            <span class="active">サーバーもセッションも、<br>続きから再開。</span>
                         </h2>
                         <p>
-                            <span class="active">Reconnect to tmux-backed work across Macs, Linux boxes, and remote projects without rebuilding context.</span>
+
+                            <span class="active">Mac、Linux、リモートプロジェクト、tmux の作業状態へスマホやタブレットからすぐ戻れます。</span>
                         </p>
                     </div>
                 </article>
@@ -225,10 +250,12 @@
                     <div class="showcase-copy">
                         <strong>PROJECT FILES</strong>
                         <h2>
-                            <span class="active">Browse project folders on a bigger canvas.</span>
+
+                            <span class="active">プロジェクトの中身を、<br>タブレットの大画面で見渡す。</span>
                         </h2>
                         <p>
-                            <span class="active">Move through source files, builds, and Markdown docs without typing long paths. Pro adds branch switching, history, and batch file tools.</span>
+
+                            <span class="active">ソース、build、README まで、長いパスを打たずに移動できます。Pro ではブランチ切り替え、履歴、ファイル一括操作も使えます。</span>
                         </p>
                     </div>
                     <div class="showcase-media">
@@ -245,10 +272,12 @@
                     <div class="showcase-copy">
                         <strong>REMOTE EDITOR</strong>
                         <h2>
-                            <span class="active">Edit remote code without leaving SSH.</span>
+
+                            <span class="active">リモートファイルをその場で編集、<br>すぐ保存。</span>
                         </h2>
                         <p>
-                            <span class="active">Line numbers and syntax highlighting make source readable on the go. Pro turns that viewer into a remote editor with quick saves over SSH.</span>
+
+                            <span class="active">行番号とシンタックスハイライトでソースを読みやすく。Pro なら SSH 越しに保存できるリモートエディタになります。</span>
                         </p>
                     </div>
                 </article>
@@ -258,26 +287,31 @@
                 <div class="plan-panel">
                     <div>
                         <div class="eyebrow">
-                            <span class="active">Free trial, then choose your workspace</span>
+
+                            <span class="active">まず全機能を試用、そのあとワークスペースを選ぶ</span>
                         </div>
                         <h2>
-                            <span class="active">Pro is for people who live in remote projects.</span>
+
+                            <span class="active">Pro はリモートプロジェクトで<br>本気で作業する人へ。</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux includes a 14-day full-feature trial. After that, free users can keep a focused single-server SSH workflow; Pro unlocks the full workspace.</span>
+
+                            <span class="active">Agentmux は 14 日間の全機能トライアル付き。試用後も単一サーバーの SSH ワークフローは使え、Pro でワークスペース全体をアンロックできます。</span>
                         </p>
                     </div>
                     <div class="plan-list">
                         <div class="plan-item">
                             <strong>Free</strong>
                             <span>
-                                <span class="active">Single-server SSH, persistent sessions, and core terminal workflows.</span>
+
+                                <span class="active">単一サーバー SSH、継続セッション、基本ターミナルワークフロー。</span>
                             </span>
                         </div>
                         <div class="plan-item">
                             <strong>Pro</strong>
                             <span>
-                                <span class="active">Multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.</span>
+
+                                <span class="active">複数サーバー、カスタムエージェント、リモート編集、ファイル履歴、ブランチツール、一括操作。</span>
                             </span>
                         </div>
                     </div>
@@ -286,10 +320,12 @@
 
             <section class="final-cta">
                 <h2>
-                    <span class="active">Take your dev box with you.</span>
+
+                    <span class="active">開発マシンを、<br>そのまま持ち歩く。</span>
                 </h2>
                 <p>
-                    <span class="active">Available on iOS, iPadOS, and Android. Connect to your servers and keep coding agents running anywhere.</span>
+
+                    <span class="active">iOS、iPadOS、Android に対応。いつでもサーバーに接続し、どこでも AI エージェントを稼働できます。</span>
                 </p>
                 <div class="final-cta-actions">
                     <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
@@ -311,11 +347,13 @@
         <footer>
             <div>© 2026 Agentmux</div>
             <div class="footer-links">
-                <a href="/privacy.html?lang=en">
-                    <span class="active">Privacy</span>
+                <a href="/privacy.html?lang=ja">
+
+                    <span class="active">プライバシー</span>
                 </a>
                 <a href="mailto:atmux-support@saxcave.cc">
-                    <span class="active">Support</span>
+
+                    <span class="active">サポート</span>
                 </a>
             </div>
         </footer>
@@ -341,21 +379,7 @@
 
         window.addEventListener('load', () => {
             setupNavCta();
-            const saved = localStorage.getItem('preferred-lang');
-            if (saved) {
-                if (saved === 'zh-TW') return location.replace('/zh-TW/');
-                if (saved === 'zh-Hans') return location.replace('/zh-Hans/');
-                if (saved === 'ja') return location.replace('/ja/');
-                if (saved === 'en') return;
-            }
-            const nav = (navigator.language || '').toLowerCase();
-            if (nav.startsWith('zh-tw') || nav.startsWith('zh-hk') || nav.startsWith('zh-mo') || nav.startsWith('zh-hant')) {
-                location.replace('/zh-TW/');
-            } else if (nav.startsWith('zh')) {
-                location.replace('/zh-Hans/');
-            } else if (nav.startsWith('ja')) {
-                location.replace('/ja/');
-            }
+            localStorage.setItem('preferred-lang', 'ja');
         });
     </script>
 </body>

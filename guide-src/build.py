@@ -343,6 +343,9 @@ def build_sitemap(out_root: Path, config: dict) -> None:
     origin = config["site"]["origin"].rstrip("/")
     urls = [
         "{0}/".format(origin),
+        "{0}/zh-TW/".format(origin),
+        "{0}/zh-Hans/".format(origin),
+        "{0}/ja/".format(origin),
         "{0}/privacy.html".format(origin),
         "{0}/guide/".format(origin),
     ]

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentmux - Run SSH, tmux, and AI agents on iOS &amp; Android</title>
+    <meta id="meta-description" name="description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/?lang=en">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/?lang=zh-TW">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/?lang=zh-Hans">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/?lang=ja">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/">
+    <meta id="og-title" property="og:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS &amp; Android">
+    <meta id="og-description" property="og:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta id="twitter-title" name="twitter:title" content="Agentmux - Run SSH, tmux, and AI agents on iOS &amp; Android">
+    <meta id="twitter-description" name="twitter:description" content="Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.">
+    <link rel="preload" as="image" href="resource/ipad-raw-launch-any-agent.webp">
+    <meta name="theme-color" content="#090d0f">
+    <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+    <nav class="nav" aria-label="Main navigation">
+        <div class="shell nav-shell">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="/guide/">
+                    <span data-lang="en" class="active">Guide</span>
+                    <span data-lang="zh-TW">指南</span>
+                    <span data-lang="zh-Hans">指南</span>
+                    <span data-lang="ja">ガイド</span>
+                </a>
+                <a href="#features">
+                    <span data-lang="en" class="active">Features</span>
+                    <span data-lang="zh-TW">功能</span>
+                    <span data-lang="zh-Hans">功能</span>
+                    <span data-lang="ja">機能</span>
+                </a>
+                <a href="#plans">
+                    <span data-lang="en" class="active">Plans</span>
+                    <span data-lang="zh-TW">方案</span>
+                    <span data-lang="zh-Hans">方案</span>
+                    <span data-lang="ja">プラン</span>
+                </a>
+                <a href="privacy.html">
+                    <span data-lang="en" class="active">Privacy</span>
+                    <span data-lang="zh-TW">隱私</span>
+                    <span data-lang="zh-Hans">隐私</span>
+                    <span data-lang="ja">プライバシー</span>
+                </a>
+                <button class="lang-btn active" type="button" onclick="switchLang('en')">EN</button>
+                <button class="lang-btn" type="button" onclick="switchLang('zh-TW')">繁中</button>
+                <button class="lang-btn" type="button" onclick="switchLang('zh-Hans')">简中</button>
+                <button class="lang-btn" type="button" onclick="switchLang('ja')">日本語</button>
+            </div>
+            <a class="nav-cta" href="#download" id="nav-download-btn">
+                <span class="cta-label-long active" data-lang="en">Get the App</span>
+                <span class="cta-label-long" data-lang="zh-TW">下載 App</span>
+                <span class="cta-label-long" data-lang="zh-Hans">下载 App</span>
+                <span class="cta-label-long" data-lang="ja">アプリを入手</span>
+                <span class="cta-label-short active" data-lang="en">Download</span>
+                <span class="cta-label-short" data-lang="zh-TW">下載</span>
+                <span class="cta-label-short" data-lang="zh-Hans">下载</span>
+                <span class="cta-label-short" data-lang="ja">入手</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="shell">
+        <main>
+            <section class="hero">
+                <div>
+                    <div class="eyebrow">
+                        <span data-lang="en" class="active">Run SSH, tmux, and AI agents on iOS &amp; Android</span>
+                        <span data-lang="zh-TW">在 iPhone、iPad 與 Android 上掌控 SSH、tmux 與 AI Agent</span>
+                        <span data-lang="zh-Hans">在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 AI Agent</span>
+                        <span data-lang="ja">iPhone、iPad、Android から SSH、tmux、AI エージェントを操作</span>
+                    </div>
+                    <h1>
+                        <span data-lang="en" class="active">Your coding agents, <span class="accent">wherever SSH lives.</span></span>
+                        <span data-lang="zh-TW">把 AI Agents<br><span class="accent">接上 SSH。</span></span>
+                        <span data-lang="zh-Hans">把 AI Agents<br><span class="accent">接上 SSH。</span></span>
+                        <span data-lang="ja">AI Agents を<br><span class="accent">SSH の先へ。</span></span>
+                    </h1>
+                    <p class="hero-copy">
+                        <span data-lang="en" class="active">Agentmux turns your phone and tablet into a command center for remote projects, persistent tmux sessions, and AI coding agents like Claude, Codex, Gemini, and OpenCode.</span>
+                        <span data-lang="zh-TW">Agentmux 把手機與平板變成遠端專案指揮中心：接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，臨時修程式碼也不慌。</span>
+                        <span data-lang="zh-Hans">Agentmux 把手机与平板变成远程项目指挥中心：接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，临时改代码也不慌。</span>
+                        <span data-lang="ja">Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッションに戻り、Claude、Codex、Gemini、OpenCode をすぐ起動できます。</span>
+                    </p>
+                    <div class="hero-actions" id="download">
+                        <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
+                            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.74 1.04-1.77.92-2.8-.9.04-2.02.6-2.67 1.34-.56.63-1.05 1.66-.92 2.68 1.02.08 2.06-.51 2.67-1.22z"/>
+                            </svg>
+                            <span>App Store</span>
+                        </a>
+                        <a class="primary-btn download-cta play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">
+                            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M3.609 1.814L13.792 12 3.61 22.186A2.02 2.02 0 0 1 3.39 21.26V2.738c0-.342.08-.658.22-.924zm11.247 11.25l2.42 2.42-12.06 6.953 9.64-9.373zm2.42-2.42l3.414 1.966c.882.508.882 1.332 0 1.84l-3.414 1.966-2.632-2.632 2.632-2.632zm-2.42-2.42l-9.64-9.373 12.06 6.953-2.42 2.42z"/>
+                            </svg>
+                            <span>Google Play</span>
+                        </a>
+                        <a class="secondary-btn" href="#features">
+                            <span data-lang="en" class="active">See the workflow</span>
+                            <span data-lang="zh-TW">看看工作流程</span>
+                            <span data-lang="zh-Hans">看看工作流</span>
+                            <span data-lang="ja">作業フローを見る</span>
+                        </a>
+                    </div>
+                    <div class="proof" aria-label="Supported workflows">
+                        <span>Claude</span>
+                        <span>Codex</span>
+                        <span>Gemini</span>
+                        <span>OpenCode</span>
+                        <span>tmux</span>
+                        <span>SSH</span>
+                    </div>
+                </div>
+
+                <div class="hero-stage" aria-hidden="true">
+                    <div class="device-window ipad-shot">
+                        <img src="resource/ipad-raw-run-coding-agents-anywhere.webp" alt="iPad running coding agents over SSH">
+                    </div>
+                    <img class="iphone-shot" src="resource/iphone-raw-run-coding-agents-anywhere.webp" alt="iPhone running coding agents over SSH">
+                </div>
+            </section>
+
+            <section class="strip" aria-label="Agentmux screens">
+                <div class="strip-track">
+                    <div class="mini-shot"><img src="resource/iphone-raw-launch-any-agent.webp" alt="Agent launcher on iPhone" loading="lazy"></div>
+                    <div class="mini-shot"><img src="resource/Darkmode_serverlist.webp" alt="Dark mode server list" loading="lazy"></div>
+                    <div class="mini-shot"><img src="resource/Serverview_tmux_agents.webp" alt="Server tmux agents view" loading="lazy"></div>
+                    <div class="mini-shot"><img src="resource/FileExplorer.webp" alt="Remote file explorer" loading="lazy"></div>
+                    <div class="mini-shot"><img src="resource/iphone-raw-preview-docs-instantly.webp" alt="Markdown documentation preview" loading="lazy"></div>
+                </div>
+            </section>
+
+            <section class="demo" aria-label="Agentmux demo">
+                <div class="demo-layout">
+                    <div class="demo-copy">
+                        <div class="eyebrow">
+                            <span data-lang="en" class="active">30-second workflow</span>
+                            <span data-lang="zh-TW">30 秒看懂工作流程</span>
+                            <span data-lang="zh-Hans">30 秒看懂工作流</span>
+                            <span data-lang="ja">30 秒で見る作業フロー</span>
+                        </div>
+                        <h2>
+                            <span data-lang="en" class="active">Open the project. Resume the agent.</span>
+                            <span data-lang="zh-TW">打開專案，接回 Agent。</span>
+                            <span data-lang="zh-Hans">打开项目，接回 Agent。</span>
+                            <span data-lang="ja">プロジェクトを開き、Agent の続きへ。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Agentmux keeps remote sessions, agents, and project context close together so a phone check can turn into real progress.</span>
+                            <span data-lang="zh-TW">Agentmux 把遠端工作階段、Agent 與專案脈絡整合在一起，在手機上也能真正推進進度。</span>
+                            <span data-lang="zh-Hans">Agentmux 把远程会话、Agent 与项目上下文放在一起，手机上也能真正推进工作。</span>
+                            <span data-lang="ja">Agentmux はリモートセッション、Agent、プロジェクト文脈を近くに置き、スマホから実作業へすぐ戻れます。</span>
+                        </p>
+                    </div>
+                    <div class="demo-media" aria-hidden="true">
+                        <div class="demo-frame">
+                            <video autoplay muted loop playsinline preload="metadata" poster="resource/ipad-raw-session-command-center.webp" onclick="this.paused ? this.play() : this.pause();">
+                                <source src="resource/ipad-demo.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="demo-phone">
+                            <video autoplay muted loop playsinline preload="metadata" poster="resource/iphone-raw-run-coding-agents-anywhere.webp" onclick="this.paused ? this.play() : this.pause();">
+                                <source src="resource/iphone-demo.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="features">
+                <div class="section-head">
+                    <div class="eyebrow">
+                        <span data-lang="en" class="active">Built for real remote development sessions</span>
+                        <span data-lang="zh-TW">專為實際的遠端開發工作階段設計</span>
+                        <span data-lang="zh-Hans">为真正的远程开发会话设计</span>
+                        <span data-lang="ja">実際のリモート開発セッションのために</span>
+                    </div>
+                    <h2>
+                        <span data-lang="en" class="active">The SSH app for the agent era.</span>
+                        <span data-lang="zh-TW">Agent 時代的<br>SSH app。</span>
+                        <span data-lang="zh-Hans">Agent 时代的<br>SSH app。</span>
+                        <span data-lang="ja">エージェント時代の<br>SSH アプリ。</span>
+                    </h2>
+                    <p>
+                        <span data-lang="en" class="active">Not a tiny terminal with a keyboard bolted on. Agentmux is shaped around sessions, agents, files, edits, and docs.</span>
+                        <span data-lang="zh-TW">不是把終端機縮小塞進螢幕。Agentmux 專為實際的遠端工作流程設計：工作階段、Agent、檔案、編輯、文件一次到位。</span>
+                        <span data-lang="zh-Hans">不是把终端缩小塞进屏幕。Agentmux 是为真正的远程工作流设计：会话、Agent、文件、编辑、文档一次到位。</span>
+                        <span data-lang="ja">小さなターミナルを押し込むだけではありません。セッション、エージェント、ファイル、編集、ドキュメントまで、実作業に合わせて設計しています。</span>
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <strong>01</strong>
+                        <h3>
+                            <span data-lang="en" class="active">One-tap agent launch</span>
+                            <span data-lang="zh-TW">Agent 一鍵啟動</span>
+                            <span data-lang="zh-Hans">Agent 一键启动</span>
+                            <span data-lang="ja">Agent をすぐ起動</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en" class="active">Start Shell, Claude, Codex, Gemini, OpenCode, and Pro custom agents from one project menu.</span>
+                            <span data-lang="zh-TW">Shell、Claude、Codex、Gemini、OpenCode，加上 Pro 自訂 Agent，全都從同一個專案選單啟動。</span>
+                            <span data-lang="zh-Hans">Shell、Claude、Codex、Gemini、OpenCode，加上 Pro 自定义 Agent，全都从同一个项目菜单启动。</span>
+                            <span data-lang="ja">Shell、Claude、Codex、Gemini、OpenCode、Pro のカスタムエージェントをプロジェクトメニューからすぐ起動。</span>
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <strong>02</strong>
+                        <h3>
+                            <span data-lang="en" class="active">Persistent tmux sessions</span>
+                            <span data-lang="zh-TW">tmux 工作階段<br class="mobile-break">不斷線</span>
+                            <span data-lang="zh-Hans">tmux 会话<br class="mobile-break">不掉线</span>
+                            <span data-lang="ja">tmux セッション<br class="mobile-break">を維持</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en" class="active">Reconnect to active work instead of rebuilding context after every network change.</span>
+                            <span data-lang="zh-TW">網路切換後不用重建脈絡，打開手機或平板就接回原本工作狀態。</span>
+                            <span data-lang="zh-Hans">网络切换后不用重建上下文，打开手机或平板就接回原本工作状态。</span>
+                            <span data-lang="ja">通信が変わっても作業文脈を失わず、スマホやタブレットからすぐ元の状態に戻れます。</span>
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <strong>03</strong>
+                        <h3>
+                            <span data-lang="en" class="active">Files, code, and docs</span>
+                            <span data-lang="zh-TW">檔案、程式碼、文件</span>
+                            <span data-lang="zh-Hans">文件、代码、文档</span>
+                            <span data-lang="ja">ファイル、コード、ドキュメント</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en" class="active">Browse remote projects, read source with syntax highlighting, and unlock Pro when you need to edit and save.</span>
+                            <span data-lang="zh-TW">瀏覽遠端專案、用語法上色閱讀原始碼，需要修改與儲存時再解鎖 Pro。</span>
+                            <span data-lang="zh-Hans">浏览远程项目、用语法高亮阅读源码，需要修改与保存时再解锁 Pro。</span>
+                            <span data-lang="ja">リモートプロジェクトを開き、シンタックスハイライトでソースを確認。編集と保存は Pro でアンロック。</span>
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="showcase">
+                <article class="showcase-row">
+                    <div class="showcase-copy">
+                        <strong>AGENT LAUNCHER</strong>
+                        <h2>
+                            <span data-lang="en" class="active">Claude, Codex, Gemini, OpenCode. One tap.</span>
+                            <span data-lang="zh-TW">想用哪個 Agent，<br>點一下就開。</span>
+                            <span data-lang="zh-Hans">想用哪个 agent，<br>点一下就开。</span>
+                            <span data-lang="ja">使いたい agent を、<br>すぐ呼び出せる。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Agentmux keeps agent choices close to the project: launch a shell, open files, or start the right AI assistant without rebuilding context.</span>
+                            <span data-lang="zh-TW">Agentmux 把 Shell、檔案和 AI Agent 跟專案放在一起，少切換、少中斷，不必重新找脈絡。</span>
+                            <span data-lang="zh-Hans">Agentmux 把 Shell、文件和 AI Agent 放在项目旁边，少切换、少中断，不用重新找上下文。</span>
+                            <span data-lang="ja">Shell、ファイル、AI エージェントをプロジェクトのすぐそばに置き、文脈を失わずに作業を続けられます。</span>
+                        </p>
+                    </div>
+                    <div class="showcase-media">
+                        <div class="showcase-frame crop-agents">
+                            <img src="resource/ipad-raw-launch-any-agent.webp" alt="iPad Agent Launcher interface" loading="eager" fetchpriority="high">
+                        </div>
+                    </div>
+                </article>
+
+                <article class="showcase-row reverse">
+                    <div class="showcase-media">
+                        <div class="showcase-frame crop-sessions">
+                            <img src="resource/ipad-raw-session-command-center.webp" alt="iPad Session Command Center" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="showcase-copy">
+                        <strong>SESSION HUB</strong>
+                        <h2>
+                            <span data-lang="en" class="active">Pick up every server where you left off.</span>
+                            <span data-lang="zh-TW">每台主機、每個工作階段，<br>都接得回來。</span>
+                            <span data-lang="zh-Hans">每台主机、每个会话，<br>都能接回来。</span>
+                            <span data-lang="ja">サーバーもセッションも、<br>続きから再開。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Reconnect to tmux-backed work across Macs, Linux boxes, and remote projects without rebuilding context.</span>
+                            <span data-lang="zh-TW">Mac、Linux、遠端專案和 tmux 工作狀態，打開手機或平板就能繼續。</span>
+                            <span data-lang="zh-Hans">Mac、Linux、远程项目和 tmux 工作状态，打开手机或平板就能继续。</span>
+                            <span data-lang="ja">Mac、Linux、リモートプロジェクト、tmux の作業状態へスマホやタブレットからすぐ戻れます。</span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="showcase-row">
+                    <div class="showcase-copy">
+                        <strong>PROJECT FILES</strong>
+                        <h2>
+                            <span data-lang="en" class="active">Browse project folders on a bigger canvas.</span>
+                            <span data-lang="zh-TW">遠端專案，<br>放到平板大螢幕上更清楚。</span>
+                            <span data-lang="zh-Hans">远程项目，<br>放到平板大屏幕上更清楚。</span>
+                            <span data-lang="ja">プロジェクトの中身を、<br>タブレットの大画面で見渡す。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Move through source files, builds, and Markdown docs without typing long paths. Pro adds branch switching, history, and batch file tools.</span>
+                            <span data-lang="zh-TW">原始碼、build、README 都能直接瀏覽，不用在終端機裡猜路徑。Pro 支援分支切換、歷史紀錄和批次檔案工具。</span>
+                            <span data-lang="zh-Hans">源码、build、README 都能直接浏览，不用在终端里猜路径。Pro 会加上分支切换、历史记录和批量文件工具。</span>
+                            <span data-lang="ja">ソース、build、README まで、長いパスを打たずに移動できます。Pro ではブランチ切り替え、履歴、ファイル一括操作も使えます。</span>
+                        </p>
+                    </div>
+                    <div class="showcase-media">
+                        <div class="showcase-frame crop-files">
+                            <img src="resource/ipad-raw-browse-remote-projects.webp" alt="iPad Remote File Explorer" loading="lazy">
+                        </div>
+                    </div>
+                </article>
+
+                <article class="showcase-row reverse">
+                    <div class="phone-media">
+                        <img src="resource/iphone-raw-edit-code-over-ssh.webp" alt="iPhone Code Editor over SSH" loading="lazy">
+                    </div>
+                    <div class="showcase-copy">
+                        <strong>REMOTE EDITOR</strong>
+                        <h2>
+                            <span data-lang="en" class="active">Edit remote code without leaving SSH.</span>
+                            <span data-lang="zh-TW">遠端檔案，<br>直接改、直接存。</span>
+                            <span data-lang="zh-Hans">远程文件，<br>直接改、直接存。</span>
+                            <span data-lang="ja">リモートファイルをその場で編集、<br>すぐ保存。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Line numbers and syntax highlighting make source readable on the go. Pro turns that viewer into a remote editor with quick saves over SSH.</span>
+                            <span data-lang="zh-TW">行號與語法上色讓原始碼更易讀。Pro 能把檢視器變成可透過 SSH 快速儲存的遠端編輯器。</span>
+                            <span data-lang="zh-Hans">行号与语法高亮让源码看起来清楚。Pro 会把查看器变成可通过 SSH 快速保存的远程编辑器。</span>
+                            <span data-lang="ja">行番号とシンタックスハイライトでソースを読みやすく。Pro なら SSH 越しに保存できるリモートエディタになります。</span>
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <section id="plans" class="plans">
+                <div class="plan-panel">
+                    <div>
+                        <div class="eyebrow">
+                            <span data-lang="en" class="active">Free trial, then choose your workspace</span>
+                            <span data-lang="zh-TW">先完整試用，再決定是否升級</span>
+                            <span data-lang="zh-Hans">先完整试用，再选择你的工作空间</span>
+                            <span data-lang="ja">まず全機能を試用、そのあとワークスペースを選ぶ</span>
+                        </div>
+                        <h2>
+                            <span data-lang="en" class="active">Pro is for people who live in remote projects.</span>
+                            <span data-lang="zh-TW">Pro 給每天泡在<br>遠端專案裡的開發者。</span>
+                            <span data-lang="zh-Hans">Pro 给真的<br>住在远程项目里的人。</span>
+                            <span data-lang="ja">Pro はリモートプロジェクトで<br>本気で作業する人へ。</span>
+                        </h2>
+                        <p>
+                            <span data-lang="en" class="active">Agentmux includes a 14-day full-feature trial. After that, free users can keep a focused single-server SSH workflow; Pro unlocks the full workspace.</span>
+                            <span data-lang="zh-TW">Agentmux 提供 14 天完整功能試用。試用後免費版仍可使用單一主機的 SSH 工作流程；Pro 則解鎖完整功能。</span>
+                            <span data-lang="zh-Hans">Agentmux 提供 14 天完整功能试用。试用后免费版仍可使用单一主机的 SSH 工作流；Pro 则解锁完整工作空间。</span>
+                            <span data-lang="ja">Agentmux は 14 日間の全機能トライアル付き。試用後も単一サーバーの SSH ワークフローは使え、Pro でワークスペース全体をアンロックできます。</span>
+                        </p>
+                    </div>
+                    <div class="plan-list">
+                        <div class="plan-item">
+                            <strong>Free</strong>
+                            <span>
+                                <span data-lang="en" class="active">Single-server SSH, persistent sessions, and core terminal workflows.</span>
+                                <span data-lang="zh-TW">單一主機 SSH、不中斷工作階段，以及核心終端機工作流程。</span>
+                                <span data-lang="zh-Hans">单一主机 SSH、不中断会话，以及核心终端工作流。</span>
+                                <span data-lang="ja">単一サーバー SSH、継続セッション、基本ターミナルワークフロー。</span>
+                            </span>
+                        </div>
+                        <div class="plan-item">
+                            <strong>Pro</strong>
+                            <span>
+                                <span data-lang="en" class="active">Multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.</span>
+                                <span data-lang="zh-TW">多台主機、自訂 Agent、遠端編輯、檔案歷史紀錄、分支工具與批次操作。</span>
+                                <span data-lang="zh-Hans">多台主机、自定义 Agent、远程编辑、文件历史记录、分支工具与批量操作。</span>
+                                <span data-lang="ja">複数サーバー、カスタムエージェント、リモート編集、ファイル履歴、ブランチツール、一括操作。</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="final-cta">
+                <h2>
+                    <span data-lang="en" class="active">Take your dev box with you.</span>
+                    <span data-lang="zh-TW">把你的開發主機<br>帶著走。</span>
+                    <span data-lang="zh-Hans">把你的开发主机<br>带着走。</span>
+                    <span data-lang="ja">開発マシンを、<br>そのまま持ち歩く。</span>
+                </h2>
+                <p>
+                    <span data-lang="en" class="active">Available on iOS, iPadOS, and Android. Connect to your servers and keep coding agents running anywhere.</span>
+                    <span data-lang="zh-TW">現已支援 iOS、iPadOS 與 Android。隨時連線伺服器，讓 AI coding agents 在哪都能繼續工作。</span>
+                    <span data-lang="zh-Hans">现已支持 iOS、iPadOS 与 Android。随时连接服务器，让 AI coding agents 在哪都能继续工作。</span>
+                    <span data-lang="ja">iOS、iPadOS、Android に対応。いつでもサーバーに接続し、どこでも AI エージェントを稼働できます。</span>
+                </p>
+                <div class="final-cta-actions">
+                    <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
+                        <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.74 1.04-1.77.92-2.8-.9.04-2.02.6-2.67 1.34-.56.63-1.05 1.66-.92 2.68 1.02.08 2.06-.51 2.67-1.22z"/>
+                        </svg>
+                        <span>App Store</span>
+                    </a>
+                    <a class="primary-btn download-cta play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">
+                        <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M3.609 1.814L13.792 12 3.61 22.186A2.02 2.02 0 0 1 3.39 21.26V2.738c0-.342.08-.658.22-.924zm11.247 11.25l2.42 2.42-12.06 6.953 9.64-9.373zm2.42-2.42l3.414 1.966c.882.508.882 1.332 0 1.84l-3.414 1.966-2.632-2.632 2.632-2.632zm-2.42-2.42l-9.64-9.373 12.06 6.953-2.42 2.42z"/>
+                        </svg>
+                        <span>Google Play</span>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div>© 2026 Agentmux</div>
+            <div class="footer-links">
+                <a href="privacy.html">
+                    <span data-lang="en" class="active">Privacy</span>
+                    <span data-lang="zh-TW">隱私政策</span>
+                    <span data-lang="zh-Hans">隐私政策</span>
+                    <span data-lang="ja">プライバシー</span>
+                </a>
+                <a href="mailto:atmux-support@saxcave.cc">
+                    <span data-lang="en" class="active">Support</span>
+                    <span data-lang="zh-TW">技術支援</span>
+                    <span data-lang="zh-Hans">技术支持</span>
+                    <span data-lang="ja">サポート</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const LANG_META = {
+            en: {
+                title: 'Agentmux - Run SSH, tmux, and AI agents on iOS & Android',
+                description: 'Agentmux is a mobile command center for iOS and Android: SSH, tmux sessions, remote files, code editing, Markdown preview, and AI coding agents like Claude, Codex, Gemini, and OpenCode.'
+            },
+            'zh-TW': {
+                title: 'Agentmux - 在 iPhone、iPad 與 Android 上掌控 SSH、tmux 與 AI Agent',
+                description: 'Agentmux 把手機與平板變成遠端專案指揮中心：接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，並可瀏覽檔案、閱讀原始碼與遠端編輯。現已支援 iOS 與 Android。'
+            },
+            'zh-Hans': {
+                title: 'Agentmux - 在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 AI Agent',
+                description: 'Agentmux 把手机与平板变成远程项目指挥中心：接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，并可浏览文件、阅读源码与远程编辑。现已支持 iOS 与 Android。'
+            },
+            ja: {
+                title: 'Agentmux - iPhone、iPad、Android から SSH、tmux、AI エージェントを操作',
+                description: 'Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッション、Claude、Codex、Gemini、OpenCode、ファイル閲覧、ソース確認、リモート編集に対応。iOS と Android の両方で利用可能です。'
+            }
+        };
+
+        const SUPPORTED_LANGS = Object.keys(LANG_META);
+
+        function normalizeLang(lang) {
+            if (!lang) return null;
+            if (SUPPORTED_LANGS.includes(lang)) return lang;
+            if (lang === 'zh-HK' || lang === 'zh-MO') return 'zh-TW';
+            if (lang.startsWith('zh-Hant')) return 'zh-TW';
+            if (lang.startsWith('zh')) return 'zh-Hans';
+            if (lang.startsWith('ja')) return 'ja';
+            if (lang.startsWith('en')) return 'en';
+            return null;
+        }
+
+        function setMetaContent(selector, content) {
+            const el = document.querySelector(selector);
+            if (el) el.setAttribute('content', content);
+        }
+
+        function updateDocumentMeta(lang) {
+            const meta = LANG_META[lang] || LANG_META.en;
+            document.title = meta.title;
+            setMetaContent('#meta-description', meta.description);
+            setMetaContent('#og-title', meta.title);
+            setMetaContent('#og-description', meta.description);
+            setMetaContent('#twitter-title', meta.title);
+            setMetaContent('#twitter-description', meta.description);
+        }
+
+        function updateLocalizedLinks(lang) {
+            const encodedLang = encodeURIComponent(lang);
+            document.querySelectorAll('a[href*="privacy.html"]').forEach((link) => {
+                link.setAttribute('href', `privacy.html?lang=${encodedLang}`);
+            });
+            const guideLink = document.querySelector('a[href*="/guide/"]');
+            if (guideLink) {
+                guideLink.setAttribute('href', (lang === 'zh-TW' || lang === 'zh-Hans') ? '/guide/zh-TW/' : '/guide/en/');
+            }
+        }
+
+        function updateLangUrl(lang) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', lang);
+            window.history.replaceState({}, '', url);
+        }
+
+        function switchLang(lang) {
+            lang = normalizeLang(lang) || 'en';
+            document.querySelectorAll('.lang-btn').forEach((btn) => {
+                btn.classList.remove('active');
+                if (
+                    (lang === 'en' && btn.textContent.trim() === 'EN') ||
+                    (lang === 'zh-TW' && btn.textContent.trim() === '繁中') ||
+                    (lang === 'zh-Hans' && btn.textContent.trim() === '简中') ||
+                    (lang === 'ja' && btn.textContent.trim() === '日本語')
+                ) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.querySelectorAll('[data-lang]').forEach((el) => {
+                el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+            });
+
+            document.documentElement.lang = lang;
+            updateDocumentMeta(lang);
+            updateLocalizedLinks(lang);
+            updateLangUrl(lang);
+            localStorage.setItem('preferred-lang', lang);
+        }
+
+        function setupNavCta() {
+            const navCta = document.getElementById('nav-download-btn');
+            if (!navCta) return;
+            const ua = navigator.userAgent || '';
+            if (/Android/i.test(ua)) {
+                navCta.href = 'https://play.google.com/store/apps/details?id=cc.saxcave.agentmux';
+                navCta.target = '_blank';
+                navCta.rel = 'noopener noreferrer';
+            } else if (/iPhone|iPad|iPod/i.test(ua)) {
+                navCta.href = 'https://apps.apple.com/app/id6766158521';
+                navCta.target = '_blank';
+                navCta.rel = 'noopener noreferrer';
+            } else {
+                navCta.href = '#download';
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setupNavCta();
+            const params = new URLSearchParams(window.location.search);
+            const requested = normalizeLang(params.get('lang'));
+            if (requested) return switchLang(requested);
+
+            const saved = normalizeLang(localStorage.getItem('preferred-lang'));
+            if (saved) return switchLang(saved);
+
+            const browserLang = navigator.language;
+            switchLang(normalizeLang(browserLang) || 'en');
+        });
+    </script>
+</body>
+</html>
