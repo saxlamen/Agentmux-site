@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - Agentmux</title>
-    <meta id="meta-description" name="description" content="Agentmux privacy policy: no data collection, local storage, hardware-backed secure credentials, encrypted SSH traffic, and user-controlled logs.">
+    <meta id="meta-description" name="description" content="Agentmux privacy policy: no personal data collection, optional anonymous usage statistics, hardware-backed secure credentials, and encrypted SSH traffic that is never logged.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/privacy.html">
     <meta id="og-title" property="og:title" content="Privacy Policy - Agentmux">
-    <meta id="og-description" property="og:description" content="Agentmux privacy policy: no data collection, local storage, hardware-backed secure credentials, encrypted SSH traffic, and user-controlled logs.">
+    <meta id="og-description" property="og:description" content="Agentmux privacy policy: no personal data collection, optional anonymous usage statistics, hardware-backed secure credentials, and encrypted SSH traffic that is never logged.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agentmux.saxcave.cc/privacy.html">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/app-icon-192.webp">
     <meta name="twitter:card" content="summary">
     <meta id="twitter-title" name="twitter:title" content="Privacy Policy - Agentmux">
-    <meta id="twitter-description" name="twitter:description" content="Agentmux privacy policy: no data collection, local storage, hardware-backed secure credentials, encrypted SSH traffic, and user-controlled logs.">
+    <meta id="twitter-description" name="twitter:description" content="Agentmux privacy policy: no personal data collection, optional anonymous usage statistics, hardware-backed secure credentials, and encrypted SSH traffic that is never logged.">
     <meta name="theme-color" content="#090d0f">
     <style>
         :root {
@@ -531,7 +531,7 @@
 
         <main class="policy-card">
             <div data-lang="en" class="active">
-                <div class="last-updated">Last updated: 2026-05-30</div>
+                <div class="last-updated">Last updated: 2026-10-15</div>
                 <div class="summary-grid" aria-label="Privacy summary">
                     <div class="summary-item"><strong>01</strong><span>No personal data collection</span></div>
                     <div class="summary-item"><strong>02</strong><span>Hardware-encrypted credentials</span></div>
@@ -539,25 +539,44 @@
                 </div>
                 <p>Agentmux ("we," "our," or "the App") is committed to protecting your privacy. This policy outlines our approach to data security and privacy.</p>
 
-                <h2>1. No Data Collection & Client-Side Operation</h2>
-                <p>Agentmux is a tool designed for developers. We <strong>DO NOT</strong> collect, store, or transmit any of your personal data, server credentials, or terminal traffic to our own servers or any third parties. All operations are conducted locally on your device or directly over SSH to your servers.</p>
+                <h2>1. No Personal Data Collection & Client-Side Operation</h2>
+                <p>Agentmux is a tool designed for developers. We <strong>DO NOT</strong> collect, store, or transmit your personal data, server credentials, terminal content, or AI prompts. Connections and terminal operations happen locally on your device or directly over SSH to your servers. The only data sent to our service is the anonymous usage statistics described in Section 2, which you can turn off at any time.</p>
 
-                <h2>2. Client-Side AI Bridge (Optional)</h2>
-                <p>Agentmux acts as a secure, client-side SSH bridge to your remote server. The App itself does not directly provide, host, or run any AI models or services. Instead, it allows you to interact with AI Coding Agents (such as Claude, Gemini, etc.) and custom agents that you have installed and configured on your own remote server.</p>
+                <h2>2. Anonymous Usage Statistics</h2>
+                <p>To help us decide what to improve, the App sends a small amount of anonymous usage statistics. You can turn this off at any time in <strong>Settings → Privacy → Share Anonymous Usage Statistics</strong>.</p>
+                <ul>
+                    <li><strong>What is sent</strong>: App version, operating system and version, device type (phone, tablet, or computer), app language, and plan (Free, Trial, or Pro), along with how many times certain events happen each day: opening the App, opening a session (its type and which coding agent), the upgrade screen being shown, and a purchase being completed. Counts such as the number of servers are sent only as ranges (for example, "2–5"), together with whether some features (such as cloud sync) are turned on.</li>
+                    <li><strong>Never sent</strong>: Server hostnames or addresses, usernames, file paths, project names, commands, terminal output, prompts, passwords, private keys, or API keys.</li>
+                    <li><strong>Anonymous</strong>: Data is grouped under a random ID created on your device. It is not linked to your account, name, email, or any device or advertising identifier, and reinstalling the App creates a new one. We cannot identify you or find a particular person's data.</li>
+                    <li><strong>Not used for tracking or advertising</strong>: It is never sold or shared with third parties. Data is received by our own service hosted on Cloudflare; we do not store your IP address.</li>
+                    <li><strong>Retention</strong>: Events are deleted from our service after 90 days. We may keep events with the random ID and exact time removed for long-term statistics; these cannot be linked to any device or person.</li>
+                    <li><strong>When turned off</strong>: Sending stops immediately, and unsent data on your device is deleted.</li>
+                </ul>
+
+                <h2>3. AI Permission Review (Optional)</h2>
+                <p>AI Permission Review is off by default and only runs after you turn it on.</p>
+                <ul>
+                    <li><strong>What is sent</strong>: When a coding agent asks for permission in the terminal, the App captures the on-screen content of that request and automatically masks text that looks like keys, passwords, or tokens.</li>
+                    <li><strong>Where it goes</strong>: The masked content is sent <strong>directly</strong> from your device to the AI service you configured, using your own API key. It does not pass through our servers. Once received, it is handled under that provider's privacy policy.</li>
+                    <li><strong>Local storage</strong>: Your API key is stored in the platform-native secure storage. Decision history keeps only masked summaries, stays on your device, and is deleted automatically after its retention period.</li>
+                </ul>
+
+                <h2>4. AI Coding Agents over SSH (Optional)</h2>
+                <p>Apart from AI Permission Review (Section 3), the App itself does not directly provide, host, or run any AI models or services. It acts as a secure SSH bridge that lets you interact with AI coding agents (such as Claude, Gemini, etc.) and custom agents that you have installed and configured on your own remote server.</p>
                 <ul>
                     <li><strong>What is processed</strong>: When you choose to run these agents, the input prompts, terminal command history, and selected workspace files you interact with are sent through your SSH connection to perform coding tasks on your server.</li>
                     <li><strong>Who it is sent to</strong>: The data is processed directly by the third-party AI CLI tools and model providers (e.g., Anthropic, Google, OpenAI, etc.) that you set up on your remote server using your own API credentials.</li>
                     <li><strong>No Client Interception</strong>: All data transmission occurs peer-to-peer over your SSH connection. Agentmux does not intercept, collect, log, or track any of this codebase context or AI prompt inputs. By using these optional features, you authorize the transmission of this workspace data to the AI service providers configured on your server.</li>
                 </ul>
 
-                <h2>3. Local Storage & Security</h2>
+                <h2>5. Local Storage & Security</h2>
                 <ul>
                     <li><strong>SSH Credentials</strong>: Your passwords and private keys are stored exclusively in platform-native hardware-backed secure storage: the iOS system <strong>Keychain</strong> on Apple devices and <strong>Android Keystore</strong> on Android. We use industry-standard encryption provided by the operating system to ensure your credentials remain secure.</li>
                     <li><strong>Server Information</strong>: All server configurations and project paths are stored locally on your device in secure local application storage.</li>
                     <li><strong>Terminal Traffic</strong>: All communication between the App and your server is encrypted via the <strong>SSH protocol</strong>. We do not intercept or log your terminal output.</li>
                 </ul>
 
-                <h2>4. Command Transparency & Security</h2>
+                <h2>6. Command Transparency & Security</h2>
                 <ul>
                     <li><strong>Automated Probes</strong>: To provide features like path detection and tmux management, Agentmux executes non-destructive probe commands (e.g., <code>PATH</code>, <code>tmux -V</code>). These do not modify your system settings.</li>
                     <li><strong>Background Activity Probing</strong>: If you enable the "Background Activity Chime" feature, the App may periodically check the status of your terminal (e.g., querying TTY processes) while in the background. This is used solely to notify you when a long-running task completes. This monitoring is conducted directly over your encrypted SSH connection and no terminal data is collected or transmitted to external servers.</li>
@@ -565,15 +584,15 @@
                     <li><strong>Security</strong>: All generated commands are rigorously escaped to prevent injection.</li>
                 </ul>
 
-                <h2>5. Cloud Synchronization (iOS Pro Feature)</h2>
+                <h2>7. Cloud Synchronization (iOS Pro Feature)</h2>
                 <p>On iOS devices, if you enable iCloud Sync, your server configurations (excluding sensitive passwords/keys unless stored in iCloud Keychain) will be synced across your own devices using <strong>Apple's iCloud service</strong>. We do not have access to this data. (Android devices store configurations locally on your device).</p>
 
-                <h2>6. Contact Us</h2>
+                <h2>8. Contact Us</h2>
                 <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a></p>
             </div>
 
             <div data-lang="zh-TW">
-                <div class="last-updated">最後更新：2026-05-30</div>
+                <div class="last-updated">最後更新：2026-10-15</div>
                 <div class="summary-grid" aria-label="隱私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集個人資料</span></div>
                     <div class="summary-item"><strong>02</strong><span>憑證硬體加密保護</span></div>
@@ -581,25 +600,44 @@
                 </div>
                 <p>Agentmux（下稱「我們」或「本應用程式」）重視並保護您的隱私。本政策說明我們如何處理資料安全與隱私。</p>
 
-                <h2>1. 不收集資料與客戶端運作</h2>
-                <p>Agentmux 是一款專為開發者設計的工具。我們 <strong>不會</strong> 收集、儲存或傳輸您的任何個人資料、伺服器憑證或終端機流量至我們的伺服器。所有操作都在您的裝置本機，或直接透過 SSH 在您的伺服器上進行。</p>
+                <h2>1. 不收集個人資料與客戶端運作</h2>
+                <p>Agentmux 是一款專為開發者設計的工具。我們 <strong>不會</strong> 收集、儲存或傳輸您的個人資料、伺服器憑證、終端機內容或 AI 提示詞。連線與終端機操作都在您的裝置本機進行，或直接透過 SSH 在您的伺服器上進行。唯一會傳送到我們服務的，是第 2 節所述的匿名使用統計，您可以隨時關閉。</p>
 
-                <h2>2. 客戶端 AI 橋接（可選）</h2>
-                <p>Agentmux 是安全的客戶端 SSH 橋接工具，讓您連線到自己的遠端伺服器。本應用程式本身不直接提供、託管或執行任何 AI 模型或服務；它只讓您與自己伺服器上已安裝並設定好的 AI 程式碼助理（如 Claude、Gemini 等）與自訂助理互動。</p>
+                <h2>2. 匿名使用統計</h2>
+                <p>為了決定要優先改善哪些功能，本應用程式會傳送少量匿名使用統計。您可以隨時到<strong>「設定 → 隱私 → 分享匿名使用統計」</strong>關閉。</p>
+                <ul>
+                    <li><strong>傳送哪些資料</strong>：App 版本、作業系統與版本、裝置類型（手機、平板或電腦）、App 介面語言、方案（免費、試用或專業版），以及每天各類事件發生的次數：開啟 App、開啟 session（類型與使用的程式碼助理）、顯示升級畫面、完成購買。伺服器數量等數字只以區間傳送（例如「2–5」），並回報部分功能（例如雲端同步）是否開啟。</li>
+                    <li><strong>絕不傳送</strong>：伺服器主機名稱或位址、使用者名稱、檔案路徑、專案名稱、指令、終端機輸出、提示詞、密碼、私鑰或 API 金鑰。</li>
+                    <li><strong>匿名</strong>：資料以您裝置上隨機產生的 ID 分組，不與您的帳號、姓名、Email、裝置識別碼或廣告識別碼連結；重新安裝 App 會產生新的 ID。因此，我們無法辨識您，也無法找出特定使用者的資料。</li>
+                    <li><strong>不用於追蹤或廣告</strong>：也不會出售或分享給第三方。資料由我們架設在 Cloudflare 上的服務接收，我們不會儲存您的 IP 位址。</li>
+                    <li><strong>保留期限</strong>：事件在 90 天後從我們的服務刪除。我們可能保留移除隨機 ID 與精確時間後的事件，用於長期統計；這些資料無法對應到任何裝置或使用者。</li>
+                    <li><strong>關閉後</strong>：立即停止傳送，並刪除裝置上尚未送出的資料。</li>
+                </ul>
+
+                <h2>3. AI 自動權限審查（可選）</h2>
+                <p>「AI 自動權限審查」預設關閉，只有在您啟用後才會運作。</p>
+                <ul>
+                    <li><strong>傳送哪些資料</strong>：當程式碼助理在終端機中請求權限時，本應用程式會擷取該請求的畫面內容，並自動遮蔽看起來像金鑰、密碼或權杖的文字。</li>
+                    <li><strong>傳送至何處</strong>：遮蔽後的內容由您的裝置 <strong>直接</strong> 傳送到您自行設定的 AI 服務，並使用您自己的 API 金鑰，不會經過我們的伺服器。資料送達後，依該服務提供商的隱私政策處理。</li>
+                    <li><strong>本地儲存</strong>：您的 API 金鑰儲存在系統原生的加密保護區中。決策紀錄只保存遮蔽後的摘要，僅存在您的裝置上，並在保留期限後自動刪除。</li>
+                </ul>
+
+                <h2>4. 透過 SSH 使用 AI 程式碼助理（可選）</h2>
+                <p>除第 3 節所述的 AI 自動權限審查外，本應用程式本身不直接提供、託管或執行任何 AI 模型或服務；它是安全的 SSH 橋接工具，讓您與自己伺服器上已安裝並設定好的 AI 程式碼助理（如 Claude、Gemini 等）與自訂助理互動。</p>
                 <ul>
                     <li><strong>處理哪些資料</strong>：當您選擇執行這些助理時，您在終端機與編輯器中輸入的提示詞、指令歷程以及選取的工作區檔案，將會透過您的 SSH 連線傳送，並在您的伺服器上執行程式碼任務。</li>
                     <li><strong>傳送至何處</strong>：資料會直接在您的遠端伺服器上，由您使用自己的 API 金鑰所設定的第三方 AI 服務提供商（例如 Anthropic、Google、OpenAI 等）處理。</li>
                     <li><strong>App 不會攔截或留存</strong>：所有資料傳輸皆透過您的 SSH 連線加密進行。Agentmux 不會截取、收集、記錄或追蹤任何程式碼工作區內容或 AI 輸入。使用這些功能即代表您授權將工作區資料傳送至您伺服器上設定的 AI 服務提供商。</li>
                 </ul>
 
-                <h2>3. 本地儲存與安全</h2>
+                <h2>5. 本地儲存與安全</h2>
                 <ul>
                     <li><strong>SSH 憑證</strong>：您的密碼與私鑰僅儲存在系統原生硬體加密保護區（iOS 系統的 <strong>Keychain</strong> 與 Android 系統的 <strong>Android Keystore</strong>）中。我們使用作業系統提供的業界標準加密技術，確保您的憑證安全。</li>
                     <li><strong>伺服器資訊</strong>：所有伺服器設定與專案路徑均安全儲存於您裝置的本機應用程式儲存區中。</li>
                     <li><strong>終端機流量</strong>：本應用程式與您的伺服器之間的所有通訊均透過 <strong>SSH 協定</strong> 加密。我們不會截取或記錄您的終端機輸出內容。</li>
                 </ul>
 
-                <h2>4. 指令透明度與安全</h2>
+                <h2>6. 指令透明度與安全</h2>
                 <ul>
                     <li><strong>自動化偵測</strong>：為了提供路徑偵測與 tmux 管理等功能，Agentmux 會執行不具破壞性的偵測指令（如 <code>PATH</code>、<code>tmux -V</code>）。這些指令不會修改您的系統設定。</li>
                     <li><strong>背景活動偵測</strong>：如果您啟用了「背景活動提醒」功能，本應用程式可能會在背景執行時定期檢查您的終端機狀態（例如查詢 TTY 處理程序）。這僅用於在長時間執行的任務完成時通知您。此監測直接透過您的加密 SSH 連線進行，不會收集終端機資料或將其傳輸至外部伺服器。</li>
@@ -607,15 +645,15 @@
                     <li><strong>安全性</strong>：所有產生的指令均經過嚴格轉義以防止注入。</li>
                 </ul>
 
-                <h2>5. 雲端同步（iOS Pro 功能）</h2>
+                <h2>7. 雲端同步（iOS Pro 功能）</h2>
                 <p>在 iOS 裝置上，如果您啟用了 iCloud 同步，您的伺服器設定將透過 <strong>Apple 的 iCloud 服務</strong> 在您自己的裝置之間同步。我們無法存取這些資料。（Android 版設定保存於本機裝置）。</p>
 
-                <h2>6. 聯絡我們</h2>
+                <h2>8. 聯絡我們</h2>
                 <p>如果您對本隱私政策有疑問，請透過以下方式聯絡我們：<a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a></p>
             </div>
 
             <div data-lang="zh-Hans">
-                <div class="last-updated">最后更新：2026-05-30</div>
+                <div class="last-updated">最后更新：2026-10-15</div>
                 <div class="summary-grid" aria-label="隐私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集个人资料</span></div>
                     <div class="summary-item"><strong>02</strong><span>凭据硬件加密保护</span></div>
@@ -623,25 +661,44 @@
                 </div>
                 <p>Agentmux（下称“我们”或“本应用程序”）致力于保护您的隐私。本政策说明了我们处理数据安全与隐私的方法。</p>
 
-                <h2>1. 不收集数据与客户端运行</h2>
-                <p>Agentmux 是一款专为开发者设计的工具。我们 <strong>不会</strong> 收集、存储或传输您的任何个人数据、服务器凭据或终端流量至我们的服务器。所有操作均在您的设备本地或直接通过 SSH 在您的服务器上进行。</p>
+                <h2>1. 不收集个人数据与客户端运行</h2>
+                <p>Agentmux 是一款专为开发者设计的工具。我们 <strong>不会</strong> 收集、存储或传输您的个人数据、服务器凭据、终端内容或 AI 提示词。连接与终端操作都在您的设备本地进行，或直接通过 SSH 在您的服务器上进行。唯一会发送到我们服务的，是第 2 节所述的匿名使用统计，您可以随时关闭。</p>
 
-                <h2>2. 客户端 AI 桥接（选用）</h2>
-                <p>Agentmux 是安全的客户端 SSH 桥接工具，让您连接到自己的远程服务器。本应用本身不直接提供、托管或运行任何 AI 模型或服务；它只让您与自己服务器上已安装并配置好的 AI 代码助理（如 Claude、Gemini 等）与自定义助理互动。</p>
+                <h2>2. 匿名使用统计</h2>
+                <p>为了决定优先改进哪些功能，本应用会发送少量匿名使用统计。您可以随时在<strong>“设置 → 隐私 → 分享匿名使用统计”</strong>中关闭。</p>
+                <ul>
+                    <li><strong>发送哪些数据</strong>：App 版本、操作系统及版本、设备类型（手机、平板或电脑）、App 界面语言、方案（免费、试用或专业版），以及每天各类事件发生的次数：打开 App、打开 session（类型与使用的代码助理）、显示升级页面、完成购买。服务器数量等数字只以区间发送（例如“2–5”），并报告部分功能（例如云端同步）是否开启。</li>
+                    <li><strong>绝不发送</strong>：服务器主机名或地址、用户名、文件路径、项目名称、指令、终端输出、提示词、密码、私钥或 API 密钥。</li>
+                    <li><strong>匿名</strong>：数据以您设备上随机生成的 ID 分组，不与您的账号、姓名、邮箱、设备标识符或广告标识符关联；重新安装 App 会生成新的 ID。因此，我们无法识别您，也无法找出特定用户的数据。</li>
+                    <li><strong>不用于追踪或广告</strong>：也不会出售或分享给第三方。数据由我们部署在 Cloudflare 上的服务接收，我们不会存储您的 IP 地址。</li>
+                    <li><strong>保留期限</strong>：事件在 90 天后从我们的服务删除。我们可能保留移除随机 ID 与精确时间后的事件，用于长期统计；这些数据无法对应到任何设备或用户。</li>
+                    <li><strong>关闭后</strong>：立即停止发送，并删除设备上尚未发送的数据。</li>
+                </ul>
+
+                <h2>3. AI 自动权限审查（选用）</h2>
+                <p>“AI 自动权限审查”默认关闭，只有在您启用后才会运行。</p>
+                <ul>
+                    <li><strong>发送哪些数据</strong>：当代码助理在终端中请求权限时，本应用会截取该请求的屏幕内容，并自动遮蔽看起来像密钥、密码或令牌的文字。</li>
+                    <li><strong>发送至何处</strong>：遮蔽后的内容由您的设备 <strong>直接</strong> 发送到您自行配置的 AI 服务，并使用您自己的 API 密钥，不会经过我们的服务器。数据送达后，按该服务提供商的隐私政策处理。</li>
+                    <li><strong>本地存储</strong>：您的 API 密钥存储在系统原生的加密保护区中。决策记录只保存遮蔽后的摘要，仅存在您的设备上，并在保留期限后自动删除。</li>
+                </ul>
+
+                <h2>4. 通过 SSH 使用 AI 代码助理（选用）</h2>
+                <p>除第 3 节所述的 AI 自动权限审查外，本应用本身不直接提供、托管或运行任何 AI 模型或服务；它是安全的 SSH 桥接工具，让您与自己服务器上已安装并配置好的 AI 代码助理（如 Claude、Gemini 等）与自定义助理互动。</p>
                 <ul>
                     <li><strong>处理哪些数据</strong>：当您选择运行这些助理时，您在终端与编辑器中输入的提示词、指令历史以及选取的工作区文件，将会通过您的 SSH 连接发送，并在您的服务器上执行代码任务。</li>
                     <li><strong>发送至何处</strong>：数据将直接在您的远程服务器上，由您使用自己的 API 密钥所配置的第三方 AI 服务提供商（例如 Anthropic、Google、OpenAI 等）进行处理。</li>
                     <li><strong>无客户端拦截</strong>：所有数据传输都通过您的 SSH 连接点对点加密。Agentmux 不会截取、收集、记录或追踪任何代码工作区内容或 AI 输入。使用这些功能即代表您授权将工作区数据发送至您服务器上配置的 AI 服务提供商。</li>
                 </ul>
 
-                <h2>3. 本地存储与安全</h2>
+                <h2>5. 本地存储与安全</h2>
                 <ul>
                     <li><strong>SSH 凭据</strong>：您的密码与私钥仅存储在系统原生硬件加密保护区（iOS 系统的 <strong>Keychain</strong> 与 Android 系统的 <strong>Android Keystore</strong>）中。我们使用操作系统提供的行业标准加密技术，确保您的凭据安全。</li>
                     <li><strong>服务器信息</strong>：所有服务器配置和项目路径均安全存储在您设备的本地应用程序存储区中。</li>
                     <li><strong>终端流量</strong>：本应用程序与您的服务器之间的所有通信均通过 <strong>SSH 协议</strong> 加密。我们不会截取或记录您的终端输出内容。</li>
                 </ul>
 
-                <h2>4. 指令透明度与安全</h2>
+                <h2>6. 指令透明度与安全</h2>
                 <ul>
                     <li><strong>自动化探测</strong>：为了提供路径检测和 tmux 管理等功能，Agentmux 会执行不具破坏性的探测指令（如 <code>PATH</code>、<code>tmux -V</code>）。这些指令不会修改您的系统设置。</li>
                     <li><strong>背景活动探测</strong>：如果您启用了“背景活动提醒”功能，本应用可能会在后台运行时定期检查您的终端状态（例如查询 TTY 进程）。这仅用于在长时间运行的任务完成时通知您。此监测直接通过您的加密 SSH 连接进行，不会收集终端数据或将其传输至外部服务器。</li>
@@ -649,15 +706,15 @@
                     <li><strong>安全性</strong>：所有生成的指令均经过严格转义以防止注入。</li>
                 </ul>
 
-                <h2>5. 云端同步（iOS 专业版功能）</h2>
+                <h2>7. 云端同步（iOS 专业版功能）</h2>
                 <p>在 iOS 设备上，如果您启用了 iCloud 同步，您的服务器配置将通过 <strong>Apple 的 iCloud 服务</strong> 在您自己的设备之间同步。我们无法访问这些数据。（Android 版配置保存在本地设备）。</p>
 
-                <h2>6. 联系我们</h2>
+                <h2>8. 联系我们</h2>
                 <p>如果您对本隐私政策有疑问，请通过以下方式联系我们：<a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a></p>
             </div>
 
             <div data-lang="ja">
-                <div class="last-updated">最終更新日：2026-05-30</div>
+                <div class="last-updated">最終更新日：2026-10-15</div>
                 <div class="summary-grid" aria-label="プライバシー概要">
                     <div class="summary-item"><strong>01</strong><span>個人データを収集しません</span></div>
                     <div class="summary-item"><strong>02</strong><span>認証情報はハードウェア暗号化</span></div>
@@ -665,25 +722,44 @@
                 </div>
                 <p>Agentmux（以下「当社」または「本アプリ」）は、ユーザーのプライバシーを重視しています。本ポリシーでは、データセキュリティとプライバシーへのアプローチについて説明します。</p>
 
-                <h2>1. データ収集なし＆クライアント側での動作</h2>
-                <p>Agentmux は開発者向けに設計されたツールです。当社はお客様の個人データ、サーバー認証情報、ターミナル通信データを当社のサーバーや第三者に収集、保存、または送信することは<strong>ありません</strong>。すべての操作は、デバイスのローカルで、または SSH を介して直接お客様のサーバー上で行われます。</p>
+                <h2>1. 個人データの非収集とクライアント側での動作</h2>
+                <p>Agentmux は開発者向けに設計されたツールです。当社がお客様の個人データ、サーバー認証情報、ターミナルの内容、AI プロンプトを収集、保存、送信することは<strong>ありません</strong>。接続とターミナル操作は、デバイスのローカルで、または SSH を介して直接お客様のサーバー上で行われます。当社のサービスに送信されるのは、第 2 項で説明する匿名の利用統計のみで、いつでもオフにできます。</p>
 
-                <h2>2. クライアント側 AI ブリッジ（オプション）</h2>
-                <p>Agentmux は、リモートサーバーへの安全なクライアント側 SSH ブリッジとして機能します。本アプリ自体が AI モデルやサービスを直接提供、ホスト、実行することはありません。代わりに、ご自身のリモートサーバーにインストールおよび設定された AI コーディングエージェント（Claude、Gemini など）やカスタムエージェントと対話できます。</p>
+                <h2>2. 匿名の利用統計</h2>
+                <p>改善すべき点を判断するため、本アプリは少量の匿名の利用統計を送信します。<strong>「設定 → プライバシー → 匿名の利用統計を共有」</strong>からいつでもオフにできます。</p>
+                <ul>
+                    <li><strong>送信される内容</strong>：アプリのバージョン、OS とそのバージョン、デバイスの種類（スマートフォン、タブレット、コンピュータ）、アプリの表示言語、プラン（無料、トライアル、Pro）、および特定のイベントが 1 日に発生した回数（アプリの起動、セッションの開始〈種類と使用したコーディングエージェント〉、アップグレード画面の表示、購入の完了）。サーバー数などの数値は範囲（例：「2–5」）でのみ送信され、一部の機能（クラウド同期など）がオンかどうかも送信されます。</li>
+                    <li><strong>送信されないもの</strong>：サーバーのホスト名やアドレス、ユーザー名、ファイルパス、プロジェクト名、コマンド、ターミナル出力、プロンプト、パスワード、秘密鍵、API キー。</li>
+                    <li><strong>匿名性</strong>：データはデバイス上で生成されたランダムな ID でまとめられます。アカウント、氏名、メールアドレス、デバイス識別子、広告識別子とは紐付けられず、アプリを再インストールすると新しい ID になります。そのため、当社がお客様を特定したり、特定の個人のデータを見つけたりすることはできません。</li>
+                    <li><strong>トラッキングや広告には使用しません</strong>：第三者への販売や共有も行いません。データは Cloudflare 上で運用する当社のサービスが受信し、IP アドレスは保存しません。</li>
+                    <li><strong>保存期間</strong>：イベントは 90 日後に当社のサービスから削除されます。長期的な統計のため、ランダムな ID と正確な時刻を取り除いたイベントを保持する場合があります。これらはいかなるデバイスや個人とも紐付けられません。</li>
+                    <li><strong>オフにした場合</strong>：送信は直ちに停止し、デバイス上の未送信データは削除されます。</li>
+                </ul>
+
+                <h2>3. AI 自動権限レビュー（オプション）</h2>
+                <p>「AI 自動権限レビュー」はデフォルトでオフで、オンにした場合にのみ動作します。</p>
+                <ul>
+                    <li><strong>送信される内容</strong>：コーディングエージェントがターミナルで権限を求めたとき、本アプリはそのリクエストの画面内容を取得し、キー、パスワード、トークンのように見える文字列を自動的にマスクします。</li>
+                    <li><strong>送信先</strong>：マスクされた内容は、お客様ご自身の API キーを使用して、お客様が設定した AI サービスへデバイスから<strong>直接</strong>送信されます。当社のサーバーを経由することはありません。受信後は、そのサービスプロバイダーのプライバシーポリシーに従って処理されます。</li>
+                    <li><strong>ローカル保存</strong>：API キーはプラットフォームネイティブの暗号化領域に保存されます。判断履歴はマスク済みの概要のみを保持し、デバイス上にのみ保存され、保存期間を過ぎると自動的に削除されます。</li>
+                </ul>
+
+                <h2>4. SSH 経由での AI コーディングエージェントの利用（オプション）</h2>
+                <p>第 3 項の AI 自動権限レビューを除き、本アプリ自体が AI モデルやサービスを直接提供、ホスト、実行することはありません。本アプリは安全な SSH ブリッジとして、ご自身のリモートサーバーにインストールおよび設定された AI コーディングエージェント（Claude、Gemini など）やカスタムエージェントと対話できるようにします。</p>
                 <ul>
                     <li><strong>処理されるデータ</strong>：これらのエージェントを実行することを選択した場合、入力したプロンプト、ターミナルコマンド履歴、および選択したワークスペースファイルは、SSH 接続を介して送信され、サーバー上でコーディングタスクを実行するために処理されます。</li>
                     <li><strong>送信先</strong>：データは、ご自身の API 資格情報を使用してリモートサーバー上にセットアップしたサードパーティの AI CLI ツールおよびモデルプロバイダー（Anthropic、Google、OpenAI など）によって直接処理されます。</li>
                     <li><strong>クライアント側での傍受なし</strong>：すべてのデータ送信は SSH 接続を介してピアツーピアで行われます。Agentmux がこのコードベースのコンテキストや AI プロンプト入力を傍受、収集、記録、または追跡することはありません。これらのオプション機能を使用することにより、サーバーに設定された AI サービスプロバイダーにワークスペースデータを送信することを許可するものとします。</li>
                 </ul>
 
-                <h2>3. ローカル保存とセキュリティ</h2>
+                <h2>5. ローカル保存とセキュリティ</h2>
                 <ul>
                     <li><strong>SSH 認証情報</strong>：パスワードと秘密鍵は、プラットフォームネイティブのハードウェア暗号化領域（iOS の <strong>Keychain</strong> および Android の <strong>Android Keystore</strong>）にのみ保存されます。当社は OS が提供する業界標準の暗号化を使用し、認証情報の安全性を確保します。</li>
                     <li><strong>サーバー情報</strong>：すべてのサーバー設定とプロジェクトパスは、デバイスの安全なローカルストレージに保存されます。</li>
                     <li><strong>ターミナル通信</strong>：アプリとサーバー間のすべての通信は <strong>SSH プロトコル</strong> を介して暗号化されます。ターミナル出力を傍受または記録することはありません。</li>
                 </ul>
 
-                <h2>4. コマンドの透明性とセキュリティ</h2>
+                <h2>6. コマンドの透明性とセキュリティ</h2>
                 <ul>
                     <li><strong>自動化されたプローブ</strong>：パス検出や tmux 管理などの機能を提供するため、Agentmux は非破壊的なプローブコマンド（例: <code>PATH</code>、<code>tmux -V</code>）を実行します。これらはお客様のシステム設定を変更しません。</li>
                     <li><strong>バックグラウンド活動のプローブ</strong>：「バックグラウンド活動チャイム」機能を有効にすると、アプリはバックグラウンド実行中に定期的にターミナルの状態（TTYプロセスなど）をSSH経由で確認する場合があります。これはタスク完了の通知のみに使用され、データ収集や外部送信は行われません。</li>
@@ -691,10 +767,10 @@
                     <li><strong>セキュリティ</strong>：生成されたすべてのコマンドは、インジェクションを防ぐために厳密にエスケープされます。</li>
                 </ul>
 
-                <h2>5. クラウド同期（iOS Pro機能）</h2>
+                <h2>7. クラウド同期（iOS Pro機能）</h2>
                 <p>iOS デバイスでは、iCloud 同期を有効にした場合、サーバー設定（iCloud キーチェーンに保存されている場合を除き、機密性の高いパスワード/キーは除外されます）は、<strong>Apple の iCloud サービス</strong>を使用してご自身のデバイス間で同期されます。当社はこのデータにアクセスできません。（Android 版の設定は端末ローカルに保存されます）。</p>
 
-                <h2>6. お問い合わせ</h2>
+                <h2>8. お問い合わせ</h2>
                 <p>本プライバシーポリシーに関するご質問は、<a href="mailto:atmux-support@saxcave.cc">atmux-support@saxcave.cc</a> までお問い合わせください。</p>
             </div>
         </main>
@@ -722,19 +798,19 @@
         const LANG_META = {
             en: {
                 title: 'Privacy Policy - Agentmux',
-                description: 'Agentmux privacy policy: no data collection, local storage, hardware-backed secure credentials, encrypted SSH traffic, and user-controlled logs.'
+                description: 'Agentmux privacy policy: no personal data collection, optional anonymous usage statistics, hardware-backed secure credentials, and encrypted SSH traffic that is never logged.'
             },
             'zh-TW': {
                 title: '隱私政策 - Agentmux',
-                description: 'Agentmux 隱私政策：不收集個人資料，憑證硬體加密儲存（Keychain / Keystore），SSH 通訊加密，終端機流量不會被記錄。'
+                description: 'Agentmux 隱私政策：不收集個人資料，匿名使用統計可隨時關閉，憑證硬體加密儲存（Keychain / Keystore），SSH 通訊加密，終端機流量不會被記錄。'
             },
             'zh-Hans': {
                 title: '隐私政策 - Agentmux',
-                description: 'Agentmux 隐私政策：不收集个人数据，凭据硬件加密存储（Keychain / Keystore），SSH 通信加密，终端流量不会被记录。'
+                description: 'Agentmux 隐私政策：不收集个人数据，匿名使用统计可随时关闭，凭据硬件加密存储（Keychain / Keystore），SSH 通信加密，终端流量不会被记录。'
             },
             ja: {
                 title: 'プライバシーポリシー - Agentmux',
-                description: 'Agentmux のプライバシーポリシー。個人データを収集せず、認証情報はハードウェア暗号化（Keychain / Keystore）で保存され、SSH 通信は暗号化され、ターミナル通信は記録されません。'
+                description: 'Agentmux のプライバシーポリシー。個人データを収集せず、匿名の利用統計はいつでもオフにでき、認証情報はハードウェア暗号化（Keychain / Keystore）で保存され、SSH 通信は暗号化され、ターミナル通信は記録されません。'
             }
         };
 
