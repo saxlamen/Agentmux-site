@@ -7,7 +7,7 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="The CLI isn&#x27;t hard for its own sake — it&#x27;s where an agent gets full filesystem access and permission to execute. Browser agents can&#x27;t see your files and IDE plugins usually can&#x27;t run freely. This is a capability boundary, not a question of looks.">
+    <meta name="description" content="Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="Why the strongest coding agents live in the terminal">
-    <meta property="og:description" content="The CLI isn&#x27;t hard for its own sake — it&#x27;s where an agent gets full filesystem access and permission to execute. Browser agents can&#x27;t see your files and IDE plugins usually can&#x27;t run freely. This is a capability boundary, not a question of looks.">
+    <meta property="og:description" content="Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
-    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp">
     <meta property="article:published_time" content="2026-07-30">
-    <meta property="article:modified_time" content="2026-09-29">
+    <meta property="article:modified_time" content="2026-11-04">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Why the strongest coding agents live in the terminal">
-    <meta name="twitter:description" content="The CLI isn&#x27;t hard for its own sake — it&#x27;s where an agent gets full filesystem access and permission to execute. Browser agents can&#x27;t see your files and IDE plugins usually can&#x27;t run freely. This is a capability boundary, not a question of looks.">
-    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta name="twitter:description" content="Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Why the strongest coding agents live in the terminal", "description": "The CLI isn't hard for its own sake — it's where an agent gets full filesystem access and permission to execute. Browser agents can't see your files and IDE plugins usually can't run freely. This is a capability boundary, not a question of looks.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-cli/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-cli/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-09-29"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Why the strongest coding agents live in the terminal", "item": "https://agentmux.saxcave.cc/guide/en/what-is-cli/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Why the strongest coding agents live in the terminal", "description": "Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-cli/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-cli/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Why the strongest coding agents live in the terminal", "item": "https://agentmux.saxcave.cc/guide/en/what-is-cli/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -47,28 +47,118 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Why the strongest coding agents live in the terminal</h1>
-            <p>"CLI" sounds like a punishment. No mouse, no buttons, just a blinking cursor. Yet that is where the strongest coding agents of the last few years live — Claude Code, Codex, all of them. Not because the people who build them are purists. Because the terminal hands them something no other interface can: <strong>full filesystem access and permission to execute</strong>.</p>
+            <p>A CLI agent is a coding agent you talk to in text. It runs in a terminal on a machine you own — a Mac, a Linux box, a server — and inherits your permissions: read every file in the project, run any command, read the result back. Agents live in terminals because no other interface grants all three at once.</p>
+<p>"CLI" still reads like a punishment: no mouse, no buttons, one blinking cursor. Yet Claude Code, Codex, Gemini CLI and OpenCode all live there. Not because their makers are purists: the terminal grants what no other interface does — <strong>full filesystem access and permission to execute</strong>. The same grant is why it asks before running anything.</p>
 
 <section id="terminal">
-  <h2>What a terminal actually is</h2>
-  <p>Strip it down and a terminal does two things. It takes the text you type, and it prints text back. No layers, no buttons. Characters in, characters out.</p>
-  <p>That is why an agent can drive one end to end. Every command it types is the same as one you would type. Every error it reads is the error you would have seen, word for word.</p>
+  <h2>What is a terminal, once you strip the buttons away?</h2>
+
+  <p>Two programs are stacked here, and beginners blame the wrong one. The <strong>terminal</strong> is the display: it draws a grid of characters and forwards your keystrokes. The <strong>shell</strong> behind it — zsh, bash, fish — waits for a line of text, runs it, and prints what that program wrote.</p>
+  <p>That thinness is why an agent can drive one end to end: every command it types is one you would have typed, every error it reads the one you would have seen.</p>
+</section>
+
+<section id="read-the-screen">
+  <h2>Three things you read off a terminal screen</h2>
+
+  <p>Three things carry the meaning; the rest is noise.</p>
+
+  <pre><code>yuki@mini ~/projects/auth (main)
+$ npm test
+
+ ✓ src/session/refresh.test.ts  (6 tests)
+ ✗ src/session/expire.test.ts &gt; drops a session after expiry
+
+     Tests  1 failed | 41 passed (42)
+
+$ echo $?
+1</code></pre>
+
+  <p><strong>The prompt</strong> — that first line — says who, on which machine, in which directory, on which branch. It stops being decorative once the machine is not in front of you: after an SSH login it is how you tell your laptop from a server you forgot you opened.</p>
+  <p><strong>Standard output</strong>, or <em>stdout</em>, is the text the program wrote. A second stream, <em>stderr</em>, keeps the complaints apart from the real output.</p>
+  <p><strong>The exit status.</strong> Every command leaves one integer behind, handed over as <code>$?</code>. Zero means the program claims success. That is the line an agent reads — the <code>1</code>, not the words "1 failed": proof its loop is not closed.</p>
 </section>
 
 <section id="capability-boundary">
   <h2>A capability boundary, not a question of looks</h2>
+
   <p>A browser agent cannot see a single file on your computer. It lives in a tab. An IDE plugin sees the files you have open, but it is usually confined to suggesting — no touching git, no running the tests, and certainly no installing packages.</p>
-  <p>A CLI agent holds the permissions you hold. It reads the whole repo, runs <code>git commit</code>, runs the test suite, installs dependencies. Claude Code, Codex, Gemini CLI, OpenCode: same category. Agents that can command the machine, not spectators in a sandbox who can see but not act.</p>
-  <p>No vendor designed this gap to please anyone. It is the permission set that comes with choosing the terminal as your interface.</p>
+  <p>A CLI agent holds the permissions you hold: it reads the whole repo, runs <code>git commit</code>, runs the suite, installs dependencies. Three tiers come with that, and the risk climbs:</p>
+  <ul>
+    <li><strong>Read.</strong> Every file in your home directory, <code>.ssh</code> keys included.</li>
+    <li><strong>Write.</strong> Under git, a bad write is a <code>git checkout</code> away. Outside a tracked project, nothing rolls it back.</li>
+    <li><strong>Execute.</strong> Anything you could type, including a migration, a force-push, an <code>rm -rf</code> pointed at the wrong path.</li>
+  </ul>
+  <p>No vendor designed this gap to please anyone: it is the permission set that comes with the terminal, and every other interface withholds part of it.</p>
+</section>
+
+<section id="commands-an-agent-runs">
+  <h2>Which commands can it run that a sandboxed agent cannot?</h2>
+
+  <p>"Execution rights," in lines on a screen:</p>
+
+  <pre><code>npm test
+npx vitest run src/session/expire.test.ts
+
+git status --short
+git commit -m "fix: expire sessions on the dot"
+
+npm install date-fns@3
+npm run build
+
+psql "$DATABASE_URL" -f db/schema.sql
+curl -sf localhost:8000/health | jq .db</code></pre>
+
+  <p>Where would those run inside a hosted sandbox? That <code>psql</code> connects to a database that exists only on your machine, using a URL from a <code>.env</code> file that was never uploaded. That <code>npm install</code> pulls an internal package from a private registry named in your <code>.npmrc</code>.</p>
+  <p>A sandboxed agent can write you a patch but cannot observe what the patch did — and an agent that cannot see the result of an edit cannot finish the task.</p>
 </section>
 
 <section id="concrete-example">
-  <h2>What that looks like in practice</h2>
-  <p>You say "fix this bug." The agent reads the relevant files, edits the code, runs <code>npm test</code>, sees one test still red, edits again, runs again. Until everything is green. You never clicked a button.</p>
-  <p>The loop finishes on its own because the agent has the terminal's execution rights. Put it in a browser tab or an IDE plugin and it stalls at step two, waiting for you to come back and press the next thing.</p>
+  <h2>The loop that closes without you pressing anything</h2>
+
+  <p>You say "fix this bug." A dozen of those lines follow, hands off the keyboard:</p>
+  <ol>
+    <li>It greps for the failing message, reads three files, edits one.</li>
+    <li>It runs <code>npm test</code>, reads the exit status, sees <code>1</code>.</li>
+    <li>It narrows to one case, edits again, reruns the whole suite, gets <code>0</code>.</li>
+    <li>It commits, applies the migration locally, curls the endpoint that was broken.</li>
+  </ol>
+  <p>Nothing in that chain needed a click. In a browser tab or an IDE plugin it stalls at step two: it can produce the edit but cannot run the suite, so it waits for you to run it and report back. You have become the test runner — a permission problem, not a model-quality one.</p>
 </section>
 
-<p>These agents can run on a different machine. First you have to be able to reach it.</p>
+<section id="byte-stream-movable">
+  <h2>Why is a byte stream worth more than a window?</h2>
+
+  <p>A terminal window is not where the program lives. The program is attached to a <strong>pseudo-terminal</strong> — a kernel object with two ends. Bytes go in one end and out the other; your window is whoever holds the far end right now. Three things follow.</p>
+  <ul>
+    <li><strong>It can be saved.</strong> <code>npm test &gt; build.log</code> writes that text to a file, which a program can read a year later. A GUI's canvas is a picture, not a record.</li>
+    <li><strong>It can be chained.</strong> <code>git ls-files | grep .env</code> feeds one program's output into another's input.</li>
+    <li><strong>It can be moved.</strong> Nothing says the two ends must be in the same place. tmux parks the session on the server; your screen attaches, detaches, and attaches again from another device.</li>
+  </ul>
+  <p>That third one is the payload. <strong>A byte stream can be redirected, stored, replayed, and reattached from somewhere else; a rendered window cannot.</strong> Persistent sessions, SSH, the same agent on a phone: everything else in this guide follows from that property.</p>
+</section>
+
+<section id="what-full-access-costs">
+  <h2>What does full access cost you?</h2>
+
+  <p>The permission that lets an agent migrate your database lets it delete one, which is why agents stop mid-task and ask: "Run this command?" That prompt is not timidity. An agent that ran everything without asking would be taking your <code>.ssh</code> directory and your production database on faith. It marks the line between tier two and tier three, drawn once the command is known.</p>
+  <p>Two habits cover most of it. <strong>Read the command line, not the summary:</strong> "I'll clean up the build cache" is a description, and only the line under it has consequences. <strong>Approve once per category:</strong> asked forty times a day to run tests, let <code>npm test</code> through on a rule once.</p>
+  <p>A prompt you were going to approve costs ten seconds. One allowed wrongly, against a live database, costs a day and a restore. That ratio is what <a href="/guide/en/permission-review/">AI Permission Review</a> exists for: blacklist first, allowlist second, a model's judgement for the rest.</p>
+</section>
+
+<section id="when-a-gui-is-better">
+  <h2>When a GUI is genuinely the better tool</h2>
+
+  <p>A terminal is not the right interface for everything you do to code. These are strictly worse in text:</p>
+  <ul>
+    <li><strong>A live debugger.</strong> A breakpoint, one step through the loop, a variable inspected at frame four.</li>
+    <li><strong>Anything visual.</strong> Layout, spacing, a colour that is almost right. Describing a screenshot is a worse version of looking at one.</li>
+    <li><strong>Reading a large diff.</strong> Two thousand lines side by side — why you review an agent's work in a GUI even when the agent wrote it.</li>
+    <li><strong>Still learning.</strong> An editor underlining the exact token where you went wrong teaches faster than a stack trace.</li>
+  </ul>
+  <p>The split is not skill against laziness. It is <strong>"you are here and driving"</strong> against <strong>"it is running and you are checking in"</strong>. At a desk an IDE is often the better instrument; the best users keep both. <a href="/guide/en/why-not-gui-ide/">That division of labour</a> is its own article.</p>
+</section>
+
+<p>The terminal gives an agent your machine, and its output is characters that can live anywhere — so the machine need not be the one you are sitting at. <a href="/guide/en/what-is-ssh/">Getting there from elsewhere is SSH's job</a>.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/why-not-gui-ide/">Previous<span>Why not Cursor or VS Code</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-ssh/">Next<span>An encrypted tunnel to another computer</span></a></nav>

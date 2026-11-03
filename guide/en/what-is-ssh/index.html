@@ -7,7 +7,7 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="SSH opens an encrypted channel between your device and another machine. You&#x27;re connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.">
+    <meta name="description" content="What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="An encrypted tunnel to another computer">
-    <meta property="og:description" content="SSH opens an encrypted channel between your device and another machine. You&#x27;re connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.">
+    <meta property="og:description" content="What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
-    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp">
     <meta property="article:published_time" content="2026-07-30">
-    <meta property="article:modified_time" content="2026-09-29">
+    <meta property="article:modified_time" content="2026-11-04">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="An encrypted tunnel to another computer">
-    <meta name="twitter:description" content="SSH opens an encrypted channel between your device and another machine. You&#x27;re connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.">
-    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta name="twitter:description" content="What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "An encrypted tunnel to another computer", "description": "SSH opens an encrypted channel between your device and another machine. You're connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-09-29"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "An encrypted tunnel to another computer", "item": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "An encrypted tunnel to another computer", "description": "What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "An encrypted tunnel to another computer", "item": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -47,28 +47,84 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>An encrypted tunnel to another computer</h1>
-            <p>An agent can run commands freely in a terminal, as the last article argued. It still needs a terminal to run in. That terminal does not have to be on your phone — it can be the Mac mini that never gets switched off at home, or the workstation at the office, as long as you can reach it.</p>
-<p>Reaching it is what SSH is for. It opens an encrypted tunnel between your device and another machine, carrying the text you type over and the text it prints back. None of the hops in between can read any of it.</p>
+            <p>SSH is an encrypted channel between your device and another computer. You send keystrokes, that machine runs the commands, its output comes back, and no hop in between can read any of it. To run a coding agent remotely, SSH is how your phone reaches the machine the agent is actually running on.</p>
+<p>The last article made the case that an agent does its best work in a terminal, with full access to a filesystem and permission to execute. This one is about where that terminal lives. It does not have to be in your pocket: it can be the Mac mini at home that never gets switched off, or the workstation at the office, as long as you can reach it.</p>
 
 <section id="another-machine">
   <h2>Why "another machine" rather than a cloud service</h2>
   <p>Browser agents and cloud IDEs connect you to a machine too. The difference is whose machine it is.</p>
   <p>SSH connects you to your own. Your files are there. Your API keys are there. Every package you installed, every environment variable you set. Nothing has to move onto someone else's server, and the changes stay where they were made — there is nothing to sync back afterwards.</p>
+  <p>The trade-off runs the other way too. A cloud environment is the better answer if you own no machine that stays on, or if a whole team needs one identical starting point. Your machine has to be awake, reachable, and set up by you.</p>
+</section>
+
+<section id="host-user-port">
+  <h2>What you actually type: host, user, port</h2>
+  <p>Every SSH connection needs three things, and the command writes them on one line:</p>
+  <pre><code>ssh -p 22 sax@mac-mini</code></pre>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>Part</th><th>What it names</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Host</td><td>Which machine — a name such as <code>mac-mini</code>, or an address such as <code>100.101.102.103</code></td></tr>
+      <tr><td>User</td><td>Which account on it. You get its files, permissions, and shell, and nothing above</td></tr>
+      <tr><td>Port</td><td>Which door. SSH's default is 22, so the field usually goes empty</td></tr>
+    </tbody>
+  </table></div>
+  <p>Two of those three are where beginners get stuck. The host has to be an address your phone can route to — the next section. And the user has to exist on that machine: an agent runs as that user, touching exactly what that user can.</p>
+</section>
+
+<section id="lan-or-public-ip">
+  <h2>Why not your LAN address or your public IP?</h2>
+  <p>The first address you find is in your network settings: something like <code>192.168.1.23</code>. Try it from a laptop on the same Wi-Fi; that is what it is for. It is a private address handed out by your router, valid only inside your own network. A phone on mobile data has no route to it.</p>
+  <p>The second is the public address your home connection shows the internet, with a port forwarded through the router to that one machine. That road works, and it is the one to avoid. Scanning bots try logins against every address in the world, around the clock, and an exposed port starts collecting attempts within a day. One mistake in the router settings opens the whole network instead of one machine.</p>
+  <p>Use a third kind: a private address only your own devices can see. <a href="/guide/en/what-is-tailscale/">Tailscale</a> gives each machine a MagicDNS name or a <code>100.x</code> address, and nothing else on the internet knows those exist. That goes in the host field, at home and away.</p>
 </section>
 
 <section id="keys-vs-passwords">
   <h2>Keys aren't the safer option — they're the easier one</h2>
   <p>SSH takes passwords or keys, and the choice gets framed as security versus convenience. It is not a trade-off. Keys win on both.</p>
-  <p>A private key stays on your device. A public key goes on the other machine. At login the two verify each other and you type nothing. Passwords can be brute-forced; the length of a key puts that out of reach. Set it up once and every connection afterwards runs the same way.</p>
+  <p>A key pair is two small text files. The private one stays on the device that connects. The public one is computed from it and copied onto the machine you want to reach, into <code>authorized_keys</code> inside that account's <code>~/.ssh</code> directory. The arithmetic runs one way: the public half comes from the private half, not back the other way. <code>ssh-keygen</code> makes a pair in seconds.</p>
+  <p>At login the two halves prove the match and you type nothing. A password has to survive repeated guessing; a key that long puts guessing out of reach. Set it up once and every connection afterwards works the same way.</p>
+  <p>Why put a passphrase on the private key? Because a key is a file. Copy it off an unlocked laptop and someone else holds your key. A passphrase makes the file worthless without it — and unlike a login password it never crosses the network. It unlocks the key locally; what travels is a signed answer to a challenge.</p>
+  <p>On a phone that gap widens. A typed password goes over the wire on every connection, handing anyone who can reach the port a fresh guess. A key answers a challenge instead, and the key never leaves the device. If the key is in place and still refused, <a href="/guide/en/troubleshooting/">the usual causes are few</a>: wrong path, wrong user, wrong permissions.</p>
+</section>
+
+<section id="what-the-app-stores">
+  <h2>Where does the app keep my key?</h2>
+  <p>Agentmux collects no personal data. Usage statistics are anonymous and optional; turning them off changes nothing about how it connects. Passwords, keys, and passphrases go into the operating system's hardware-backed credential storage. Your SSH traffic is never logged: the channel is encrypted between your device and your machine, and the app is not a relay.</p>
+</section>
+
+<section id="fingerprint-prompt">
+  <h2>Why the fingerprint prompt appears the first time</h2>
+  <p>The first time you reach a machine, before any password or key, the client prints a line about the host's authenticity, a short string of hex, and a yes or no. That string is the server's fingerprint: a readable summary of the host key the machine signs with. Nothing has gone wrong. SSH is authenticating the other direction.</p>
+  <p>A password or key proves you to the machine. A host key proves the machine to you. Without that second half, anyone between your phone and your Mac mini could answer in its place and read what you send. On a first connection there is no stored copy to compare against, so the client asks you to accept it and remembers it from then on.</p>
+  <p>It earns its keep later. Reconnect to a machine whose fingerprint has changed and the client refuses. Either you reinstalled the system, or something else is answering.</p>
 </section>
 
 <section id="not-a-server">
   <h2>You don't need to turn your computer into a server</h2>
   <p>People hear "SSH" and picture racks in a data centre. You are flipping a switch. On a Mac it is System Settings → General → Sharing → Remote Login. On Linux it is usually starting a service called <code>sshd</code>, which most distributions already ship.</p>
-  <p>Nothing else about the machine changes. It is still your everyday computer, with one more door you can knock on from outside.</p>
+  <p>Nothing else about the machine changes. It is still your everyday computer, with one more door you can knock on from outside. If you would rather not remember the order of operations, <a href="/guide/en/setup/">the setup page</a> asks three questions and hands back a checklist.</p>
 </section>
 
-<p>Then you put your phone away, the tunnel drops, and the agent dies with it. Unless…</p>
+<section id="what-ssh-is-not">
+  <h2>SSH is not a VPN or a remote desktop</h2>
+  <p>Three things SSH does not do:</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>Not this</th><th>What that would mean</th><th>What SSH does instead</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>A VPN</td><td>Everything your phone sends routed into your home network</td><td>One channel to one port on one machine. Nothing else becomes reachable</td></tr>
+      <tr><td>A mounted filesystem</td><td>Your remote disk appears as a folder</td><td>Bytes on request. A file browser fetches and pushes each file itself</td></tr>
+      <tr><td>Screen sharing</td><td>Pictures of a desktop, steered with a finger</td><td>Text both ways: keystrokes out, printed output back</td></tr>
+    </tbody>
+  </table></div>
+  <p>That last row is a real limit, not a flaw in this tool. Software that exists only as a window you click cannot be driven over SSH — the same boundary the previous article stood on: an agent that speaks text is an agent that fits down the tunnel.</p>
+</section>
+
+<p>Then you put your phone away, the tunnel drops, and the agent dies with it — unless the session was never inside your connection to begin with. <a href="/guide/en/what-is-tmux/">That is what tmux is for</a>.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/what-is-cli/">Previous<span>Why the strongest coding agents live in the terminal</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-tmux/">Next<span>Keep the agent running after you put your phone away</span></a></nav>

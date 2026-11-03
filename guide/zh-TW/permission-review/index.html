@@ -20,7 +20,7 @@
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-TW/permission-review/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
     <meta property="article:published_time" content="2026-09-29">
-    <meta property="article:modified_time" content="2026-10-21">
+    <meta property="article:modified_time" content="2026-11-04">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AI 自動權限審查：agent 問你時，誰來回答">
     <meta name="twitter:description" content="Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。">
@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "AI 自動權限審查：agent 問你時，誰來回答", "description": "Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/permission-review/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/permission-review/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-09-29", "dateModified": "2026-10-21"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "AI 自動權限審查：agent 問你時，誰來回答", "item": "https://agentmux.saxcave.cc/guide/zh-TW/permission-review/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "AI 自動權限審查：agent 問你時，誰來回答", "description": "Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/permission-review/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/permission-review/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-09-29", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "AI 自動權限審查：agent 問你時，誰來回答", "item": "https://agentmux.saxcave.cc/guide/zh-TW/permission-review/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -47,7 +47,8 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>AI 自動權限審查：agent 問你時，誰來回答</h1>
-            <p>Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛好不在螢幕前，整個任務就卡在那裡等你。AI 自動權限審查就是替你看這些權限提示的：危險的擋下來交給你，安全的給建議或直接幫你按下去。</p>
+            <p>AI 自動權限審查是 Agentmux 用來回答 agent 權限提示的機制：黑名單先擋下危險指令，白名單直接放行你已經信任的，兩邊都沒命中的才交給 AI 判斷；判斷為允許時，顧問模式給你建議，自動回覆模式幫你按下那個鍵。</p>
+<p>Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛好不在螢幕前，整個任務就卡在那裡等你。它要處理的就是這一刻。</p>
 <p>它只做一件事：回答 agent 的權限提示，而且每次只按一個鍵。它不會替你打指令，也不會去碰畫面上以外的東西。</p>
 
 <figure class="flow" aria-label="自動權限審查的判斷流程">
@@ -63,7 +64,7 @@
 </figure>
 
 <section id="when-it-starts">
-  <h2>什麼時候會啟動</h2>
+  <h2>agent 停下來等你，審查才開始</h2>
   <p>只有在 agent 停下來等你回應時才會啟動。Agentmux 本來就會辨識 Claude Code、Codex 這類 agent 的狀態，當畫面出現「要不要允許」「選 1 還是 2」這種提示，工作階段就會被標記成等待中，審查也從這一刻開始。</p>
   <p>同時要符合這幾個條件：</p>
   <ul>
@@ -76,13 +77,13 @@
 </section>
 
 <section id="read-the-screen">
-  <h2>第一步：看清楚畫面</h2>
+  <h2>它只讀目前畫面上那一個提示</h2>
   <p>它先從畫面上找出「目前這一個」提示：要執行的指令、問題本身，還有可以選的選項。更早以前捲上去的舊內容不算數。</p>
   <p>要送給 AI 之前，畫面裡看起來像密碼、API key、token 的內容會先被遮蔽掉。如果遮蔽失敗，原始內容不會送出，這次也不會幫你按任何鍵。</p>
 </section>
 
 <section id="blacklist">
-  <h2>第一關：黑名單</h2>
+  <h2>黑名單永遠先跑，而且就在手機上</h2>
   <p>黑名單在你的手機上直接比對，永遠第一個檢查，命中了就不會送給 AI，直接交給你處理。內建的規則涵蓋最危險的幾類操作：</p>
   <ul>
     <li>對 <code>/</code>、<code>~</code> 或家目錄執行 <code>rm -rf</code></li>
@@ -96,14 +97,14 @@
 </section>
 
 <section id="allowlist">
-  <h2>第二關：白名單</h2>
+  <h2>白名單命中，就不用等 AI</h2>
   <p>有些指令你每天都在按「允許」，例如跑測試或 build。把它們加進白名單，下次命中時它就直接在手機上決定要按哪個鍵，不用等 AI，也不花 API 用量。</p>
   <p>另外，在「自動回覆」模式下，還可以對單一工作階段開啟「允許此工作階段中的所有命令」：跳過 AI 判斷，但黑名單照樣有效，工作階段結束就自動關掉。</p>
   <p>白名單命中了、但畫面上找不到一個明確、安全的按鍵可以按時，一樣交給你。</p>
 </section>
 
 <section id="ai-judgment">
-  <h2>第三關：AI 判斷</h2>
+  <h2>AI 能決定什麼，不能決定什麼？</h2>
   <p>黑名單和白名單都沒命中的提示，才會送給 AI。AI 會看到遮蔽過的畫面內容，以及你寫的<strong>主要意圖</strong>，也就是你這次要 agent 做的事，例如「修好登入頁的測試」。</p>
   <p>你可以選兩種引擎：</p>
   <ul>
@@ -114,7 +115,7 @@
 </section>
 
 <section id="finish">
-  <h2>最後：建議你，或幫你按</h2>
+  <h2>顧問只給建議，自動回覆幫你按</h2>
   <p>每個工作階段可以分別選模式：</p>
   <ul>
     <li><strong>顧問</strong>（預設）：只給建議。畫面上方會跳出提示，告訴你它建議按什麼，旁邊有「採納」按鈕，按下去才會送出。</li>
@@ -125,7 +126,7 @@
 </section>
 
 <section id="handed-to-you">
-  <h2>哪些情況一定交給你</h2>
+  <h2>哪些情況一定交回給你？</h2>
   <ul>
     <li>命中黑名單。</li>
     <li>AI 判斷為拒絕或不確定。</li>
@@ -138,7 +139,7 @@
 </section>
 
 <section id="get-started">
-  <h2>開始使用</h2>
+  <h2>要怎麼打開它？</h2>
   <p>開始前請準備好其中一種：</p>
   <ul>
     <li>JEV 引擎的 API key，透過 <a href="https://openrouter.ai/keys">OpenRouter</a> 或 TypeSafe 取得。</li>
@@ -154,7 +155,7 @@
 </section>
 
 <section id="privacy">
-  <h2>資料去哪裡</h2>
+  <h2>哪些資料會離開你的裝置？</h2>
   <p>只有遮蔽過的畫面片段和你的主要意圖，會送到你自己設定的 AI 服務，用的是你自己的 API key。如果打開了「使用我最近的提示」，你在那個分頁送出的提示會成為主要意圖，也會一起送出。Agentmux 不提供、也不經手任何 AI 服務。每次判斷的紀錄只存在你的裝置上，可以在稽核記錄裡查看或清除，模型的推理內容不會保存。</p>
 </section>
 

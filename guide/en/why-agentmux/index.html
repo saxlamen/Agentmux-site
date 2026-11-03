@@ -7,7 +7,7 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="General SSH apps assume you came to type commands. Agentmux assumes you came to rejoin an agent that&#x27;s already running. Five capabilities verified against the source, plus an honest list of cases where Termius is the better tool.">
+    <meta name="description" content="Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/why-agentmux/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/why-agentmux/">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="Why not Termius or Blink">
-    <meta property="og:description" content="General SSH apps assume you came to type commands. Agentmux assumes you came to rejoin an agent that&#x27;s already running. Five capabilities verified against the source, plus an honest list of cases where Termius is the better tool.">
+    <meta property="og:description" content="Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/why-agentmux/">
-    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/Serverview_tmux_agents.webp">
     <meta property="article:published_time" content="2026-07-30">
-    <meta property="article:modified_time" content="2026-09-29">
+    <meta property="article:modified_time" content="2026-11-04">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Why not Termius or Blink">
-    <meta name="twitter:description" content="General SSH apps assume you came to type commands. Agentmux assumes you came to rejoin an agent that&#x27;s already running. Five capabilities verified against the source, plus an honest list of cases where Termius is the better tool.">
-    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta name="twitter:description" content="Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/Serverview_tmux_agents.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Why not Termius or Blink", "description": "General SSH apps assume you came to type commands. Agentmux assumes you came to rejoin an agent that's already running. Five capabilities verified against the source, plus an honest list of cases where Termius is the better tool.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/why-agentmux/", "url": "https://agentmux.saxcave.cc/guide/en/why-agentmux/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-09-29"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Why not Termius or Blink", "item": "https://agentmux.saxcave.cc/guide/en/why-agentmux/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Why not Termius or Blink", "description": "Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/why-agentmux/", "url": "https://agentmux.saxcave.cc/guide/en/why-agentmux/", "image": ["https://agentmux.saxcave.cc/resource/Serverview_tmux_agents.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Why not Termius or Blink", "item": "https://agentmux.saxcave.cc/guide/en/why-agentmux/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -47,51 +47,145 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Why not Termius or Blink</h1>
-            <p>A general SSH app assumes you came to type commands. Agentmux assumes you came to rejoin an agent that is already running. That assumption decides everything below.</p>
-<p>So this is not a comparison of how the interfaces look. It is a comparison of who thought harder about reattaching. All five capabilities were verified against the current source, not listed from memory.</p>
+            <p>A general SSH client assumes you opened it to type commands. Agentmux assumes you opened it to rejoin an agent already running. Buy Termius or Blink if you need Mosh, SOCKS5 forwarding, or host sync across platforms. Buy Agentmux if your day is spent inside coding agents on several servers. The trade-off is breadth of operations against depth of reattachment.</p>
+<p>This is not a comparison of interfaces but of who thought harder about reattaching; every difference below follows from that. All five capabilities were checked against the current source.</p>
+
+<section id="the-assumption">
+  <h2>What each kind of tool is built around</h2>
+  <p>A general SSH client is built around a host and a shell: hand you a working prompt, then stay out of the way. What happens after the prompt is yours.</p>
+  <p>Agentmux is built around an agent already running somewhere; its job is to shorten the distance from your pocket to that process. Three consequences follow. The last two are where a good general client stops being a substitute — not because it is badly made, but because those behaviours were never its product.</p>
+  <ul>
+    <li><strong>What you see first.</strong> A host, or the sessions running on it.</li>
+    <li><strong>What a dropped connection costs.</strong> A prompt you re-navigate, or the screen you left.</li>
+    <li><strong>What the app does while you are away.</strong> Nothing, or a Lock Screen progress line and a sound at the end.</li>
+  </ul>
+</section>
+
+<section id="capability-comparison">
+  <h2>Head to head, capability by capability</h2>
+  <p>One row per capability. Where a competitor's behaviour cannot be checked from the outside, the cell says so.</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>Capability</th>
+        <th>General SSH client</th>
+        <th>Agentmux</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Back to a tmux session</td>
+        <td><code>tmux ls</code>, then <code>tmux attach -t</code></td>
+        <td>Sessions listed on connect; one tap reattaches</td>
+      </tr>
+      <tr>
+        <td>After a drop</td>
+        <td>The prompt returns; finding the session is on you</td>
+        <td>A detach, not a death: you land on the screen you left</td>
+      </tr>
+      <tr>
+        <td>A twenty-minute agent run</td>
+        <td>No model of a run to report from</td>
+        <td>Dynamic Island and Lock Screen progress; a sound at the end</td>
+      </tr>
+      <tr>
+        <td>Prompt to allow a command</td>
+        <td>You are the reviewer, in the chair</td>
+        <td>AI Permission Review: blacklist, allowlist, AI judgement; suggests or presses the key (Pro)</td>
+      </tr>
+      <tr>
+        <td>One line in a file</td>
+        <td>Vim over SSH, on a phone keyboard</td>
+        <td>Runestone editor, Ink Markdown preview, branch tools, Files app (Pro)</td>
+      </tr>
+      <tr>
+        <td>Private keys</td>
+        <td>Not verifiable from outside</td>
+        <td>Keychain / Keystore, never the local database; iCloud sync carries server names only</td>
+      </tr>
+      <tr>
+        <td>Automation from outside</td>
+        <td>Nothing to call: no session or agent model exposed</td>
+        <td>6 App Intents over four entity types: Server, Project, TMUXSession, RecentSession</td>
+      </tr>
+      <tr>
+        <td>Unreliable mobile networks</td>
+        <td><strong>Mosh</strong> is a reason to buy this kind of app</td>
+        <td>Standard SSH plus tmux reattachment — not Mosh</td>
+      </tr>
+      <tr>
+        <td>Port forwarding</td>
+        <td>Local, remote, dynamic SOCKS5</td>
+        <td>Local only</td>
+      </tr>
+      <tr>
+        <td>Host configuration at scale</td>
+        <td>Synced on iOS, Android, Windows, macOS, Linux; shared host lists</td>
+        <td>Multiple servers and batch actions (Pro); mobile only</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>Read the last three rows first: they are where Agentmux loses.</p>
+</section>
 
 <section id="tmux-first-reconnect">
   <h2>tmux-first reconnection</h2>
   <p>Connect to a server and Agentmux lists the tmux sessions already running on it. One tap reattaches. No <code>tmux ls</code>, no <code>tmux attach -t</code> to remember. Reconnect after a drop and you land on the same session, screen as you left it, without retyping anything.</p>
+  <p>An agent's value is the context it accumulated: which files it read, why it chose this approach. Reattach to that screen and the context survives; open a fresh prompt and you explain the task to a process that has forgotten it. <a href="/guide/en/what-is-tmux/">What tmux does</a> is the load-bearing part of this design.</p>
 </section>
 
 <section id="background-live-activity">
   <h2>Background survival and Live Activity</h2>
   <p>Agents routinely run for tens of minutes. That waiting period is what this is built for. The Dynamic Island and Lock Screen show progress, and a sound can play when it finishes — so the app does not have to sit in the foreground while you stare at it.</p>
-  <p>When the agent stops to ask whether to allow a command, <a href="/guide/en/permission-review/">AI Permission Review</a> can take a look for you: dangerous commands are held for you, safe ones get a suggestion or a key press (Pro).</p>
+  <p>An app built around a shell has nothing to report once closed: it holds no notion of a run. Here a named session on a named server is running, and the system reports on it. When it stops to ask whether to allow a command, <a href="/guide/en/permission-review/">AI Permission Review</a> can look first: dangerous commands are held, safe ones get a suggestion or a key press (Pro).</p>
 </section>
 
 <section id="editor-git-files">
   <h2>Runestone editor, Git tools, and Files app integration</h2>
-  <p>Changing one line of code does not mean wrestling vim on a phone. The built-in Runestone editor opens the file and edits it. For a README or notes an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools — switching branches, reading diffs — and Files app integration are Pro features, available during the 14-day trial.</p>
+  <p>Changing one line of code does not mean wrestling vim on a phone. The built-in Runestone editor opens the file and edits it. For a README an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools — switching branches, reading diffs — and Files app integration are Pro features, available during the 14-day trial.</p>
+  <p>The loop closes on one device: the agent changes files, you read the diff, you answer, it goes on. Every step that needs a second machine waits for a desk.</p>
 </section>
 
 <section id="keychain-isolation">
   <h2>Hardware-backed credential isolation</h2>
   <p>Private keys live in native secure storage (the iOS Keychain / Android Keystore) and are never written to the local database. On iOS, if you turn on iCloud sync, CloudKit carries non-sensitive metadata such as server names. The keys stay put.</p>
+  <p>Ask any tool the same question: which private keys leave this device if sync is on? A feature list will not answer it.</p>
 </section>
 
 <section id="siri-shortcuts">
   <h2>Siri and Shortcuts automation</h2>
-  <p><code>GetCurrentSessionContextIntent</code> lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal right then lands in iOS Shortcuts, ready to pipe into Notes, Messages, or anything you assemble yourself. <code>ContinueLastSessionIntent</code> is blunter: "continue working in Agentmux" reattaches to your last session.</p>
-  <p>General SSH apps cannot do this, structurally. They have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 6 App Intents across four entity types — Server, Project, TMUXSession, RecentSession.</p>
+  <p><code>GetCurrentSessionContextIntent</code> lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal lands in iOS Shortcuts, ready for Notes, Messages, or anything you build. <code>ContinueLastSessionIntent</code> is blunter: "continue working in Agentmux" reattaches to your last session.</p>
+  <p>General SSH apps cannot do this, structurally. They have no semantic model of sessions, projects, and agents to expose to the system; Agentmux implements 6 App Intents across four entity types — Server, Project, TMUXSession, RecentSession.</p>
 </section>
 
 <section id="cjk-fixes">
   <h2>Fixes you'll feel if you read CJK</h2>
-  <p>Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once. Selection alignment drifting on full-width characters. A link that wraps across lines breaking into several pieces when copied. A single slash inside CJK text read as a file path. You only fall into these once you have actually handled CJK text.</p>
+  <p>Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once. Selection alignment drifting on full-width characters. A link that wraps across lines breaking into several pieces when copied. A single slash inside CJK text read as a file path. You only fall into those once you have handled CJK text.</p>
+</section>
+
+<section id="pick-by-job">
+  <h2>Which tool for which job</h2>
+  <p><strong>Mostly manual terminal work on one host.</strong> You log in to run commands you chose: restart a service, tail a log, check a disk. Take a general SSH client. The free single-server tier covers one server, persistent sessions, and the core terminal, if you want to test the idea first.</p>
+  <p><strong>Living inside agents on several servers.</strong> One refactoring on the Mac mini, another running tests on a Linux box, a third started from a train. That is Agentmux, and specifically Pro: multiple servers, custom agents, remote editing, file history, branch tools, batch actions.</p>
+  <p><strong>An agent in a browser tab or a cloud sandbox.</strong> The convenience is real, and the cost is that the files and the credentials no longer sit on your machine. Agentmux never hosts the work: it is a client, and the code and the agent stay on hardware you own — a Mac, a Linux box, a server. Renting one is defensible if you are at peace with your project and its keys living there.</p>
+  <p>Tailscale is the recommended way in: no port open to the public internet, machines addressed by MagicDNS names or 100.x addresses rather than LAN IPs.</p>
 </section>
 
 <section id="when-not-to-use">
-  <h2>When to use Termius instead of Agentmux</h2>
+  <h2>When Termius is the better buy</h2>
+  <p>If one of these is your main job, buy the general tool.</p>
   <ul>
     <li>You work on very unreliable mobile networks and need <strong>Mosh</strong> to hold the connection. Agentmux only speaks standard SSH and compensates with automatic tmux reattachment, which is not the same thing as Mosh.</li>
-    <li>You need <strong>remote or dynamic (SOCKS5) port forwarding</strong>. Agentmux only does local.</li>
-    <li>You want to sync a large host configuration across iOS, Android, Windows, macOS, and Linux, or share a host list with a team.</li>
-    <li>You're an SRE or sysadmin running operations across dozens or hundreds of servers.</li>
+    <li>You need <strong>remote or dynamic (SOCKS5) port forwarding</strong>. Agentmux only does local — a hard gap, not a preference.</li>
+    <li>You want to sync a large host configuration across iOS, Android, Windows, macOS, and Linux, or share a host list with a team. Agentmux is a mobile client: multiple servers and batch actions on Pro, nothing shared.</li>
+    <li>You're an SRE or sysadmin running operations across dozens or hundreds of servers. An inventory you script against beats a list you tap through.</li>
   </ul>
-  <p>Agentmux is built for one workflow: <strong>rejoining a running coding agent from your phone.</strong> It is not a general-purpose operations tool.</p>
+  <p>Agentmux is built for one workflow: <strong>rejoining a running coding agent from your phone.</strong> It is not a general-purpose operations tool, and a week of manual SSH will not earn that back.</p>
 </section>
+
+<p>Decided on Agentmux? The next problem is the machine at the other end: <a href="/guide/en/setup/">the setup wizard</a> asks three questions and hands back a checklist, and most of what goes wrong afterwards is already in <a href="/guide/en/troubleshooting/">troubleshooting</a>.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="Previous" href="/guide/en/what-is-tailscale/">Previous<span>Don&#x27;t open a port to the public internet</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="Next" href="/guide/en/setup/">Next<span>15 minutes to an agent that works all night</span></a></nav>

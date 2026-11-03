@@ -13,15 +13,15 @@ Source: https://agentmux.saxcave.cc/  |  App Store: https://apps.apple.com/app/i
 
 URL: https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 What a CLI agent really costs you is not typing time — it's standby time. The CLI, tmux, and SSH plus Tailscale each undo one layer of that, taking standby from a single laptop down to the phone in your pocket.
 
-If you already write code with a CLI agent — Claude Code, Codex, whichever — you have probably noticed something odd. It does the work. You are the one tied down.
+A CLI agent's real cost is standby, not typing: thirty seconds of input, then hours you can't leave. Run it on a machine that stays on, keep the session alive with tmux, and reattach over SSH and Tailscale. The agent keeps working while you sleep; standby becomes a phone and fifteen seconds.
 
-This article is about what that tie is, why it comes apart, and what your day looks like afterwards.
+You have probably noticed it: the agent does the work, and you are the one tied down. What follows is what that tie is, why it comes apart, and what your day looks like afterwards.
 
-## First, see where the time actually goes
+## Where does the time actually go?
 
 A round of work with a CLI agent almost always has the same rhythm:
 
@@ -43,7 +43,7 @@ In the default arrangement that standby has a physical location. The agent runs 
 
 Both options pay the same bill. The work is not what ties you down. **The location of that machine** is.
 
-## Three pieces, each undoing one tie
+## What three tools undo the tie?
 
 The tie is not one solid thing. It is three layers, and each has a standard tool, decades old, that takes it apart. On their own all three are unremarkable. Stacked, they are the whole trick:
 
@@ -65,7 +65,7 @@ Fifteen seconds changes what the activity is. You stop setting aside time to bab
 
 And once standby stops requiring you, the work moves into the hours you were never going to be there anyway. Hand it a refactor and go to dinner. Start a test-fixing session before bed, read the results over breakfast. That machine sat idle every night until now.
 
-## What about the other approaches?
+## What else reaches your agent when you're away?
 
 There is more than one road to reaching your own agent remotely. Line them up against the same criteria and the differences show — particularly the last column, which is where people find out they are stuck, usually too late.
 
@@ -86,13 +86,13 @@ Not sure where to start? Help me pick a track.
 
 URL: https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 An agent inside a GUI IDE is tied to a process that needs a screen. A CLI agent's interface is a byte stream you can reattach to. That's an architectural difference, not a matter of taste.
 
-You already have Cursor, or VS Code with an agent extension, and it works well. So why learn SSH and tmux to do the same job?
+An agent inside Cursor or VS Code lives inside a GUI process, so it needs a screen, a logged-in desktop, and someone sitting in front of it. A CLI agent's interface is a stream of characters, which tmux can store whole and reattach on any device. That is an architectural difference, not a matter of taste.
 
-Not because one is nicer to use. The difference is architectural, and it only shows up when you are away from your computer.
+You already have Cursor, or VS Code with an agent extension, and it works well. So why learn SSH and tmux to do the same job? The answer only shows up when you are away from your computer.
 
 ## The difference is architectural, not a preference
 
@@ -102,7 +102,7 @@ A CLI agent's interface is a byte stream. Characters in, characters out, nothing
 
 So a CLI agent works remotely for one reason: **a canvas of pixels cannot be serialised and reattached, and a matrix of characters can**. Nothing to do with being geekier, or with text people being better. It is a difference in capability.
 
-## The same scenario, run twice
+## What happens when you close the laptop mid-task?
 
 Say you hand the agent a large refactor at the end of the day. Twenty minutes of work at least, and you are leaving now.
 
@@ -125,7 +125,7 @@ You hit that gap daily. On the train, in a lift, anywhere you are down to one ba
 
 Even with bandwidth to spare you are still facing a desktop UI built for a mouse and a 1440p display, crammed onto a six-inch touchscreen. Hitting a menu item means zoom, aim, tap. Driving an interface by touch that was never designed for touch is its own punishment.
 
-## An honest ending
+## At your desk the IDE is often the better tool
 
 GUI IDEs are not bad. At your desk an IDE is often the better tool — go-to-definition, refactoring, a debugger, none of which works on a phone. The division is simpler than it looks. **An IDE suits "you are here and you are driving". A CLI agent plus remote access suits "it is running and you are checking in".** The people who get the most out of either use both: the IDE on the Mac during the day, Agentmux to rejoin the same agent on the same project after they leave.
 
@@ -135,45 +135,140 @@ Agentmux isn't here to replace your IDE. It's here to replace **sitting in a cha
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-cli/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-The CLI isn't hard for its own sake — it's where an agent gets full filesystem access and permission to execute. Browser agents can't see your files and IDE plugins usually can't run freely. This is a capability boundary, not a question of looks.
+Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.
 
-"CLI" sounds like a punishment. No mouse, no buttons, just a blinking cursor. Yet that is where the strongest coding agents of the last few years live — Claude Code, Codex, all of them. Not because the people who build them are purists. Because the terminal hands them something no other interface can: **full filesystem access and permission to execute**.
+A CLI agent is a coding agent you talk to in text. It runs in a terminal on a machine you own — a Mac, a Linux box, a server — and inherits your permissions: read every file in the project, run any command, read the result back. Agents live in terminals because no other interface grants all three at once.
 
-## What a terminal actually is
+"CLI" still reads like a punishment: no mouse, no buttons, one blinking cursor. Yet Claude Code, Codex, Gemini CLI and OpenCode all live there. Not because their makers are purists: the terminal grants what no other interface does — **full filesystem access and permission to execute**. The same grant is why it asks before running anything.
 
-Strip it down and a terminal does two things. It takes the text you type, and it prints text back. No layers, no buttons. Characters in, characters out.
+## What is a terminal, once you strip the buttons away?
 
-That is why an agent can drive one end to end. Every command it types is the same as one you would type. Every error it reads is the error you would have seen, word for word.
+Two programs are stacked here, and beginners blame the wrong one. The **terminal** is the display: it draws a grid of characters and forwards your keystrokes. The **shell** behind it — zsh, bash, fish — waits for a line of text, runs it, and prints what that program wrote.
+
+That thinness is why an agent can drive one end to end: every command it types is one you would have typed, every error it reads the one you would have seen.
+
+## Three things you read off a terminal screen
+
+Three things carry the meaning; the rest is noise.
+
+```
+yuki@mini ~/projects/auth (main)
+$ npm test
+
+ ✓ src/session/refresh.test.ts  (6 tests)
+ ✗ src/session/expire.test.ts > drops a session after expiry
+
+     Tests  1 failed | 41 passed (42)
+
+$ echo $?
+1
+```
+
+**The prompt** — that first line — says who, on which machine, in which directory, on which branch. It stops being decorative once the machine is not in front of you: after an SSH login it is how you tell your laptop from a server you forgot you opened.
+
+**Standard output**, or *stdout*, is the text the program wrote. A second stream, *stderr*, keeps the complaints apart from the real output.
+
+**The exit status.** Every command leaves one integer behind, handed over as `$?`. Zero means the program claims success. That is the line an agent reads — the `1`, not the words "1 failed": proof its loop is not closed.
 
 ## A capability boundary, not a question of looks
 
 A browser agent cannot see a single file on your computer. It lives in a tab. An IDE plugin sees the files you have open, but it is usually confined to suggesting — no touching git, no running the tests, and certainly no installing packages.
 
-A CLI agent holds the permissions you hold. It reads the whole repo, runs `git commit`, runs the test suite, installs dependencies. Claude Code, Codex, Gemini CLI, OpenCode: same category. Agents that can command the machine, not spectators in a sandbox who can see but not act.
+A CLI agent holds the permissions you hold: it reads the whole repo, runs `git commit`, runs the suite, installs dependencies. Three tiers come with that, and the risk climbs:
 
-No vendor designed this gap to please anyone. It is the permission set that comes with choosing the terminal as your interface.
+- **Read.** Every file in your home directory, `.ssh` keys included.
 
-## What that looks like in practice
+- **Write.** Under git, a bad write is a `git checkout` away. Outside a tracked project, nothing rolls it back.
 
-You say "fix this bug." The agent reads the relevant files, edits the code, runs `npm test`, sees one test still red, edits again, runs again. Until everything is green. You never clicked a button.
+- **Execute.** Anything you could type, including a migration, a force-push, an `rm -rf` pointed at the wrong path.
 
-The loop finishes on its own because the agent has the terminal's execution rights. Put it in a browser tab or an IDE plugin and it stalls at step two, waiting for you to come back and press the next thing.
+No vendor designed this gap to please anyone: it is the permission set that comes with the terminal, and every other interface withholds part of it.
 
-These agents can run on a different machine. First you have to be able to reach it.
+## Which commands can it run that a sandboxed agent cannot?
+
+"Execution rights," in lines on a screen:
+
+```
+npm test
+npx vitest run src/session/expire.test.ts
+
+git status --short
+git commit -m "fix: expire sessions on the dot"
+
+npm install date-fns@3
+npm run build
+
+psql "$DATABASE_URL" -f db/schema.sql
+curl -sf localhost:8000/health | jq .db
+```
+
+Where would those run inside a hosted sandbox? That `psql` connects to a database that exists only on your machine, using a URL from a `.env` file that was never uploaded. That `npm install` pulls an internal package from a private registry named in your `.npmrc`.
+
+A sandboxed agent can write you a patch but cannot observe what the patch did — and an agent that cannot see the result of an edit cannot finish the task.
+
+## The loop that closes without you pressing anything
+
+You say "fix this bug." A dozen of those lines follow, hands off the keyboard:
+
+- It greps for the failing message, reads three files, edits one.
+
+- It runs `npm test`, reads the exit status, sees `1`.
+
+- It narrows to one case, edits again, reruns the whole suite, gets `0`.
+
+- It commits, applies the migration locally, curls the endpoint that was broken.
+
+Nothing in that chain needed a click. In a browser tab or an IDE plugin it stalls at step two: it can produce the edit but cannot run the suite, so it waits for you to run it and report back. You have become the test runner — a permission problem, not a model-quality one.
+
+## Why is a byte stream worth more than a window?
+
+A terminal window is not where the program lives. The program is attached to a **pseudo-terminal** — a kernel object with two ends. Bytes go in one end and out the other; your window is whoever holds the far end right now. Three things follow.
+
+- **It can be saved.** `npm test > build.log` writes that text to a file, which a program can read a year later. A GUI's canvas is a picture, not a record.
+
+- **It can be chained.** `git ls-files | grep .env` feeds one program's output into another's input.
+
+- **It can be moved.** Nothing says the two ends must be in the same place. tmux parks the session on the server; your screen attaches, detaches, and attaches again from another device.
+
+That third one is the payload. **A byte stream can be redirected, stored, replayed, and reattached from somewhere else; a rendered window cannot.** Persistent sessions, SSH, the same agent on a phone: everything else in this guide follows from that property.
+
+## What does full access cost you?
+
+The permission that lets an agent migrate your database lets it delete one, which is why agents stop mid-task and ask: "Run this command?" That prompt is not timidity. An agent that ran everything without asking would be taking your `.ssh` directory and your production database on faith. It marks the line between tier two and tier three, drawn once the command is known.
+
+Two habits cover most of it. **Read the command line, not the summary:** "I'll clean up the build cache" is a description, and only the line under it has consequences. **Approve once per category:** asked forty times a day to run tests, let `npm test` through on a rule once.
+
+A prompt you were going to approve costs ten seconds. One allowed wrongly, against a live database, costs a day and a restore. That ratio is what AI Permission Review exists for: blacklist first, allowlist second, a model's judgement for the rest.
+
+## When a GUI is genuinely the better tool
+
+A terminal is not the right interface for everything you do to code. These are strictly worse in text:
+
+- **A live debugger.** A breakpoint, one step through the loop, a variable inspected at frame four.
+
+- **Anything visual.** Layout, spacing, a colour that is almost right. Describing a screenshot is a worse version of looking at one.
+
+- **Reading a large diff.** Two thousand lines side by side — why you review an agent's work in a GUI even when the agent wrote it.
+
+- **Still learning.** An editor underlining the exact token where you went wrong teaches faster than a stack trace.
+
+The split is not skill against laziness. It is **"you are here and driving"** against **"it is running and you are checking in"**. At a desk an IDE is often the better instrument; the best users keep both. That division of labour is its own article.
+
+The terminal gives an agent your machine, and its output is characters that can live anywhere — so the machine need not be the one you are sitting at. Getting there from elsewhere is SSH's job.
 
 ## An encrypted tunnel to another computer
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-ssh/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-SSH opens an encrypted channel between your device and another machine. You're connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.
+What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.
 
-An agent can run commands freely in a terminal, as the last article argued. It still needs a terminal to run in. That terminal does not have to be on your phone — it can be the Mac mini that never gets switched off at home, or the workstation at the office, as long as you can reach it.
+SSH is an encrypted channel between your device and another computer. You send keystrokes, that machine runs the commands, its output comes back, and no hop in between can read any of it. To run a coding agent remotely, SSH is how your phone reaches the machine the agent is actually running on.
 
-Reaching it is what SSH is for. It opens an encrypted tunnel between your device and another machine, carrying the text you type over and the text it prints back. None of the hops in between can read any of it.
+The last article made the case that an agent does its best work in a terminal, with full access to a filesystem and permission to execute. This one is about where that terminal lives. It does not have to be in your pocket: it can be the Mac mini at home that never gets switched off, or the workstation at the office, as long as you can reach it.
 
 ## Why "another machine" rather than a cloud service
 
@@ -181,37 +276,111 @@ Browser agents and cloud IDEs connect you to a machine too. The difference is wh
 
 SSH connects you to your own. Your files are there. Your API keys are there. Every package you installed, every environment variable you set. Nothing has to move onto someone else's server, and the changes stay where they were made — there is nothing to sync back afterwards.
 
+The trade-off runs the other way too. A cloud environment is the better answer if you own no machine that stays on, or if a whole team needs one identical starting point. Your machine has to be awake, reachable, and set up by you.
+
+## What you actually type: host, user, port
+
+Every SSH connection needs three things, and the command writes them on one line:
+
+```
+ssh -p 22 sax@mac-mini
+```
+
+| Part | What it names |
+| --- | --- |
+| Host | Which machine — a name such as mac-mini, or an address such as 100.101.102.103 |
+| User | Which account on it. You get its files, permissions, and shell, and nothing above |
+| Port | Which door. SSH's default is 22, so the field usually goes empty |
+
+Two of those three are where beginners get stuck. The host has to be an address your phone can route to — the next section. And the user has to exist on that machine: an agent runs as that user, touching exactly what that user can.
+
+## Why not your LAN address or your public IP?
+
+The first address you find is in your network settings: something like `192.168.1.23`. Try it from a laptop on the same Wi-Fi; that is what it is for. It is a private address handed out by your router, valid only inside your own network. A phone on mobile data has no route to it.
+
+The second is the public address your home connection shows the internet, with a port forwarded through the router to that one machine. That road works, and it is the one to avoid. Scanning bots try logins against every address in the world, around the clock, and an exposed port starts collecting attempts within a day. One mistake in the router settings opens the whole network instead of one machine.
+
+Use a third kind: a private address only your own devices can see. Tailscale gives each machine a MagicDNS name or a `100.x` address, and nothing else on the internet knows those exist. That goes in the host field, at home and away.
+
 ## Keys aren't the safer option — they're the easier one
 
 SSH takes passwords or keys, and the choice gets framed as security versus convenience. It is not a trade-off. Keys win on both.
 
-A private key stays on your device. A public key goes on the other machine. At login the two verify each other and you type nothing. Passwords can be brute-forced; the length of a key puts that out of reach. Set it up once and every connection afterwards runs the same way.
+A key pair is two small text files. The private one stays on the device that connects. The public one is computed from it and copied onto the machine you want to reach, into `authorized_keys` inside that account's `~/.ssh` directory. The arithmetic runs one way: the public half comes from the private half, not back the other way. `ssh-keygen` makes a pair in seconds.
+
+At login the two halves prove the match and you type nothing. A password has to survive repeated guessing; a key that long puts guessing out of reach. Set it up once and every connection afterwards works the same way.
+
+Why put a passphrase on the private key? Because a key is a file. Copy it off an unlocked laptop and someone else holds your key. A passphrase makes the file worthless without it — and unlike a login password it never crosses the network. It unlocks the key locally; what travels is a signed answer to a challenge.
+
+On a phone that gap widens. A typed password goes over the wire on every connection, handing anyone who can reach the port a fresh guess. A key answers a challenge instead, and the key never leaves the device. If the key is in place and still refused, the usual causes are few: wrong path, wrong user, wrong permissions.
+
+## Where does the app keep my key?
+
+Agentmux collects no personal data. Usage statistics are anonymous and optional; turning them off changes nothing about how it connects. Passwords, keys, and passphrases go into the operating system's hardware-backed credential storage. Your SSH traffic is never logged: the channel is encrypted between your device and your machine, and the app is not a relay.
+
+## Why the fingerprint prompt appears the first time
+
+The first time you reach a machine, before any password or key, the client prints a line about the host's authenticity, a short string of hex, and a yes or no. That string is the server's fingerprint: a readable summary of the host key the machine signs with. Nothing has gone wrong. SSH is authenticating the other direction.
+
+A password or key proves you to the machine. A host key proves the machine to you. Without that second half, anyone between your phone and your Mac mini could answer in its place and read what you send. On a first connection there is no stored copy to compare against, so the client asks you to accept it and remembers it from then on.
+
+It earns its keep later. Reconnect to a machine whose fingerprint has changed and the client refuses. Either you reinstalled the system, or something else is answering.
 
 ## You don't need to turn your computer into a server
 
 People hear "SSH" and picture racks in a data centre. You are flipping a switch. On a Mac it is System Settings → General → Sharing → Remote Login. On Linux it is usually starting a service called `sshd`, which most distributions already ship.
 
-Nothing else about the machine changes. It is still your everyday computer, with one more door you can knock on from outside.
+Nothing else about the machine changes. It is still your everyday computer, with one more door you can knock on from outside. If you would rather not remember the order of operations, the setup page asks three questions and hands back a checklist.
 
-Then you put your phone away, the tunnel drops, and the agent dies with it. Unless…
+## SSH is not a VPN or a remote desktop
+
+Three things SSH does not do:
+
+| Not this | What that would mean | What SSH does instead |
+| --- | --- | --- |
+| A VPN | Everything your phone sends routed into your home network | One channel to one port on one machine. Nothing else becomes reachable |
+| A mounted filesystem | Your remote disk appears as a folder | Bytes on request. A file browser fetches and pushes each file itself |
+| Screen sharing | Pictures of a desktop, steered with a finger | Text both ways: keystrokes out, printed output back |
+
+That last row is a real limit, not a flaw in this tool. Software that exists only as a window you click cannot be driven over SSH — the same boundary the previous article stood on: an agent that speaks text is an agent that fits down the tunnel.
+
+Then you put your phone away, the tunnel drops, and the agent dies with it — unless the session was never inside your connection to begin with. That is what tmux is for.
 
 ## Keep the agent running after you put your phone away
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tmux/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-When SSH drops, the processes you started get SIGHUP and die. tmux leaves the session living on the server so you're only ever attaching to it — and a dropped connection no longer interrupts the agent.
+What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.
+
+tmux is a terminal multiplexer: it keeps a terminal session running on the machine you connect to, rather than inside the connection you came through. For an AI coding agent, that is the difference between surviving and dying. SSH connections drop — a locked phone, a lost signal — and a dropped SSH normally kills the agent's shell.
 
 You put your phone away, the SSH tunnel drops, and the agent dies with it. That is mechanics, not bad luck.
 
-When the connection goes, the pseudo-terminal your login was using is closed. The kernel then sends **SIGHUP** — hangup — to every process attached to it. That means your shell, and the agent you started inside that shell. Unless a process has gone out of its way to handle that signal, the default is to terminate. Your agent gets no chance to say goodbye, and everything half-finished is thrown away.
+When the connection goes, the pseudo-terminal your login was using is closed. The kernel sends **SIGHUP** — hangup — to every process attached to it: your shell, and the agent inside it. Unless a process goes out of its way to handle that signal, the default is to terminate. Everything half-finished is thrown away. SSH was only the road the connection travelled on, and nobody meant it to hold the agent up.
 
 ## tmux lets the session live somewhere else
 
 tmux opens a session on the server. Your agent runs inside that session, not inside the SSH connection that keeps dropping.
 
-When your phone attaches, it is opening a window onto what that session looks like right now. When the connection drops, the window is what disappears. The session stays on the server, the agent in it carries on, and nothing was interrupted.
+The mechanism is a process. The first time you type `tmux`, it starts a background program — the tmux *server* — that stays alive under your user account. Sessions belong to it, and each one gets its pseudo-terminal from that process, not from `sshd`.
+
+So when the connection goes, `sshd` closes its own pseudo-terminal, and only your tmux client is attached to it. The client exits. The session does not notice.
+
+## What is a session, a window, a pane?
+
+Three nouns, used as one, and only the first keeps your agent alive.
+
+| Word | What it is | What it means for an agent |
+| --- | --- | --- |
+| session | A named place to work on that machine, holding its own processes | The thing that survives. Name it once |
+| window | A tab inside a session; most people give each agent one | Switch away and it keeps running |
+| pane | A split inside a window: agent left, tests right | Two things visible on a phone screen |
+
+A fourth word: a **client** is the terminal looking at a session. Zero clients is normal — a detached session, still running, nobody watching.
+
+Names matter. `tmux new -s work` can be found again a week later; an unnamed session is just a number.
 
 ## Detach and attach are the same as turning off a television
 
@@ -219,113 +388,284 @@ Switch a TV off and the picture in your living room is gone. The broadcast never
 
 tmux calls those two actions **detach** and **attach** — close the window, open it again. Neither touches what is running on the machine.
 
+The analogy hides one thing, in your favour. A television off learned nothing while off; a tmux session kept its output. Attach an hour later and you can read the hour you missed, scrollback and all.
+
+## Which commands do I actually type?
+
+Four to start with:
+
+```
+tmux new -s work          # make a session named work
+claude                    # start the agent inside it
+tmux ls                   # list sessions: work: 1 windows
+tmux attach -t work       # look at it again, from anywhere
+```
+
+**Detach is a key press, not a command.** Press Ctrl-b, let go, then press d. That first key is the *prefix*: tmux takes it, and the next key says what to do. Two more are worth learning:
+
+- `Ctrl-b d` — detach. The terminal becomes an ordinary shell again; the session runs on.
+
+- `Ctrl-b c` makes a new window; `Ctrl-b %` splits a window into panes.
+
+If the machine answers `tmux: command not found`, the fix is on the troubleshooting page.
+
 ## What this means for an agent
 
 You lose signal on the train. Again in a lift. Again switching Wi-Fi. Attach to the same tmux session each time and you can drop ten times without the agent being interrupted once. It does not know you ever disconnected. It was never living inside your connection.
 
-Knowing what tmux is for is enough. **Agentmux handles the installing** — once it connects, it works out whether your machine uses apt, dnf, pacman, or brew, and sets it up for you.
+The three phone-side cases people worry about are one event three times over:
 
-So the agent survives. One question left: how do you get in from outside?
+- **The phone locks.** The system suspends the app, the connection is torn down, nothing reaches the agent. It kept working.
+
+- **No signal for twenty minutes.** The connection dies quietly, the tmux client with it, the session left detached and untouched.
+
+- **The app is killed or swiped away.** A process on the phone is gone; the session was never inside it. Close a laptop's terminal window and tmux does the same.
+
+Detach is not pause. While you are gone the agent keeps reading files, editing them, and spending your quota — which is the point, and the reason to answer a waiting prompt before you walk off.
+
+## Can two devices watch the same session?
+
+Yes, and it is not a party trick. Several clients can attach to one session at once. Start the job from the phone in a queue, attach from the laptop at work, and you are looking at the same screen mid-sentence — not a copy.
+
+Keys from either device go to the same program, so one person types at a time. Attaching moves nothing: the session stays on the machine that made it, which is why phone and laptop agree. A session you started by hand in a laptop terminal is there for the app too.
+
+## How the app handles these sessions
+
+Agentmux is built on the same split. A disconnect on the phone's side is a detach, not a stop: reconnect and you are back at that session, further along. Type the commands above in its terminal and it is still the same session.
+
+Two chores it takes off your hands. If the machine has no tmux, the app installs it, working out whether your machine uses apt, yum, dnf, pacman, apk, or brew. If an agent sits where the shell can't see it, the app probes that PATH problem. Persistent sessions are in the free single-server tier, so nothing here is paid. The setup page turns it into a checklist.
+
+## What tmux does not do
+
+tmux answers one question — will this process outlive my connection — and leaves the rest alone.
+
+- **A reboot of the server ends every session.** They live in the tmux server's memory, so a power cut or an unattended upgrade ends the agent with them. What survives is what reached the disk: files changed, commits made, the branch you were left on. Git is the save file, not tmux.
+
+- **It does not undo a command the agent already ran.** A command that ran has run. tmux kept the output; it does not roll back the files.
+
+- **`tmux kill-session -t work` really does kill it.** So does quitting the last window, or the agent crashing. `tmux kill-server` takes every session with it. None of that asks first.
+
+- **It does not keep the machine awake.** A Mac mini that stays on is a different case from a laptop that sleeps when the lid shuts — and a machine that powers off loses the session.
+
+Two minutes proves the article. SSH in, run `tmux new -s work`, start an agent, press Ctrl-b then d, close the connection, and run `tmux attach -t work`: the same screen, further along, one question waiting.
+
+So the agent survives you putting the phone away. One problem left: getting in from outside without opening a port to the whole internet. Tailscale answers that.
 
 ## Don't open a port to the public internet
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tailscale/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.
+How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.
 
-So: how do you get in from outside? Not by exposing port 22 on your home machine to the internet. That is about the fastest way to get yourself into trouble.
+Install Tailscale on your computer and on your phone, sign both in to the same account, then connect with SSH to the machine's MagicDNS name or its `100.x` address. Tailscale builds an encrypted WireGuard mesh between your own devices, so no port on your router is open to the internet and no public address is involved.
 
-Scanning bots knock on port 22 across every IP in the world, around the clock. Put your address on the public internet and the first login attempts usually arrive before the next day.
+The agent survives a dropped connection, which only helps if there is somewhere safe to reconnect from. The obvious answer — expose port 22 to the internet — is the fastest way into trouble. Scanning bots knock on port 22 across every IP on earth, around the clock.
 
-There is a second problem, and it is more boring but harder to dodge. Your home connection almost certainly has a dynamic IP that changes every so often. Your machine is probably behind NAT, sharing one outward address with everything else on the same Wi-Fi. There was never a public address there to open.
+A second problem is duller and harder to dodge. Your home IP is dynamic, and the machine sits behind NAT, sharing one outward address with everything else at home. There was never a public address there to open.
 
 ## How painful the traditional fix is
 
-Before tools like this, opening that path meant going into the router yourself. Port forwarding, so some public port reaches the machine at home. A DDNS service to bind a hostname to whatever the IP happens to be today, or a static IP bought from your ISP. Then firewall rules, maintained by hand, to turn away everyone who is not you.
+The traditional fix meant the router itself: port forwarding so a public port reaches the machine, a DDNS service binding a hostname to today's IP or a static IP from your ISP, then firewall rules kept straight by hand.
 
-Every step has to be right. Get one wrong and you either cannot get in, or you have exposed your entire home network.
+Get one step wrong and you cannot get in, or you have exposed your whole home network. Get them all right and a door still faces the internet.
+
+## Why port forwarding plus a dynamic IP keeps breaking
+
+Four moving parts, each letting go at an inconvenient moment.
+
+- **The address changes.** Your ISP reassigns it, and a DDNS client needs a few minutes to catch up. For a window after every change, nothing you saved points at home — and if that update fails while you are away, the hostname belongs to somebody else.
+
+- **Sometimes the address was never yours.** Behind carrier-grade NAT your router holds an address inside the ISP's own network, so no forward can work.
+
+- **One forward is one more door** into a network shared with a smart TV and an old camera.
+
+- **It has to stay right forever.** A firmware update resets the rules; a new router means rebuilding them.
+
+The real cost is the failure mode: debugging a home router from a phone on mobile data, when what you want is unreachable.
 
 ## What Tailscale does
 
-Tailscale is a WireGuard mesh. Install it on each device, sign in to the same account, and the devices build an encrypted link straight between themselves. No public entry point. No port sitting on the internet waiting to be scanned.
+Tailscale is a WireGuard mesh. Install it on each device, sign in to the same account, and the devices build an encrypted link straight between themselves. No public entry point, no port waiting to be scanned.
 
-You do not connect using that shifting IP either. MagicDNS gives each device a name you can remember and handles the resolution. Devices behind NAT, an IP that changed overnight, you on home Wi-Fi one minute and mobile data the next — the traversal happens out of sight.
+Each device makes a WireGuard key pair; the private half never leaves it. The public halves are exchanged, and those are the tunnels. The account is bookkeeping: it introduces devices, tracks where each is reachable, and hands out private addresses the public internet does not route to.
+
+MagicDNS gives each device a name you can remember and resolves it for you. NAT, an address that changed overnight, home Wi-Fi then mobile data — all handled out of sight.
+
+## Why the mesh works when your phone has no address either
+
+Mobile data makes it worse. Your phone has no public address either: on 4G and 5G it sits behind carrier-grade NAT, sharing one outward address with many other subscribers. A door-knocking scheme fails at both ends.
+
+A mesh works the other way round: both sides only have to send packets *outward*. The phone sends one, the machine sends one, each learns where the other appears to be, and the two attempt a direct path through their NATs. WireGuard supplies the encryption; the mesh supplies the introductions. Where no direct path exists, traffic falls back to a relay, still encrypted end to end.
 
 ## The mental model: one more address, reachable only by you
 
-Your machine at home gains a private address. Only devices signed in to the same Tailscale account can see it or reach it. The scanning bots have no idea it exists, because it has never appeared on the public internet.
+Your machine gains a private address. Only devices signed in to the same Tailscale account can see it or reach it. The scanning bots do not know it exists, because it never appeared on the public internet.
 
-From here on your SSH connections go to that address, not to a port 22 that gets knocked on all day.
+From here on, SSH goes to that address, not to a port 22 that gets knocked on all day.
 
-That is all three pieces. Which leaves what you use on the phone to attach.
+## Which address do you actually type?
+
+Not the LAN one. The machine holds three addresses at once, and only two are worth saving.
+
+| Address | Where it works | Use it? |
+| --- | --- | --- |
+| LAN, e.g. 192.168.1.23 | That Wi-Fi only | No. On mobile data it routes nowhere useful |
+| The ISP's address for the router | Nothing under carrier-grade NAT | No. It changes, and it is the router's |
+| MagicDNS name, e.g. mac-mini.tail1234.ts.net | Any network, tunnel up at both ends | Yes. Save this one |
+| 100.x.y.z | Same as the name | Yes, when name resolution is the broken part |
+
+A LAN address describes a local network, not your machine. Save the name, and the entry survives the machine changing Wi-Fi, changing IP, or moving flats. `tailscale status` prints both.
+
+When SSH fails although both devices look connected, check the address first. Tailscale says connected, SSH still can't reach it covers that, including a signed-out machine.
+
+## What you give up by doing it this way
+
+Three costs, better known before you are on a train.
+
+**One more program on the machine.** It starts at boot, updates itself occasionally, and has its own bugs — one more thing to rule out before you blame SSH.
+
+**A control plane you need at the wrong moment.** Traffic goes device to device; introductions do not. A new laptop, a replaced phone, stale credentials — none are on your network until they sign in. Fail that sign-in while you are out and the machine is fine but unreachable. Keep another way in.
+
+**A phone that has to stay connected.** The tunnel is a VPN profile, and phones drop those: after a restart, when another VPN takes over, when you dismiss the prompt. Check it before debugging anything else. It carries only traffic to your own addresses.
+
+## A private network is not a reason to go back to passwords
+
+A machine nobody can reach from the internet still needs a lock on the door, for two reasons.
+
+The mesh's security is now your account's security, and any device that signs in is inside — one device you already trusted. A laptop left in a taxi is inside the network you built, where every machine is reachable and nothing else asks questions. A key means it still has to prove something.
+
+Then defence in depth. The mesh keeps strangers out; a key stops a stranger already in from going further. Two independent things have to fail before anyone reaches your project. A password is one guessable thing, and guessing is now easy. How keys do the proving covers the mechanics.
+
+## When you don't need this at all
+
+If the machine and the phone are on the same Wi-Fi and always will be, skip this. The LAN address works, nothing to install, nothing to sign in to — and you lose it the moment you walk outside.
+
+A hosted server changes the arithmetic. Its address does not move, there is no router of yours to configure, and a failed experiment cannot lock you out. The risk moves to port 22 facing the internet permanently. Some still run the mesh there, to move SSH behind a private address; others stay public and lean entirely on keys. What is not workable: a password on an exposed port.
+
+Or if you already reach it through a network someone else runs — a work VPN — take that path: two overlapping tunnels makes debugging worse, not the connection better. Not sure which case you are in? The setup page asks three questions and hands you a checklist.
+
+The way in is settled. What is left is the thing in your hand, and what it assumes about why you are there.
 
 ## Why not Termius or Blink
 
 URL: https://agentmux.saxcave.cc/guide/en/why-agentmux/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-General SSH apps assume you came to type commands. Agentmux assumes you came to rejoin an agent that's already running. Five capabilities verified against the source, plus an honest list of cases where Termius is the better tool.
+Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.
 
-A general SSH app assumes you came to type commands. Agentmux assumes you came to rejoin an agent that is already running. That assumption decides everything below.
+A general SSH client assumes you opened it to type commands. Agentmux assumes you opened it to rejoin an agent already running. Buy Termius or Blink if you need Mosh, SOCKS5 forwarding, or host sync across platforms. Buy Agentmux if your day is spent inside coding agents on several servers. The trade-off is breadth of operations against depth of reattachment.
 
-So this is not a comparison of how the interfaces look. It is a comparison of who thought harder about reattaching. All five capabilities were verified against the current source, not listed from memory.
+This is not a comparison of interfaces but of who thought harder about reattaching; every difference below follows from that. All five capabilities were checked against the current source.
+
+## What each kind of tool is built around
+
+A general SSH client is built around a host and a shell: hand you a working prompt, then stay out of the way. What happens after the prompt is yours.
+
+Agentmux is built around an agent already running somewhere; its job is to shorten the distance from your pocket to that process. Three consequences follow. The last two are where a good general client stops being a substitute — not because it is badly made, but because those behaviours were never its product.
+
+- **What you see first.** A host, or the sessions running on it.
+
+- **What a dropped connection costs.** A prompt you re-navigate, or the screen you left.
+
+- **What the app does while you are away.** Nothing, or a Lock Screen progress line and a sound at the end.
+
+## Head to head, capability by capability
+
+One row per capability. Where a competitor's behaviour cannot be checked from the outside, the cell says so.
+
+| Capability | General SSH client | Agentmux |
+| --- | --- | --- |
+| Back to a tmux session | tmux ls, then tmux attach -t | Sessions listed on connect; one tap reattaches |
+| After a drop | The prompt returns; finding the session is on you | A detach, not a death: you land on the screen you left |
+| A twenty-minute agent run | No model of a run to report from | Dynamic Island and Lock Screen progress; a sound at the end |
+| Prompt to allow a command | You are the reviewer, in the chair | AI Permission Review: blacklist, allowlist, AI judgement; suggests or presses the key (Pro) |
+| One line in a file | Vim over SSH, on a phone keyboard | Runestone editor, Ink Markdown preview, branch tools, Files app (Pro) |
+| Private keys | Not verifiable from outside | Keychain / Keystore, never the local database; iCloud sync carries server names only |
+| Automation from outside | Nothing to call: no session or agent model exposed | 6 App Intents over four entity types: Server, Project, TMUXSession, RecentSession |
+| Unreliable mobile networks | Mosh is a reason to buy this kind of app | Standard SSH plus tmux reattachment — not Mosh |
+| Port forwarding | Local, remote, dynamic SOCKS5 | Local only |
+| Host configuration at scale | Synced on iOS, Android, Windows, macOS, Linux; shared host lists | Multiple servers and batch actions (Pro); mobile only |
+
+Read the last three rows first: they are where Agentmux loses.
 
 ## tmux-first reconnection
 
 Connect to a server and Agentmux lists the tmux sessions already running on it. One tap reattaches. No `tmux ls`, no `tmux attach -t` to remember. Reconnect after a drop and you land on the same session, screen as you left it, without retyping anything.
 
+An agent's value is the context it accumulated: which files it read, why it chose this approach. Reattach to that screen and the context survives; open a fresh prompt and you explain the task to a process that has forgotten it. What tmux does is the load-bearing part of this design.
+
 ## Background survival and Live Activity
 
 Agents routinely run for tens of minutes. That waiting period is what this is built for. The Dynamic Island and Lock Screen show progress, and a sound can play when it finishes — so the app does not have to sit in the foreground while you stare at it.
 
-When the agent stops to ask whether to allow a command, AI Permission Review can take a look for you: dangerous commands are held for you, safe ones get a suggestion or a key press (Pro).
+An app built around a shell has nothing to report once closed: it holds no notion of a run. Here a named session on a named server is running, and the system reports on it. When it stops to ask whether to allow a command, AI Permission Review can look first: dangerous commands are held, safe ones get a suggestion or a key press (Pro).
 
 ## Runestone editor, Git tools, and Files app integration
 
-Changing one line of code does not mean wrestling vim on a phone. The built-in Runestone editor opens the file and edits it. For a README or notes an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools — switching branches, reading diffs — and Files app integration are Pro features, available during the 14-day trial.
+Changing one line of code does not mean wrestling vim on a phone. The built-in Runestone editor opens the file and edits it. For a README an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools — switching branches, reading diffs — and Files app integration are Pro features, available during the 14-day trial.
+
+The loop closes on one device: the agent changes files, you read the diff, you answer, it goes on. Every step that needs a second machine waits for a desk.
 
 ## Hardware-backed credential isolation
 
 Private keys live in native secure storage (the iOS Keychain / Android Keystore) and are never written to the local database. On iOS, if you turn on iCloud sync, CloudKit carries non-sensitive metadata such as server names. The keys stay put.
 
+Ask any tool the same question: which private keys leave this device if sync is on? A feature list will not answer it.
+
 ## Siri and Shortcuts automation
 
-`GetCurrentSessionContextIntent` lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal right then lands in iOS Shortcuts, ready to pipe into Notes, Messages, or anything you assemble yourself. `ContinueLastSessionIntent` is blunter: "continue working in Agentmux" reattaches to your last session.
+`GetCurrentSessionContextIntent` lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal lands in iOS Shortcuts, ready for Notes, Messages, or anything you build. `ContinueLastSessionIntent` is blunter: "continue working in Agentmux" reattaches to your last session.
 
-General SSH apps cannot do this, structurally. They have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 6 App Intents across four entity types — Server, Project, TMUXSession, RecentSession.
+General SSH apps cannot do this, structurally. They have no semantic model of sessions, projects, and agents to expose to the system; Agentmux implements 6 App Intents across four entity types — Server, Project, TMUXSession, RecentSession.
 
 ## Fixes you'll feel if you read CJK
 
-Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once. Selection alignment drifting on full-width characters. A link that wraps across lines breaking into several pieces when copied. A single slash inside CJK text read as a file path. You only fall into these once you have actually handled CJK text.
+Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once. Selection alignment drifting on full-width characters. A link that wraps across lines breaking into several pieces when copied. A single slash inside CJK text read as a file path. You only fall into those once you have handled CJK text.
 
-## When to use Termius instead of Agentmux
+## Which tool for which job
+
+**Mostly manual terminal work on one host.** You log in to run commands you chose: restart a service, tail a log, check a disk. Take a general SSH client. The free single-server tier covers one server, persistent sessions, and the core terminal, if you want to test the idea first.
+
+**Living inside agents on several servers.** One refactoring on the Mac mini, another running tests on a Linux box, a third started from a train. That is Agentmux, and specifically Pro: multiple servers, custom agents, remote editing, file history, branch tools, batch actions.
+
+**An agent in a browser tab or a cloud sandbox.** The convenience is real, and the cost is that the files and the credentials no longer sit on your machine. Agentmux never hosts the work: it is a client, and the code and the agent stay on hardware you own — a Mac, a Linux box, a server. Renting one is defensible if you are at peace with your project and its keys living there.
+
+Tailscale is the recommended way in: no port open to the public internet, machines addressed by MagicDNS names or 100.x addresses rather than LAN IPs.
+
+## When Termius is the better buy
+
+If one of these is your main job, buy the general tool.
 
 - You work on very unreliable mobile networks and need **Mosh** to hold the connection. Agentmux only speaks standard SSH and compensates with automatic tmux reattachment, which is not the same thing as Mosh.
 
-- You need **remote or dynamic (SOCKS5) port forwarding**. Agentmux only does local.
+- You need **remote or dynamic (SOCKS5) port forwarding**. Agentmux only does local — a hard gap, not a preference.
 
-- You want to sync a large host configuration across iOS, Android, Windows, macOS, and Linux, or share a host list with a team.
+- You want to sync a large host configuration across iOS, Android, Windows, macOS, and Linux, or share a host list with a team. Agentmux is a mobile client: multiple servers and batch actions on Pro, nothing shared.
 
-- You're an SRE or sysadmin running operations across dozens or hundreds of servers.
+- You're an SRE or sysadmin running operations across dozens or hundreds of servers. An inventory you script against beats a list you tap through.
 
-Agentmux is built for one workflow: **rejoining a running coding agent from your phone.** It is not a general-purpose operations tool.
+Agentmux is built for one workflow: **rejoining a running coding agent from your phone.** It is not a general-purpose operations tool, and a week of manual SSH will not earn that back.
+
+Decided on Agentmux? The next problem is the machine at the other end: the setup wizard asks three questions and hands back a checklist, and most of what goes wrong afterwards is already in troubleshooting.
 
 ## 15 minutes to an agent that works all night
 
 URL: https://agentmux.saxcave.cc/guide/en/setup/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.
 
-Answer three questions and I'll give you a checklist built for your setup. Every step tells you **why you're doing it**, **what the command is**, **how to confirm it worked**, and **where to look if it didn't**. (Is that machine running Windows? Read this first.)
+Setting up an agent that works all night takes about fifteen minutes: SSH into a machine you own, tmux so a dropped phone connection detaches instead of stopping the agent, and Tailscale so no port is open to the public internet. Answer three questions and the checklist is built for your machine, your agent, and where you connect from.
+
+Every step tells you **why you're doing it**, **what the command is**, **how to confirm it worked**, and **where to look if it didn't**. (Is that machine running Windows? Read this first.)
 
 The setup wizard needs JavaScript. You can also go straight to the troubleshooting page.
 
-## Using Windows?
+## Native Windows has no tmux — use WSL2
 
 You picked Windows, so the wizard did not hand you a checklist. Not because one is missing. This path is a different shape from the other three, and half a checklist would do you more harm than none.
 
@@ -357,15 +697,134 @@ None is a dead end. Knowing them in advance saves you assuming you broke somethi
 
 The Windows discussed here is always *the machine you connect to*. If your Windows PC is the computer you work at, and the agent runs somewhere else — a Mac mini at home, a Linux box at the office, a VPS — none of the above applies. The guide works for you as written. The machine you need to set up was never the one in front of you.
 
+## Run Claude Code on your iPhone or iPad
+
+URL: https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/
+Language: en
+Updated: 2026-11-04
+
+Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.
+
+Yes. Claude Code is a program that runs on a machine you own, never on the phone. Turn on Remote Login, reach that machine through Tailscale instead of an open port, start a tmux session with a name, and run `claude` inside it. Your iPhone carries a terminal; the agent keeps working after you lock the screen.
+
+The phrase sounds obvious and is not: "Claude Code on my phone" describes two machines doing different jobs. Separate them and what is left gets short — what survives a dropped connection, why the command is missing over SSH, whether an agent should answer its own permission prompts from a train.
+
+## Your phone carries a terminal. That is all.
+
+Claude Code is a program on the disk of some machine you own. A shell starts it. It reads your project through that filesystem, runs `git` and the tests, and writes its edits back into the same directory. The misconception: that some part of it now lives in your pocket.
+
+From the phone, two things cross the wire: keys go out, characters come back. Nothing of the agent is installed there, and no copy of your repository travels. The phone draws a picture of a session living on another computer.
+
+- **On the phone.** Keystrokes, display, your thumb. Lock the screen or swipe the app away and the display stops; that is the whole list.
+
+- **On the machine.** The process, the files being edited, the tests, everything already read and decided. None of it notices your screen going dark.
+
+Two consequences. The machine has to stay on and reachable — a laptop in a drawer with the lid shut runs nothing. The phone is the cheap half to replace.
+
+## Three things in place, in order
+
+Skip one and the arrangement fails. Do them in this sequence.
+
+- **A door into the machine.** On a Mac: System Settings → General → Sharing → **Remote Login**. On Linux, the SSH service, a daemon called `sshd`.
+
+- **A private network, not an open port.** Install Tailscale on the machine and the phone, sign both into one account, then connect to the MagicDNS name or the `100.x` address — never a LAN address like `192.168.1.23`, which means nothing on mobile data. Forwarding port 22 instead hands your machine to every scanning bot that finds it.
+
+- **A tmux session with a name, and the agent inside it.**
+
+```
+tmux new -s work     # name it
+claude               # inside it
+```
+
+From the phone, on another network:
+
+```
+tmux ls              # what exists
+tmux attach -t work  # open a window onto it
+```
+
+The name matters: `tmux attach` alone takes the most recent session. If tmux is missing, Agentmux installs it.
+
+## Why a plain SSH window kills the agent
+
+Skip tmux: you SSH in, run `claude`, then pocket the phone and lock the screen.
+
+The connection times out and closes. sshd closes the pseudo-terminal it was attached to, and the kernel sends **SIGHUP** to every process still on it — your shell, and Claude Code inside it. The default response is to terminate: the agent dies mid-edit, twenty minutes of reading gone.
+
+Keeping the app open fixes nothing: Wi-Fi switches networks, cellular loses signal, one Ctrl-C lands wrong. tmux moves the session onto the machine, so what disappears is the window, not the process (the mechanism). The rule: **the agent goes inside the session before the work starts — a running process cannot be moved into tmux afterwards.**
+
+## What working from a phone is actually like
+
+What fits a phone is one decision at a time — which is what an agent cycle is made of. It proposes a plan; you take it or send it back in a sentence. A two-line correction — "leave the serializer alone, the export job uses it" — and the phone goes away.
+
+The on-screen keyboard is the first real cost. Backticks, pipes, quotes, backslashes and the tilde all sit two layers deep, so `~/src/auth/session.ts` takes longer than it should and one wrong segment costs a round trip. Long prompts are harder to proofread than they look, so many people draft them in a notes app.
+
+A diff is where a phone runs out of room: forty changed lines across two files is three screens of scrolling on six inches, and a wrapped line hides whether a change sits at the end of a line or in the middle. Turn an iPad sideways and it fits without wrapping.
+
+One habit pays for itself: a second session for the noisy parts, so a test run cannot bury the agent's prompts.
+
+```
+tmux new -s tests -d    # -d starts it detached
+tmux attach -t tests    # watch it, then detach
+```
+
+## The agent stops and asks. From the phone, you answer.
+
+Claude Code does not run everything it thinks of. Before it runs a command — and, depending on configuration, before it edits a file — it stops and asks: here is the command, go ahead? That stop is where the job waits, and when only you can answer it, the waiting becomes the bottleneck.
+
+AI Permission Review answers those prompts and nothing else: it reads the prompt, then suggests or presses the key. A **blacklist** blocks dangerous commands and always hands a match to you. An **allowlist** passes commands you already trust, decided on the device. Anything matching neither goes to an **AI judgement**: allow, deny, or unsure, and the last two come back to you. The session's mode then decides whether it only **suggests** the key or **presses** it.
+
+Distance does not transfer the responsibility. A command approved on cellular runs on a machine holding your `.env`, your keys, and a repository you do not own alone — and the judgement sees the screen, not the reasoning that got the agent there. Start in the mode that only suggests, allowlist the commands you approve daily, and read the screen before pressing anything when signal and attention are poor. The blacklist exists because "approve everything" is a bad default: an `rm -rf` aimed at a home directory is no gentler because you said yes on a platform.
+
+## claude: command not found, but it runs in Terminal
+
+Same machine, same account, different answers: `claude` starts in Terminal and prints `claude: command not found` over SSH. It reads as the remote setup being broken, and it is the most common failure on the way in.
+
+The cause, in two sentences. An install through npm, or under a node version nvm pins, puts its directory on the PATH from a startup file that only an *interactive login* shell reads. A connection running one command, like `ssh host claude`, starts a non-interactive shell that never reads that file.
+
+The fix that always works is to stop relying on the PATH. In the Terminal where it runs:
+
+```
+which claude
+# /Users/you/.nvm/versions/node/v20.11.0/bin/claude
+```
+
+Use that absolute path, as the agent command or typed into the session. It breaks when nvm changes the node version; the durable fix, which depends on your shell and your distribution, is on the troubleshooting page.
+
+## Overnight works. A reboot does not.
+
+A session on a machine that stays awake runs all night — hand it a refactor at eleven, read the result with coffee. Three limits.
+
+**The machine has to stay awake.** A Mac that idles into sleep takes its network interface with it, and Remote Login makes no difference: nothing is left to answer. System Settings → Battery on a laptop, Energy Saver on a desktop: lengthen or switch off idle sleep, and turn on "Wake for network access" if offered.
+
+**A reboot takes the session with it.** tmux does not restore sessions after a restart, and updates restart without asking. Commit before you stop for the night, so the worst case costs an hour.
+
+**Waiting is not crashing.** Attach and look. A fresh shell prompt means the process exited: finished, or died, and the lines above say which. A prompt asking a question has waited one word from you for six hours at no cost. From a lock screen both look the same; only one needs you to act.
+
+## What belongs on the phone, what belongs at the desk
+
+| From the phone | At the desk |
+| --- | --- |
+| Answer a permission prompt, having read it | Review a diff you did not expect to see |
+| Choose between the two approaches it offered | Judge a change spanning several files |
+| Read one short diff, commit, push | Read a long diff, or a file you have never opened |
+| Watch a test run in a second session | Debug the failure those tests printed |
+| Hand it the next task before bed | Write a prompt that has to be exact |
+| Reattach after ten dropped connections | Fix the connection, or the PATH problem behind it |
+
+A machine that stays awake, a session with a name, a private way in. Missing one, the setup wizard asks three questions about your machine and hands back a checklist.
+
 ## AI Permission Review: who answers when your agent asks
 
 URL: https://agentmux.saxcave.cc/guide/en/permission-review/
 Language: en
-Updated: 2026-10-21
+Updated: 2026-11-04
 
 When an agent stops to ask "Run this?", AI Permission Review blocks dangerous commands with a blacklist, lets through the ones you trust with an allowlist, sends the rest to AI, and then suggests or presses the key depending on your mode. Every step, from trigger to decision.
 
-Halfway through a task, the agent stops to ask "Run this command?" — and you happen to be away from the screen. The whole job sits there waiting for you. AI Permission Review reads these permission prompts for you: dangerous ones are held for you, safe ones get a suggestion or a key press on your behalf.
+AI Permission Review is how Agentmux answers the permission prompt an agent raises on a screen you are not looking at. Each request is checked against a blacklist that blocks dangerous commands, an allowlist of commands you already trust, and then an AI judgement. Depending on the session's mode, it suggests the key or presses it for you.
+
+Halfway through a task, the agent stops to ask "Run this command?" — and you happen to be away from the screen. The whole job sits there waiting for you. That is the moment it is built for.
 
 It does exactly one thing: answer the agent's permission prompts, one key at a time. It never types commands for you and never touches anything beyond what's on screen.
 
@@ -383,7 +842,7 @@ It does exactly one thing: answer the agent's permission prompts, one key at a t
 
 - **Suggest, or press for you**Depends on the mode you picked
 
-## When it starts
+## It starts only when an agent stops and waits
 
 It only starts when an agent stops and waits for you. Agentmux already tracks the state of agents like Claude Code and Codex. When a prompt such as "Allow this?" or "Pick 1 or 2" appears, the session is marked as waiting, and the review begins at that moment.
 
@@ -399,13 +858,13 @@ Each prompt is judged once; it doesn't re-ask every few seconds. As soon as you 
 
 Sessions that aren't on screen are reviewed too. When you switch to another tab, it keeps watching in the background.
 
-## Step one: read the screen
+## It reads the current prompt, not the scrollback
 
 It first picks out the current prompt on screen: the command to run, the question itself, and the choices you can pick. Older content that has scrolled up doesn't count.
 
 Before anything goes to the AI, text that looks like a password, API key, or token is redacted. If redaction fails, the original text is not sent, and no key is pressed this time.
 
-## First check: the blacklist
+## The blacklist runs first, on your phone
 
 The blacklist is matched right on your phone and always runs first. A match is never sent to the AI; it's handed straight to you. The built-in rules cover the most dangerous kinds of operations:
 
@@ -423,7 +882,7 @@ The blacklist is matched right on your phone and always runs first. A match is n
 
 You can edit or remove these built-in rules, and add your own.
 
-## Second check: the allowlist
+## The allowlist decides without the AI
 
 Some commands you approve every day, like running tests or a build. Add them to the allowlist, and the next match is decided right on your phone — which key to press, with no wait for the AI and no API usage.
 
@@ -431,7 +890,7 @@ In Auto Reply mode, you can also turn on "Allow all commands in this session" fo
 
 If the allowlist matches but there's no clear, safe key to press on screen, the prompt is handed to you.
 
-## Third check: AI judgment
+## What does the AI actually decide?
 
 Only prompts that match neither list go to the AI. It sees the redacted screen and your **Main Intent** — what you want the agent to do this time, such as "fix the login page tests".
 
@@ -443,7 +902,7 @@ You can choose between two engines:
 
 The AI reaches one of three conclusions: allow, deny, or unsure. Only "allow" goes further, and the AI has to name exactly which option on screen to pick. It never picks a permanent choice such as "Always allow" or "Don't ask again".
 
-## Finally: suggest, or press for you
+## Advisor suggests, Auto Reply presses the key
 
 Each session has its own mode:
 
@@ -455,7 +914,7 @@ Either way, it looks at the screen again right before sending a key. If the prom
 
 After Auto Reply sends a key, it waits 3 seconds before it can send another in the same session.
 
-## When it always hands the prompt to you
+## When does it hand the prompt back to you?
 
 - A blacklist rule matched.
 
@@ -471,7 +930,7 @@ After Auto Reply sends a key, it waits 3 seconds before it can send another in t
 
 When that happens, Agentmux alerts you the usual way, exactly as it would with the review turned off.
 
-## Getting started
+## How do I turn it on?
 
 Before you start, have one of these ready:
 
@@ -489,7 +948,7 @@ Before you start, have one of these ready:
 
 Try Advisor for a few days first to see whether its suggestions match how you work, before turning on Auto Reply for specific sessions.
 
-## Where your data goes
+## What data leaves your device?
 
 Only redacted screen excerpts and your Main Intent are sent, to the AI service you set up, using your own API key. If "Use My Latest Prompt" is on, the prompts you send in that tab become the Main Intent and are sent too. Agentmux doesn't provide or relay any AI service. A record of each decision stays on your device only; you can review or clear it in the audit log. Model reasoning is never stored.
 
@@ -497,9 +956,11 @@ Only redacted screen excerpts and your Main Intent are sent, to the AI service y
 
 URL: https://agentmux.saxcave.cc/guide/en/troubleshooting/
 Language: en
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 Can't connect, key rejected, tmux not found, agent command missing — the eight things that most often go wrong when setting up remote development, and how to fix each one.
+
+Remote development over SSH, tmux and Tailscale fails in eight recognizable ways: `Operation timed out`, `Permission denied (publickey)`, a password that is correct but rejected, `tmux not found`, `claude: command not found`, Tailscale showing connected but unreachable, Remote Login on but the Mac refusing, and `sudo: a terminal is required`. Each one has a symptom, a cause, and a fix.
 
 Follow the previous articles and it works first time eight or nine times out of ten. When it does not, it is almost always one of these eight. Find your error message and jump to it. Nobody needs to read this page from the top.
 
@@ -817,15 +1278,15 @@ Configure it only if you understand that cost and are accepting it deliberately.
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。
 
-如果你已經在用 Claude Code、Codex 這類 CLI agent 寫 code，大概感覺過一件怪事：做事的是它，被綁住的是你。
+CLI agent 真正的成本是待命，不是打字：你講三十秒，幾個小時不能離開。跑在沒關過的機器上，tmux 讓 session 斷線照跑，SSH 加 Tailscale 從手機接回去，它在你睡覺時照樣工作。
 
-這篇講那個綁定是什麼、為什麼解得開，以及解開之後一天長什麼樣子。
+如果你已經在用 Claude Code 或 Codex，大概感覺過這件事：做事的是它，被綁住的是你。這篇講那個綁定是什麼、為什麼解得開，以及解開之後一天長什麼樣子。
 
-## 先看清楚時間花在哪裡
+## 時間到底花在哪裡？
 
 一輪 CLI agent 的工作，節奏幾乎都是同一個樣子：
 
@@ -847,7 +1308,7 @@ CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH
 
 兩個選擇都是在付同一筆代價。綁住你的不是工作，是**那台機器的所在位置**。
 
-## 三個零件，各解開一個綁定
+## 哪三個零件解開這個綁定？
 
 這個綁定不是一整塊，是三層疊起來的。每一層都有一個存在幾十年的標準工具可以拆掉。三樣東西單獨看都很普通，疊在一起才是重點：
 
@@ -869,7 +1330,7 @@ CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH
 
 而且待命一旦不需要你在場，工作就能移到你本來就不在場的時間。丟一個重構任務給它，去吃晚餐。睡前開一個測試修復的 session，早上起來看結果。你那台機器本來每個晚上都閒著。
 
-## 那其他做法呢？
+## 還有其他做法能接到自己的 agent 嗎？
 
 要遠端碰到自己的 agent，路不只一條。放在同一組標準底下比，差別很清楚——尤其最後一欄，多數人是事後才發現自己卡在那裡。
 
@@ -892,13 +1353,13 @@ CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。
 
-你已經有 Cursor 了，或者 VS Code 加一個 agent 外掛，用得也很順。那為什麼要為了同一件事去學 SSH 和 tmux？
+Cursor 或 VS Code 裡的 agent 長在 GUI 程式上，需要螢幕、已登入的桌面，和坐在前面的人。CLI agent 的介面是字元流，tmux 能把字元整塊存下來，畫到任何螢幕。這是架構差異，不是偏好。
 
-跟哪個比較好用無關。這是架構上的差別，而且只在你不在電腦前面的時候才現形。
+你已經有 Cursor，或者 VS Code 加一個 agent 外掛，用得也很順，那為什麼要為了同一件事去學 SSH 和 tmux？答案跟哪個比較好用無關，只在你不在電腦前面的時候才現形。
 
 ## 差別在架構，不在偏好
 
@@ -910,7 +1371,7 @@ tmux 做得到這件事，是因為一個 80×24 的字元矩陣可以完整存�
 
 所以 CLI agent 能遠端只有一個理由：**一塊像素畫布沒辦法被序列化後重新接上，一個字元矩陣可以**。跟比較 geek 無關，跟用文字介面的人比較厲害也無關。這是能力上的差別。
 
-## 同一個情境，跑兩次
+## 合上筆電之後會發生什麼事？
 
 假設你在下班前丟了一個大重構給 agent。估計要跑二十分鐘以上，而你現在要走了。
 
@@ -933,7 +1394,7 @@ Cursor 現在也有雲端背景 agent，闔上筆電一樣繼續跑。但它續�
 
 就算頻寬完全不是問題，你面對的還是一個為滑鼠和 1440p 螢幕設計的桌面 UI，被塞進六吋觸控螢幕。點一個選單要先放大、再對準、再點。用觸控操作一個沒有為觸控設計過的介面，這件事本身就是折磨。
 
-## 誠實地收尾
+## 坐在桌前，IDE 常常更好用
 
 GUI IDE 不差。坐在桌前寫 code，IDE 常常更好用——跳轉定義、重構、除錯器，這些手機上都做不到。分工比想像中單純：**IDE 適合「你在場、你主導」，CLI agent 加遠端適合「它在跑、你抽查」。**效率高的人兩個都用。白天在 Mac 上用 IDE，出門用 Agentmux 接回同一個專案的同一個 agent。
 
@@ -943,167 +1404,489 @@ Agentmux 不是要取代你的 IDE。它取代的是**坐在椅子上等**。
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。
+為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。
 
-「CLI」聽起來像一種懲罰。沒有滑鼠、沒有按鈕，只有一個閃爍的游標。但這幾年最強的 coding agent 全都住在這裡——Claude Code、Codex，一個不缺。
+CLI agent 是一個用文字跟你對話的 coding agent。它跑在你自己擁有的機器上——一台 Mac、一台 Linux 主機、一台伺服器——並沿用你在那台機器上的權限：讀整個專案的檔案、執行任何指令、把結果讀回來。coding agent 住在終端機裡，是因為沒有任何別的介面能同時給你這三樣。
 
-不是因為做 CLI 的人比較硬派。是終端機給了它們別的介面給不了的東西：**完整的檔案系統存取與執行權限**。
+「CLI」三個字聽起來像懲罰：沒有滑鼠、沒有按鈕、只有一個閃爍的游標。可是 Claude Code、Codex、Gemini CLI、OpenCode 全都住在這裡。不是因為做它們的人硬派，是因為終端機給了 agent 別的介面給不了的東西——**完整的檔案系統存取與執行權限**。同一份權限，也是它跑任何指令之前會先問你的原因。
 
-## 終端機到底是什麼
+## 終端機其實是兩層程式疊在一起
 
-終端機只做兩件事：接受你打進去的文字，把結果印回螢幕。沒有圖層，沒有按鈕。進去是字元，出來也是字元。
+這裡有兩個程式疊在一起，而初學者通常怪錯那一個。**終端機**是負責顯示的那一層：它畫出一格一格的字，把你的按鍵轉出去，就這樣。後面的 **shell**——zsh、bash、fish——等一行文字，跑它，然後把那個程式寫出來的東西印在螢幕上。
 
-簡單到這個程度，agent 才操作得動。它打的每一行指令跟你手動打的沒有兩樣。它看到的錯誤訊息，跟你會看到的一字不差。
+就是因為薄到這個程度，agent 才操作得動。它打的每一行指令跟你手動打的沒有兩樣；它讀到的錯誤訊息，跟你會看到的一字不差。
+
+## 螢幕上真正有意義的三樣東西
+
+這份指南後面每一篇都假設你會看螢幕。真正承載意義的是三樣，其餘都是雜訊。
+
+```
+yuki@mini ~/projects/auth (main)
+$ npm test
+
+ ✓ src/session/refresh.test.ts  (6 tests)
+ ✗ src/session/expire.test.ts > drops a session after expiry
+
+     Tests  1 failed | 41 passed (42)
+
+$ echo $?
+1
+```
+
+**提示字元**——第一行——告訴你：誰、在哪台機器、哪個目錄、哪個分支。當機器不在你眼前的時候，它就不再是裝飾。SSH 登入之後，它就是讓你分清楚這是自己的筆電、還是你忘記自己登進去過的那台伺服器。
+
+**標準輸出**，也就是 *stdout*，是那個程式寫出來的文字。第二條串流 *stderr* 分開存放，讓真正的輸出不會跟抱怨混在一起。
+
+**exit status。**每一條跑完的指令都留下一個整數，shell 用 `$?` 交給你。0 表示那個程式宣稱自己成功。agent 讀的就是這一行：它讀的不是「1 failed」那些字，而是那個 `1`——它的迴圈還沒有閉上的訊號。
 
 ## 能力邊界，不是介面美醜
 
-網頁版的 agent 看不到你電腦裡的任何一個檔案，它只活在瀏覽器分頁裡。IDE 外掛看得到你打開的檔案，但通常卡在「建議」層級——改不動 git，跑不動測試，更別說裝套件。
+網頁版的 agent 看不到你電腦裡的任何一個檔案，它只活在瀏覽器分頁裡。IDE 外掛看得到你打開的檔案，但通常卡在「建議」這一層——動不了 git，跑不了測試，更別說裝套件。
 
-CLI agent 拿的是你自己打指令時那組權限。能讀整個 repo，能下 `git commit`，能跑測試套件，能裝依賴。Claude Code、Codex、Gemini CLI、OpenCode 全是這一類：能對整台機器下指令的 agent，不是困在沙盒裡看得到動不了的旁觀者。
+CLI agent 拿的是你自己那組權限：讀整個 repo、下 `git commit`、跑測試套件、裝依賴。三層權力跟著一起來，風險則是一路往上陡增：
 
-這個差別沒有廠商刻意設計來討好誰。選了終端機當介面，這組權限就跟著來了。
+- **讀。**你家目錄下的每一個檔案，包含 `.ssh` 裡的金鑰。
 
-## 一個具體的樣子
+- **寫。**在 git 管著的專案裡，改壞了，一個 `git checkout` 就救得回來；專案之外，沒有東西會幫你 rollback。
 
-你丟一句「把這個 bug 修好」。agent 讀相關檔案、改 code、下 `npm test`、看到某個測試還是紅的、回頭再改、再跑一次。直到全部綠燈。全程你沒點過一個按鈕。
+- **執行。**任何你打得出來的指令，包括 migration、force push、還有指向錯誤路徑的 `rm -rf`。
 
-這條迴圈跑得完，靠的就是終端機那組執行權限。換成網頁版或 IDE 外掛，它在第二步就卡住，等你回來按下一步。
+這個差距沒有哪個廠商刻意設計來討好誰。選了終端機當介面，這組權限就跟著來了；其他每一個介面都扣掉了其中一部分，也因此做不了同樣的事。
 
-這些 agent 可以跑在別台機器上。前提是你連得過去。
+## 哪些指令是沙箱裡的 agent 跑不了的？
+
+「執行權限」講抽象了很容易點頭。把它們還原成螢幕上的行：
+
+```
+npm test
+npx vitest run src/session/expire.test.ts
+
+git status --short
+git commit -m "fix: expire sessions on the dot"
+
+npm install date-fns@3
+npm run build
+
+psql "$DATABASE_URL" -f db/schema.sql
+curl -sf localhost:8000/health | jq .db
+```
+
+這些指令搬到別人的雲端沙箱裡，要跑在哪裡？那行 `psql` 連的是一個只存在於你機器上的資料庫，用的 URL 來自一個從來沒上傳過的 `.env`。那行 `npm install` 從你 `.npmrc` 裡寫明的私有 registry 拉內部套件。那些 `git` 動作發生在一個帶著你的 remote、你的 hook、你的 signing key 的 clone 上。
+
+沙箱裡的 agent 可以寫一份 patch 給你，但看不見那份 patch 造成了什麼結果。看不見一次 edit 的結果，就沒辦法把工作做完。
+
+## 不需要你按任何鍵就會閉上的迴圈
+
+你丟一句「把這個 bug 修好」。接著是十幾行同樣的指令，而你的手不在鍵盤上：
+
+- 它 grep 那條錯誤訊息，讀三個檔案，改一個。
+
+- 它跑 `npm test`，讀 exit status，看到 `1`。
+
+- 它縮到那一個失敗的案例，再改一次，整組重跑，拿到 `0`。
+
+- 它 commit，在本地把 migration 套上去，再 curl 那個壞掉的 endpoint。
+
+整條鏈上沒有一個按鈕需要按。換成瀏覽器分頁或 IDE 外掛，它在第二步就停下：它能產出那個 edit，卻跑不了測試，於是等你去跑、再回報結果。你變成了測試執行器——這是權限的問題，不是模型強弱的問題。
+
+## 為什麼位元組串比一個視窗值錢？
+
+你螢幕上那個終端機視窗，不是程式居住的地方。程式接在一個 **pseudo-terminal** 上：kernel 裡一個有兩端的物件。一端寫進去位元組，另一端就出來位元組，而你的視窗只是「目前握著另一端的那個人」。三個結果跟著來：
+
+- **可以存下來。**`npm test > build.log` 把那串文字寫進檔案，一年後另一個程式還能讀它。GUI 的畫布是一張圖，而圖不是紀錄。
+
+- **可以接起來。**`git ls-files | grep .env` 把一個程式的輸出餵給下一個當輸入。
+
+- **可以搬走。**那個定義裡沒有任何一句話說兩端必須在同一個地方。tmux 把 session 擱在伺服器上，你的螢幕接上去、detach、再從另一台裝置接回來。
+
+第三點才是本篇的重點。**位元組串可以被轉向、存起來、重播、從別的地方接回去；渲染好的視窗不行。**持久的 session、SSH、在手機上接回同一個 agent——這份指南後面每一件事，都是這個性質的推論。
+
+## 完整存取要付什麼代價？
+
+讓 agent 能對資料庫做 migration 的那個權限，也能把那個資料庫刪掉。它們知道這一點，所以會在工作做到一半時停下來問：「要跑這條指令嗎？」那個 prompt 不是膽小。一個什麼都不問就直接跑的 agent，等於把你的 `.ssh` 目錄和正式環境的資料庫押在你身上。prompt 畫的是第二層與第三層之間那條線，而且只可能在那個時刻畫：指令已經已知、還沒有執行。
+
+兩個習慣擋掉大部分風險。**讀指令本身，不要讀摘要：**「我要清掉 build cache」是一段描述，只有它下面那一行才有後果。**同一類只批一次：**一天四十次要你准許跑測試，就用一條規則讓 `npm test` 直接通過。
+
+不對稱才是重點。一個你本來就會准許的 prompt 花你十秒。一個你誤准許、跑在正式資料庫上的指令，花你一天和一次 restore。這個比例就是 AI 自動權限審查存在的理由：先 blacklist，再 allowlist，剩下的交給模型判斷。
+
+## 什麼時候 GUI 確實是比較好的選擇
+
+終端機不是對 code 做任何事的正確介面。下面這些事情，用文字做就是比較差：
+
+- **即時 debugger。**設 breakpoint、單步走過那個迴圈、在第四個 frame 看一個變數。
+
+- **任何視覺的東西。**排版、間距、一個差一點點的顏色。叫 agent 描述一張截圖，比你自己看一眼差得多。
+
+- **讀一個大的 diff。**兩千行並排著看——所以就算 code 是 agent 寫的，你多半會在 GUI 裡 review 它的工作。
+
+- **還在學的時候。**編輯器在你寫錯的那個 token 下面畫一條線，比一整牆的 stack trace 教得快。
+
+分界不是熟練與懶惰之爭，是「你在場、你在開」對比「它在跑、你去看」。坐在桌前，IDE 常常是比較好的那個工具；而把 CLI agent 用到最好的人，兩邊都留著。那條分工線怎麼畫，自己就是一篇。
+
+終端機把 agent 放進你自己的機器，而它的輸出是可以住在任何地方的字元——所以那台機器不必是你正坐著的這一台。從別的地方連過去，是 SSH 的工作。
 
 ## 一條通往另一台電腦的加密隧道
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。
+SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。
 
-上一篇說到，agent 能在終端機裡自由執行指令。前提是得有一個終端機讓它跑。
+SSH 是你手上這台裝置和另一台電腦之間的加密通道：你打的字送過去，那台機器執行，印出來的文字帶回來，中間經過的每一個節點都看不懂內容。要在手機上跑 agent，SSH 就是手機連到「agent 實際運行的那台機器」的那條路。
 
-那個終端機不必在你手機上。它可以在家裡那台一直開著的 Mac mini、公司那台工作站，只要你連得過去。SSH 做的就是這件事：在你的裝置和另一台機器之間開一條加密隧道，把你打的文字送過去，把對方印出來的文字帶回來。中間經過的每一個節點都看不懂內容。
+上一篇的結論是：agent 在終端機裡最能做事，因為它能讀整個檔案系統，也能真的執行指令。這篇要問的是那個終端機在哪裡。它不必在你口袋裡。它可以是家裡那台從來沒關過的 Mac mini，也可以是公司那台工作站，只要你連得過去。
 
 ## 為什麼是「另一台機器」，不是雲端服務
 
-網頁版 agent 或雲端 IDE 也能讓你連上一台機器。差別在那台機器是誰的。
+網頁版 agent 和雲端 IDE 也會讓你連上一台機器。差別在那台機器是誰的。
 
-SSH 連的是你自己的。你的檔案在那裡，你的 API key 在那裡，你裝過的套件、設好的環境變數，全部都在。不用把任何東西搬到別人的伺服器上。agent 動的每一個位元組都還是你那份，改完留在原地，事後不必再同步回來。
+SSH 連的是你自己的。你的檔案在那裡，你的 API key 在那裡，你裝過的套件、設好的環境變數，全部都在。不用把任何東西搬到別人的伺服器上，改動也留在原地，事後不必再同步回來。
+
+反過來也有取捨。如果你沒有任何一台一直開著的機器，或是一整組人需要完全相同的起點，雲端環境確實是更好的答案。用自己的機器的代價是：它要開著、要連得到，而且設定由你負責。
+
+## 你其實要打的是三樣東西：host、user、port
+
+每一次 SSH 連線都需要三個東西，指令把它們寫在同一行：
+
+```
+ssh -p 22 sax@mac-mini
+```
+
+| 部分 | 指的是什麼 |
+| --- | --- |
+| Host | 要連哪台機器——像 mac-mini 這種名稱，或 100.101.102.103 這種位址 |
+| User | 那台機器上的哪個帳號。你拿到的是那個帳號的檔案、權限和 shell，不會再多 |
+| Port | 那台機器上的哪扇門。SSH 預設是 22，所以這個欄位通常留空 |
+
+卡住的人多數卡在第一項和第三項。host 必須是手機真的路由得到的位址，下一節就在講這件事。user 則必須真的存在於那台機器上：agent 以那個帳號執行，能碰到的東西剛好就是那個帳號能碰到的。
+
+## 為什麼不用 LAN 位址，也不用公網 IP？
+
+你第一個找到的位址在網路設定裡，長得像 `192.168.1.23`。先從同一個 Wi-Fi 下的筆電試它，那正是它的用途。但它是路由器發出的私網位址，只在你自己的網路裡有效。手機切換到行動數據就沒有路能走到它，別人的網路也沒有。
+
+第二種是家裡網路對外呈現的公網位址，再在路由器上做 port forwarding，把那個 port 指到這台機器。這條路走得通，也是要避開的那一條。掃段的機器人對全世界的位址全天候嘗試登入，對外開放的 port 一天之內就會開始累積登入嘗試。而路由器的設定只要有一處錯了，暴露出去的是整個網路，不是單一一台機器。
+
+該用的是第三種位址：只有你自己的裝置看得見的私網位址。Tailscale 會給每台機器一個 MagicDNS 名稱或一個 `100.x` 位址，公網上沒有別人知道它們存在。host 欄位就填這個，在家和在外都一樣。
 
 ## 金鑰不是比較安全的那個選項，是比較省事的那個
 
-SSH 收密碼，也收金鑰。這常被講成安全跟方便之間的取捨。它不是取捨，金鑰兩邊都贏。
+SSH 收密碼，也收金鑰。這件事常被講成安全跟方便之間的取捨。它不是取捨，金鑰兩邊都贏。
 
-一把私鑰留在你的裝置上，一把公鑰放到對方機器。登入時兩把鑰匙互相驗證，你一個字都不用打。密碼可以被暴力猜測；金鑰的長度讓那條路實務上走不通。設定一次，之後每次連線都走同一套流程。
+一對金鑰就是兩個小小的文字檔。私鑰留在會發起連線的那台裝置上。公鑰由私鑰算出來，複製到你要連的那台機器，放進那個帳號 `~/.ssh` 裡的 `authorized_keys`。這條運算只有單向：公鑰從私鑰推得出來，反過來做不到。`ssh-keygen` 幾秒就產生一對，剩下的都是複製貼上。
+
+登入時兩半互相證明配對，你一個字都不用打。密碼必須扛得住別人反覆猜測；金鑰的長度讓那條路實務上走不通。設定一次，之後每一次連線都走同一套流程。
+
+那為什麼要替私鑰加 pass-phrase（金鑰口令）？因為金鑰就是一個檔案。從一台沒鎖的筆電上把它複製走，別人就握有了你的金鑰。加了口令，那個檔案沒有它就毫無價值——而且它跟帳號密碼不同，它絕不過網路，只在本地解鎖金鑰。真正傳出去的是對一個挑戰簽好的短答案。
+
+在手機上，這個差距更大。打出來的密碼每一次連線都要走過線路，任何摸得到那個 port 的人都多一次猜的機會。金鑰則是回答一個挑戰，金鑰本身從不離開你的裝置。如果金鑰都設好了還是被擋在外面，常見原因沒幾個：路徑錯、帳號錯、檔案權限錯。
+
+## App 把我的密碼和金鑰放在哪裡？
+
+Agentmux 不收集任何個人資料。使用統計是匿名、而且可選的，關掉它不會改變連線的方式。密碼、金鑰和口令都放進作業系統的硬體級憑證儲存，不是一般檔案。你的 SSH 流量不會被記錄下來：那條通道在你的裝置和你的機器之間加密，App 不是站在中間的中繼站。
+
+## 第一次連線，為什麼要問你信不信這組指紋
+
+連一台沒連過的機器時，在密碼或金鑰之前，你會先看到一行說無法確認主機真實性的話、一串十六進位字元，以及一個 yes 或 no。那串字元是伺服器的指紋：那台機器簽名用的 host key 濃縮成可讀的摘要。沒有出錯。這是 SSH 在驗證另一個方向。
+
+密碼或金鑰證明的是「你對那台機器來說是誰」；host key 證明的是「那台機器對你來說是誰」。少了後半，任何站在你手機與家裡 Mac mini 之間都可以冒充它回答，把你送出去的每一個字讀走。第一次連線時你沒有存檔可以比對，所以 client 請你先相信它，並從那之後記住這個值。
+
+它的價值在之後才顯現。重新連一台指紋變過的機器，client 會直接拒絕，而且說得很清楚。要嘛是你重裝過系統，要嘛是有別的東西在代替它回答。
 
 ## 不需要把電腦「架成伺服器」
 
 很多人聽到 SSH 就想到機房和機櫃。你要做的只是打開一個開關。Mac 上是「系統設定 → 一般 → 共享 → 遠端登入」，Linux 上通常是啟動一個叫 `sshd` 的服務，多數發行版預設就裝好了。
 
-開關打開之後，那台機器什麼都沒變。還是你平常那台電腦，只是多了一扇你可以從外面敲的門。
+開關打開之後，那台機器什麼都沒變。還是你平常那台電腦，只是多了一扇你可以從外面敲的門。不想記住順序的話，設定頁會問你三個問題，然後回給你一張照你的情況排好的清單。
 
-然後你關掉手機，隧道斷了，agent 跟著死。除非……
+## SSH 不是 VPN，也不是遠端桌面
+
+SSH 不做下面三件事：
+
+| 它不是 | 那樣的話會是什麼 | SSH 實際做什麼 |
+| --- | --- | --- |
+| VPN | 你手機送出的所有流量都走進家裡網路 | 一條通道連到一台機器上的一個 port，其他東西不會因此變得可達 |
+| 掛載的檔案系統 | 遠端的磁碟變成你能直接打開的資料夾 | 按要求的位元組。檔案瀏覽器得自己一個檔案一個檔案抓和傳 |
+| 遠端桌面 | 你看到整個桌面畫面，用手指去點 | 雙向都是文字：送出去的是按鍵，回來的是印出的文字 |
+
+最後一列是真的限制，不是這個工具的缺點。只以「一個可以點的視窗」存在的軟體，沒辦法用 SSH 操作。那也正是上一篇站著的那條界線：會用文字對話的 agent，才塞得進這條隧道。
+
+然後你關掉手機，隧道斷了，agent 跟著死——除非那個 session 本來就不在你的連線裡面。那正是 tmux 負責的事。
 
 ## 讓 agent 在你關掉手機後繼續跑
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-SSH 斷線會讓你啟動的 process 收到 SIGHUP 而死。tmux 把 session 留在伺服器上，你只是接上去看，斷線也不會中斷 agent。
+tmux 是什麼，為什麼 SSH 斷線時你的 AI coding agent 不會死：session 留在伺服器上，手機只是接上去看。
 
-你關掉手機，SSH 隧道斷掉，agent 跟著死。這不是巧合，是機制。
+tmux 是一個 terminal multiplexer：它讓 terminal session 繼續跑在你連進去的那台機器上，而不是跑在你那條連線裡面。對 AI coding agent 來說，這就是活下來與死掉的分別——SSH 連線一定會斷（手機鎖定、沒訊號），而斷掉的 SSH 通常會順手殺掉 agent 所在的 shell。
 
-連線一斷，你這次登入用的虛擬終端機被關閉。作業系統核心會對接在這個終端機上的所有 process 送出 **SIGHUP**（hangup）——包含你的 shell，也包含你直接在這個 shell 裡跑起來的 agent。沒有特別處理過這個訊號的 process，預設反應就是終止。於是 agent 沒機會道別，跟著那條斷掉的連線一起消失，跑到一半的東西全部作廢。
+你把手機收起來，SSH 隧道斷了，agent 跟著死。這不是運氣問題，是機制。
+
+連線一斷，你這次登入所用的虛擬終端機（pseudo-terminal）被關閉。核心會對接在這個終端機上的每一個 process 送出 **SIGHUP**（hangup）：你的 shell，也包括 shell 裡面的 agent。process 除非自己特別處理過這個訊號，否則預設反應就是終止。跑到一半的東西全部作廢，agent 連再見都來不及說。SSH 本來只是連線行走的那條路，沒人打算讓它負責讓 agent 活下去。
 
 ## tmux 讓 session 活在別的地方
 
-tmux 在伺服器上開一個獨立的 session。你的 agent 跑在那裡面，不是跑在你那條會斷的 SSH 連線裡。
+tmux 在伺服器上開一個 session。你的 agent 跑在那個 session 裡面，不是跑在你那條一直會斷的 SSH 連線裡。
 
-手機接上去，只是打開一扇窗看這個 session 現在長什麼樣。斷線的時候，消失的是那扇窗。session 和裡面的 agent 繼續留在伺服器上跑，什麼都沒被中斷。
+背後的機制是一個 process。你第一次輸入 `tmux`，它會在你的帳號底下啟動一個背景程式——tmux *server*——之後你開的每個 session 都屬於它，每個 session 的虛擬終端機也由它分配，而不是由 `sshd` 分配。你的 agent 依賴的那個終端機，從此刻起屬於一個沒有理由跟著手機一起死掉的東西。
+
+所以下次連線斷掉時，`sshd` 關閉的是它自己的虛擬終端機，而掛在那上面的只有你的 tmux client。client 結束了，session 毫無感覺。
+
+## session、window、pane 各是什麼？
+
+三個詞經常用來指同一件事，但只有第一個能保住你的 agent。把詞分清楚，tmux 一半的困惑就消失了。
+
+| 詞 | 是什麼 | 對 agent 的意義 |
+| --- | --- | --- |
+| session | 機器上一個有名字的工作場所，自備 process，由那台機器上的 tmux server 保管 | 斷線之後活下來的就是它。名字取一次，可以用好幾個月 |
+| window | 一個 session 裡面的一個分頁，多數人一個 agent 開一個 | 你切走，它在後面照樣跑 |
+| pane | 一個 window 裡面的分割：左邊 agent，右邊測試或 git status | 手機那一小塊螢幕同時看到兩件事 |
+
+第四個詞也有用：**client** 就是當下正在看著這個 session 的終端機。一個 session 可以沒有 client、有一個、或有好幾個。零個不是錯誤，那就是 detach 狀態——照樣在跑，只是沒人看。
+
+名字因此很重要。`tmux new -s work` 建立一個名叫 work 的 session，一週後還找得回來；不取名，tmux 就幫你編號，而「接回第 2 號」過了三天就沒有意義。
 
 ## detach、attach，跟關掉電視是同一件事
 
-把電視關掉，客廳裡的畫面沒了。節目沒停，一直在播。你回來打開，接的是同一個頻道，從它現在播到的地方看下去。
+把電視關掉，客廳裡的畫面沒了。節目沒停，一直在播。你回來打開，接的是同一個頻道，從它播到的地方看下去。
 
 tmux 把這兩個動作叫 **detach** 和 **attach**——關窗、開窗。兩個都碰不到機器上真正在跑的東西。
 
+這個比喻藏了一件事，而且對你有利。電視關著的時候什麼都沒學到；tmux 的 session 把輸出留了下來。一個小時後接回來，畫面就是它現在的樣子，而那一個小時裡它印出來的東西還在 scrollback 上面，可以往上翻。
+
+## 實際上要下哪些指令？
+
+先記四個：
+
+```
+tmux new -s work          # 建立一個名叫 work 的 session
+claude                    # 在裡面啟動 agent
+tmux ls                   # 列出 session：work: 1 windows
+tmux attach -t work       # 從任何終端機再接上去看它
+```
+
+**detach 不是指令，是按鍵。**按 Ctrl-b，放手，再按 d。前面那個鍵是 *prefix*：tmux 收下它，下一個鍵才決定要做什麼。另外兩個第一週就該學起來：
+
+- `Ctrl-b d`——detach。你的終端機變回一般的 shell，session 繼續跑。
+
+- `Ctrl-b c` 開一個新的 window；`Ctrl-b %` 把一個 window 分割成兩個 pane。
+
+如果機器回你 `tmux: command not found`，解法在疑難排解那一頁。
+
 ## 對 agent 來說，這代表什麼
 
-你在捷運上訊號斷了。進電梯斷了。切 Wi-Fi 又斷了。只要接的是同一個 tmux session，斷線十次，agent 一次都沒中斷。它不知道你斷過線，因為它從頭到尾就沒活在你那條連線裡。
+你在捷運上訊號斷了。進電梯斷了。切 Wi-Fi 又斷了。每次都接回同一個 tmux session，斷線十次，agent 一次都沒有被打斷。它不知道你斷過線，因為它從頭到尾就沒活在你那條連線裡。
 
-你只需要知道 tmux 是幹嘛的就夠了。**裝的部分 Agentmux 會處理**——它連上去之後會自己看你的機器是 apt、dnf、pacman 還是 brew，然後幫你裝好。
+手機那三個最令人擔心的情況，其實是同一件事發生了三次：
 
-現在 agent 不會死了。剩最後一個問題：從外面怎麼連進去？
+- **手機鎖定。**系統把 app 暫停，連線被拆掉，什麼訊號都送不到 agent。它繼續做事。
+
+- **二十分鐘沒訊號。**連線在背景安靜地死掉，tmux client 跟著死，session 被 detach，毫髮無傷。
+
+- **app 被系統殺掉，或被你往上一劃。**沒了的是手機上的一個 process，session 從來就不在裡面。在筆電上直接關掉終端機視窗，也是同樣的結果。
+
+detach 不是暫停。你不在的時候，agent 繼續讀檔案、改檔案、花掉你的用量。這是整件事的重點，也是走開之前先回它一句、或者先把它停掉的理由。
+
+## 兩台裝置可以同時看同一個 session 嗎？
+
+可以，而且這不是魔術。多個 client 可以同時接在同一個 session 上。排隊時從手機開工，到公司從筆電接回同一個，你看到的是同一個畫面跑到一半——不是副本，也不是快照。
+
+兩邊按的鍵都送進同一個程式，所以實際上一次只有一個人打字。接上去不會搬遷任何東西：session 留在建立它的那台機器上，這就是手機和筆電看到的內容一致的原因。反向也成立——你在筆電的終端機裡手動開的 session，app 一樣接得上，因為兩邊問的是同一台機器上的同一個 tmux server。
+
+## App 怎麼處理這些 session
+
+Agentmux 就建在同一個區分上。手機這一側的斷線是 detach，不是停止：重新連線，你回到同一個 session，而它已經跑得更遠了。你在它的終端機裡手動輸入上面那些指令，結果仍然一致，因為那是同一台機器上的同一個 session。
+
+兩件跑腿它幫你做掉。機器上沒有 tmux 時，app 會自己裝，並判斷你的機器用的是 apt、yum、dnf、pacman、apk 還是 brew。agent 裝在 shell 看不到的地方時，app 會去查那個 PATH 問題，不會只丟給你一個毫無訊息的畫面。persistent session 屬於免費的 single-server 方案，所以這篇文章裡沒有東西是付費功能。設定頁把整件事變成一份檢查清單。
+
+## tmux 不做的事
+
+tmux 只回答一個問題——這個 process 會不會活得比我的連線久——其他一概不管。
+
+- **伺服器重開，所有 session 一起結束。**它們存在 tmux server 的記憶體裡，一次斷電、一次自動更新，都會把 agent 一併帶走。活下來的是已經寫進磁碟的東西：改過的檔案、做出的 commit、你停在哪個 branch。負責存檔的是 git，不是 tmux。
+
+- **它不會還原 agent 已經跑過的指令。**跑過的指令就是跑過了。tmux 留住的是輸出，檔案本身不會被倒回去。
+
+- **`tmux kill-session -t work` 真的會殺掉它。**關掉最後一個 window，或是 agent 自己崩潰，結果一樣。`tmux kill-server` 則把所有 session 一併帶走，而且這些都不會先問你。
+
+- **它不會讓機器保持醒著。**一整晚開著的 Mac mini，跟關上蓋子就睡的筆電是兩回事；筆電睡著時 agent 只是被凍結，但真的斷電，session 就和第一點說的一樣消失。
+
+兩分鐘就能驗證整篇。SSH 進去，跑 `tmux new -s work`，啟動 agent，按 Ctrl-b 再按 d，把連線完全關掉，然後跑 `tmux attach -t work`：同一個畫面，已經跑得更遠，有一個問題在等你回。
+
+agent 現在能在你收起手機之後活下來。剩下一個問題：怎麼從外面連進去，又不想在路由器上對公網開任何一個 port。Tailscale 回答的是這個。
 
 ## 不要對公網開 port
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-把 SSH 開到公網會被掃描機器人 24 小時輪番敲門。Tailscale 用 WireGuard mesh 讓裝置之間直接建立加密連線，你家的機器多了一個只有你連得到的私有位址。
+不開 port 也能從手機連回自己的電腦：WireGuard mesh、MagicDNS 名稱或 100.x 位址，還有什麼時候根本不需要它。
 
-從外面怎麼連進去？答案不是把家裡那台機器的 22 port 開到公網。那大概是最快把自己搞出事的做法。
+在家裡的電腦和手上的手機都安裝 Tailscale，兩邊登入同一個帳號，接著 SSH 連線時填那台機器的 MagicDNS 名稱或 `100.x` 開頭的位址。Tailscale 在你自己的裝置之間建立 WireGuard 加密 mesh，所以不需要對公網開放任何 port，也不需要一個固定的公網位址。
 
-網路上有大量掃描機器人 24 小時對全世界的 IP 敲 22 port。你的位址只要出現在公網上，第一波嘗試登入通常等不到隔天。
+上一篇讓 agent 在你關掉手機之後還能繼續跑，前提是有一條安全的門可以連回去。最直覺的做法是把家裡的 22 port 開到公網，那也最快出事：掃描機器人對全世界的位址全天候敲 22 port，嘗試登入通常不到一天就開始堆積。
 
-還有第二個問題，比較無聊但更難繞。你家多半是動態 IP，隔一段時間就換一個號碼。你的機器十之八九躲在 NAT 後面，跟同一個 Wi-Fi 下的其他裝置共用 ISP 給的那一個對外位址。本來就沒有一個公網位址可以開。
+第二個問題比較無聊，也更難繞。你家的對外 IP 幾乎一定是動態的，每隔一陣子換號碼；機器又躲在 NAT 後面，跟家裡其他裝置共用那一個對外位址。那裡本來就沒有公網位址可以開。
 
 ## 傳統解法有多痛
 
-在這類工具出現之前，要打通這條路得自己進路由器動手。先設 port forwarding，把公網某個 port 轉給家裡那台機器。再裝一個 DDNS 服務，把主機名稱綁到當下的 IP，不然 IP 一換就連不到；或者付錢跟 ISP 要固定 IP。port 開出去之後，還得自己維護防火牆規則，擋掉除了你以外找上門的人。
+在這類工具出現之前，這條路得自己進路由器打通：port forwarding 把公網某個 port 轉給家裡那台機器，DDNS 把主機名稱綁到當下那個 IP，或是向 ISP 買固定 IP，然後自己維護防火牆規則，擋掉除了你以外的每一個人。
 
-每一步都要設對。錯一步，不是連不進去，就是把整個家用網路暴露在外。
+每一步都要對。錯一步，要嘛連不進去，要嘛整個家用網路暴露在外。就算全部設定正確，那扇門也永遠開在公網上，你在不在家都一樣。
+
+## port forwarding 加動態 IP 為什麼一直出包
+
+四個會動的零件，每一個都在最不方便的時候鬆掉。
+
+- **位址會變。**ISP 重新連線就換號碼，DDNS 客戶端要幾分鐘才跟上。每次變更之後都有一段時間，你存好的名稱哪台機器都不指向；那次更新若在你出門時失敗，名稱從此指向別人的網路。
+
+- **那個位址常常不是你的。**躲在 carrier-grade NAT 背後時，路由器只拿到 ISP 內部網路的一個位址，port forwarding 完全無效——對外那個位址屬於 ISP，好幾個使用者共用。
+
+- **多一個轉發就多一扇門**，通往一個住著智慧電視和舊攝影機的網路。
+
+- **它必須永遠正確。**韌體更新會清掉規則，換路由器要全部重建，機器換了區網位址，轉發就指向空處。
+
+真正的代價是出錯那一刻：你在月台上，用行動網路的手機檢查家裡的路由器，而你要連的東西剛好連不到。
 
 ## Tailscale 做了什麼
 
-Tailscale 是一個 WireGuard mesh。每台裝置裝好、登入同一個帳號，裝置之間就直接建立一條加密連線。不經過任何對外入口，沒有一個 port 被開在公網上等人掃描。
+Tailscale 是一個 WireGuard mesh。每台裝置裝好、登入同一個帳號，裝置之間就直接建立一條加密連線。沒有一個對外入口，也沒有一個 port 被開在公網上等人掃描。
 
-你也不必記那組看不懂又會變的 IP。MagicDNS 給每台裝置一個好記的名字，解析 Tailscale 自己處理。裝置在 NAT 後面、IP 昨晚換掉、你人在家裡 Wi-Fi 或外面行動網路——這些穿透細節都在背後處理完了。
+每台裝置產生一對 WireGuard 金鑰，私鑰那半從不離開裝置。公鑰互相交換，換完那些就是隧道。帳號那一側是帳務：介紹裝置彼此認識、記下每台現在在哪裡可達、發出公網不會路由到的私有位址。
+
+MagicDNS 給每台裝置一個你記得起來的名稱，解析由它自己處理，你不必碰那個會變的 IP。裝置在 NAT 後面、位址昨晚換過、從家裡的 Wi-Fi 切到行動網路——這些穿透都在背後完成。
+
+## 手機也在 NAT 後面，mesh 為什麼還行
+
+行動網路讓問題更糟。手機也沒有可以被連進來的公網位址：4G、5G 之下它躲在 carrier-grade NAT 後面，跟大量用戶共用同一個對外位址。依賴「從外面敲門」的做法，兩端同時失效。
+
+mesh 是反過來的設計：兩邊都只需要往外送封包。手機送一顆，機器送一顆，雙方各自知道對方看起來在哪裡，再試著穿過自己的 NAT 開出一條直連。加密由 WireGuard 負責，介紹由 mesh 負責。找不到直連時，流量改走中繼站而不是失敗，仍然是端到端加密。
 
 ## 心智模型：多一個只有你連得到的位址
 
-你家那台機器多了一個私有位址。只有登入同一個 Tailscale 帳號的裝置看得到、連得到。掃描機器人不知道它存在，因為它從來沒出現在公網上。
+你家那台機器多了一個私有位址。只有登入同一個 Tailscale 帳號的裝置看得到它、連得到它。掃描機器人不知道它存在，因為它從沒出現在公網上，而你的路由器什麼都沒改。
 
-接下來的 SSH 連線就接這個位址，不是那個天天被人敲門的 22 port。
+從這裡開始，你的 SSH 連線打的就是這個位址，不是那個天天被人敲門的 22 port。
 
-三個零件都到齊了。剩下的問題是手機上用哪個 app 接。
+## 你該打的到底是哪個位址？
+
+不是區網那個。一台機器在這個架構下同時有三個位址，只有兩個值得存進 app。
+
+| 位址 | 在哪裡連得到 | 要不要用 |
+| --- | --- | --- |
+| 區網位址，例如 192.168.1.23 | 只有那個 Wi-Fi 底下 | 不要。手機切到行動網路就沒有路走到它 |
+| ISP 給路由器的位址 | carrier-grade NAT 之下哪裡都不通 | 不要。它會變，而且是路由器的 |
+| MagicDNS 名稱，例如 mac-mini.tail1234.ts.net | 任何網路，兩端隧道都開著就行 | 要。存這個 |
+| 100.x.y.z | 跟名稱一樣 | 留一組，名稱解析壞掉時用 |
+
+區網位址說明的是那個區域網路，不是你的機器。存名稱，機器換 Wi-Fi、換 IP、甚至搬家都還連得到。機器上打 `tailscale status`，兩個值都會列出來。
+
+兩台裝置看起來都連線了、SSH 還是失敗，先查你填的那個位址。Tailscale 顯示已連線，SSH 仍連不到那一節有完整的順序，包括機器被登出、需要重新登入的情況。
+
+## 這樣做你要付出什麼
+
+三筆成本，在擠進捷運之前先知道，比事後知道好。
+
+**機器上多一個常跑的程式。**它隨開機啟動、偶爾自己更新、也有自己的 bug。機器連不到的時候，要多排除一個嫌疑犯，才輪到 SSH。
+
+**有一個你在錯誤時刻需要它的控制面。**流量是裝置對裝置，介紹不是。新的筆電、剛換掉的手機、過期的憑證——在它們重新登入之前都不在你的網路裡。這個登入若在你出門時失敗，機器好好的，你就是連不到。留一條不依賴那台裝置的入路。
+
+**手機必須維持連線。**手機上那條隧道是一個 VPN profile，手機會把它關掉：重開機之後、別的 VPN 接手之後、你點掉那個要求的時候。除錯之前先確認它還開著。它只承載連往你自己那些位址的流量。
+
+## 私人網路不是改回密碼的理由
+
+看起來合理的推論是：一台公網連不到的機器，門上不必上鎖。它需要，而且有兩個理由。
+
+mesh 的安全現在就是帳號的安全，任何能登入的裝置都在裡面——一台你已經信任的裝置。忘在計程車上的筆電不是掉在公開 Wi-Fi 上，它在你自己蓋的網路裡面，每台機器都可達，也沒有別的東西攔它。金鑰讓那台裝置還是要證明自己是誰，才走得到下一步。
+
+再來是縱深。mesh 讓外面的人進不來，金鑰讓已經在裡面的陌生人走不下去。兩件獨立的事情都失效，才會有人開始動你的專案。密碼只是一個可以被猜的東西，而猜的難度剛剛又變低了。金鑰怎麼完成證明在 SSH 那一篇。
+
+## 什麼時候根本不需要 Tailscale
+
+如果機器和手機永遠在同一個 Wi-Fi 底下，跳過這一步。區網位址能用，不用裝東西，不用登入帳號——條件是你一走出家門就全部失效，而這篇處理的正是出門之後。
+
+自己租的伺服器是另一種算法。位址不會動，沒有路由器要設定，玩壞了也不會把自己鎖在外面。風險換成 22 port 永久面對公網。有人還是會在上面跑 mesh，把 SSH 收到私有位址後面；有人維持公開，完全依賴金鑰。兩種都可行，不可行的是暴露在公網的 port 用密碼。
+
+如果你已經透過別人管理的網路碰到那台機器——公司的 VPN——就走那條路。兩條重疊的隧道不會讓你更連得到，只會讓除錯更難。不確定自己屬於哪一種？設定頁問三個問題，然後回給你一張排好的清單。
+
+進來的路解決了。剩下的是你手上那台裝置，以及它假設你為什麼來了。
 
 ## 為什麼不是 Termius / Blink
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
-通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。
+Agentmux 對 Termius、Blink：五個功能差異、什麼時候買 Termius 比較對，以及各種工作該選哪一個。
 
-通用 SSH app 假設你要打指令。Agentmux 假設你要接回一個正在跑的 agent。這個假設決定了底下每一個功能。
+通用 SSH app 假設你打開它是為了打指令；Agentmux 假設你要接回一個正在跑的 agent。要 Mosh、SOCKS5 轉發、跨平台同步主機清單，買 Termius 或 Blink；一天到晚在好幾台伺服器的 agent 之間來回接回，買 Agentmux。前者贏在廣度，後者贏在接回。
 
-所以這不是在比介面好不好看，是在比誰把「接回」這件事想得更透徹。以下五個功能全部對照現行程式碼查證過，不是隨口列的清單。
+這篇不比介面好不好看，比的是誰把「接回」這件事想得更透徹。底下每個差別都從那個假設推出來，五個功能全部對照現行程式碼查證過。
+
+## 兩種工具的核心假設不同
+
+通用 SSH client 圍繞「一台主機加一個 shell」：給你一個能用的 prompt，然後別擋路。prompt 之後發生什麼是你的事——你開哪個 process、它活不活得下來、明天怎麼找回來。
+
+Agentmux 圍繞「一個已經在跑的 agent」：它的任務是縮短你口袋到那個 process 的距離。三個結論往下走，後兩個是通用 client 補不起來的地方，不是它做得不好，而是這些行為從來不是它的產品。
+
+- **你先看到什麼。**一台主機，或這台主機上跑著的 session。
+
+- **斷線的代價。**一個要自己重新走的 prompt，或你離開時的那個畫面。
+
+- **你不在的時候 app 做什麼。**什麼都不做，或鎖定畫面上的進度與跑完的一聲提示音。
+
+## 一個功能一個功能對照
+
+每一列一個功能。競爭對手從外部查證不到的行為，格子裡就寫查證不到，不猜。
+
+| 功能 | 通用 SSH client | Agentmux |
+| --- | --- | --- |
+| 接回 tmux session | 自己打 tmux ls，再打 tmux attach -t | 連上就把伺服器上現有的 session 列出來，點一下接回 |
+| 斷線之後 | prompt 回來了，session 要自己找 | detach 不是死亡：你落在離開時那個畫面 |
+| 跑幾十分鐘的 agent | 沒有「一次執行」這層概念可以回報進度 | 動態島與鎖定畫面顯示進度，跑完可以播提示音 |
+| 問你要不要准一個指令 | 你人必須坐在螢幕前 | AI 自動權限審查：黑名單擋掉、白名單放過、其他交給 AI 判斷，再給你建議或幫你按（Pro） |
+| 改檔案裡的一行 | 用手機鍵盤跟 vim 肉搏 | Runestone 編輯器、Ink 雙欄 Markdown 預覽、分支工具、Files app 整合（Pro） |
+| 私鑰放在哪裡 | 從外部查證不到 | Keychain／Keystore，絕不寫進本機資料庫；iCloud 同步只帶走伺服器名稱 |
+| 從 app 外面自動化 | 沒有 session、專案、agent 模型可以暴露給系統 | 6 個 App Intent，涵蓋四種 entity：Server、Project、TMUXSession、RecentSession |
+| 不穩的行動網路 | Mosh 是買這類 app 的理由 | 只有標準 SSH 加 tmux 自動重連，不等於 Mosh |
+| Port forwarding | Local、Remote、Dynamic（SOCKS5）都有 | 只有 Local |
+| 大規模的主機設定 | 五個平台同步，主機清單能共享給團隊 | 多伺服器與批次操作（Pro），平台只有手機與平板 |
+
+先看最後三列。那是 Agentmux 輸的地方，也決定了這一頁哪些讀者該去買別的。
 
 ## tmux-first 自動重連
 
 連上伺服器，Agentmux 直接把上面現有的 tmux session 列出來，點一下就接回去。不用記 `tmux ls`、`tmux attach -t`。斷線之後重連，接的還是同一個 session，畫面接著上次的樣子，不必手動重打 attach。
 
+agent 的價值在它累積下來的脈絡：讀過哪些檔案、為什麼選這個做法。接回同一個畫面，脈絡還在眼前；開一個新的 prompt，你得對一個已經忘光的 process 把任務重講一次。tmux 對你是新東西的話，tmux 到底在做什麼是這整套設計承重的那一塊。
+
 ## 背景維持 + Live Activity
 
 agent 常常一跑就是幾十分鐘。這段等待期就是為它設計的：動態島和鎖定畫面顯示目前進度，跑完可以播提示音。App 不必開在最前面讓你死盯著等結果。
 
-Agent 停下來問你要不要允許某個指令時，AI 自動權限審查可以先替你看一眼：危險的擋下來，安全的給建議或直接幫你按（Pro）。
+圍繞 shell 的 app 關掉之後沒有東西可回報，因為它腦中沒有「還在跑」這回事。這裡是某個伺服器上某個有名字的 session 在跑，系統層的面板替它回報。等它停下來問你要不要允許某個指令時，AI 自動權限審查可以先替你看一眼：危險的擋下來，安全的給建議或直接幫你按（Pro）。
 
 ## Runestone 編輯器 + Git 工具 + Files app 整合
 
-臨時改一行程式碼，不必在手機上跟 vim 肉搏。內建 Runestone 編輯器直接開檔案改。想看 README 或 agent 產出的說明文件，Ink 提供雙欄 Markdown 預覽，原始碼和排版同時看得到。Git 工具（切換分支、查 diff）和 Files app 整合是 Pro 功能，14 天試用期間也用得到。
+臨時改一行程式碼，不必在手機上跟 vim 肉搏。內建 Runestone 編輯器直接開檔案改。想看 agent 產出的 README，Ink 提供雙欄 Markdown 預覽，原始碼和排版同時看得到。Git 工具（切換分支、查 diff）和 Files app 整合是 Pro 功能，14 天試用期間也用得到。
+
+重點是整個循環在一台裝置上閉合：agent 改檔案，你看 diff，你回答，它繼續跑。每多一步要換到另一台機器，任務就多等一次你回到書桌前。
 
 ## 憑證硬體隔離（Keychain / Keystore）
 
 私鑰在 iOS 只存在系統的 Keychain 裡，在 Android 則透過 Android Keystore 硬體加密保護，不會寫進本機資料庫。開了 iCloud 同步的話（iOS），CloudKit 帶走的是伺服器名稱這類非敏感 metadata。私鑰留在原地。
 
+考慮任何工具時都問同一個問題：開了同步之後，我的哪些私鑰會離開這台裝置。功能清單不會回答你。
+
 ## Siri／捷徑自動化
 
-對 Siri 說「從 Agentmux 取得目前終端內容」，`GetCurrentSessionContextIntent` 就把終端當下的畫面抓進 iOS 捷徑，接去記事本、訊息，或任何你自己組的自動化流程。`ContinueLastSessionIntent` 更直接：一句「在 Agentmux 繼續工作」接回上一個 session。
+對 Siri 說「從 Agentmux 取得目前終端內容」，`GetCurrentSessionContextIntent` 就把終端當下的畫面抓進 iOS 捷徑，接去記事本、訊息，或任何你自己組的流程。`ContinueLastSessionIntent` 更直接：一句「在 Agentmux 繼續工作」接回上一個 session。
 
 這類自動化通用 SSH app 結構上做不到。它們沒有「session／專案／agent」這層語意模型可以暴露給系統。Agentmux 目前實作 6 個 App Intent，涵蓋 Server、Project、TMUXSession、RecentSession 四種 entity。
 
@@ -1111,31 +1894,47 @@ Agent 停下來問你要不要允許某個指令時，AI 自動權限審查可�
 
 1.3.10 修掉三個英文圈使用者感受不到、繁中讀者一看就懂的痛點。全形字選取時對齊跑掉。連結跨行時複製會斷成好幾截。中日韓詞句裡帶一個斜線就被誤判成檔案路徑。這些坑要實際處理過中日韓文字才踩得到。
 
-## 什麼時候該用 Termius 而不是 Agentmux
+## 你的工作是哪一種，就買哪一種
 
-- 你在極不穩定的行動網路下工作，需要 **Mosh** 維持連線——Agentmux 目前只有標準 SSH，靠 tmux 自動重連彌補，但那不等於 Mosh。
+**主要是一台主機上的手動終端工作。**你登入是為了跑自己挑的指令：重啟服務、tail log、看磁碟。那就買通用 SSH client。想先試試「以 session 為中心」的做法，免費的單伺服器方案就涵蓋一台伺服器、持久 session 和核心終端機。
 
-- 你需要 **Remote／Dynamic（SOCKS5）port forwarding**——Agentmux 只有 Local。
+**住在好幾台伺服器的 agent 裡。**一個在 Mac mini 上重構，另一個在 Linux 機器上跑測試，第三個是你在上火車前開的。這是 Agentmux，而且具體來說是 Pro：多伺服器、自訂 agent、遠端編輯、檔案歷史、分支工具、批次操作。
 
-- 你要在 iOS／Android／Windows／macOS／Linux 之間同步大量主機設定，或跟團隊共享主機清單。
+**agent 活在瀏覽器分頁或雲端沙箱裡。**方便是真的，代價是檔案和憑證不再坐在你的機器上。Agentmux 從不代跑你的工作：它是 client，程式碼和 agent 留在你自己擁有的硬體上，一台 Mac、一台 Linux 機器、一台伺服器。如果你的專案和它的金鑰住在別人租給你的環境裡讓你安心，那也是合理選擇。
 
-- 你是 SRE／系統管理員，要管幾十上百台伺服器做維運。
+怎麼連進去跟選哪個 app 一樣重要。標準 SSH 加金鑰或密碼就夠；建議走 Tailscale，因為不用對公網開 port，位置要用 MagicDNS 名稱或 100.x 位址，不是區網 IP。
 
-Agentmux 為一個工作流最佳化：**在手機上接回正在跑的 coding agent。**它不是通用維運工具。
+## 什麼時候該買 Termius 而不是 Agentmux
+
+下面任何一條是你的主要工作，就去買通用工具。
+
+- 你在極不穩定的行動網路下工作，需要 **Mosh** 維持連線。Agentmux 只有標準 SSH，靠 tmux 自動重連彌補，但那不等於 Mosh。
+
+- 你需要 **Remote／Dynamic（SOCKS5）port forwarding**。Agentmux 只有 Local。從某個網路打隧道出去、或讓瀏覽器走跳板主機，對你是日常的話，這是硬缺口，不是偏好問題。
+
+- 你要在 iOS／Android／Windows／macOS／Linux 之間同步大量主機設定，或跟團隊共享主機清單。Agentmux 是手機與平板的 client：Pro 有多伺服器與批次操作，但沒有共享給同事這回事。
+
+- 你是 SRE／系統管理員，要管幾十上百台伺服器做維運。能被腳本操作的主機清單，勝過一個要你點來點去的 session 清單。
+
+Agentmux 為一個工作流最佳化：**在手機上接回正在跑的 coding agent。**它不是通用維運工具，一週都在手動 SSH 的人不會把差別賺回來。
+
+決定用 Agentmux？下一個問題是連線另一頭那台機器。設定精靈問三個問題，然後給你一張檢查清單；之後常見的毛病，疑難排解已經都寫在那裡了。
 
 ## 15 分鐘，讓你的 agent 開始整晚工作
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/setup/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。
 
-回答三個問題，我給你一份只屬於你的步驟清單。每一步都會講**為什麼要做**、**指令是什麼**、**怎麼確認成功了**，還有**沒成功的話去哪裡看**。（那台機器是 Windows？先看這一節。）
+把 agent 放到遠端整晚跑，大約 15 分鐘：用 SSH 連進你自己那台機器，用 tmux 讓手機斷線只是 detach、不會停止 agent，再用 Tailscale，不必對公網開 port。回答三個問題，步驟清單就照你的機器、你要跑的 agent、還有你想從哪裡連回來生成。
+
+每一步都會講**為什麼要做**、**指令是什麼**、**怎麼確認成功了**，還有**沒成功的話去哪裡看**。（那台機器是 Windows？先看這一節。）
 
 這個安裝精靈需要 JavaScript。你也可以直接看疑難排解頁。
 
-## 如果你用的是 Windows？
+## 原生 Windows 沒有 tmux，改走 WSL2
 
 你選了 Windows，所以精靈沒有給你清單。不是還沒做。這條路的形狀跟另外三種不一樣，給你半套清單只會害你。
 
@@ -1167,15 +1966,134 @@ WSL2 裡面是一個完整的 Linux，tmux、sshd、agent 的行為都跟真的 
 
 這裡講的 Windows 一直都是「那台被連線的機器」。如果你的 Windows 只是你平常工作的電腦，跑 agent 的是別台 — 家裡的 Mac mini、公司的 Linux 主機、一台 VPS — 那上面這些你一個都不會遇到。這份指南對你完全成立。要設定的機器從來不是你手上這台。
 
+## 在 iPhone、iPad 上跑 Claude Code
+
+URL: https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/
+Language: zh-TW
+Updated: 2026-11-04
+
+在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 那個坑。
+
+可以，但 Claude Code 不會跑在你的 iPhone 上。它跑在你自己擁有的 Mac 或 Linux 機器上，手機只負責帶著終端機。做法是：打開遠端登入，用 Tailscale 取代對外開放的 port，開一個有名字的 tmux session，在裡面啟動 `claude`。鎖屏之後，agent 照樣繼續跑。
+
+「在手機上跑 Claude Code」這句話聽起來很直白，其實混了兩台機器、兩種工作。把它們分開之後，剩下的問題都變短：斷線之後什麼還會活著、為什麼同一個指令在 SSH 裡找不到、agent 能不能在你搭捷運的時候自己回答自己的權限提示。
+
+## 手機上什麼都沒有跑，只有終端機
+
+Claude Code 是你某台機器硬碟裡的一個程式，由 shell 啟動。它透過那台機器的檔案系統讀你的專案，跑 `git`，跑測試，把改好的內容寫回同一個目錄。這句話帶來的誤解是：以為它有一部分現在住在你口袋裡。
+
+從手機連過去，線上只跑兩樣東西：你按的鍵出去，session 印出的字元回來。手機上沒有裝任何 agent 的元件，你的 repo 也不需要搬到任何地方。手機是在顯示另一台電腦上那個 session 此刻的樣子。
+
+- **手機上。**按鍵、畫面、你的拇指。鎖屏、把 app 滑掉、走進電梯——停掉的是畫面，停掉的就是這些。
+
+- **機器上。**process、正在被改的檔案、正在跑的測試、它已經讀過和決定過的一切。你的螢幕變暗，它感覺不到。
+
+兩個直接後果。機器必須一直開著、而且要連得到：蓋著蓋子收在抽屜裡的筆電什麼都不會跑。手機反而是這套東西裡最便宜、壞了可以換的那一半。
+
+## 先決定的三件事，順序不能換
+
+少任何一件都不成立，所以照這個順序做。
+
+- **一個進得去那台機器的門。**Mac 上是「系統設定 → 一般 → 共享 → 遠端登入」；Linux 上是 SSH 服務，一個叫 `sshd` 的 daemon。
+
+- **一個私有網路，不是一個對外開放的 port。**機器和手機都裝 Tailscale，登入同一個帳號，然後連那台機器的 MagicDNS 名稱或 `100.x` 位址，不要連 `192.168.1.23` 這種區網位址——手機切到行動網路之後，那個位址什麼都不是。另一條路是把 port 22 轉向公網，那等於把機器交給全網路的掃號機器人。
+
+- **一個有名字的 tmux session，而且 agent 在裡面。**
+
+```
+tmux new -s work     # 取名為 work
+claude               # 在 session 裡面啟動
+```
+
+之後從手機、從另一個網路接回來：
+
+```
+tmux ls              # 現在有哪些 session
+tmux attach -t work  # 開一個窗看進去
+```
+
+名字不是裝飾。沒有名字，你就沒有可以指名要的那個 session：只打 `tmux attach` 會接上最近的一個，那是在猜你的意思。機器上還沒有 tmux 的話，Agentmux 會自己裝。
+
+## 只用一個 SSH 視窗，鎖屏那一刻 agent 就死了
+
+假設你跳過 tmux：從手機 SSH 進去，跑 `claude`，看它開始讀專案，然後把手機放進口袋、鎖定螢幕。
+
+手機不再送封包，連線逾時、關閉。機器上 sshd 跟著關掉那條連線掛著的 pseudo-terminal，kernel 對還掛在上面的每一個 process 送出 **SIGHUP**：你的 shell，還有 shell 裡面的 Claude Code。預設的反應就是結束。agent 死在原地，改到一半的編輯只剩一半，讀了二十分鐘的專案也一起消失。
+
+讓 app 開著救不了它：Wi-Fi 換一個網路、行動網路斷訊、一個 Ctrl-C 按錯地方，連線都照樣斷。tmux 把 session 從連線上搬到機器本身，所以你斷線時消失的是窗，不是 process（機制在那篇 tmux 文章）。結論只有一條：**agent 要在開始做事之前就在 session 裡面，因為一個正在跑的 process 沒辦法之後搬進去。**
+
+## 用手機工作，實際上是什麼樣子
+
+適合手機的是「一次一個決定」，而這正好是 agent 工作循環的主體。它提出一個計畫，你用一句話核准或打回；它問要不要順便處理 migration，你選第二個。你回兩行修正——「serializer 不要動，export 那支在用它」——然後把手機收起來。
+
+螢幕鍵盤是第一個真實的成本。backtick、pipe、引號、反斜線、代表家目錄的 tilde，全部藏在兩層之後，所以 `~/src/auth/session.ts` 這種路徑打起來比想像中久，打錯一段就是一個來回。長的 prompt 在手機上比較難寫也比較難檢查，很多人是在備忘錄裡寫好再貼進來。
+
+讀 diff 是手機真正不夠用的地方：兩個檔案改了四十行，加上周圍的 context，在六吋螢幕上就是兩三個畫面的捲動；而且換行會讓你看不出某個改動落在行尾還是行中，而那正是你要 review 的東西。把 iPad 橫過來，同一個 diff 就不用換行。
+
+一個馬上回本的習慣：把吵的部分放進第二個 session，測試就不會蓋掉 agent 自己的提示。
+
+```
+tmux new -s tests -d    # -d 建立後立刻 detach
+tmux attach -t tests    # 看完再 detach
+```
+
+## 它停下來問你，而你在手機上回答
+
+Claude Code 不是想到什麼就跑。要跑一條指令之前——依照設定，改檔案之前也會——它停下來，把問題放在畫面上：這是它要跑的指令，可以嗎？工作就在這裡等。如果只有你能回答，等的時間就是你何時抬頭看。離開書桌之後，權限提示不再是不方便，而是整件事的瓶頸。
+
+AI 自動權限審查只做這件事：讀畫面上目前那一則提示，然後給你建議、或幫你按下那個鍵。三道檢查決定走到哪一步。**黑名單**擋掉危險指令，命中的一定交給你。**白名單**放行你原本就信任的指令，直接在裝置上決定，不用等。**AI 判斷**只處理兩邊都沒命中的，結果是允許、拒絕、或不確定，後面兩種一樣回到你手上。最後由這個 session 的模式決定它是只**建議**那個鍵，還是直接**幫你按**。
+
+距離沒有把責任一起轉移。一條在行動網路上核准的指令，跑在一台存著你的 `.env`、你的金鑰、以及不只你一個人在用的 repo 的機器上；而判斷看到的是畫面，不是 agent 怎麼走到那一幕。所以先選只給建議的模式，把你每天核准的指令放進白名單，訊號和注意力都不好的時候，先讀畫面上那條指令再按。黑名單存在，是因為「全部核准」是個壞的預設，而距離不會讓它變得比較安全：指向家目錄的 `rm -rf`，不會因為你人在月台上就比較溫和。
+
+## claude: command not found，但在 Terminal 裡跑得好好的
+
+同一台機器、同一個帳號，兩種結果：在 Terminal 裡打 `claude` 會跑，透過 SSH 就給你 `claude: command not found`。看起來像是遠端那套設定壞了，而它是這條路上最常見的一種。
+
+原因兩句話。用 npm 安裝、或跑在 nvm 釘選的 node 版本下，它的目錄是被寫在只有*互動式 login shell* 會讀的啟動檔裡，PATH 裡才有那一筆。而像 `ssh host claude` 這種只跑一個指令的連線，啟動的是非互動式 shell，根本不會讀那個檔案。
+
+一定會有效的做法是不靠 PATH。在原本能跑的 Terminal 裡：
+
+```
+which claude
+# /Users/you/.nvm/versions/node/v20.11.0/bin/claude
+```
+
+把整個絕對路徑當成 agent 指令，或直接打在 session 裡。nvm 換了 node 版本它就失效；長期的解法取決於你用的是 zsh 還是 bash、以及你的發行版，那些寫在疑難排解那頁。
+
+## 跑一整晚可以，重開機不行
+
+機器不睡，session 就能跑一整晚：十一點丟一個重構給它，早上配咖啡看結果。周圍有三個限制。
+
+**機器要維持清醒。**Mac 閒置進入睡眠時，網路介面跟著休眠，遠端登入開不開都沒用，因為沒有東西在回應。「系統設定 → 電池」（筆電）或「系統設定 → 節能」（長期開機當伺服器用的桌機）：把閒置睡眠的時間調長或關掉，有「喚醒以供網路存取」這個選項就打開。
+
+**重開機會把 session 一起帶走。**tmux 不會在重開機之後還原 session，而系統更新重開機之前不會問你。收工之前先 commit，最壞的情況就從損失整個任務變成損失一個小時。
+
+**在等你的 agent 不是當掉的 agent。**先接回去看一眼。嶄新的 shell 提示字元代表 process 已經結束：跑完了，或者死了，上面幾行會告訴你是哪一種。停在一個問題上的 session，則已經等了你一個字六小時，而且沒消耗什麼。從鎖屏看兩者一模一樣；只有一種需要你動手。
+
+## 什麼歸手機，什麼歸書桌
+
+| 在手機上做 | 在書桌前做 |
+| --- | --- |
+| 讀完那條指令之後回答權限提示 | 看一段你沒預期會看到的 diff |
+| 在它給的兩個做法之間選一個 | 判斷一個橫跨好幾個檔案的改動 |
+| 讀一段短的 diff、commit、push | 讀一段長的 diff，或一個你沒開過的檔案 |
+| 在第二個 session 裡看測試跑完 | 追那些測試印出來的失敗 |
+| 睡前把下一個任務丟給它 | 寫一段必須很精確的 prompt |
+| 連線斷了十次，再接回來 | 修連線本身，或它後面的 PATH 問題 |
+
+一台不會睡的機器、一個有名字的 session、一條只有你自己人進得來的路。三樣少一樣，setup 那頁會先問你三個問題，再照你那台機器給一份清單。
+
 ## AI 自動權限審查：agent 問你時，誰來回答
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/permission-review/
 Language: zh-TW
-Updated: 2026-10-21
+Updated: 2026-11-04
 
 Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。
 
-Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛好不在螢幕前，整個任務就卡在那裡等你。AI 自動權限審查就是替你看這些權限提示的：危險的擋下來交給你，安全的給建議或直接幫你按下去。
+AI 自動權限審查是 Agentmux 用來回答 agent 權限提示的機制：黑名單先擋下危險指令，白名單直接放行你已經信任的，兩邊都沒命中的才交給 AI 判斷；判斷為允許時，顧問模式給你建議，自動回覆模式幫你按下那個鍵。
+
+Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛好不在螢幕前，整個任務就卡在那裡等你。它要處理的就是這一刻。
 
 它只做一件事：回答 agent 的權限提示，而且每次只按一個鍵。它不會替你打指令，也不會去碰畫面上以外的東西。
 
@@ -1193,7 +2111,7 @@ Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛�
 
 - **建議你，或幫你按**看你選的模式
 
-## 什麼時候會啟動
+## agent 停下來等你，審查才開始
 
 只有在 agent 停下來等你回應時才會啟動。Agentmux 本來就會辨識 Claude Code、Codex 這類 agent 的狀態，當畫面出現「要不要允許」「選 1 還是 2」這種提示，工作階段就會被標記成等待中，審查也從這一刻開始。
 
@@ -1209,13 +2127,13 @@ Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛�
 
 不在畫面上的工作階段也一樣會被審查，你切到別的分頁時，它照樣在背景幫你看著。
 
-## 第一步：看清楚畫面
+## 它只讀目前畫面上那一個提示
 
 它先從畫面上找出「目前這一個」提示：要執行的指令、問題本身，還有可以選的選項。更早以前捲上去的舊內容不算數。
 
 要送給 AI 之前，畫面裡看起來像密碼、API key、token 的內容會先被遮蔽掉。如果遮蔽失敗，原始內容不會送出，這次也不會幫你按任何鍵。
 
-## 第一關：黑名單
+## 黑名單永遠先跑，而且就在手機上
 
 黑名單在你的手機上直接比對，永遠第一個檢查，命中了就不會送給 AI，直接交給你處理。內建的規則涵蓋最危險的幾類操作：
 
@@ -1233,7 +2151,7 @@ Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛�
 
 這些內建規則可以編輯或移除，你也可以加上自己的規則。
 
-## 第二關：白名單
+## 白名單命中，就不用等 AI
 
 有些指令你每天都在按「允許」，例如跑測試或 build。把它們加進白名單，下次命中時它就直接在手機上決定要按哪個鍵，不用等 AI，也不花 API 用量。
 
@@ -1241,7 +2159,7 @@ Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛�
 
 白名單命中了、但畫面上找不到一個明確、安全的按鍵可以按時，一樣交給你。
 
-## 第三關：AI 判斷
+## AI 能決定什麼，不能決定什麼？
 
 黑名單和白名單都沒命中的提示，才會送給 AI。AI 會看到遮蔽過的畫面內容，以及你寫的**主要意圖**，也就是你這次要 agent 做的事，例如「修好登入頁的測試」。
 
@@ -1253,7 +2171,7 @@ Agent 跑到一半停下來問「要不要執行這個指令？」，而你剛�
 
 AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會繼續往下走，而且 AI 必須明確指出要按畫面上的哪一個選項。「永遠允許」「不要再問」這種永久授權的選項，它不會選。
 
-## 最後：建議你，或幫你按
+## 顧問只給建議，自動回覆幫你按
 
 每個工作階段可以分別選模式：
 
@@ -1265,7 +2183,7 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 自動回覆送出一個鍵之後，同一個工作階段會先停 3 秒才會再送下一個。
 
-## 哪些情況一定交給你
+## 哪些情況一定交回給你？
 
 - 命中黑名單。
 
@@ -1281,7 +2199,7 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 交給你的時候，Agentmux 會照平常的方式提醒你，就跟沒開審查時一樣。
 
-## 開始使用
+## 要怎麼打開它？
 
 開始前請準備好其中一種：
 
@@ -1299,7 +2217,7 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 建議先用顧問模式跑幾天，看看它的建議合不合你的習慣，再考慮對特定工作階段開自動回覆。
 
-## 資料去哪裡
+## 哪些資料會離開你的裝置？
 
 只有遮蔽過的畫面片段和你的主要意圖，會送到你自己設定的 AI 服務，用的是你自己的 API key。如果打開了「使用我最近的提示」，你在那個分頁送出的提示會成為主要意圖，也會一起送出。Agentmux 不提供、也不經手任何 AI 服務。每次判斷的紀錄只存在你的裝置上，可以在稽核記錄裡查看或清除，模型的推理內容不會保存。
 
@@ -1307,9 +2225,11 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/
 Language: zh-TW
-Updated: 2026-09-29
+Updated: 2026-11-04
 
 連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。
+
+透過 SSH、tmux、Tailscale 做遠端開發，最常卡住的就是下面這八種：`Operation timed out`、`Permission denied (publickey)`、密碼正確卻被拒絕、找不到 tmux、`claude: command not found`、Tailscale 顯示已連線卻連不到、遠端登入開著但 Mac 不接、`sudo: a terminal is required`。每一種都分成症狀、原因，和你可以照著做的解法。
 
 照著前面幾篇設定，十次有八九次一次就通。剩下那一兩次卡住的地方，通常就是這八種。找到你看到的錯誤訊息跳過去看，不用整篇從頭讀。
 

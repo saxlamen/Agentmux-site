@@ -44,27 +44,38 @@
     },
     "what-is-cli": {
       "title": "為什麼最強的 coding agent 都住在終端機裡",
-      "description": "CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。"
+      "description": "為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。",
+      "image": "/resource/iphone-raw-launch-any-agent.webp"
     },
     "what-is-ssh": {
       "title": "一條通往另一台電腦的加密隧道",
-      "description": "SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。"
+      "description": "SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。",
+      "image": "/resource/iphone-raw-edit-code-over-ssh.webp"
     },
     "what-is-tmux": {
       "title": "讓 agent 在你關掉手機後繼續跑",
-      "description": "SSH 斷線會讓你啟動的 process 收到 SIGHUP 而死。tmux 把 session 留在伺服器上，你只是接上去看，斷線也不會中斷 agent。"
+      "description": "tmux 是什麼，為什麼 SSH 斷線時你的 AI coding agent 不會死：session 留在伺服器上，手機只是接上去看。",
+      "image": "/resource/ipad-raw-session-command-center.webp"
     },
     "what-is-tailscale": {
       "title": "不要對公網開 port",
-      "description": "把 SSH 開到公網會被掃描機器人 24 小時輪番敲門。Tailscale 用 WireGuard mesh 讓裝置之間直接建立加密連線，你家的機器多了一個只有你連得到的私有位址。"
+      "description": "不開 port 也能從手機連回自己的電腦：WireGuard mesh、MagicDNS 名稱或 100.x 位址，還有什麼時候根本不需要它。",
+      "image": "/resource/Darkmode_serverlist.webp"
     },
     "why-agentmux": {
       "title": "為什麼不是 Termius / Blink",
-      "description": "通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。"
+      "description": "Agentmux 對 Termius、Blink：五個功能差異、什麼時候買 Termius 比較對，以及各種工作該選哪一個。",
+      "image": "/resource/Serverview_tmux_agents.webp"
     },
     "setup": {
       "title": "15 分鐘，讓你的 agent 開始整晚工作",
-      "description": "回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。"
+      "description": "回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。",
+      "image": "/resource/ipad-raw-browse-remote-projects.webp"
+    },
+    "claude-code-on-iphone": {
+      "title": "在 iPhone、iPad 上跑 Claude Code",
+      "description": "在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 那個坑。",
+      "image": "/resource/iphone-raw-run-coding-agents-anywhere.webp"
     },
     "permission-review": {
       "title": "AI 自動權限審查：agent 問你時，誰來回答",

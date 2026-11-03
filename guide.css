@@ -75,6 +75,17 @@
                                        text-align: left; font-size: 15px; color: var(--muted); }
 .guide-article th { color: var(--ink); }
 
+/* Figures — a device shot from /resource/ with a caption. No article uses one
+   yet; the styles exist so an article can add a figure without inventing markup
+   at the time. `figure-phone` keeps a tall phone shot from becoming a
+   two-screen-tall column; a wide iPad shot takes the full measure. */
+.guide-article figure { margin: 40px 0; }
+.guide-article figure img { display: block; width: 100%; height: auto;
+                            border: 1px solid var(--line); border-radius: 14px;
+                            background: var(--panel); }
+.guide-article figure.figure-phone img { max-width: 420px; }
+.guide-article figcaption { color: var(--soft); font-size: 15px; line-height: 1.6; margin-top: 12px; }
+
 /* site.css sets `body { overflow-x: hidden }`, so anything that overflows is
    clipped and unreachable rather than scrollable. Long unbreakable tokens are
    guaranteed here — URLs, shell flags, file paths — so wrap them. Matches the

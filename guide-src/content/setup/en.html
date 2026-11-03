@@ -1,11 +1,12 @@
-<p>Answer three questions and I'll give you a checklist built for your setup. Every step tells you <strong>why you're doing it</strong>, <strong>what the command is</strong>, <strong>how to confirm it worked</strong>, and <strong>where to look if it didn't</strong>. (Is that machine running Windows? <a href="#windows">Read this first</a>.)</p>
+<p>Setting up an agent that works all night takes about fifteen minutes: SSH into a machine you own, tmux so a dropped phone connection detaches instead of stopping the agent, and Tailscale so no port is open to the public internet. Answer three questions and the checklist is built for your machine, your agent, and where you connect from.</p>
+<p>Every step tells you <strong>why you're doing it</strong>, <strong>what the command is</strong>, <strong>how to confirm it worked</strong>, and <strong>where to look if it didn't</strong>. (Is that machine running Windows? <a href="#windows">Read this first</a>.)</p>
 <div id="wizard" data-wizard-lang="en" data-load-failed="Could not load the setup wizard. Please refresh.">
     <noscript><p>The setup wizard needs JavaScript. You can also go straight to the <a href="/guide/en/troubleshooting/">troubleshooting</a> page.</p></noscript>
 </div>
 <script src="/guide/assets/wizard.js" defer></script>
 
 <details id="windows" class="windows-note">
-  <summary><h2>Using Windows?</h2></summary>
+  <summary><h2>Native Windows has no tmux — use WSL2</h2></summary>
 
   <p>You picked Windows, so the wizard did not hand you a checklist. Not because one is missing. This path is a different shape from the other three, and half a checklist would do you more harm than none.</p>
   <p>It works, but it goes through WSL2 and takes a few more steps than a Mac or a Linux box. If all you want is an agent working through the night, rent the cheapest cloud VPS you can find and take the VPS path above. That is usually faster than getting Windows there, and it is not a brush-off — it saves most people an evening.</p>

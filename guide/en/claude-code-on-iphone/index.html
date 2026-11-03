@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Claude Code on your iPhone or iPad — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Run Claude Code on your iPhone or iPad">
+    <meta property="og:description" content="Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-run-coding-agents-anywhere.webp">
+    <meta property="article:published_time" content="2026-11-04">
+    <meta property="article:modified_time" content="2026-11-04">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Run Claude Code on your iPhone or iPad">
+    <meta name="twitter:description" content="Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Run Claude Code on your iPhone or iPad", "description": "Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/", "url": "https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-04", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Run Claude Code on your iPhone or iPad", "item": "https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/en/">Guide home</a>
+                <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+                <a class="lang-switch" href="/guide/zh-TW/claude-code-on-iphone/">繁體中文</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>Run Claude Code on your iPhone or iPad</h1>
+            <p>Yes. Claude Code is a program that runs on a machine you own, never on the phone. Turn on Remote Login, reach that machine through Tailscale instead of an open port, start a tmux session with a name, and run <code>claude</code> inside it. Your iPhone carries a terminal; the agent keeps working after you lock the screen.</p>
+<p>The phrase sounds obvious and is not: "Claude Code on my phone" describes two machines doing different jobs. Separate them and what is left gets short — what survives a dropped connection, why the command is missing over SSH, whether an agent should answer its own permission prompts from a train.</p>
+
+<section id="what-the-phone-does-not-do">
+  <h2>Your phone carries a terminal. That is all.</h2>
+
+  <p>Claude Code is a program on the disk of some machine you own. A shell starts it. It reads your project through that filesystem, runs <code>git</code> and the tests, and writes its edits back into the same directory. The misconception: that some part of it now lives in your pocket.</p>
+  <p>From the phone, two things cross the wire: keys go out, characters come back. Nothing of the agent is installed there, and no copy of your repository travels. The phone draws a picture of a session living on another computer.</p>
+  <ul>
+    <li><strong>On the phone.</strong> Keystrokes, display, your thumb. Lock the screen or swipe the app away and the display stops; that is the whole list.</li>
+    <li><strong>On the machine.</strong> The process, the files being edited, the tests, everything already read and decided. None of it notices your screen going dark.</li>
+  </ul>
+  <p>Two consequences. The machine has to stay on and reachable — a laptop in a drawer with the lid shut runs nothing. The phone is the cheap half to replace.</p>
+</section>
+
+<section id="three-things-before-the-phone-matters">
+  <h2>Three things in place, in order</h2>
+
+  <p>Skip one and the arrangement fails. Do them in this sequence.</p>
+
+  <ol>
+    <li><strong>A door into the machine.</strong> On a Mac: System Settings → General → Sharing → <strong>Remote Login</strong>. On Linux, the SSH service, a daemon called <code>sshd</code>.</li>
+    <li><strong>A private network, not an open port.</strong> Install Tailscale on the machine and the phone, sign both into one account, then connect to the MagicDNS name or the <a href="/guide/en/what-is-tailscale/"><code>100.x</code> address</a> — never a LAN address like <code>192.168.1.23</code>, which means nothing on mobile data. Forwarding port 22 instead hands your machine to every scanning bot that finds it.</li>
+    <li><strong>A tmux session with a name, and the agent inside it.</strong></li>
+  </ol>
+
+  <pre><code>tmux new -s work     # name it
+claude               # inside it</code></pre>
+
+  <p>From the phone, on another network:</p>
+
+  <pre><code>tmux ls              # what exists
+tmux attach -t work  # open a window onto it</code></pre>
+
+  <p>The name matters: <code>tmux attach</code> alone takes the most recent session. If tmux is missing, Agentmux installs it.</p>
+</section>
+
+<section id="why-a-plain-ssh-window-kills-the-agent">
+  <h2>Why a plain SSH window kills the agent</h2>
+
+  <p>Skip tmux: you SSH in, run <code>claude</code>, then pocket the phone and lock the screen.</p>
+  <p>The connection times out and closes. sshd closes the pseudo-terminal it was attached to, and the kernel sends <strong>SIGHUP</strong> to every process still on it — your shell, and Claude Code inside it. The default response is to terminate: the agent dies mid-edit, twenty minutes of reading gone.</p>
+  <p>Keeping the app open fixes nothing: Wi-Fi switches networks, cellular loses signal, one Ctrl-C lands wrong. tmux moves the session onto the machine, so what disappears is the window, not the process (<a href="/guide/en/what-is-tmux/">the mechanism</a>). The rule: <strong>the agent goes inside the session before the work starts — a running process cannot be moved into tmux afterwards.</strong></p>
+</section>
+
+<section id="what-working-from-a-phone-is-actually-like">
+  <h2>What working from a phone is actually like</h2>
+
+  <p>What fits a phone is one decision at a time — which is what an agent cycle is made of. It proposes a plan; you take it or send it back in a sentence. A two-line correction — "leave the serializer alone, the export job uses it" — and the phone goes away.</p>
+  <p>The on-screen keyboard is the first real cost. Backticks, pipes, quotes, backslashes and the tilde all sit two layers deep, so <code>~/src/auth/session.ts</code> takes longer than it should and one wrong segment costs a round trip. Long prompts are harder to proofread than they look, so many people draft them in a notes app.</p>
+  <p>A diff is where a phone runs out of room: forty changed lines across two files is three screens of scrolling on six inches, and a wrapped line hides whether a change sits at the end of a line or in the middle. Turn an iPad sideways and it fits without wrapping.</p>
+  <p>One habit pays for itself: a second session for the noisy parts, so a test run cannot bury the agent's prompts.</p>
+
+  <pre><code>tmux new -s tests -d    # -d starts it detached
+tmux attach -t tests    # watch it, then detach</code></pre>
+</section>
+
+<section id="answering-permission-prompts-from-the-phone">
+  <h2>The agent stops and asks. From the phone, you answer.</h2>
+
+  <p>Claude Code does not run everything it thinks of. Before it runs a command — and, depending on configuration, before it edits a file — it stops and asks: here is the command, go ahead? That stop is where the job waits, and when only you can answer it, the waiting becomes the bottleneck.</p>
+  <p><a href="/guide/en/permission-review/">AI Permission Review</a> answers those prompts and nothing else: it reads the prompt, then suggests or presses the key. A <strong>blacklist</strong> blocks dangerous commands and always hands a match to you. An <strong>allowlist</strong> passes commands you already trust, decided on the device. Anything matching neither goes to an <strong>AI judgement</strong>: allow, deny, or unsure, and the last two come back to you. The session's mode then decides whether it only <strong>suggests</strong> the key or <strong>presses</strong> it.</p>
+  <p>Distance does not transfer the responsibility. A command approved on cellular runs on a machine holding your <code>.env</code>, your keys, and a repository you do not own alone — and the judgement sees the screen, not the reasoning that got the agent there. Start in the mode that only suggests, allowlist the commands you approve daily, and read the screen before pressing anything when signal and attention are poor. The blacklist exists because "approve everything" is a bad default: an <code>rm -rf</code> aimed at a home directory is no gentler because you said yes on a platform.</p>
+</section>
+
+<section id="claude-command-not-found-over-ssh">
+  <h2>claude: command not found, but it runs in Terminal</h2>
+
+  <p>Same machine, same account, different answers: <code>claude</code> starts in Terminal and prints <code>claude: command not found</code> over SSH. It reads as the remote setup being broken, and it is the most common failure on the way in.</p>
+  <p>The cause, in two sentences. An install through npm, or under a node version nvm pins, puts its directory on the PATH from a startup file that only an <em>interactive login</em> shell reads. A connection running one command, like <code>ssh host claude</code>, starts a non-interactive shell that never reads that file.</p>
+  <p>The fix that always works is to stop relying on the PATH. In the Terminal where it runs:</p>
+
+  <pre><code>which claude
+# /Users/you/.nvm/versions/node/v20.11.0/bin/claude</code></pre>
+
+  <p>Use that absolute path, as the agent command or typed into the session. It breaks when nvm changes the node version; the durable fix, which depends on your shell and your distribution, is on <a href="/guide/en/troubleshooting/">the troubleshooting page</a>.</p>
+</section>
+
+<section id="running-overnight-and-the-honest-limits">
+  <h2>Overnight works. A reboot does not.</h2>
+
+  <p>A session on a machine that stays awake runs all night — hand it a refactor at eleven, read the result with coffee. Three limits.</p>
+  <p><strong>The machine has to stay awake.</strong> A Mac that idles into sleep takes its network interface with it, and Remote Login makes no difference: nothing is left to answer. System Settings → Battery on a laptop, Energy Saver on a desktop: lengthen or switch off idle sleep, and turn on "Wake for network access" if offered.</p>
+  <p><strong>A reboot takes the session with it.</strong> tmux does not restore sessions after a restart, and updates restart without asking. Commit before you stop for the night, so the worst case costs an hour.</p>
+  <p><strong>Waiting is not crashing.</strong> Attach and look. A fresh shell prompt means the process exited: finished, or died, and the lines above say which. A prompt asking a question has waited one word from you for six hours at no cost. From a lock screen both look the same; only one needs you to act.</p>
+</section>
+
+<section id="phone-or-desk">
+  <h2>What belongs on the phone, what belongs at the desk</h2>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>From the phone</th><th>At the desk</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Answer a permission prompt, having read it</td><td>Review a diff you did not expect to see</td></tr>
+      <tr><td>Choose between the two approaches it offered</td><td>Judge a change spanning several files</td></tr>
+      <tr><td>Read one short diff, commit, push</td><td>Read a long diff, or a file you have never opened</td></tr>
+      <tr><td>Watch a test run in a second session</td><td>Debug the failure those tests printed</td></tr>
+      <tr><td>Hand it the next task before bed</td><td>Write a prompt that has to be exact</td></tr>
+      <tr><td>Reattach after ten dropped connections</td><td>Fix the connection, or the PATH problem behind it</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>A machine that stays awake, a session with a name, a private way in. Missing one, the <a href="/guide/en/setup/">setup wizard</a> asks three questions about your machine and hands back a checklist.</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="cliuser" data-label="Previous" href="/guide/en/setup/">Previous<span>15 minutes to an agent that works all night</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14-day full-feature trial, available on iOS and Android.</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">Home</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="mailto:atmux-support@saxcave.cc">Support</a>
+        </div>
+    </footer>
+</body>
+</html>

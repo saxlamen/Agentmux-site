@@ -7,7 +7,7 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.">
+    <meta name="description" content="How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="Don&#x27;t open a port to the public internet">
-    <meta property="og:description" content="Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.">
+    <meta property="og:description" content="How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
-    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp">
     <meta property="article:published_time" content="2026-07-30">
-    <meta property="article:modified_time" content="2026-09-29">
+    <meta property="article:modified_time" content="2026-11-04">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Don&#x27;t open a port to the public internet">
-    <meta name="twitter:description" content="Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.">
-    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta name="twitter:description" content="How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Don't open a port to the public internet", "description": "Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-09-29"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Don't open a port to the public internet", "item": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Don't open a port to the public internet", "description": "How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "image": ["https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Don't open a port to the public internet", "item": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -47,29 +47,106 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Don&#x27;t open a port to the public internet</h1>
-            <p>So: how do you get in from outside? Not by exposing port 22 on your home machine to the internet. That is about the fastest way to get yourself into trouble.</p>
-<p>Scanning bots knock on port 22 across every IP in the world, around the clock. Put your address on the public internet and the first login attempts usually arrive before the next day.</p>
-<p>There is a second problem, and it is more boring but harder to dodge. Your home connection almost certainly has a dynamic IP that changes every so often. Your machine is probably behind NAT, sharing one outward address with everything else on the same Wi-Fi. There was never a public address there to open.</p>
+            <p>Install Tailscale on your computer and on your phone, sign both in to the same account, then connect with SSH to the machine's MagicDNS name or its <code>100.x</code> address. Tailscale builds an encrypted WireGuard mesh between your own devices, so no port on your router is open to the internet and no public address is involved.</p>
+<p>The agent survives a dropped connection, which only helps if there is somewhere safe to reconnect from. The obvious answer — expose port 22 to the internet — is the fastest way into trouble. Scanning bots knock on port 22 across every IP on earth, around the clock.</p>
+<p>A second problem is duller and harder to dodge. Your home IP is dynamic, and the machine sits behind NAT, sharing one outward address with everything else at home. There was never a public address there to open.</p>
 
 <section id="the-old-way">
   <h2>How painful the traditional fix is</h2>
-  <p>Before tools like this, opening that path meant going into the router yourself. Port forwarding, so some public port reaches the machine at home. A DDNS service to bind a hostname to whatever the IP happens to be today, or a static IP bought from your ISP. Then firewall rules, maintained by hand, to turn away everyone who is not you.</p>
-  <p>Every step has to be right. Get one wrong and you either cannot get in, or you have exposed your entire home network.</p>
+  <p>The traditional fix meant the router itself: port forwarding so a public port reaches the machine, a DDNS service binding a hostname to today's IP or a static IP from your ISP, then firewall rules kept straight by hand.</p>
+  <p>Get one step wrong and you cannot get in, or you have exposed your whole home network. Get them all right and a door still faces the internet.</p>
+</section>
+
+<section id="why-port-forwarding-plus-a-dynamic-ip-breaks">
+  <h2>Why port forwarding plus a dynamic IP keeps breaking</h2>
+  <p>Four moving parts, each letting go at an inconvenient moment.</p>
+  <ul>
+    <li><strong>The address changes.</strong> Your ISP reassigns it, and a DDNS client needs a few minutes to catch up. For a window after every change, nothing you saved points at home — and if that update fails while you are away, the hostname belongs to somebody else.</li>
+    <li><strong>Sometimes the address was never yours.</strong> Behind carrier-grade NAT your router holds an address inside the ISP's own network, so no forward can work.</li>
+    <li><strong>One forward is one more door</strong> into a network shared with a smart TV and an old camera.</li>
+    <li><strong>It has to stay right forever.</strong> A firmware update resets the rules; a new router means rebuilding them.</li>
+  </ul>
+  <p>The real cost is the failure mode: debugging a home router from a phone on mobile data, when what you want is unreachable.</p>
 </section>
 
 <section id="what-tailscale-does">
   <h2>What Tailscale does</h2>
-  <p>Tailscale is a WireGuard mesh. Install it on each device, sign in to the same account, and the devices build an encrypted link straight between themselves. No public entry point. No port sitting on the internet waiting to be scanned.</p>
-  <p>You do not connect using that shifting IP either. MagicDNS gives each device a name you can remember and handles the resolution. Devices behind NAT, an IP that changed overnight, you on home Wi-Fi one minute and mobile data the next — the traversal happens out of sight.</p>
+  <p>Tailscale is a WireGuard mesh. Install it on each device, sign in to the same account, and the devices build an encrypted link straight between themselves. No public entry point, no port waiting to be scanned.</p>
+  <p>Each device makes a WireGuard key pair; the private half never leaves it. The public halves are exchanged, and those are the tunnels. The account is bookkeeping: it introduces devices, tracks where each is reachable, and hands out private addresses the public internet does not route to.</p>
+  <p>MagicDNS gives each device a name you can remember and resolves it for you. NAT, an address that changed overnight, home Wi-Fi then mobile data — all handled out of sight.</p>
+</section>
+
+<section id="why-the-mesh-works-on-a-phone-network">
+  <h2>Why the mesh works when your phone has no address either</h2>
+  <p>Mobile data makes it worse. Your phone has no public address either: on 4G and 5G it sits behind carrier-grade NAT, sharing one outward address with many other subscribers. A door-knocking scheme fails at both ends.</p>
+  <p>A mesh works the other way round: both sides only have to send packets <em>outward</em>. The phone sends one, the machine sends one, each learns where the other appears to be, and the two attempt a direct path through their NATs. WireGuard supplies the encryption; the mesh supplies the introductions. Where no direct path exists, traffic falls back to a relay, still encrypted end to end.</p>
 </section>
 
 <section id="mental-model">
   <h2>The mental model: one more address, reachable only by you</h2>
-  <p>Your machine at home gains a private address. Only devices signed in to the same Tailscale account can see it or reach it. The scanning bots have no idea it exists, because it has never appeared on the public internet.</p>
-  <p>From here on your SSH connections go to that address, not to a port 22 that gets knocked on all day.</p>
+  <p>Your machine gains a private address. Only devices signed in to the same Tailscale account can see it or reach it. The scanning bots do not know it exists, because it never appeared on the public internet.</p>
+  <p>From here on, SSH goes to that address, not to a port 22 that gets knocked on all day.</p>
 </section>
 
-<p>That is all three pieces. Which leaves what you use on the phone to attach.</p>
+<section id="which-address-to-type">
+  <h2>Which address do you actually type?</h2>
+  <p>Not the LAN one. The machine holds three addresses at once, and only two are worth saving.</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>Address</th><th>Where it works</th><th>Use it?</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>LAN, e.g. <code>192.168.1.23</code></td>
+        <td>That Wi-Fi only</td>
+        <td>No. On mobile data it routes nowhere useful</td>
+      </tr>
+      <tr>
+        <td>The ISP's address for the router</td>
+        <td>Nothing under carrier-grade NAT</td>
+        <td>No. It changes, and it is the router's</td>
+      </tr>
+      <tr>
+        <td>MagicDNS name, e.g. <code>mac-mini.tail1234.ts.net</code></td>
+        <td>Any network, tunnel up at both ends</td>
+        <td>Yes. Save this one</td>
+      </tr>
+      <tr>
+        <td><code>100.x.y.z</code></td>
+        <td>Same as the name</td>
+        <td>Yes, when name resolution is the broken part</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>A LAN address describes a local network, not your machine. Save the name, and the entry survives the machine changing Wi-Fi, changing IP, or moving flats. <code>tailscale status</code> prints both.</p>
+  <p>When SSH fails although both devices look connected, check the address first. <a href="/guide/en/troubleshooting/">Tailscale says connected, SSH still can't reach it</a> covers that, including a signed-out machine.</p>
+</section>
+
+<section id="what-it-costs-you">
+  <h2>What you give up by doing it this way</h2>
+  <p>Three costs, better known before you are on a train.</p>
+  <p><strong>One more program on the machine.</strong> It starts at boot, updates itself occasionally, and has its own bugs — one more thing to rule out before you blame SSH.</p>
+  <p><strong>A control plane you need at the wrong moment.</strong> Traffic goes device to device; introductions do not. A new laptop, a replaced phone, stale credentials — none are on your network until they sign in. Fail that sign-in while you are out and the machine is fine but unreachable. Keep another way in.</p>
+  <p><strong>A phone that has to stay connected.</strong> The tunnel is a VPN profile, and phones drop those: after a restart, when another VPN takes over, when you dismiss the prompt. Check it before debugging anything else. It carries only traffic to your own addresses.</p>
+</section>
+
+<section id="keys-still-matter">
+  <h2>A private network is not a reason to go back to passwords</h2>
+  <p>A machine nobody can reach from the internet still needs a lock on the door, for two reasons.</p>
+  <p>The mesh's security is now your account's security, and any device that signs in is inside — one device you already trusted. A laptop left in a taxi is inside the network you built, where every machine is reachable and nothing else asks questions. A key means it still has to prove something.</p>
+  <p>Then defence in depth. The mesh keeps strangers out; a key stops a stranger already in from going further. Two independent things have to fail before anyone reaches your project. A password is one guessable thing, and guessing is now easy. <a href="/guide/en/what-is-ssh/">How keys do the proving</a> covers the mechanics.</p>
+</section>
+
+<section id="when-you-dont-need-tailscale">
+  <h2>When you don't need this at all</h2>
+  <p>If the machine and the phone are on the same Wi-Fi and always will be, skip this. The LAN address works, nothing to install, nothing to sign in to — and you lose it the moment you walk outside.</p>
+  <p>A hosted server changes the arithmetic. Its address does not move, there is no router of yours to configure, and a failed experiment cannot lock you out. The risk moves to port 22 facing the internet permanently. Some still run the mesh there, to move SSH behind a private address; others stay public and lean entirely on keys. What is not workable: a password on an exposed port.</p>
+  <p>Or if you already reach it through a network someone else runs — a work VPN — take that path: two overlapping tunnels makes debugging worse, not the connection better. Not sure which case you are in? The <a href="/guide/en/setup/">setup</a> page asks three questions and hands you a checklist.</p>
+</section>
+
+<p>The way in is settled. What is left is the thing in your hand, and what it assumes about why you are there.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="Previous" href="/guide/en/what-is-tmux/">Previous<span>Keep the agent running after you put your phone away</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="Next" href="/guide/en/why-agentmux/">Next<span>Why not Termius or Blink</span></a></nav>

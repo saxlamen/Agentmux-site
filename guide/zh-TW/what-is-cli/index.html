@@ -7,7 +7,7 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。">
+    <meta name="description" content="為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="zh_TW">
     <meta property="og:title" content="為什麼最強的 coding agent 都住在終端機裡">
-    <meta property="og:description" content="CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。">
+    <meta property="og:description" content="為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/">
-    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp">
     <meta property="article:published_time" content="2026-07-28">
-    <meta property="article:modified_time" content="2026-09-29">
+    <meta property="article:modified_time" content="2026-11-04">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="為什麼最強的 coding agent 都住在終端機裡">
-    <meta name="twitter:description" content="CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。">
-    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta name="twitter:description" content="為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "為什麼最強的 coding agent 都住在終端機裡", "description": "CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-28", "dateModified": "2026-09-29"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "為什麼最強的 coding agent 都住在終端機裡", "item": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "為什麼最強的 coding agent 都住在終端機裡", "description": "為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-28", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "為什麼最強的 coding agent 都住在終端機裡", "item": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -47,29 +47,118 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>為什麼最強的 coding agent 都住在終端機裡</h1>
-            <p>「CLI」聽起來像一種懲罰。沒有滑鼠、沒有按鈕，只有一個閃爍的游標。但這幾年最強的 coding agent 全都住在這裡——Claude Code、Codex，一個不缺。</p>
-<p>不是因為做 CLI 的人比較硬派。是終端機給了它們別的介面給不了的東西：<strong>完整的檔案系統存取與執行權限</strong>。</p>
+            <p>CLI agent 是一個用文字跟你對話的 coding agent。它跑在你自己擁有的機器上——一台 Mac、一台 Linux 主機、一台伺服器——並沿用你在那台機器上的權限：讀整個專案的檔案、執行任何指令、把結果讀回來。coding agent 住在終端機裡，是因為沒有任何別的介面能同時給你這三樣。</p>
+<p>「CLI」三個字聽起來像懲罰：沒有滑鼠、沒有按鈕、只有一個閃爍的游標。可是 Claude Code、Codex、Gemini CLI、OpenCode 全都住在這裡。不是因為做它們的人硬派，是因為終端機給了 agent 別的介面給不了的東西——<strong>完整的檔案系統存取與執行權限</strong>。同一份權限，也是它跑任何指令之前會先問你的原因。</p>
 
 <section id="terminal">
-  <h2>終端機到底是什麼</h2>
-  <p>終端機只做兩件事：接受你打進去的文字，把結果印回螢幕。沒有圖層，沒有按鈕。進去是字元，出來也是字元。</p>
-  <p>簡單到這個程度，agent 才操作得動。它打的每一行指令跟你手動打的沒有兩樣。它看到的錯誤訊息，跟你會看到的一字不差。</p>
+  <h2>終端機其實是兩層程式疊在一起</h2>
+
+  <p>這裡有兩個程式疊在一起，而初學者通常怪錯那一個。<strong>終端機</strong>是負責顯示的那一層：它畫出一格一格的字，把你的按鍵轉出去，就這樣。後面的 <strong>shell</strong>——zsh、bash、fish——等一行文字，跑它，然後把那個程式寫出來的東西印在螢幕上。</p>
+  <p>就是因為薄到這個程度，agent 才操作得動。它打的每一行指令跟你手動打的沒有兩樣；它讀到的錯誤訊息，跟你會看到的一字不差。</p>
+</section>
+
+<section id="read-the-screen">
+  <h2>螢幕上真正有意義的三樣東西</h2>
+
+  <p>這份指南後面每一篇都假設你會看螢幕。真正承載意義的是三樣，其餘都是雜訊。</p>
+
+  <pre><code>yuki@mini ~/projects/auth (main)
+$ npm test
+
+ ✓ src/session/refresh.test.ts  (6 tests)
+ ✗ src/session/expire.test.ts &gt; drops a session after expiry
+
+     Tests  1 failed | 41 passed (42)
+
+$ echo $?
+1</code></pre>
+
+  <p><strong>提示字元</strong>——第一行——告訴你：誰、在哪台機器、哪個目錄、哪個分支。當機器不在你眼前的時候，它就不再是裝飾。SSH 登入之後，它就是讓你分清楚這是自己的筆電、還是你忘記自己登進去過的那台伺服器。</p>
+  <p><strong>標準輸出</strong>，也就是 <em>stdout</em>，是那個程式寫出來的文字。第二條串流 <em>stderr</em> 分開存放，讓真正的輸出不會跟抱怨混在一起。</p>
+  <p><strong>exit status。</strong>每一條跑完的指令都留下一個整數，shell 用 <code>$?</code> 交給你。0 表示那個程式宣稱自己成功。agent 讀的就是這一行：它讀的不是「1 failed」那些字，而是那個 <code>1</code>——它的迴圈還沒有閉上的訊號。</p>
 </section>
 
 <section id="capability-boundary">
   <h2>能力邊界，不是介面美醜</h2>
-  <p>網頁版的 agent 看不到你電腦裡的任何一個檔案，它只活在瀏覽器分頁裡。IDE 外掛看得到你打開的檔案，但通常卡在「建議」層級——改不動 git，跑不動測試，更別說裝套件。</p>
-  <p>CLI agent 拿的是你自己打指令時那組權限。能讀整個 repo，能下 <code>git commit</code>，能跑測試套件，能裝依賴。Claude Code、Codex、Gemini CLI、OpenCode 全是這一類：能對整台機器下指令的 agent，不是困在沙盒裡看得到動不了的旁觀者。</p>
-  <p>這個差別沒有廠商刻意設計來討好誰。選了終端機當介面，這組權限就跟著來了。</p>
+
+  <p>網頁版的 agent 看不到你電腦裡的任何一個檔案，它只活在瀏覽器分頁裡。IDE 外掛看得到你打開的檔案，但通常卡在「建議」這一層——動不了 git，跑不了測試，更別說裝套件。</p>
+  <p>CLI agent 拿的是你自己那組權限：讀整個 repo、下 <code>git commit</code>、跑測試套件、裝依賴。三層權力跟著一起來，風險則是一路往上陡增：</p>
+  <ul>
+    <li><strong>讀。</strong>你家目錄下的每一個檔案，包含 <code>.ssh</code> 裡的金鑰。</li>
+    <li><strong>寫。</strong>在 git 管著的專案裡，改壞了，一個 <code>git checkout</code> 就救得回來；專案之外，沒有東西會幫你 rollback。</li>
+    <li><strong>執行。</strong>任何你打得出來的指令，包括 migration、force push、還有指向錯誤路徑的 <code>rm -rf</code>。</li>
+  </ul>
+  <p>這個差距沒有哪個廠商刻意設計來討好誰。選了終端機當介面，這組權限就跟著來了；其他每一個介面都扣掉了其中一部分，也因此做不了同樣的事。</p>
+</section>
+
+<section id="commands-an-agent-runs">
+  <h2>哪些指令是沙箱裡的 agent 跑不了的？</h2>
+
+  <p>「執行權限」講抽象了很容易點頭。把它們還原成螢幕上的行：</p>
+
+  <pre><code>npm test
+npx vitest run src/session/expire.test.ts
+
+git status --short
+git commit -m "fix: expire sessions on the dot"
+
+npm install date-fns@3
+npm run build
+
+psql "$DATABASE_URL" -f db/schema.sql
+curl -sf localhost:8000/health | jq .db</code></pre>
+
+  <p>這些指令搬到別人的雲端沙箱裡，要跑在哪裡？那行 <code>psql</code> 連的是一個只存在於你機器上的資料庫，用的 URL 來自一個從來沒上傳過的 <code>.env</code>。那行 <code>npm install</code> 從你 <code>.npmrc</code> 裡寫明的私有 registry 拉內部套件。那些 <code>git</code> 動作發生在一個帶著你的 remote、你的 hook、你的 signing key 的 clone 上。</p>
+  <p>沙箱裡的 agent 可以寫一份 patch 給你，但看不見那份 patch 造成了什麼結果。看不見一次 edit 的結果，就沒辦法把工作做完。</p>
 </section>
 
 <section id="concrete-example">
-  <h2>一個具體的樣子</h2>
-  <p>你丟一句「把這個 bug 修好」。agent 讀相關檔案、改 code、下 <code>npm test</code>、看到某個測試還是紅的、回頭再改、再跑一次。直到全部綠燈。全程你沒點過一個按鈕。</p>
-  <p>這條迴圈跑得完，靠的就是終端機那組執行權限。換成網頁版或 IDE 外掛，它在第二步就卡住，等你回來按下一步。</p>
+  <h2>不需要你按任何鍵就會閉上的迴圈</h2>
+
+  <p>你丟一句「把這個 bug 修好」。接著是十幾行同樣的指令，而你的手不在鍵盤上：</p>
+  <ol>
+    <li>它 grep 那條錯誤訊息，讀三個檔案，改一個。</li>
+    <li>它跑 <code>npm test</code>，讀 exit status，看到 <code>1</code>。</li>
+    <li>它縮到那一個失敗的案例，再改一次，整組重跑，拿到 <code>0</code>。</li>
+    <li>它 commit，在本地把 migration 套上去，再 curl 那個壞掉的 endpoint。</li>
+  </ol>
+  <p>整條鏈上沒有一個按鈕需要按。換成瀏覽器分頁或 IDE 外掛，它在第二步就停下：它能產出那個 edit，卻跑不了測試，於是等你去跑、再回報結果。你變成了測試執行器——這是權限的問題，不是模型強弱的問題。</p>
 </section>
 
-<p>這些 agent 可以跑在別台機器上。前提是你連得過去。</p>
+<section id="byte-stream-movable">
+  <h2>為什麼位元組串比一個視窗值錢？</h2>
+
+  <p>你螢幕上那個終端機視窗，不是程式居住的地方。程式接在一個 <strong>pseudo-terminal</strong> 上：kernel 裡一個有兩端的物件。一端寫進去位元組，另一端就出來位元組，而你的視窗只是「目前握著另一端的那個人」。三個結果跟著來：</p>
+  <ul>
+    <li><strong>可以存下來。</strong><code>npm test &gt; build.log</code> 把那串文字寫進檔案，一年後另一個程式還能讀它。GUI 的畫布是一張圖，而圖不是紀錄。</li>
+    <li><strong>可以接起來。</strong><code>git ls-files | grep .env</code> 把一個程式的輸出餵給下一個當輸入。</li>
+    <li><strong>可以搬走。</strong>那個定義裡沒有任何一句話說兩端必須在同一個地方。tmux 把 session 擱在伺服器上，你的螢幕接上去、detach、再從另一台裝置接回來。</li>
+  </ul>
+  <p>第三點才是本篇的重點。<strong>位元組串可以被轉向、存起來、重播、從別的地方接回去；渲染好的視窗不行。</strong>持久的 session、SSH、在手機上接回同一個 agent——這份指南後面每一件事，都是這個性質的推論。</p>
+</section>
+
+<section id="what-full-access-costs">
+  <h2>完整存取要付什麼代價？</h2>
+
+  <p>讓 agent 能對資料庫做 migration 的那個權限，也能把那個資料庫刪掉。它們知道這一點，所以會在工作做到一半時停下來問：「要跑這條指令嗎？」那個 prompt 不是膽小。一個什麼都不問就直接跑的 agent，等於把你的 <code>.ssh</code> 目錄和正式環境的資料庫押在你身上。prompt 畫的是第二層與第三層之間那條線，而且只可能在那個時刻畫：指令已經已知、還沒有執行。</p>
+  <p>兩個習慣擋掉大部分風險。<strong>讀指令本身，不要讀摘要：</strong>「我要清掉 build cache」是一段描述，只有它下面那一行才有後果。<strong>同一類只批一次：</strong>一天四十次要你准許跑測試，就用一條規則讓 <code>npm test</code> 直接通過。</p>
+  <p>不對稱才是重點。一個你本來就會准許的 prompt 花你十秒。一個你誤准許、跑在正式資料庫上的指令，花你一天和一次 restore。這個比例就是 <a href="/guide/zh-TW/permission-review/">AI 自動權限審查</a>存在的理由：先 blacklist，再 allowlist，剩下的交給模型判斷。</p>
+</section>
+
+<section id="when-a-gui-is-better">
+  <h2>什麼時候 GUI 確實是比較好的選擇</h2>
+
+  <p>終端機不是對 code 做任何事的正確介面。下面這些事情，用文字做就是比較差：</p>
+  <ul>
+    <li><strong>即時 debugger。</strong>設 breakpoint、單步走過那個迴圈、在第四個 frame 看一個變數。</li>
+    <li><strong>任何視覺的東西。</strong>排版、間距、一個差一點點的顏色。叫 agent 描述一張截圖，比你自己看一眼差得多。</li>
+    <li><strong>讀一個大的 diff。</strong>兩千行並排著看——所以就算 code 是 agent 寫的，你多半會在 GUI 裡 review 它的工作。</li>
+    <li><strong>還在學的時候。</strong>編輯器在你寫錯的那個 token 下面畫一條線，比一整牆的 stack trace 教得快。</li>
+  </ul>
+  <p>分界不是熟練與懶惰之爭，是「你在場、你在開」對比「它在跑、你去看」。坐在桌前，IDE 常常是比較好的那個工具；而把 CLI agent 用到最好的人，兩邊都留著。<a href="/guide/zh-TW/why-not-gui-ide/">那條分工線怎麼畫</a>，自己就是一篇。</p>
+</section>
+
+<p>終端機把 agent 放進你自己的機器，而它的輸出是可以住在任何地方的字元——所以那台機器不必是你正坐著的這一台。<a href="/guide/zh-TW/what-is-ssh/">從別的地方連過去，是 SSH 的工作</a>。</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="上一篇" href="/guide/zh-TW/why-not-gui-ide/">上一篇<span>為什麼不是 Cursor / VS Code</span></a><a class="pager-next" data-tracks="beginner" data-label="下一篇" href="/guide/zh-TW/what-is-ssh/">下一篇<span>一條通往另一台電腦的加密隧道</span></a></nav>

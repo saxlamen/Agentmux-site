@@ -1,8 +1,8 @@
-<p>If you already write code with a CLI agent — Claude Code, Codex, whichever — you have probably noticed something odd. It does the work. You are the one tied down.</p>
-<p>This article is about what that tie is, why it comes apart, and what your day looks like afterwards.</p>
+<p>A CLI agent's real cost is standby, not typing: thirty seconds of input, then hours you can't leave. Run it on a machine that stays on, keep the session alive with tmux, and reattach over SSH and Tailscale. The agent keeps working while you sleep; standby becomes a phone and fifteen seconds.</p>
+<p>You have probably noticed it: the agent does the work, and you are the one tied down. What follows is what that tie is, why it comes apart, and what your day looks like afterwards.</p>
 
 <section id="the-cycle">
-  <h2>First, see where the time actually goes</h2>
+  <h2>Where does the time actually go?</h2>
 
   <p>A round of work with a CLI agent almost always has the same rhythm:</p>
   <pre><code>You talk for 30 seconds → it runs for 5–20 minutes → it needs you to decide something → repeat</code></pre>
@@ -20,7 +20,7 @@
 </section>
 
 <section id="three-parts">
-  <h2>Three pieces, each undoing one tie</h2>
+  <h2>What three tools undo the tie?</h2>
 
   <p>The tie is not one solid thing. It is three layers, and each has a standard tool, decades old, that takes it apart. On their own all three are unremarkable. Stacked, they are the whole trick:</p>
 
@@ -57,7 +57,7 @@
 </section>
 
 <section id="alternatives">
-  <h2>What about the other approaches?</h2>
+  <h2>What else reaches your agent when you're away?</h2>
 
   <p>There is more than one road to reaching your own agent remotely. Line them up against the same criteria and the differences show — particularly the last column, which is where people find out they are stuck, usually too late.</p>
 

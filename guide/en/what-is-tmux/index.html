@@ -7,7 +7,7 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="When SSH drops, the processes you started get SIGHUP and die. tmux leaves the session living on the server so you&#x27;re only ever attaching to it — and a dropped connection no longer interrupts the agent.">
+    <meta name="description" content="What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-tmux/">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-tmux/">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="Keep the agent running after you put your phone away">
-    <meta property="og:description" content="When SSH drops, the processes you started get SIGHUP and die. tmux leaves the session living on the server so you&#x27;re only ever attaching to it — and a dropped connection no longer interrupts the agent.">
+    <meta property="og:description" content="What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-tmux/">
-    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
     <meta property="article:published_time" content="2026-07-30">
-    <meta property="article:modified_time" content="2026-09-29">
+    <meta property="article:modified_time" content="2026-11-04">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Keep the agent running after you put your phone away">
-    <meta name="twitter:description" content="When SSH drops, the processes you started get SIGHUP and die. tmux leaves the session living on the server so you&#x27;re only ever attaching to it — and a dropped connection no longer interrupts the agent.">
-    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta name="twitter:description" content="What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Keep the agent running after you put your phone away", "description": "When SSH drops, the processes you started get SIGHUP and die. tmux leaves the session living on the server so you're only ever attaching to it — and a dropped connection no longer interrupts the agent.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tmux/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tmux/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-09-29"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Keep the agent running after you put your phone away", "item": "https://agentmux.saxcave.cc/guide/en/what-is-tmux/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Keep the agent running after you put your phone away", "description": "What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tmux/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tmux/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Keep the agent running after you put your phone away", "item": "https://agentmux.saxcave.cc/guide/en/what-is-tmux/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -47,29 +47,107 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Keep the agent running after you put your phone away</h1>
-            <p>You put your phone away, the SSH tunnel drops, and the agent dies with it. That is mechanics, not bad luck.</p>
-<p>When the connection goes, the pseudo-terminal your login was using is closed. The kernel then sends <strong>SIGHUP</strong> — hangup — to every process attached to it. That means your shell, and the agent you started inside that shell. Unless a process has gone out of its way to handle that signal, the default is to terminate. Your agent gets no chance to say goodbye, and everything half-finished is thrown away.</p>
+            <p>tmux is a terminal multiplexer: it keeps a terminal session running on the machine you connect to, rather than inside the connection you came through. For an AI coding agent, that is the difference between surviving and dying. SSH connections drop — a locked phone, a lost signal — and a dropped SSH normally kills the agent's shell.</p>
+<p>You put your phone away, the SSH tunnel drops, and the agent dies with it. That is mechanics, not bad luck.</p>
+<p>When the connection goes, the pseudo-terminal your login was using is closed. The kernel sends <strong>SIGHUP</strong> — hangup — to every process attached to it: your shell, and the agent inside it. Unless a process goes out of its way to handle that signal, the default is to terminate. Everything half-finished is thrown away. <a href="/guide/en/what-is-ssh/">SSH</a> was only the road the connection travelled on, and nobody meant it to hold the agent up.</p>
 
 <section id="session-elsewhere">
   <h2>tmux lets the session live somewhere else</h2>
   <p>tmux opens a session on the server. Your agent runs inside that session, not inside the SSH connection that keeps dropping.</p>
-  <p>When your phone attaches, it is opening a window onto what that session looks like right now. When the connection drops, the window is what disappears. The session stays on the server, the agent in it carries on, and nothing was interrupted.</p>
+  <p>The mechanism is a process. The first time you type <code>tmux</code>, it starts a background program — the tmux <em>server</em> — that stays alive under your user account. Sessions belong to it, and each one gets its pseudo-terminal from that process, not from <code>sshd</code>.</p>
+  <p>So when the connection goes, <code>sshd</code> closes its own pseudo-terminal, and only your tmux client is attached to it. The client exits. The session does not notice.</p>
+</section>
+
+<section id="session-window-pane">
+  <h2>What is a session, a window, a pane?</h2>
+  <p>Three nouns, used as one, and only the first keeps your agent alive.</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>Word</th><th>What it is</th><th>What it means for an agent</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>session</td>
+        <td>A named place to work on that machine, holding its own processes</td>
+        <td>The thing that survives. Name it once</td>
+      </tr>
+      <tr>
+        <td>window</td>
+        <td>A tab inside a session; most people give each agent one</td>
+        <td>Switch away and it keeps running</td>
+      </tr>
+      <tr>
+        <td>pane</td>
+        <td>A split inside a window: agent left, tests right</td>
+        <td>Two things visible on a phone screen</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>A fourth word: a <strong>client</strong> is the terminal looking at a session. Zero clients is normal — a detached session, still running, nobody watching.</p>
+  <p>Names matter. <code>tmux new -s work</code> can be found again a week later; an unnamed session is just a number.</p>
 </section>
 
 <section id="detach-attach">
   <h2>Detach and attach are the same as turning off a television</h2>
   <p>Switch a TV off and the picture in your living room is gone. The broadcast never stopped. Turn it back on and you are on the same channel, wherever it has got to by now.</p>
   <p>tmux calls those two actions <strong>detach</strong> and <strong>attach</strong> — close the window, open it again. Neither touches what is running on the machine.</p>
+  <p>The analogy hides one thing, in your favour. A television off learned nothing while off; a tmux session kept its output. Attach an hour later and you can read the hour you missed, scrollback and all.</p>
+</section>
+
+<section id="commands-you-type">
+  <h2>Which commands do I actually type?</h2>
+  <p>Four to start with:</p>
+  <pre><code>tmux new -s work          # make a session named work
+claude                    # start the agent inside it
+tmux ls                   # list sessions: work: 1 windows
+tmux attach -t work       # look at it again, from anywhere</code></pre>
+  <p><strong>Detach is a key press, not a command.</strong> Press Ctrl-b, let go, then press d. That first key is the <em>prefix</em>: tmux takes it, and the next key says what to do. Two more are worth learning:</p>
+  <ul>
+    <li><code>Ctrl-b d</code> — detach. The terminal becomes an ordinary shell again; the session runs on.</li>
+    <li><code>Ctrl-b c</code> makes a new window; <code>Ctrl-b %</code> splits a window into panes.</li>
+  </ul>
+  <p>If the machine answers <code>tmux: command not found</code>, the fix is on the <a href="/guide/en/troubleshooting/">troubleshooting page</a>.</p>
 </section>
 
 <section id="what-it-means-for-agents">
   <h2>What this means for an agent</h2>
   <p>You lose signal on the train. Again in a lift. Again switching Wi-Fi. Attach to the same tmux session each time and you can drop ten times without the agent being interrupted once. It does not know you ever disconnected. It was never living inside your connection.</p>
+  <p>The three phone-side cases people worry about are one event three times over:</p>
+  <ul>
+    <li><strong>The phone locks.</strong> The system suspends the app, the connection is torn down, nothing reaches the agent. It kept working.</li>
+    <li><strong>No signal for twenty minutes.</strong> The connection dies quietly, the tmux client with it, the session left detached and untouched.</li>
+    <li><strong>The app is killed or swiped away.</strong> A process on the phone is gone; the session was never inside it. Close a laptop's terminal window and tmux does the same.</li>
+  </ul>
+  <p>Detach is not pause. While you are gone the agent keeps reading files, editing them, and spending your quota — which is the point, and the reason to answer a waiting prompt before you walk off.</p>
 </section>
 
-<p>Knowing what tmux is for is enough. <strong>Agentmux handles the installing</strong> — once it connects, it works out whether your machine uses apt, dnf, pacman, or brew, and sets it up for you.</p>
+<section id="two-devices">
+  <h2>Can two devices watch the same session?</h2>
+  <p>Yes, and it is not a party trick. Several clients can attach to one session at once. Start the job from the phone in a queue, attach from the laptop at work, and you are looking at the same screen mid-sentence — not a copy.</p>
+  <p>Keys from either device go to the same program, so one person types at a time. Attaching moves nothing: the session stays on the machine that made it, which is why phone and laptop agree. A session you started by hand in a laptop terminal is there for the app too.</p>
+</section>
 
-<p>So the agent survives. One question left: how do you get in from outside?</p>
+<section id="inside-the-app">
+  <h2>How the app handles these sessions</h2>
+  <p>Agentmux is built on the same split. A disconnect on the phone's side is a detach, not a stop: reconnect and you are back at that session, further along. Type the commands above in its terminal and it is still the same session.</p>
+  <p>Two chores it takes off your hands. If the machine has no tmux, the app installs it, working out whether your machine uses apt, yum, dnf, pacman, apk, or brew. If an agent sits where the shell can't see it, the app probes that PATH problem. Persistent sessions are in the free single-server tier, so nothing here is paid. The <a href="/guide/en/setup/">setup page</a> turns it into a checklist.</p>
+</section>
+
+<section id="what-tmux-does-not-do">
+  <h2>What tmux does not do</h2>
+  <p>tmux answers one question — will this process outlive my connection — and leaves the rest alone.</p>
+  <ul>
+    <li><strong>A reboot of the server ends every session.</strong> They live in the tmux server's memory, so a power cut or an unattended upgrade ends the agent with them. What survives is what reached the disk: files changed, commits made, the branch you were left on. Git is the save file, not tmux.</li>
+    <li><strong>It does not undo a command the agent already ran.</strong> A command that ran has run. tmux kept the output; it does not roll back the files.</li>
+    <li><strong><code>tmux kill-session -t work</code> really does kill it.</strong> So does quitting the last window, or the agent crashing. <code>tmux kill-server</code> takes every session with it. None of that asks first.</li>
+    <li><strong>It does not keep the machine awake.</strong> A Mac mini that stays on is a different case from a laptop that sleeps when the lid shuts — and a machine that powers off loses the session.</li>
+  </ul>
+</section>
+
+<p>Two minutes proves the article. SSH in, run <code>tmux new -s work</code>, start an agent, press Ctrl-b then d, close the connection, and run <code>tmux attach -t work</code>: the same screen, further along, one question waiting.</p>
+<p>So the agent survives you putting the phone away. One problem left: getting in from outside without opening a port to the whole internet. <a href="/guide/en/what-is-tailscale/">Tailscale answers that</a>.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/what-is-ssh/">Previous · I&#x27;ve never opened a terminal<span>An encrypted tunnel to another computer</span></a><a class="pager-prev" data-tracks="cliuser" data-label="Previous" href="/guide/en/why-remote-vibe-coding/">Previous · I already run CLI agents<span>Your AI should be working while you sleep</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="Next" href="/guide/en/what-is-tailscale/">Next<span>Don&#x27;t open a port to the public internet</span></a></nav>

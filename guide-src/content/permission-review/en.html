@@ -1,4 +1,5 @@
-<p>Halfway through a task, the agent stops to ask "Run this command?" — and you happen to be away from the screen. The whole job sits there waiting for you. AI Permission Review reads these permission prompts for you: dangerous ones are held for you, safe ones get a suggestion or a key press on your behalf.</p>
+<p>AI Permission Review is how Agentmux answers the permission prompt an agent raises on a screen you are not looking at. Each request is checked against a blacklist that blocks dangerous commands, an allowlist of commands you already trust, and then an AI judgement. Depending on the session's mode, it suggests the key or presses it for you.</p>
+<p>Halfway through a task, the agent stops to ask "Run this command?" — and you happen to be away from the screen. The whole job sits there waiting for you. That is the moment it is built for.</p>
 <p>It does exactly one thing: answer the agent's permission prompts, one key at a time. It never types commands for you and never touches anything beyond what's on screen.</p>
 
 <figure class="flow" aria-label="How Permission Review decides">
@@ -14,7 +15,7 @@
 </figure>
 
 <section id="when-it-starts">
-  <h2>When it starts</h2>
+  <h2>It starts only when an agent stops and waits</h2>
   <p>It only starts when an agent stops and waits for you. Agentmux already tracks the state of agents like Claude Code and Codex. When a prompt such as "Allow this?" or "Pick 1 or 2" appears, the session is marked as waiting, and the review begins at that moment.</p>
   <p>These also need to be true:</p>
   <ul>
@@ -27,13 +28,13 @@
 </section>
 
 <section id="read-the-screen">
-  <h2>Step one: read the screen</h2>
+  <h2>It reads the current prompt, not the scrollback</h2>
   <p>It first picks out the current prompt on screen: the command to run, the question itself, and the choices you can pick. Older content that has scrolled up doesn't count.</p>
   <p>Before anything goes to the AI, text that looks like a password, API key, or token is redacted. If redaction fails, the original text is not sent, and no key is pressed this time.</p>
 </section>
 
 <section id="blacklist">
-  <h2>First check: the blacklist</h2>
+  <h2>The blacklist runs first, on your phone</h2>
   <p>The blacklist is matched right on your phone and always runs first. A match is never sent to the AI; it's handed straight to you. The built-in rules cover the most dangerous kinds of operations:</p>
   <ul>
     <li><code>rm -rf</code> on <code>/</code>, <code>~</code>, or your home directory</li>
@@ -47,14 +48,14 @@
 </section>
 
 <section id="allowlist">
-  <h2>Second check: the allowlist</h2>
+  <h2>The allowlist decides without the AI</h2>
   <p>Some commands you approve every day, like running tests or a build. Add them to the allowlist, and the next match is decided right on your phone — which key to press, with no wait for the AI and no API usage.</p>
   <p>In Auto Reply mode, you can also turn on "Allow all commands in this session" for a single session. It skips AI judgment, but the blacklist still applies, and it turns off when the session ends.</p>
   <p>If the allowlist matches but there's no clear, safe key to press on screen, the prompt is handed to you.</p>
 </section>
 
 <section id="ai-judgment">
-  <h2>Third check: AI judgment</h2>
+  <h2>What does the AI actually decide?</h2>
   <p>Only prompts that match neither list go to the AI. It sees the redacted screen and your <strong>Main Intent</strong> — what you want the agent to do this time, such as "fix the login page tests".</p>
   <p>You can choose between two engines:</p>
   <ul>
@@ -65,7 +66,7 @@
 </section>
 
 <section id="finish">
-  <h2>Finally: suggest, or press for you</h2>
+  <h2>Advisor suggests, Auto Reply presses the key</h2>
   <p>Each session has its own mode:</p>
   <ul>
     <li><strong>Advisor</strong> (default): suggestions only. A notice at the top of the screen tells you what it recommends, with an Accept button next to it. Nothing is sent until you tap it.</li>
@@ -76,7 +77,7 @@
 </section>
 
 <section id="handed-to-you">
-  <h2>When it always hands the prompt to you</h2>
+  <h2>When does it hand the prompt back to you?</h2>
   <ul>
     <li>A blacklist rule matched.</li>
     <li>The AI said deny, or wasn't sure.</li>
@@ -89,7 +90,7 @@
 </section>
 
 <section id="get-started">
-  <h2>Getting started</h2>
+  <h2>How do I turn it on?</h2>
   <p>Before you start, have one of these ready:</p>
   <ul>
     <li>An API key for the JEV engine, from <a href="https://openrouter.ai/keys">OpenRouter</a> or TypeSafe.</li>
@@ -105,6 +106,6 @@
 </section>
 
 <section id="privacy">
-  <h2>Where your data goes</h2>
+  <h2>What data leaves your device?</h2>
   <p>Only redacted screen excerpts and your Main Intent are sent, to the AI service you set up, using your own API key. If "Use My Latest Prompt" is on, the prompts you send in that tab become the Main Intent and are sent too. Agentmux doesn't provide or relay any AI service. A record of each decision stays on your device only; you can review or clear it in the audit log. Model reasoning is never stored.</p>
 </section>

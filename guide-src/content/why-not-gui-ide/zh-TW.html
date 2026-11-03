@@ -1,5 +1,5 @@
-<p>你已經有 Cursor 了，或者 VS Code 加一個 agent 外掛，用得也很順。那為什麼要為了同一件事去學 SSH 和 tmux？</p>
-<p>跟哪個比較好用無關。這是架構上的差別，而且只在你不在電腦前面的時候才現形。</p>
+<p>Cursor 或 VS Code 裡的 agent 長在 GUI 程式上，需要螢幕、已登入的桌面，和坐在前面的人。CLI agent 的介面是字元流，tmux 能把字元整塊存下來，畫到任何螢幕。這是架構差異，不是偏好。</p>
+<p>你已經有 Cursor，或者 VS Code 加一個 agent 外掛，用得也很順，那為什麼要為了同一件事去學 SSH 和 tmux？答案跟哪個比較好用無關，只在你不在電腦前面的時候才現形。</p>
 
 <section id="architecture">
   <h2>差別在架構，不在偏好</h2>
@@ -11,7 +11,7 @@
 </section>
 
 <section id="same-scenario">
-  <h2>同一個情境，跑兩次</h2>
+  <h2>合上筆電之後會發生什麼事？</h2>
 
   <p>假設你在下班前丟了一個大重構給 agent。估計要跑二十分鐘以上，而你現在要走了。</p>
 
@@ -51,7 +51,7 @@
 </section>
 
 <section id="honest-ending">
-  <h2>誠實地收尾</h2>
+  <h2>坐在桌前，IDE 常常更好用</h2>
 
   <p>GUI IDE 不差。坐在桌前寫 code，IDE 常常更好用——跳轉定義、重構、除錯器，這些手機上都做不到。分工比想像中單純：<strong>IDE 適合「你在場、你主導」，CLI agent 加遠端適合「它在跑、你抽查」。</strong>效率高的人兩個都用。白天在 Mac 上用 IDE，出門用 Agentmux 接回同一個專案的同一個 agent。</p>
   <p>Agentmux 不是要取代你的 IDE。它取代的是<strong>坐在椅子上等</strong>。</p>
