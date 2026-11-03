@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 1108" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="13">
+<rect width="1460" height="1108" fill="#090d0f"/>
+<text x="26" y="34" fill="#f4fbf7" font-size="20">Agentmux site map</text>
+<text x="26" y="56" fill="#6f817a">B = beginner track, C = CLI-user track | sizes are English words / Traditional Chinese characters, code excluded</text>
+<rect x="26" y="92" width="200" height="42" rx="10" fill="#101719" stroke="rgba(214,255,236,0.2)"/>
+<text x="40" y="115" fill="#f4fbf7">/</text>
+<text x="40" y="135" fill="#8fa79d">home (en, x-default)</text>
+<rect x="26" y="144" width="200" height="42" rx="10" fill="#101719" stroke="rgba(214,255,236,0.2)"/>
+<text x="40" y="167" fill="#f4fbf7">/zh-TW/</text>
+<text x="40" y="187" fill="#8fa79d">home zh-TW</text>
+<rect x="26" y="196" width="200" height="42" rx="10" fill="#101719" stroke="rgba(214,255,236,0.2)"/>
+<text x="40" y="219" fill="#f4fbf7">/zh-Hans/</text>
+<text x="40" y="239" fill="#8fa79d">home zh-Hans</text>
+<rect x="26" y="248" width="200" height="42" rx="10" fill="#101719" stroke="rgba(214,255,236,0.2)"/>
+<text x="40" y="271" fill="#f4fbf7">/ja/</text>
+<text x="40" y="291" fill="#8fa79d">home ja</text>
+<rect x="26" y="300" width="200" height="42" rx="10" fill="#101719" stroke="rgba(214,255,236,0.2)"/>
+<text x="40" y="323" fill="#f4fbf7">/privacy.html</text>
+<text x="40" y="343" fill="#8fa79d">privacy policy</text>
+<rect x="26" y="364" width="200" height="42" rx="10" fill="#182326" stroke="rgba(214,255,236,0.2)"/>
+<text x="40" y="387" fill="#f4fbf7">/guide/</text>
+<text x="40" y="407" fill="#8fa79d">language picker</text>
+<rect x="300" y="130" width="190" height="42" rx="10" fill="#182326" stroke="rgba(214,255,236,0.2)"/>
+<text x="314" y="153" fill="#f4fbf7">/guide/en/</text>
+<text x="314" y="173" fill="#8fa79d">x-default</text>
+<rect x="300" y="192" width="190" height="42" rx="10" fill="#182326" stroke="rgba(214,255,236,0.2)"/>
+<text x="314" y="215" fill="#f4fbf7">/guide/zh-TW/</text>
+<text x="314" y="235" fill="#8fa79d">same articles</text>
+<path d="M226 385 C 272 385 254 151 300 151" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.4"/>
+<path d="M226 385 C 272 385 254 213 300 213" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.4"/>
+<text x="600" y="84" fill="#6f817a">/guide/&lt;lang&gt;/... exists in en and zh-TW</text>
+<rect x="600" y="92" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="115" fill="#f4fbf7">Standby is the real cost</text>
+<text x="614" y="135" fill="#8fa79d">BC | 768 w / 1080 zh</text>
+<text x="920" y="126" fill="#6f817a">/guide/&lt;lang&gt;/why-remote-vibe-coding/</text>
+<path d="M490 151 C 536 151 554 121 600 121" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="166" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="189" fill="#f4fbf7">Why not Cursor / VS Code</text>
+<text x="614" y="209" fill="#8fa79d">B | 711 w / 929 zh</text>
+<text x="920" y="200" fill="#6f817a">/guide/&lt;lang&gt;/why-not-gui-ide/</text>
+<path d="M490 151 C 536 151 554 195 600 195" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="240" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="263" fill="#f4fbf7">What is a CLI agent</text>
+<text x="614" y="283" fill="#8fa79d">B | 1204 w / 1993 zh</text>
+<text x="920" y="274" fill="#6f817a">/guide/&lt;lang&gt;/what-is-cli/</text>
+<path d="M490 151 C 536 151 554 269 600 269" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="314" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="337" fill="#f4fbf7">What is SSH</text>
+<text x="614" y="357" fill="#8fa79d">B | 1149 w / 1817 zh</text>
+<text x="920" y="348" fill="#6f817a">/guide/&lt;lang&gt;/what-is-ssh/</text>
+<path d="M490 151 C 536 151 554 343 600 343" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="388" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="411" fill="#f4fbf7">What is tmux</text>
+<text x="614" y="431" fill="#8fa79d">BC | 1101 w / 1730 zh</text>
+<text x="920" y="422" fill="#6f817a">/guide/&lt;lang&gt;/what-is-tmux/</text>
+<path d="M490 151 C 536 151 554 417 600 417" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="462" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="485" fill="#f4fbf7">What is Tailscale</text>
+<text x="614" y="505" fill="#8fa79d">BC | 1202 w / 2015 zh</text>
+<text x="920" y="496" fill="#6f817a">/guide/&lt;lang&gt;/what-is-tailscale/</text>
+<path d="M490 151 C 536 151 554 491 600 491" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="536" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="559" fill="#f4fbf7">vs Termius / Blink</text>
+<text x="614" y="579" fill="#8fa79d">BC | 1194 w / 1762 zh</text>
+<text x="920" y="570" fill="#6f817a">/guide/&lt;lang&gt;/why-agentmux/</text>
+<path d="M490 151 C 536 151 554 565 600 565" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="610" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="633" fill="#f4fbf7">Setup wizard</text>
+<text x="614" y="653" fill="#8fa79d">BC | 744 w / 874 zh</text>
+<text x="920" y="644" fill="#6f817a">/guide/&lt;lang&gt;/setup/</text>
+<path d="M490 151 C 536 151 554 639 600 639" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="684" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="707" fill="#f4fbf7">Claude Code on iPhone</text>
+<text x="614" y="727" fill="#8fa79d">C | 1311 w / 2205 zh</text>
+<text x="920" y="718" fill="#6f817a">/guide/&lt;lang&gt;/claude-code-on-iphone/</text>
+<path d="M490 151 C 536 151 554 713 600 713" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="758" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="781" fill="#f4fbf7">AI Permission Review</text>
+<text x="614" y="801" fill="#8fa79d">- | 1257 w / 1826 zh</text>
+<text x="920" y="792" fill="#6f817a">/guide/&lt;lang&gt;/permission-review/</text>
+<path d="M490 151 C 536 151 554 787 600 787" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<rect x="600" y="832" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
+<text x="614" y="855" fill="#f4fbf7">Troubleshooting (8 fixes)</text>
+<text x="614" y="875" fill="#8fa79d">- | 3074 w / 4441 zh</text>
+<text x="920" y="866" fill="#6f817a">/guide/&lt;lang&gt;/troubleshooting/</text>
+<path d="M490 151 C 536 151 554 861 600 861" fill="none" stroke="rgba(214,255,236,0.28)" stroke-width="1.4"/>
+<path d="M395 213 C 441 213 544 886 590 886" fill="none" stroke="rgba(214,255,236,0.16)" stroke-width="1.4"/>
+<text x="26" y="930" fill="#f4fbf7" font-size="15">Reading orders (pager prev/next)</text>
+<text x="26" y="956" fill="#8fa79d">beginner: Standby is the real cost  &gt;  Why not Cursor / VS Code  &gt;  What is a CLI agent  &gt;  What is SSH  &gt;  What is tmux  &gt;  What is Tailscale  &gt;  vs Termius / Blink  &gt;  Setup wizard</text>
+<text x="26" y="982" fill="#8fa79d">cliuser: Standby is the real cost  &gt;  What is tmux  &gt;  What is Tailscale  &gt;  vs Termius / Blink  &gt;  Setup wizard  &gt;  Claude Code on iPhone</text>
+<text x="26" y="1008" fill="#6f817a">further reading: cliuser also gets Why not Cursor / VS Code; beginner also gets Claude Code on iPhone</text>
+</svg>

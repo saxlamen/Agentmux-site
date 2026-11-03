@@ -99,6 +99,17 @@ for a Traditional Chinese reader. Keep technical terms untranslated (tmux, SSH,
 session, agent, commit, port), keep commands in English, and never translate an
 English idiom literally.
 
+It also has to read as written in Taiwan: preferred term first, never the
+mainland one — 鎖定螢幕 not 鎖屏, 網路 not 網絡, 使用者 not 用戶, 儲存 not
+保存, 程式碼 not 代碼, 介面 not 界面, 圖示 not 圖標, 支援 not 支持, 快取 not
+緩存, 記憶體 not 內存, 程序 not 進程, 設定 not 設置, 載入 not 加載, 影片 not
+視頻, 硬碟 not 硬盤, 滑鼠 not 鼠標, 電腦 not 計算機. And no simplified
+characters anywhere in a zh-TW file — the site has a separate zh-Hans page for
+that orthography.
+
+`guide-src/tests/test_language.py` checks both rules. Run it after writing any
+zh-TW copy: `python3 guide-src/tests/test_language.py`.
+
 ## Links and the closing hook
 
 Two to four internal links per article, using the current language's path
