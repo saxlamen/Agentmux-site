@@ -72,9 +72,9 @@ def svg(config: dict) -> str:
     legend_rows = rows(config)
     height = 150 + len(slugs) * (card_height + gap) + 40 + 26 * (len(legend_rows) + 2)
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
-           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 %d"'
+           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1230 %d"'
            ' font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="13">' % height,
-           '<rect width="1460" height="%d" fill="#090d0f"/>' % height,
+           '<rect width="1230" height="%d" fill="#090d0f"/>' % height,
            '<text x="26" y="34" fill="#f4fbf7" font-size="20">Agentmux site map</text>',
            '<text x="26" y="56" fill="#6f817a">B = beginner track, C = CLI-user track | '
            'sizes are English words / Traditional Chinese characters, code excluded</text>']

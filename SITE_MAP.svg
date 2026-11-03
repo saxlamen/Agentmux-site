@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 1108" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="13">
-<rect width="1460" height="1108" fill="#090d0f"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1230 1108" font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="13">
+<rect width="1230" height="1108" fill="#090d0f"/>
 <text x="26" y="34" fill="#f4fbf7" font-size="20">Agentmux site map</text>
 <text x="26" y="56" fill="#6f817a">B = beginner track, C = CLI-user track | sizes are English words / Traditional Chinese characters, code excluded</text>
 <rect x="26" y="92" width="200" height="42" rx="10" fill="#101719" stroke="rgba(214,255,236,0.2)"/>
