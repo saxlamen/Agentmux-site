@@ -18,6 +18,7 @@ SRC = Path(__file__).resolve().parent
 WEB_ROOT = SRC.parent
 OUT_SVG = WEB_ROOT / "SITE_MAP.svg"
 OUT_MD = WEB_ROOT / "SITE_MAP.md"
+CARD_X = 600  # left edge of the article cards; no connector may enter from here right
 
 HOME_PAGES = [("/", "home (en, x-default)"), ("/zh-TW/", "home zh-TW"), ("/zh-Hans/", "home zh-Hans"),
               ("/ja/", "home ja"), ("/privacy.html", "privacy policy")]
@@ -87,6 +88,9 @@ def svg(config: dict) -> str:
             out.append('<text x="%d" y="%d" fill="#8fa79d">%s</text>' % (x + 14, y + 43, html.escape(sub)))
 
     def curve(x1, y1, x2, y2, colour="rgba(214,255,236,0.4)"):
+        if x1 >= CARD_X or x2 >= CARD_X:
+            raise AssertionError("connectors must stay left of the card column (x < %d): "
+                                 "a line emitted after its card cuts the title in half" % CARD_X)
         out.append('<path d="M%d %d C %d %d %d %d %d %d" fill="none" stroke="%s" stroke-width="1.4"/>'
                    % (x1, y1, x1 + 46, y1, x2 - 46, y2, x2, y2, colour))
 
@@ -104,17 +108,23 @@ def svg(config: dict) -> str:
     curve(226, guide_y + 21, 300, 151)
     curve(226, guide_y + 21, 300, 213)
 
-    # right column: one card per article, in guide reading order. One edge per
-    # card from the English index; every card also exists under /guide/zh-TW/, so
-    # the URLs say <lang> rather than drawing the same edge twice.
-    cards_top = 92
+    # right column: one card per article, in guide reading order. Every card also
+    # exists under /guide/zh-TW/, so the URLs say <lang> rather than drawing the
+    # same edge twice. A spine plus short stubs, not a curved fan: the fan's
+    # control points pushed the lines through the card column and cut the titles
+    # in half ("Cla e Code on iPhone"). Lines stop at the card edge.
+    cards_top, spine, card_x = 92, 552, CARD_X
     out.append('<text x="600" y="84" fill="#6f817a">/guide/&lt;lang&gt;/... exists in en and zh-TW</text>')
+    mids = [cards_top + index * (card_height + gap) + card_height // 2 for index in range(len(slugs))]
+    out.append('<path d="M490 151 H%d M490 213 H%d M%d 151 V%d" fill="none"'
+               ' stroke="rgba(214,255,236,0.45)" stroke-width="1.4"/>' % (spine, spine, spine, mids[-1]))
     for index, slug in enumerate(slugs):
         cy = cards_top + index * (card_height + gap)
-        box(600, cy, 300, card_height, LABEL.get(slug, slug), "%s | %s" % (track_of(config, slug), size(slug)))
+        box(card_x, cy, 300, card_height, LABEL.get(slug, slug), "%s | %s" % (track_of(config, slug), size(slug)))
         out.append('<text x="920" y="%d" fill="#6f817a">/guide/&lt;lang&gt;/%s/</text>' % (cy + 34, slug))
-        curve(490, 151, 600, cy + card_height // 2, "rgba(214,255,236,0.28)")
-    curve(395, 213, 590, cards_top + len(slugs) * (card_height + gap) - 20, "rgba(214,255,236,0.16)")
+        out.append('<path d="M%d %d H%d" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.3"/>'
+                   % (spine, mids[index], card_x - 8))
+        out.append('<circle cx="%d" cy="%d" r="2.4" fill="rgba(214,255,236,0.6)"/>' % (card_x - 8, mids[index]))
 
     # legend: the two reading orders, as arrows
     legend_y = cards_top + len(slugs) * (card_height + gap) + 24
