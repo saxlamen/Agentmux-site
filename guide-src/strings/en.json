@@ -32,15 +32,15 @@
   "articles": {
     "why-remote-vibe-coding": {
       "title": "Your AI should be working while you sleep",
-      "description": "What a CLI agent really costs you is not typing time — it's standby time. The CLI, tmux, and SSH plus Tailscale each undo one layer of that, taking standby from a single laptop down to the phone in your pocket."
+      "description": "The cost of running agents remotely is standby: the agent waits on you. Three parts move that wait into your pocket."
     },
     "why-not-gui-ide": {
       "title": "Why not Cursor or VS Code",
-      "description": "An agent inside a GUI IDE is tied to a process that needs a screen. A CLI agent's interface is a byte stream you can reattach to. That's an architectural difference, not a matter of taste."
+      "description": "On a desktop the IDE agent usually wins. On a phone a terminal beats it, because its interface is a byte stream."
     },
     "troubleshooting": {
       "title": "Stuck? Start here",
-      "description": "Can't connect, key rejected, tmux not found, agent command missing — the eight things that most often go wrong when setting up remote development, and how to fix each one."
+      "description": "SSH refused, key rejected, tmux missing, claude not found: eight real failures, each with cause and the fix to type."
     },
     "what-is-cli": {
       "title": "Why the strongest coding agents live in the terminal",
@@ -79,7 +79,7 @@
     },
     "permission-review": {
       "title": "AI Permission Review: who answers when your agent asks",
-      "description": "When an agent stops to ask \"Run this?\", AI Permission Review blocks dangerous commands with a blacklist, lets through the ones you trust with an allowlist, sends the rest to AI, and then suggests or presses the key depending on your mode. Every step, from trigger to decision."
+      "description": "Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides."
     }
   }
 }

@@ -32,7 +32,7 @@
   "articles": {
     "why-remote-vibe-coding": {
       "title": "你的 AI 應該在你睡覺時工作",
-      "description": "CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。"
+      "description": "遠端跑 agent 真正的成本是待命。CLI、tmux、SSH＋Tailscale 三個零件，把待命從筆電搬到口袋裡的手機。"
     },
     "why-not-gui-ide": {
       "title": "為什麼不是 Cursor / VS Code",
@@ -74,12 +74,12 @@
     },
     "claude-code-on-iphone": {
       "title": "在 iPhone、iPad 上跑 Claude Code",
-      "description": "在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 那個坑。",
+      "description": "在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。",
       "image": "/resource/iphone-raw-run-coding-agents-anywhere.webp"
     },
     "permission-review": {
       "title": "AI 自動權限審查：agent 問你時，誰來回答",
-      "description": "Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。"
+      "description": "Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。"
     }
   }
 }

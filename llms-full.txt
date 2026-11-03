@@ -15,7 +15,7 @@ URL: https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/
 Language: en
 Updated: 2026-11-04
 
-What a CLI agent really costs you is not typing time — it's standby time. The CLI, tmux, and SSH plus Tailscale each undo one layer of that, taking standby from a single laptop down to the phone in your pocket.
+The cost of running agents remotely is standby: the agent waits on you. Three parts move that wait into your pocket.
 
 A CLI agent's real cost is standby, not typing: thirty seconds of input, then hours you can't leave. Run it on a machine that stays on, keep the session alive with tmux, and reattach over SSH and Tailscale. The agent keeps working while you sleep; standby becomes a phone and fifteen seconds.
 
@@ -88,7 +88,7 @@ URL: https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/
 Language: en
 Updated: 2026-11-04
 
-An agent inside a GUI IDE is tied to a process that needs a screen. A CLI agent's interface is a byte stream you can reattach to. That's an architectural difference, not a matter of taste.
+On a desktop the IDE agent usually wins. On a phone a terminal beats it, because its interface is a byte stream.
 
 An agent inside Cursor or VS Code lives inside a GUI process, so it needs a screen, a logged-in desktop, and someone sitting in front of it. A CLI agent's interface is a stream of characters, which tmux can store whole and reattach on any device. That is an architectural difference, not a matter of taste.
 
@@ -820,7 +820,7 @@ URL: https://agentmux.saxcave.cc/guide/en/permission-review/
 Language: en
 Updated: 2026-11-04
 
-When an agent stops to ask "Run this?", AI Permission Review blocks dangerous commands with a blacklist, lets through the ones you trust with an allowlist, sends the rest to AI, and then suggests or presses the key depending on your mode. Every step, from trigger to decision.
+Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides.
 
 AI Permission Review is how Agentmux answers the permission prompt an agent raises on a screen you are not looking at. Each request is checked against a blacklist that blocks dangerous commands, an allowlist of commands you already trust, and then an AI judgement. Depending on the session's mode, it suggests the key or presses it for you.
 
@@ -958,7 +958,7 @@ URL: https://agentmux.saxcave.cc/guide/en/troubleshooting/
 Language: en
 Updated: 2026-11-04
 
-Can't connect, key rejected, tmux not found, agent command missing — the eight things that most often go wrong when setting up remote development, and how to fix each one.
+SSH refused, key rejected, tmux missing, claude not found: eight real failures, each with cause and the fix to type.
 
 Remote development over SSH, tmux and Tailscale fails in eight recognizable ways: `Operation timed out`, `Permission denied (publickey)`, a password that is correct but rejected, `tmux not found`, `claude: command not found`, Tailscale showing connected but unreachable, Remote Login on but the Mac refusing, and `sudo: a terminal is required`. Each one has a symptom, a cause, and a fix.
 
@@ -1280,7 +1280,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/
 Language: zh-TW
 Updated: 2026-11-04
 
-CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。
+遠端跑 agent 真正的成本是待命。CLI、tmux、SSH＋Tailscale 三個零件，把待命從筆電搬到口袋裡的手機。
 
 CLI agent 真正的成本是待命，不是打字：你講三十秒，幾個小時不能離開。跑在沒關過的機器上，tmux 讓 session 斷線照跑，SSH 加 Tailscale 從手機接回去，它在你睡覺時照樣工作。
 
@@ -1972,7 +1972,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/
 Language: zh-TW
 Updated: 2026-11-04
 
-在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 那個坑。
+在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
 
 可以，但 Claude Code 不會跑在你的 iPhone 上。它跑在你自己擁有的 Mac 或 Linux 機器上，手機只負責帶著終端機。做法是：打開遠端登入，用 Tailscale 取代對外開放的 port，開一個有名字的 tmux session，在裡面啟動 `claude`。鎖定螢幕之後，agent 照樣繼續跑。
 
@@ -2089,7 +2089,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/permission-review/
 Language: zh-TW
 Updated: 2026-11-04
 
-Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。
+Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。
 
 AI 自動權限審查是 Agentmux 用來回答 agent 權限提示的機制：黑名單先擋下危險指令，白名單直接放行你已經信任的，兩邊都沒命中的才交給 AI 判斷；判斷為允許時，顧問模式給你建議，自動回覆模式幫你按下那個鍵。
 

@@ -18,6 +18,7 @@ H3_HEAD = re.compile(r"<h3\b[^>]*>(.*?)</h3>(.*?)(?=<h3\b|<h2\b|\Z)", re.DOTALL 
 DATE_TEXT = re.compile(r"\d{4}-\d{2}-\d{2}")
 
 DEFAULT_OG_IMAGE = "/resource/ipad-raw-run-coding-agents-anywhere.webp"
+IMAGES_FILE = Path(__file__).resolve().parent / "images.json"
 FAQ_SLUGS = ("troubleshooting",)
 FAQ_ANSWER_HEADINGS = ("fix", "解法")
 
@@ -67,6 +68,26 @@ def seo(config: dict) -> dict:
 def og_image(config: dict, meta: dict = None) -> str:
     meta = meta or {}
     return absolute_url(config, meta.get("image") or seo(config).get("defaultOgImage") or DEFAULT_OG_IMAGE)
+
+
+def image_tags(config: dict, meta: dict, lang: str) -> str:
+    """og:image:width/height/alt for whatever image this page declares.
+
+    Dimensions come from images.json; guide-src/refresh_images.py re-reads them
+    from resource/ so a swapped screenshot cannot leave stale tags behind.
+    """
+    path = (meta or {}).get("image") or seo(config).get("defaultOgImage") or DEFAULT_OG_IMAGE
+    entry = {}
+    if IMAGES_FILE.exists():
+        entry = json.loads(IMAGES_FILE.read_text(encoding="utf-8")).get(path, {})
+    if not entry:
+        return ""
+    alt = (entry.get("alt") or {}).get(lang) or (entry.get("alt") or {}).get("en", "")
+    tags = ['<meta property="og:image:width" content="%d">' % int(entry["width"]),
+            '<meta property="og:image:height" content="%d">' % int(entry["height"])]
+    if alt:
+        tags.append('<meta property="og:image:alt" content="%s">' % esc(alt))
+    return "\n    ".join(tags)
 
 
 def organization_node(config: dict) -> dict:
@@ -541,6 +562,7 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
         "ogDescription": esc(meta["description"]),
         "ogUrl": esc(article_url(config["site"]["origin"], lang, slug)),
         "ogImage": esc(image),
+        "ogImageExtras": image_tags(config, meta, lang),
         "ogLocale": esc(seo(config).get("ogLocale", {}).get(lang, "en_US")),
         "ogSiteName": esc(seo(config).get("orgName") or "Agentmux"),
         "publishedDate": esc(published),
@@ -627,6 +649,7 @@ def build_root_index(src: Path, out: Path, config: dict) -> None:
                 "ogDescription": esc(description),
                 "ogUrl": esc("{0}/guide/".format(origin(config))),
                 "ogImage": esc(og_image(config)),
+                "ogImageExtras": image_tags(config, {}, "en"),
                 "ogLocale": esc(settings.get("ogLocale", {}).get("en", "en_US")),
                 "ogSiteName": esc(settings.get("orgName") or "Agentmux"),
             },
@@ -712,6 +735,7 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
                 "ogDescription": esc(strings["ui"]["trackIndexDescription"]),
                 "ogUrl": esc("{0}/guide/{1}/".format(origin(config), lang)),
                 "ogImage": esc(og_image(config)),
+                "ogImageExtras": image_tags(config, {}, lang),
                 "ogLocale": esc(seo(config).get("ogLocale", {}).get(lang, "en_US")),
                 "ogSiteName": esc(seo(config).get("orgName") or "Agentmux"),
                 "tracks": "\n        ".join(blocks),

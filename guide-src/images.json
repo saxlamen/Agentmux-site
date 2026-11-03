@@ -1,0 +1,98 @@
+{
+  "/resource/Darkmode_serverlist.webp": {
+    "width": 1320,
+    "height": 2868,
+    "alt": {
+      "en": "Dark mode server list",
+      "zh-TW": "深色模式的主機清單"
+    }
+  },
+  "/resource/FileExplorer.webp": {
+    "width": 1320,
+    "height": 2868,
+    "alt": {
+      "en": "Remote file explorer",
+      "zh-TW": "遠端檔案總管"
+    }
+  },
+  "/resource/Serverview_tmux_agents.webp": {
+    "width": 1242,
+    "height": 2688,
+    "alt": {
+      "en": "Server tmux agents view",
+      "zh-TW": "主機的 tmux session 與 agent 畫面"
+    }
+  },
+  "/resource/app-icon-192.webp": {
+    "width": 192,
+    "height": 192,
+    "alt": {
+      "en": "Agentmux Icon",
+      "zh-TW": "Agentmux 圖示"
+    }
+  },
+  "/resource/ipad-raw-browse-remote-projects.webp": {
+    "width": 2752,
+    "height": 2064,
+    "alt": {
+      "en": "iPad Remote File Explorer",
+      "zh-TW": "iPad 瀏覽遠端專案檔案"
+    }
+  },
+  "/resource/ipad-raw-launch-any-agent.webp": {
+    "width": 2752,
+    "height": 2064,
+    "alt": {
+      "en": "iPad Agent Launcher interface",
+      "zh-TW": "iPad 上的 agent 啟動畫面"
+    }
+  },
+  "/resource/ipad-raw-run-coding-agents-anywhere.webp": {
+    "width": 2752,
+    "height": 2064,
+    "alt": {
+      "en": "iPad running coding agents over SSH",
+      "zh-TW": "iPad 透過 SSH 跑 coding agent"
+    }
+  },
+  "/resource/ipad-raw-session-command-center.webp": {
+    "width": 2752,
+    "height": 2064,
+    "alt": {
+      "en": "iPad Session Command Center",
+      "zh-TW": "iPad 上的 session 指揮中心"
+    }
+  },
+  "/resource/iphone-raw-edit-code-over-ssh.webp": {
+    "width": 1320,
+    "height": 2868,
+    "alt": {
+      "en": "iPhone Code Editor over SSH",
+      "zh-TW": "iPhone 透過 SSH 編輯程式碼"
+    }
+  },
+  "/resource/iphone-raw-launch-any-agent.webp": {
+    "width": 1320,
+    "height": 2868,
+    "alt": {
+      "en": "Agent launcher on iPhone",
+      "zh-TW": "iPhone 上的 agent 啟動畫面"
+    }
+  },
+  "/resource/iphone-raw-preview-docs-instantly.webp": {
+    "width": 1320,
+    "height": 2868,
+    "alt": {
+      "en": "Markdown documentation preview",
+      "zh-TW": "Markdown 文件預覽"
+    }
+  },
+  "/resource/iphone-raw-run-coding-agents-anywhere.webp": {
+    "width": 1320,
+    "height": 2868,
+    "alt": {
+      "en": "iPhone running coding agents over SSH",
+      "zh-TW": "iPhone 透過 SSH 跑 coding agent"
+    }
+  }
+}

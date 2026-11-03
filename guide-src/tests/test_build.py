@@ -868,5 +868,82 @@ class TestLlmsFiles(BuildFixture):
         self.assertIn("URL: https://example.test/guide/zh-TW/what-is-tmux/", text)
 
 
+class TestPublishedHeadMetadata(unittest.TestCase):
+    """Checks against the real site files, not the fixture.
+
+    These are the parts a reader (or an answer engine) sees in a preview card:
+    the description length, and whether the image tags describe the image.
+    """
+
+    SITE = Path(__file__).resolve().parents[2]
+    STRINGS = Path(__file__).resolve().parents[1] / "strings"
+    CAPS = {"en": (60, 160), "zh-TW": (34, 82)}  # title, description; CJK is wider per glyph
+
+    def guide_pages(self):
+        return sorted((self.SITE / "guide").glob("*/index.html")) + sorted(self.SITE.glob("guide/*/*/index.html"))
+
+    def test_meta_lengths_survive_a_search_result(self):
+        offenders = []
+        for code, (title_cap, desc_cap) in self.CAPS.items():
+            articles = json.loads(self.STRINGS.joinpath(code + ".json").read_text(encoding="utf-8"))["articles"]
+            for slug, meta in articles.items():
+                if len(meta["title"]) > title_cap:
+                    offenders.append("%s %s title %d > %d" % (code, slug, len(meta["title"]), title_cap))
+                if len(meta["description"]) > desc_cap:
+                    offenders.append("%s %s description %d > %d"
+                                     % (code, slug, len(meta["description"]), desc_cap))
+        self.assertEqual(offenders, [], "meta gets truncated in the SERP:\n" + "\n".join(offenders))
+
+    def test_every_og_image_declares_its_size_and_alt(self):
+        missing = []
+        for page in self.guide_pages():
+            head = page.read_text(encoding="utf-8").split("</head>")[0]
+            if 'property="og:image"' not in head:
+                missing.append("%s has no og:image" % page.relative_to(self.SITE))
+                continue
+            for tag in ('og:image:width', 'og:image:height', 'og:image:alt'):
+                if tag not in head:
+                    missing.append("%s missing %s" % (page.relative_to(self.SITE), tag))
+        self.assertEqual(missing, [])
+
+    def test_llms_txt_is_advertised_where_crawlers_look(self):
+        pages = self.guide_pages() + [self.SITE / n for n in
+                                      ("index.html", "zh-TW/index.html", "privacy.html")]
+        missing = [str(p.relative_to(self.SITE)) for p in pages
+                   if 'type="text/plain" href="/llms.txt"' not in p.read_text(encoding="utf-8")]
+        self.assertEqual(missing, [])
+
+    def test_images_json_covers_every_image_the_guide_publishes(self):
+        images = json.loads((self.STRINGS.parent / "images.json").read_text(encoding="utf-8"))
+        problems = []
+        for code in self.CAPS:
+            articles = json.loads(self.STRINGS.joinpath(code + ".json").read_text(encoding="utf-8"))["articles"]
+            for slug, meta in articles.items():
+                path = meta.get("image")
+                if not path:
+                    continue
+                entry = images.get(path)
+                if not entry:
+                    problems.append("%s: %s not in images.json" % (slug, path))
+                elif not (entry.get("alt") or {}).get(code):
+                    problems.append("%s: %s has no %s alt" % (slug, path, code))
+        for path in images:
+            if not (self.SITE / path.lstrip("/")).exists():
+                problems.append("images.json points at a missing file: %s" % path)
+        self.assertEqual(problems, [])
+
+    def test_missing_pages_land_somewhere_useful(self):
+        page = self.SITE / "404.html"
+        self.assertTrue(page.exists(), "GitHub Pages needs 404.html at the site root")
+        text = page.read_text(encoding="utf-8")
+        for href in ("/guide/en/", "/guide/zh-TW/", "/guide/en/troubleshooting/", "/guide/en/setup/"):
+            self.assertIn('href="%s"' % href, text, "404 page should link to %s" % href)
+        self.assertIn('name="robots" content="noindex"', text)
+
+    def test_indexnow_key_file_is_present_and_public(self):
+        keys = [f.name for f in self.SITE.iterdir() if re.fullmatch(r"[0-9a-f]{32}\.txt", f.name)]
+        self.assertEqual(len(keys), 1, "expected exactly one IndexNow key file")
+
+
 if __name__ == "__main__":
     unittest.main()

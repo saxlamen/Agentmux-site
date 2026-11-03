@@ -21,8 +21,8 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 
 ## Guide (English)
 
-- [Your AI should be working while you sleep](https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/): What a CLI agent really costs you is not typing time — it's standby time. The CLI, tmux, and SSH plus Tailscale each undo one layer of that, taking standby from a single laptop down to the phone in your pocket.
-- [Why not Cursor or VS Code](https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/): An agent inside a GUI IDE is tied to a process that needs a screen. A CLI agent's interface is a byte stream you can reattach to. That's an architectural difference, not a matter of taste.
+- [Your AI should be working while you sleep](https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/): The cost of running agents remotely is standby: the agent waits on you. Three parts move that wait into your pocket.
+- [Why not Cursor or VS Code](https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/): On a desktop the IDE agent usually wins. On a phone a terminal beats it, because its interface is a byte stream.
 - [Why the strongest coding agents live in the terminal](https://agentmux.saxcave.cc/guide/en/what-is-cli/): Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.
 - [An encrypted tunnel to another computer](https://agentmux.saxcave.cc/guide/en/what-is-ssh/): What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.
 - [Keep the agent running after you put your phone away](https://agentmux.saxcave.cc/guide/en/what-is-tmux/): What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.
@@ -30,12 +30,12 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [Why not Termius or Blink](https://agentmux.saxcave.cc/guide/en/why-agentmux/): Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.
 - [15 minutes to an agent that works all night](https://agentmux.saxcave.cc/guide/en/setup/): Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.
 - [Run Claude Code on your iPhone or iPad](https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/): Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.
-- [AI Permission Review: who answers when your agent asks](https://agentmux.saxcave.cc/guide/en/permission-review/): When an agent stops to ask "Run this?", AI Permission Review blocks dangerous commands with a blacklist, lets through the ones you trust with an allowlist, sends the rest to AI, and then suggests or presses the key depending on your mode. Every step, from trigger to decision.
-- [Stuck? Start here](https://agentmux.saxcave.cc/guide/en/troubleshooting/): Can't connect, key rejected, tmux not found, agent command missing — the eight things that most often go wrong when setting up remote development, and how to fix each one.
+- [AI Permission Review: who answers when your agent asks](https://agentmux.saxcave.cc/guide/en/permission-review/): Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides.
+- [Stuck? Start here](https://agentmux.saxcave.cc/guide/en/troubleshooting/): SSH refused, key rejected, tmux missing, claude not found: eight real failures, each with cause and the fix to type.
 
 ## Guide (繁體中文)
 
-- [你的 AI 應該在你睡覺時工作](https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/): CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。
+- [你的 AI 應該在你睡覺時工作](https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/): 遠端跑 agent 真正的成本是待命。CLI、tmux、SSH＋Tailscale 三個零件，把待命從筆電搬到口袋裡的手機。
 - [為什麼不是 Cursor / VS Code](https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/): GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。
 - [為什麼最強的 coding agent 都住在終端機裡](https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/): 為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。
 - [一條通往另一台電腦的加密隧道](https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/): SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。
@@ -43,8 +43,8 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [不要對公網開 port](https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/): 不開 port 也能從手機連回自己的電腦：WireGuard mesh、MagicDNS 名稱或 100.x 位址，還有什麼時候根本不需要它。
 - [為什麼不是 Termius / Blink](https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/): Agentmux 對 Termius、Blink：五個功能差異、什麼時候買 Termius 比較對，以及各種工作該選哪一個。
 - [15 分鐘，讓你的 agent 開始整晚工作](https://agentmux.saxcave.cc/guide/zh-TW/setup/): 回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。
-- [在 iPhone、iPad 上跑 Claude Code](https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/): 在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 那個坑。
-- [AI 自動權限審查：agent 問你時，誰來回答](https://agentmux.saxcave.cc/guide/zh-TW/permission-review/): Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。
+- [在 iPhone、iPad 上跑 Claude Code](https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/): 在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
+- [AI 自動權限審查：agent 問你時，誰來回答](https://agentmux.saxcave.cc/guide/zh-TW/permission-review/): Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。
 - [卡住了看這裡](https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/): 連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。
 
 ## Support and legal
