@@ -10,9 +10,41 @@ Reads index.source.html and generates:
 """
 
 from pathlib import Path
+import json
 import re
 
 ROOT_DIR = Path(__file__).resolve().parent
+GUIDE_CONFIG = ROOT_DIR / "guide-src" / "config.json"
+
+# Organisation facts live in guide-src/config.json so the guide builder, the
+# sitemap, llms.txt and these homepages cannot drift apart.
+SEO_DEFAULTS = {
+    "orgName": "Agentmux",
+    "supportEmail": "atmux-support@saxcave.cc",
+    "logo": "/resource/app-icon-192.webp",
+    "defaultOgImage": "/resource/ipad-raw-run-coding-agents-anywhere.webp",
+}
+
+APP_STORE_URL = "https://apps.apple.com/app/id6766158521"
+PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"
+ORIGIN = "https://agentmux.saxcave.cc"
+
+# Phrased the way the homepage and the guide already phrase them, so the
+# structured data restates the page rather than inventing claims.
+FEATURE_LIST = [
+    "SSH to your own machine over keys or passwords",
+    "Persistent tmux sessions that keep running when the connection drops",
+    "Run CLI coding agents such as Claude Code, Codex, Gemini, and OpenCode",
+    "Remote file editing with file history and branch tools",
+    "AI Permission Review: blacklist, allowlist, and AI judgement on the commands an agent wants to run",
+    "Multiple servers, custom agents, and batch actions on Pro",
+]
+
+OFFER_DESCRIPTION = (
+    "14-day full-feature trial, then a free single-server tier. "
+    "Pro unlocks multiple servers, custom agents, remote editing, file history, "
+    "branch tools, and batch actions."
+)
 
 LANG_CONFIG = {
     "en": {
@@ -23,6 +55,7 @@ LANG_CONFIG = {
         "out_dir": "",
         "guide_href": "/guide/en/",
         "privacy_href": "/privacy.html?lang=en",
+        "og_locale": "en_US",
     },
     "zh-TW": {
         "html_lang": "zh-TW",
@@ -32,6 +65,7 @@ LANG_CONFIG = {
         "out_dir": "zh-TW",
         "guide_href": "/guide/zh-TW/",
         "privacy_href": "/privacy.html?lang=zh-TW",
+        "og_locale": "zh_TW",
     },
     "zh-Hans": {
         "html_lang": "zh-Hans",
@@ -41,6 +75,7 @@ LANG_CONFIG = {
         "out_dir": "zh-Hans",
         "guide_href": "/guide/zh-TW/",
         "privacy_href": "/privacy.html?lang=zh-Hans",
+        "og_locale": "zh_CN",
     },
     "ja": {
         "html_lang": "ja",
@@ -50,6 +85,7 @@ LANG_CONFIG = {
         "out_dir": "ja",
         "guide_href": "/guide/en/",
         "privacy_href": "/privacy.html?lang=ja",
+        "og_locale": "ja_JP",
     },
 }
 
@@ -112,6 +148,96 @@ def make_hreflangs() -> str:
         '    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/zh-TW/">\n'
         '    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/zh-Hans/">\n'
         '    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/ja/">'
+    )
+
+
+def site_seo() -> dict:
+    """Organisation facts from guide-src/config.json, with defaults so the
+    homepages still build if that file is absent."""
+    facts = dict(SEO_DEFAULTS)
+    try:
+        config = json.loads(GUIDE_CONFIG.read_text(encoding="utf-8"))
+        facts.update(config.get("seo", {}))
+    except (OSError, ValueError):
+        pass
+    return facts
+
+
+def make_structured_data(lang: str, cfg: dict) -> str:
+    """One JSON-LD graph: the organisation, the site, and the app itself.
+
+    The app entity is what lets Google show app rich results and lets an answer
+    engine treat "Agentmux" as a named thing with known stores, platforms and
+    pricing rather than guessing from prose."""
+    facts = site_seo()
+    org_id = ORIGIN + "/#organization"
+    organization = {
+        "@type": "Organization",
+        "@id": org_id,
+        "name": facts["orgName"],
+        "url": ORIGIN + "/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": ORIGIN + facts["logo"],
+            "width": facts.get("logoWidth", 192),
+            "height": facts.get("logoHeight", 192),
+        },
+        "email": facts["supportEmail"],
+        "sameAs": [APP_STORE_URL, PLAY_STORE_URL],
+    }
+    website = {
+        "@type": "WebSite",
+        "@id": ORIGIN + "/#website",
+        "url": ORIGIN + "/",
+        "name": facts["orgName"],
+        "description": cfg["description"],
+        "inLanguage": cfg["html_lang"],
+        "publisher": {"@id": org_id},
+    }
+    app = {
+        "@type": "SoftwareApplication",
+        "@id": cfg["canonical"] + "#app",
+        "name": facts["orgName"],
+        "url": cfg["canonical"],
+        "description": cfg["description"],
+        "inLanguage": cfg["html_lang"],
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "iOS, iPadOS, Android",
+        "image": ORIGIN + facts["defaultOgImage"],
+        "featureList": FEATURE_LIST,
+        "sameAs": [APP_STORE_URL, PLAY_STORE_URL],
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": OFFER_DESCRIPTION,
+            "availability": "https://schema.org/InStock",
+        },
+        "publisher": {"@id": org_id},
+    }
+    body = json.dumps(
+        {"@context": "https://schema.org", "@graph": [organization, website, app]},
+        ensure_ascii=False,
+    ).replace("</", "<\\/")
+    return '    <script type="application/ld+json">{0}</script>'.format(body)
+
+
+def make_seo_block(lang: str, cfg: dict) -> str:
+    """Social extras plus structured data, appended to the end of <head>.
+
+    og:locale tells Facebook and LinkedIn which language variant a share
+    belongs to; the image dimensions spare them a second fetch."""
+    return "\n".join(
+        [
+            '    <meta property="og:site_name" content="Agentmux">',
+            '    <meta property="og:locale" content="{0}">'.format(cfg["og_locale"]),
+            '    <meta property="og:image:width" content="2752">',
+            '    <meta property="og:image:height" content="2064">',
+            '    <meta name="twitter:image" content="{0}{1}">'.format(
+                ORIGIN, site_seo()["defaultOgImage"]
+            ),
+            make_structured_data(lang, cfg),
+        ]
     )
 
 
@@ -232,6 +358,9 @@ def build_lang_page(source_html: str, lang: str, cfg: dict) -> str:
                   f'<meta id="twitter-title" name="twitter:title" content="{cfg["title"]}">', html, count=1)
     html = re.sub(r'<meta id="twitter-description" name="twitter:description" content="[^"]*">',
                   f'<meta id="twitter-description" name="twitter:description" content="{cfg["description"]}">', html, count=1)
+
+    # 4b. Social extras and structured data, just before </head>.
+    html = html.replace("</head>", make_seo_block(lang, cfg) + "\n</head>", 1)
 
     # 5. Replace navigation links
     # Guide link

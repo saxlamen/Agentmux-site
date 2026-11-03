@@ -4,3 +4,5 @@ archive/
 
 # Superpowers SDD scratch
 .superpowers/
+
+__pycache__/

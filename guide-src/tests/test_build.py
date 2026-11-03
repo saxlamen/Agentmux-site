@@ -638,5 +638,235 @@ class TestBuildArticleWrapsTables(BuildFixture):
         self.assertNotIn("&lt;td&gt;", html_out)
 
 
+class TestEntityGraph(BuildFixture):
+    """Article 需要作者/發行者/日期/圖片，頁面才有一個可被引用的實體。"""
+
+    SRC = Path(__file__).resolve().parents[1]
+
+    def _page(self):
+        # The real template, so this test covers the head tags as they ship.
+        (self.src / "templates" / "article.html").write_text(
+            (self.SRC / "templates" / "article.html").read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+        config = make_config()
+        config["seo"] = {
+            "orgName": "Agentmux",
+            "supportEmail": "support.test",
+            "logo": "/icon.png",
+            "fallbackUpdated": "2026-01-02",
+        }
+        build.build_article(self.src, self.out, config, "zh-TW", "what-is-tmux")
+        raw = (self.out / "zh-TW" / "what-is-tmux" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        block = re.search(
+            r'<script type="application/ld\+json">(.*?)</script>', raw, re.S
+        ).group(1)
+        return raw, json.loads(block.replace("<\\/", "</"))
+
+    def test_author_and_publisher_are_the_organization(self):
+        _, data = self._page()
+        node = [n for n in data["@graph"] if n["@type"] == "Article"][0]
+        self.assertEqual(node["author"]["name"], "Agentmux")
+        self.assertEqual(node["publisher"]["@id"], "https://example.test/#organization")
+        self.assertEqual(node["image"], ["https://example.test/resource/ipad-raw-run-coding-agents-anywhere.webp"])
+
+    def test_dates_come_from_config_when_git_is_absent(self):
+        _, data = self._page()
+        node = [n for n in data["@graph"] if n["@type"] == "Article"][0]
+        self.assertEqual(node["datePublished"], "2026-01-02")
+        self.assertEqual(node["dateModified"], "2026-01-02")
+
+    def test_breadcrumb_is_in_the_same_graph(self):
+        _, data = self._page()
+        trail = [n for n in data["@graph"] if n["@type"] == "BreadcrumbList"][0]
+        positions = [item["position"] for item in trail["itemListElement"]]
+        self.assertEqual(positions, [1, 2, 3, 4])
+        self.assertIn("what-is-tmux", trail["itemListElement"][-1]["item"])
+
+    def test_og_image_and_timestamps_are_emitted(self):
+        raw, _ = self._page()
+        self.assertIn('property="og:image" content="https://example.test/resource/', raw)
+        self.assertIn('property="article:modified_time" content="2026-01-02"', raw)
+
+    def test_index_html_is_untouched_apart_from_new_head_tags(self):
+        raw, _ = self._page()
+        self.assertIn("tmux 讓 agent 繼續跑。", raw)
+
+
+class TestFaqNodes(unittest.TestCase):
+    """FAQPage 只能用頁面上看得到的文字，問句是 h2，答案取「解法」那一段。"""
+
+    CONTENT = (
+        '<section><h2>連線逾時</h2>'
+        "<h3>症狀</h3><p>螢幕卡住不動，很久之後出現 Operation timed out。</p>"
+        "<h3>原因</h3><p>防火牆把封包擋掉了。</p>"
+        "<h3>解法</h3><p>先確認機器本身有沒有回應：ping 主機位址，不通就檢查 IP 和睡眠狀態。</p>"
+        "</section>"
+    )
+
+    def test_answer_comes_from_the_fix_section(self):
+        nodes = build.faq_nodes({"seo": {}}, "troubleshooting", self.CONTENT)
+        self.assertEqual(nodes[0]["name"], "連線逾時")
+        self.assertTrue(nodes[0]["acceptedAnswer"]["text"].startswith("先確認機器"))
+
+    def test_tags_and_code_are_stripped_from_the_answer(self):
+        content = self.CONTENT.replace(
+            "ping 主機位址", "<code>ping host</code>"
+        )
+        nodes = build.faq_nodes({"seo": {}}, "troubleshooting", content)
+        self.assertNotIn("<", nodes[0]["acceptedAnswer"]["text"])
+        self.assertIn("ping host", nodes[0]["acceptedAnswer"]["text"])
+
+    def test_answer_is_cut_at_a_sentence_boundary(self):
+        long_answer = "第一步。" * 200
+        content = "<h2>A</h2><h3>解法</h3><p>{0}</p>".format(long_answer)
+        nodes = build.faq_nodes(
+            {"seo": {"faqAnswerMaxChars": 40}}, "troubleshooting", content
+        )
+        text = nodes[0]["acceptedAnswer"]["text"]
+        self.assertLessEqual(len(text), 40)
+        self.assertTrue(text.endswith("。"))
+
+    def test_short_answers_are_dropped_entirely(self):
+        nodes = build.faq_nodes({"seo": {}}, "troubleshooting", "<h2>A</h2><p>短</p>")
+        self.assertEqual(nodes, [])
+
+
+class TestIndexJsonLd(BuildFixture):
+    SRC = Path(__file__).resolve().parents[1]
+
+    def setUp(self):
+        super().setUp()
+        (self.src / "templates" / "track-index.html").write_text(
+            (self.SRC / "templates" / "track-index.html").read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+        strings = json.loads(
+            (self.src / "strings" / "zh-TW.json").read_text(encoding="utf-8")
+        )
+        strings["ui"]["trackIndexTitle"] = "Agentmux 指南"
+        strings["ui"]["trackIndexDescription"] = "從零開始。"
+        strings["ui"]["extendedReading"] = "延伸閱讀"
+        (self.src / "strings" / "zh-TW.json").write_text(
+            json.dumps(strings, ensure_ascii=False), encoding="utf-8"
+        )
+
+    def _graph(self):
+        build.build_track_index(self.src, self.out, make_config(), "zh-TW")
+        raw = (self.out / "zh-TW" / "index.html").read_text(encoding="utf-8")
+        block = re.search(
+            r'<script type="application/ld\+json">(.*?)</script>', raw, re.S
+        ).group(1)
+        return raw, json.loads(block.replace("<\\/", "</"))
+
+    def test_collection_page_lists_every_available_article(self):
+        _, data = self._graph()
+        page = [n for n in data["@graph"] if n["@type"] == "CollectionPage"][0]
+        items = page["hasPart"]["itemListElement"]
+        self.assertEqual([item["position"] for item in items], [1])
+        self.assertIn("what-is-tmux", items[0]["url"])
+
+    def test_index_page_carries_a_breadcrumb_and_hreflang(self):
+        raw, data = self._graph()
+        self.assertIn("BreadcrumbList", json.dumps(data))
+        self.assertIn('hreflang="x-default"', raw)
+        self.assertIn('property="og:image"', raw)
+
+
+class TestSitemapLastmod(BuildFixture):
+    def test_every_url_gets_a_lastmod(self):
+        config = make_config()
+        config["seo"] = {"fallbackUpdated": "2026-01-02"}
+        build.build_sitemap(self.tmp, config, self.src)
+        xml = (self.tmp / "sitemap.xml").read_text(encoding="utf-8")
+        urls = xml.count("<loc>")
+        self.assertGreater(urls, 1)
+        self.assertEqual(xml.count("<lastmod>"), urls)
+        self.assertIn("<lastmod>2026-01-02</lastmod>", xml)
+
+    def test_is_wellformed_with_lastmod(self):
+        import xml.etree.ElementTree as ET
+
+        config = make_config()
+        config["seo"] = {"fallbackUpdated": "2026-01-02"}
+        build.build_sitemap(self.tmp, config, self.src)
+        ET.parse(str(self.tmp / "sitemap.xml"))
+
+
+class TestHtmlToMarkdown(unittest.TestCase):
+    def test_headings_lists_and_bold_survive(self):
+        text = build.html_to_markdown(
+            "<h2>步驟</h2><p>先<strong>安裝</strong>。</p><ul><li>tmux</li></ul>"
+        )
+        self.assertIn("## 步驟", text)
+        self.assertIn("**安裝**", text)
+        self.assertIn("- tmux", text)
+
+    def test_code_block_keeps_its_line_structure(self):
+        text = build.html_to_markdown(
+            "<pre><code># Debian\nsudo apt install -y tmux\n# Mac\nbrew install tmux</code></pre>"
+        )
+        self.assertIn("```\n# Debian\nsudo apt install -y tmux", text)
+
+    def test_table_becomes_a_markdown_table(self):
+        text = build.html_to_markdown(
+            "<table><tr><th>路徑</th><th>權限</th></tr>"
+            "<tr><td>~/.ssh</td><td>700</td></tr></table>"
+        )
+        self.assertIn("| 路徑 | 權限 |", text)
+        self.assertIn("| --- | --- |", text)
+        self.assertIn("| ~/.ssh | 700 |", text)
+
+    def test_source_indentation_is_not_part_of_the_prose(self):
+        text = build.html_to_markdown("<section>\n  <p>文字</p>\n</section>")
+        self.assertEqual(text, "文字")
+
+
+class TestLlmsFiles(BuildFixture):
+    def _config(self):
+        config = make_config()
+        config["seo"] = {
+            "supportEmail": "support.test",
+            "fallbackUpdated": "2026-01-02",
+            "llms": {
+                "title": "Agentmux",
+                "summary": "SSH, tmux and coding agents on iOS and Android.",
+                "notes": ["The agent always runs on a machine you own."],
+                "home": [
+                    {
+                        "path": "/",
+                        "name": "Home",
+                        "description": "Features and download links.",
+                    }
+                ],
+            },
+        }
+        return config
+
+    def test_llms_txt_lists_guide_pages_with_descriptions(self):
+        build.build_llms_txt(self.tmp, self.src, self._config())
+        text = (self.tmp / "llms.txt").read_text(encoding="utf-8")
+        self.assertTrue(text.startswith("# Agentmux"))
+        self.assertIn("> SSH, tmux and coding agents", text)
+        self.assertIn("https://example.test/guide/zh-TW/what-is-tmux/", text)
+        self.assertIn("tmux 是什麼", text)
+        self.assertIn("https://example.test/", text)
+
+    def test_llms_full_contains_the_article_body_as_text(self):
+        (self.src / "content" / "what-is-tmux" / "zh-TW.html").write_text(
+            "<h2>Session 留在伺服器</h2><p>斷線也不會中斷 agent。</p>"
+            "<pre><code>tmux new -s work</code></pre>",
+            encoding="utf-8",
+        )
+        build.build_llms_full(self.tmp, self.src, self._config())
+        text = (self.tmp / "llms-full.txt").read_text(encoding="utf-8")
+        self.assertIn("## 讓 agent 在你關掉手機後繼續跑", text)
+        self.assertIn("## Session 留在伺服器", text)
+        self.assertIn("```\ntmux new -s work\n```", text)
+        self.assertIn("URL: https://example.test/guide/zh-TW/what-is-tmux/", text)
+
+
 if __name__ == "__main__":
     unittest.main()

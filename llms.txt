@@ -1,0 +1,51 @@
+# Agentmux
+
+> iOS, iPadOS and Android client for SSH, persistent tmux sessions, and AI coding agents such as Claude Code, Codex, Gemini and OpenCode.
+
+Agentmux is a client, not a host. The code and the agent always run on a machine you own — a Mac, a Linux box, or a server. The phone reaches it over SSH, usually with Tailscale so no port is open to the public internet.
+A dropped connection does not stop the agent. Sessions are detached and attached again (tmux), so the agent keeps running on the server while the phone is locked or out of coverage.
+Pricing: 14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.
+AI Permission Review screens the commands an agent wants to run: a blacklist blocks dangerous ones, an allowlist passes the ones you already trust, the rest go to an AI judgement, and you choose whether it only suggests the key or presses it.
+
+App Store: https://apps.apple.com/app/id6766158521
+Google Play: https://play.google.com/store/apps/details?id=cc.saxcave.agentmux
+Support: mailto:atmux-support@saxcave.cc
+Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full.txt
+
+## Home
+
+- [Home (English)](https://agentmux.saxcave.cc/): Features, plans, screenshots, and download links.
+- [首頁（繁體中文）](https://agentmux.saxcave.cc/zh-TW/): 功能、方案、下載連結。
+- [首页（简体中文）](https://agentmux.saxcave.cc/zh-Hans/): 功能、方案、下载链接。
+- [ホーム（日本語）](https://agentmux.saxcave.cc/ja/): 機能、プラン、ダウンロードリンク。
+
+## Guide (English)
+
+- [Your AI should be working while you sleep](https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/): What a CLI agent really costs you is not typing time — it's standby time. The CLI, tmux, and SSH plus Tailscale each undo one layer of that, taking standby from a single laptop down to the phone in your pocket.
+- [Why not Cursor or VS Code](https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/): An agent inside a GUI IDE is tied to a process that needs a screen. A CLI agent's interface is a byte stream you can reattach to. That's an architectural difference, not a matter of taste.
+- [Why the strongest coding agents live in the terminal](https://agentmux.saxcave.cc/guide/en/what-is-cli/): The CLI isn't hard for its own sake — it's where an agent gets full filesystem access and permission to execute. Browser agents can't see your files and IDE plugins usually can't run freely. This is a capability boundary, not a question of looks.
+- [An encrypted tunnel to another computer](https://agentmux.saxcave.cc/guide/en/what-is-ssh/): SSH opens an encrypted channel between your device and another machine. You're connecting to hardware you own, not a cloud service — and keys are both safer and less work than passwords.
+- [Keep the agent running after you put your phone away](https://agentmux.saxcave.cc/guide/en/what-is-tmux/): When SSH drops, the processes you started get SIGHUP and die. tmux leaves the session living on the server so you're only ever attaching to it — and a dropped connection no longer interrupts the agent.
+- [Don't open a port to the public internet](https://agentmux.saxcave.cc/guide/en/what-is-tailscale/): Expose SSH to the internet and scanning bots will knock around the clock. Tailscale uses a WireGuard mesh to build encrypted links directly between your devices, giving your machine a private address only you can reach.
+- [Why not Termius or Blink](https://agentmux.saxcave.cc/guide/en/why-agentmux/): General SSH apps assume you came to type commands. Agentmux assumes you came to rejoin an agent that's already running. Five capabilities verified against the source, plus an honest list of cases where Termius is the better tool.
+- [15 minutes to an agent that works all night](https://agentmux.saxcave.cc/guide/en/setup/): Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.
+- [AI Permission Review: who answers when your agent asks](https://agentmux.saxcave.cc/guide/en/permission-review/): When an agent stops to ask "Run this?", AI Permission Review blocks dangerous commands with a blacklist, lets through the ones you trust with an allowlist, sends the rest to AI, and then suggests or presses the key depending on your mode. Every step, from trigger to decision.
+- [Stuck? Start here](https://agentmux.saxcave.cc/guide/en/troubleshooting/): Can't connect, key rejected, tmux not found, agent command missing — the eight things that most often go wrong when setting up remote development, and how to fix each one.
+
+## Guide (繁體中文)
+
+- [你的 AI 應該在你睡覺時工作](https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/): CLI agent 真正吃掉的不是你打字的時間，是待命。CLI、tmux、SSH + Tailscale 三個零件各解開一層綁定，把待命成本從一台筆電降到口袋裡的手機。
+- [為什麼不是 Cursor / VS Code](https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/): GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。
+- [為什麼最強的 coding agent 都住在終端機裡](https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/): CLI 不是難用，是它有完整的檔案系統存取與執行權限。網頁版 agent 看不到你的檔案，IDE 外掛通常不能自由執行 — 這是能力邊界，不是介面美醜。
+- [一條通往另一台電腦的加密隧道](https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/): SSH 在你的裝置與另一台機器之間開一條加密通道。連的是你自己的機器，不是雲端服務；金鑰同時比較安全又比較省事。
+- [讓 agent 在你關掉手機後繼續跑](https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/): SSH 斷線會讓你啟動的 process 收到 SIGHUP 而死。tmux 把 session 留在伺服器上，你只是接上去看，斷線也不會中斷 agent。
+- [不要對公網開 port](https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/): 把 SSH 開到公網會被掃描機器人 24 小時輪番敲門。Tailscale 用 WireGuard mesh 讓裝置之間直接建立加密連線，你家的機器多了一個只有你連得到的私有位址。
+- [為什麼不是 Termius / Blink](https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/): 通用 SSH app 假設你要打指令，Agentmux 假設你要接回一個正在跑的 agent。五個對照原始碼查證過的功能，加上誠實列出 Termius 更適合的場景。
+- [15 分鐘，讓你的 agent 開始整晚工作](https://agentmux.saxcave.cc/guide/zh-TW/setup/): 回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。
+- [AI 自動權限審查：agent 問你時，誰來回答](https://agentmux.saxcave.cc/guide/zh-TW/permission-review/): Agent 停下來問「要不要執行」時，AI 自動權限審查會先用黑名單擋下危險指令、用白名單放行你信任的，其餘交給 AI 判斷，最後依你選的模式給建議或直接幫你按。這篇說明從觸發到判斷的每一步。
+- [卡住了看這裡](https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/): 連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。
+
+## Support and legal
+
+- [Privacy Policy](https://agentmux.saxcave.cc/privacy.html): what Agentmux does and does not collect.
+- [Setup guide](https://agentmux.saxcave.cc/guide/en/setup/): install steps for the agent runtime.
