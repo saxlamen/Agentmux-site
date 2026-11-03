@@ -30,7 +30,7 @@
 <path d="M226 385 C 272 385 254 151 300 151" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.4"/>
 <path d="M226 385 C 272 385 254 213 300 213" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.4"/>
 <text x="600" y="84" fill="#6f817a">/guide/&lt;lang&gt;/... exists in en and zh-TW</text>
-<path d="M490 151 H552 M490 213 H552 M552 151 V861" fill="none" stroke="rgba(214,255,236,0.45)" stroke-width="1.4"/>
+<path d="M490 151 H552 M490 213 H552 M552 121 V861" fill="none" stroke="rgba(214,255,236,0.45)" stroke-width="1.4"/>
 <rect x="600" y="92" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
 <text x="614" y="115" fill="#f4fbf7">Standby is the real cost</text>
 <text x="614" y="135" fill="#8fa79d">BC | 768 w / 1080 zh</text>

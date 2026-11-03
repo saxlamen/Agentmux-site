@@ -116,8 +116,13 @@ def svg(config: dict) -> str:
     cards_top, spine, card_x = 92, 552, CARD_X
     out.append('<text x="600" y="84" fill="#6f817a">/guide/&lt;lang&gt;/... exists in en and zh-TW</text>')
     mids = [cards_top + index * (card_height + gap) + card_height // 2 for index in range(len(slugs))]
-    out.append('<path d="M490 151 H%d M490 213 H%d M%d 151 V%d" fill="none"'
-               ' stroke="rgba(214,255,236,0.45)" stroke-width="1.4"/>' % (spine, spine, spine, mids[-1]))
+    # The spine has to span every stub, not just the level of the two locale
+    # boxes. Starting it at y=151 left the first card's stub (y=121) attached to
+    # nothing -- a line ending in mid-air next to "Standby is the real cost".
+    entry = (151, 213)
+    top, bottom = min(mids[0], *entry), max(mids[-1], *entry)
+    out.append('<path d="M490 151 H%d M490 213 H%d M%d %d V%d" fill="none"'
+               ' stroke="rgba(214,255,236,0.45)" stroke-width="1.4"/>' % (spine, spine, spine, top, bottom))
     for index, slug in enumerate(slugs):
         cy = cards_top + index * (card_height + gap)
         box(card_x, cy, 300, card_height, LABEL.get(slug, slug), "%s | %s" % (track_of(config, slug), size(slug)))
