@@ -73,7 +73,7 @@
     },
     "tmux-handled": {
       "title": "tmux：不需要動作",
-      "why": "你不用自己裝 tmux。Agentmux 連上去會偵測機器用的是 apt、dnf、pacman、brew 或 apk，然後幫你裝好。",
+      "why": "你不用自己裝 tmux。Agentmux 連上去會用機器上現成的套件管理器（apt、dnf、yum、pacman、apk、brew、nix-env）幫你裝好。",
       "verifyHint": "這步沒有要你做的事，直接看下一步。",
       "failHint": "如果之後 app 顯示自動安裝失敗，多半是 sudo 需要 TTY。"
     },

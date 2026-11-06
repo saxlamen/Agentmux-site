@@ -22,6 +22,31 @@ the site speaks **four languages** while the guide speaks two.
 App Store copy (`release-notes.txt`, `metadata/`) is not this site and is not
 covered here.
 
+## Claims checked against the app
+
+Marketing copy drifts from behaviour because the two live in different repos.
+Each claim below was read out of the app source in `../Agentmux` rather than
+agreed in prose. If you change one of these sentences, change it against code.
+
+| Claim in `privacy.html` | What the code actually does | Evidence |
+|---|---|---|
+| §6 names the switch a reader should look at | The app has no "Background Activity Chime". The master toggle is `background_activity_alerts`: **Background Activity Alerts** / 背景任務警報 / 背景任务提醒 / バックグラウンド活動アラート. It is a computed OR of six sub-toggles, and the coordinator refuses to run without it, so it is the only switch that stops background polling. `completion_chime` only plays a sound; turning off the heartbeat sound does not stop polling, because a silent audio track still keeps the app alive. | `SettingsView.swift:370,973-1021`; `BackgroundActivityCoordinator.swift:198,226,1082-1089`; `BackgroundActivityAudioController.swift:72,104` |
+| §2 lists what statistics contain | The client also sends the build number, release channel, and per session whether it was new/pre-warmed/restored and attached/created. `app_active` is written at most once a day, so it is a daily snapshot, not a count of app opens. Counts bucket to `0/1/2–5/6+`. | `TelemetryService.swift:85-137,289-307,363-371,481-489` |
+| §2 says statistics can be turned off | True, and they are **on by default** (`shareUsageStatistics` defaults to `true`); a one-time notice is shown before the first send, and turning the switch off discards unsent counters. The app's own labels: Share Anonymous Usage Statistics / 分享匿名使用統計 / 分享匿名使用统计 / 匿名の利用統計を共有. | `AppConfiguration.swift:299-304,316-318`; `SettingsView.swift:1205-1230`; `*.lproj/Localizable.strings:1088-1091` |
+| §2 retention: raw events deleted after 90 days, long-term copies have no ID and no exact time | True. Raw rows keep `install_id` and second-precision `ts` for 90 days; a rollup then writes `daily_stats` at day granularity with `COUNT(DISTINCT install_id)`, kept indefinitely. | `TelemetryService.swift:280-287,415-427`; `telemetry-worker/src/index.ts:158-182`; `telemetry-dashboard/src/rollup.ts:7,108-113`; `migrations/0001,0003` |
+| §2 the random ID is created on the device and a reinstall makes a new one | True: a plain `UUID` in `UserDefaults`. It is never rotated by toggling, and `UserDefaults` is not excluded from device backups, so a restore carries the old ID to a new device. | `TelemetryService.swift:316,457-463` |
+| §5 credentials are in a "hardware-backed" store | The iOS side is the system Keychain with `kSecAttrAccessibleAfterFirstUnlock`; there is no `LAContext`, biometry or passcode gate anywhere in the app, so the app never proves the key is unlocked by a person. Android uses Keystore-backed AES-GCM. The policy now says "the operating system's own credential store" and states the missing biometric gate instead of implying one. | `Models/Server.swift:255-308`; `Services/AIAutoPilot/AIAutoPilotKeychain.swift:88-109`; Android `KeystoreManager.kt:12-48` |
+| §7 iOS sync excludes "sensitive passwords and keys, unless stored in iCloud Keychain" | The exception was framed wrongly. The CloudKit `Server` record hard-codes `keyContent = ""` and has no `password` field at all, so a secret can never be in the app's sync payload. Passwords and private keys are written twice, once synchronizable, so they replicate through **iCloud Keychain**, a different channel. §7 now describes two channels instead of one plus an exception. | `CloudKitSyncService.swift:707-741` (`:714`), `:185-189`; `Models/Server.swift:260,299-307,363-370` |
+| §7 Android puts "encrypted server configurations" in Google Drive | The file in `appDataFolder` is plain JSON; only the transport and Google's at-rest encryption protect it. Secrets are not in it. The policy now says so. | Android `GoogleDriveSyncService.kt:481,272-311,872,994,1003` |
+| The wizard says it installs tmux with "apt, dnf, pacman, brew, or apk" | The installer also handles `yum` (fedora/centos/rhel/amazonLinux) and `nix-env` (NixOS), and picks by distro as well as by binary. The list now ends with nix-env so it does not read as exhaustive. | `Services/TmuxInstaller.swift:50,57-88,212-256` |
+
+Three findings are **not** site problems and are left for the app:
+`share_usage_statistics_desc` promises the statistics "never include servers"
+while the client sends the server *count* as a range; `Info.plist` sets
+`NSAllowsArbitraryLoads = true`, so HTTPS is not enforced app-wide even though
+telemetry itself uses it; and the wizard's question text is fine but Windows has
+no checklist because `steps.json` maps that option to an explainer anchor.
+
 ## Commands
 
 ```
@@ -126,30 +151,26 @@ not.
    that behaviour so it changes on purpose rather than by accident.
 3. `zh-Hans` and `ja` have no terminology sheet of their own; the mapping table
    above is the only reference, and it is short.
-4. `privacy.html` §6 quotes a switch name that does not exist in the app, and the
-   four locales disagree about what it even is: English and Japanese say *chime*
-   (a sound), both Chinese say 提醒 (an alert). The app's own strings call it
-   "Background Activity Alerts" plus a separate "Completion Chime" (zh-Hant
-   背景任務警報, ja バックグラウンド活動アラート). Renaming it in the policy is a
-   product decision, not a copy decision, so it stays wrong in four languages
-   until someone decides.
-5. Two promises in `privacy.html` are kept because removing them would weaken
-   them, not because they read well: "industry-standard encryption", and the §2
-   sentence allowing aggregate statistics after stripping random IDs and exact
-   timestamps. Both want a yes or no from whoever owns the claim.
-6. An article's `title` in `guide-src/strings/*.json` is also its on-page `<h1>`,
+4. `privacy.html` quotes two app switch names in four languages each: the
+   statistics switch (Share Anonymous Usage Statistics / 分享匿名使用統計 /
+   分享匿名使用统计 / 匿名の利用統計を共有) and the background-alert master
+   (Background Activity Alerts / 背景任務警報 / 背景任务提醒 /
+   バックグラウンド活動アラート). The old text named a "Background Activity
+   Chime" that has never existed in the app. Nothing links the policy to
+   `Agentmux/Resources/*.lproj/Localizable.strings`, so a rename on the settings
+   screen makes the policy wrong again in four languages at once.
+5. An article's `title` in `guide-src/strings/*.json` is also its on-page `<h1>`,
    its `og:title` and its JSON-LD headline. There is no way to shorten a search
    result title without changing the heading a reader sees, which is why
    `test_build.py` caps it. Five headings changed in the last strings pass.
-7. The wizard's "A Windows PC" answer leads to an explainer with no checklist,
-   although the question implies one (`guide-src/wizard/steps.json`).
-8. `wizard/strings/*.json`'s `ui.loadFailed` text is duplicated verbatim inside
+6. The wizard's "A Windows PC" answer is an explainer answer by design: it opens
+   the setup article's `#windows` section (which exists in en and zh-TW) and
+   never builds a plan, guarded in `guide-src/wizard.js:216-220`. Copy
+   consequence: the machine question must not promise a checklist for every
+   answer.
+7. `wizard/strings/*.json`'s `ui.loadFailed` text is duplicated verbatim inside
    `guide-src/content/setup/{en,zh-TW}.html` (`data-load-failed`). Change one and
    the guide's fallback message stops matching the wizard's.
-9. The wizard names `apt, dnf, pacman, brew, or apk` as the package managers it
-   uses to install tmux. `Agentmux/Services/TmuxInstaller.swift` also handles
-   yum, CentOS, RHEL, Amazon Linux and `nix-env`, so the list reads as exhaustive
-   when it is not.
 
 ## Plan
 

@@ -73,7 +73,7 @@
     },
     "tmux-handled": {
       "title": "tmux: nothing to do",
-      "why": "You don't need to install tmux yourself. Once Agentmux connects it checks whether the machine has apt, dnf, pacman, brew, or apk, and installs tmux for you.",
+      "why": "You don't need to install tmux yourself. Once Agentmux connects it installs tmux with whichever package manager the machine has (apt, dnf, yum, pacman, apk, brew, nix-env).",
       "verifyHint": "Nothing to do in this step. Move on to the next one.",
       "failHint": "If the app later reports that the automatic install failed, the cause is usually that sudo wants a TTY."
     },

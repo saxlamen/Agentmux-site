@@ -7,21 +7,21 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta id="meta-description" name="description" content="Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials protected in device hardware, SSH traffic not logged.">
+    <meta id="meta-description" name="description" content="Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials kept in the system keychain, SSH traffic not logged.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/privacy.html">
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <meta id="og-title" property="og:title" content="Privacy Policy - Agentmux">
-    <meta id="og-description" property="og:description" content="Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials protected in device hardware, SSH traffic not logged.">
+    <meta id="og-description" property="og:description" content="Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials kept in the system keychain, SSH traffic not logged.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agentmux.saxcave.cc/privacy.html">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/app-icon-192.webp">
     <meta name="twitter:card" content="summary">
     <meta id="twitter-title" name="twitter:title" content="Privacy Policy - Agentmux">
-    <meta id="twitter-description" name="twitter:description" content="Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials protected in device hardware, SSH traffic not logged.">
+    <meta id="twitter-description" name="twitter:description" content="Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials kept in the system keychain, SSH traffic not logged.">
     <meta name="theme-color" content="#090d0f">
     <meta property="og:site_name" content="Agentmux">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://agentmux.saxcave.cc/privacy.html", "url": "https://agentmux.saxcave.cc/privacy.html", "name": "Privacy Policy", "description": "Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials protected in device hardware, SSH traffic not logged.", "inLanguage": ["en", "zh-Hant", "zh-Hans", "ja"], "dateModified": "2026-10-28", "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "about": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Agentmux", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://agentmux.saxcave.cc/privacy.html"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://agentmux.saxcave.cc/privacy.html", "url": "https://agentmux.saxcave.cc/privacy.html", "name": "Privacy Policy", "description": "Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials kept in the system keychain, SSH traffic not logged.", "inLanguage": ["en", "zh-Hant", "zh-Hans", "ja"], "dateModified": "2026-10-28", "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "about": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Agentmux", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://agentmux.saxcave.cc/privacy.html"}]}]}</script>
     <style>
         :root {
             --bg: #090d0f;
@@ -541,7 +541,7 @@
                 <div class="last-updated">Last updated: 2026-10-16</div>
                 <div class="summary-grid" aria-label="Privacy summary">
                     <div class="summary-item"><strong>01</strong><span>No personal data collection</span></div>
-                    <div class="summary-item"><strong>02</strong><span>Hardware-encrypted credentials</span></div>
+                    <div class="summary-item"><strong>02</strong><span>Credentials in the system keychain</span></div>
                     <div class="summary-item"><strong>03</strong><span>SSH traffic is not logged</span></div>
                 </div>
                 <p>Agentmux ("we," "our," or "the App") protects your privacy. This policy covers data handling and security on iOS and Android.</p>
@@ -550,11 +550,11 @@
                 <p>Agentmux is a tool for developers. We <strong>DO NOT</strong> collect, store, or transmit your personal data, server credentials, terminal content, or AI prompts. Connections and terminal operations run locally on your device, or go straight over SSH to your servers. The only data that reaches our service is the anonymous usage statistics in Section 2. You can turn those off at any time.</p>
 
                 <h2>2. Anonymous Usage Statistics</h2>
-                <p>To decide what to improve, the App sends a small amount of anonymous usage statistics. You can turn this off at any time in <strong>Settings → Privacy → Share Anonymous Usage Statistics</strong>.</p>
+                <p>To decide what to improve, the App sends a small amount of anonymous usage statistics. They are on by default, and the App shows you a notice before the first one goes out. You can turn them off at any time in <strong>Settings → Privacy → Share Anonymous Usage Statistics</strong>.</p>
                 <ul>
-                    <li><strong>What is sent</strong>: App version, operating system and version, device type (phone, tablet, or computer), app language, and plan (Free, Trial, or Pro). Each day the App also counts how often these events happen: opening the App, opening a session (with its type and which coding agent), the upgrade screen appearing, and a purchase completing. Counts such as the number of servers go as ranges only (for example, "2–5"), plus whether features such as cloud sync are on.</li>
+                    <li><strong>What is sent</strong>: App version and build number, which release channel you installed from, the system version, device type (phone, tablet, or computer), app language, and plan (Free, Trial, or Pro). Once a day the App records that you used it, together with how many servers and custom agents you have (as a range: 0, 1, 2–5, or 6+), how long it has been installed, and whether features such as background alerts, Live Activities, cloud sync and AI Permission Review are on. It also counts, per day: a tab opened (which kind: terminal, file browser, editor, image viewer or web browser; whether it was new, pre-warmed or restored; for a terminal, whether it attached to an existing tmux session or created one; and which coding agent), the upgrade screen appearing and what triggered it, and a purchase completing.</li>
                     <li><strong>Never sent</strong>: Server hostnames or addresses, usernames, file paths, project names, commands, terminal output, prompts, passwords, private keys, or API keys.</li>
-                    <li><strong>Anonymous</strong>: Events are grouped under a random ID created on your device. That ID is not linked to your account, name, email, or any device or advertising identifier. Reinstalling the App creates a new ID. We cannot identify you or look up one person's data.</li>
+                    <li><strong>Anonymous</strong>: Events are grouped under a random ID created on your device. That ID is not linked to your account, name, email, or any device or advertising identifier. Reinstalling the App creates a new ID. Turning statistics off and back on keeps the same ID, and restoring the App from a device backup carries the old ID with it. We cannot identify you or look up one person's data.</li>
                     <li><strong>Not used for tracking or advertising</strong>: We do not sell it or share it with third parties. Our own service on Cloudflare receives it, and we do not store your IP address.</li>
                     <li><strong>Retention</strong>: Events are deleted from our service after 90 days. For long-term statistics we may keep events with the random ID and the exact time stripped out, and those cannot be linked to a device or a person.</li>
                     <li><strong>When turned off</strong>: Sending stops at once, and data that has not been sent yet is deleted from your device.</li>
@@ -578,7 +578,7 @@
 
                 <h2>5. Local Storage & Security</h2>
                 <ul>
-                    <li><strong>SSH Credentials</strong>: The App keeps your passwords and private keys only in the platform's own hardware-backed secure storage: the iOS system <strong>Keychain</strong> on Apple devices and <strong>Android Keystore</strong> on Android. The encryption is the industry-standard encryption the operating system provides.</li>
+                    <li><strong>SSH Credentials</strong>: The App keeps your passwords and private keys in the operating system's own credential store: the iOS system <strong>Keychain</strong> on Apple devices and <strong>Android Keystore</strong> on Android. The device encrypts that store with a key tied to it, and neither the App nor our servers keep another copy. On iOS the App reads them without asking for Face ID, Touch ID, or a screen lock.</li>
                     <li><strong>Server Information</strong>: The App stores server configurations and project paths in its own secure storage on your device.</li>
                     <li><strong>Terminal Traffic</strong>: All communication between the App and your server is encrypted by the <strong>SSH protocol</strong>. We do not intercept or log your terminal output.</li>
                 </ul>
@@ -586,15 +586,15 @@
                 <h2>6. Command Transparency & Security</h2>
                 <ul>
                     <li><strong>Automated Probes</strong>: For features such as path detection and tmux management, Agentmux runs non-destructive probe commands (for example <code>PATH</code>, <code>tmux -V</code>). These do not change your system settings.</li>
-                    <li><strong>Background Activity Probing</strong>: If you turn on "Background Activity Chime", the App may periodically check your terminal's status in the background, for example by querying TTY processes. The check exists only to notify you when a long-running task finishes. It runs over your encrypted SSH connection, and no terminal data is collected or sent to any external server.</li>
+                    <li><strong>Background Activity Probing</strong>: If you turn on "Background Activity Alerts", the App may periodically check your terminal's status in the background, for example by querying TTY processes. The check exists only to notify you when a long-running task finishes. It runs over your encrypted SSH connection, and no terminal data is collected or sent to any external server.</li>
                     <li><strong>Agent Optimizations</strong>: When you launch certain agents (Gemini, for example), the App may temporarily adjust a remote settings file such as <code>~/.gemini/settings.json</code> so the agent matches your UI theme. The change is reverted automatically.</li>
                     <li><strong>Security</strong>: Every command the App generates is strictly escaped to prevent injection.</li>
                 </ul>
 
                 <h2>7. Cloud Synchronization (Pro Feature)</h2>
                 <ul>
-                    <li><strong>iOS (iCloud Sync)</strong>: If you enable iCloud Sync on iOS, your server configurations sync across your own devices through <strong>Apple's iCloud service</strong>. Sensitive passwords and keys are excluded, unless stored in iCloud Keychain.</li>
-                    <li><strong>Android (Google Drive Sync)</strong>: If you enable Google Drive Sync on Android, your encrypted server configurations are stored directly in your own <strong>Google Drive AppData folder</strong>.</li>
+                    <li><strong>iOS (iCloud Sync)</strong>: If you enable iCloud Sync on iOS, your server configurations sync across your own devices through <strong>Apple's iCloud service</strong>: names, addresses, ports, usernames, the authentication method, key and project paths, folder and port-forwarding rules, plus your 20 most recent sessions and files. Passwords and private keys are never part of that data. They reach your other devices only through <strong>iCloud Keychain</strong>, Apple's own encrypted sync, if you have it switched on.</li>
+                    <li><strong>Android (Google Drive Sync)</strong>: If you enable Google Drive Sync on Android, your server configurations are stored in your own <strong>Google Drive AppData folder</strong>, which only your App can list. Passwords and private keys stay on the device and are not in that file. Google encrypts the file in transit and at rest; the App does not encrypt its contents itself.</li>
                     <li>We do not host or operate intermediate sync servers, and we cannot access this data.</li>
                 </ul>
 
@@ -651,7 +651,7 @@
                 <h2>6. 指令透明度與安全</h2>
                 <ul>
                     <li><strong>自動化偵測</strong>：為了提供路徑偵測與 tmux 管理等功能，Agentmux 會執行不具破壞性的偵測指令（例如 <code>PATH</code>、<code>tmux -V</code>）。這些指令不會改到您的系統設定。</li>
-                    <li><strong>背景活動偵測</strong>：如果您開啟「背景活動提醒」功能，App 在背景執行時，可能會定期檢查您的終端機狀態（例如查詢 TTY 處理程序）。檢查只有一個用途：長時間執行的任務完成時通知您。檢查直接透過您的加密 SSH 連線進行，不會收集終端機資料，也不會傳到外部伺服器。</li>
+                    <li><strong>背景活動偵測</strong>：如果您開啟「背景任務警報」，App 在背景執行時，可能會定期檢查您的終端機狀態（例如查詢 TTY 處理程序）。檢查只有一個用途：長時間執行的任務完成時通知您。檢查直接透過您的加密 SSH 連線進行，不會收集終端機資料，也不會傳到外部伺服器。</li>
                     <li><strong>Agent 最佳化</strong>：啟動特定 Agent（例如 Gemini）時，App 可能會暫時調整遠端設定（例如 <code>~/.gemini/settings.json</code>），讓它符合您的介面主題。這個調整會自動還原。</li>
                     <li><strong>安全性</strong>：所有產生的指令都經過嚴格轉義，以防注入。</li>
                 </ul>
@@ -716,7 +716,7 @@
                 <h2>6. 指令透明度与安全</h2>
                 <ul>
                     <li><strong>自动化探测</strong>：为了提供路径检测和 tmux 管理等功能，Agentmux 会执行不具破坏性的探测指令（例如 <code>PATH</code>、<code>tmux -V</code>）。这些指令不会改到您的系统设置。</li>
-                    <li><strong>背景活动探测</strong>：如果您开启“背景活动提醒”功能，App 在后台运行时，可能会定期检查您的终端状态（例如查询 TTY 进程）。检查只有一个用途：长时间运行的任务完成时通知您。检查直接通过您的加密 SSH 连接进行，不会收集终端数据，也不会传到外部服务器。</li>
+                    <li><strong>背景活动探测</strong>：如果您开启“背景任务提醒”，App 在后台运行时，可能会定期检查您的终端状态（例如查询 TTY 进程）。检查只有一个用途：长时间运行的任务完成时通知您。检查直接通过您的加密 SSH 连接进行，不会收集终端数据，也不会传到外部服务器。</li>
                     <li><strong>Agent 优化</strong>：启动特定 Agent（例如 Gemini）时，App 可能会暂时调整远程配置（例如 <code>~/.gemini/settings.json</code>），让它符合您的界面主题。这个调整会自动还原。</li>
                     <li><strong>安全性</strong>：所有生成的指令都经过严格转义，以防注入。</li>
                 </ul>
@@ -781,7 +781,7 @@
                 <h2>6. コマンドの透明性とセキュリティ</h2>
                 <ul>
                     <li><strong>自動化されたプローブ</strong>：パス検出や tmux 管理などの機能を提供するため、Agentmux は非破壊的なプローブコマンド（例：<code>PATH</code>、<code>tmux -V</code>）を実行します。これらはお客様のシステム設定を変更しません。</li>
-                    <li><strong>バックグラウンド活動のプローブ</strong>：「バックグラウンド活動チャイム」をオンにすると、アプリはバックグラウンド実行中に、ターミナルの状態を定期的に確認することがあります（TTY プロセスへのクエリなど）。この確認は、長時間実行しているタスクの完了を通知するためだけのものです。確認は暗号化された SSH 接続を直接経由して行い、ターミナルデータを収集したり外部サーバーに送ったりすることはありません。</li>
+                    <li><strong>バックグラウンド活動のプローブ</strong>：「バックグラウンド活動アラート」をオンにすると、アプリはバックグラウンド実行中に、ターミナルの状態を定期的に確認することがあります（TTY プロセスへのクエリなど）。この確認は、長時間実行しているタスクの完了を通知するためだけのものです。確認は暗号化された SSH 接続を直接経由して行い、ターミナルデータを収集したり外部サーバーに送ったりすることはありません。</li>
                     <li><strong>エージェントの最適化</strong>：特定のエージェント（Gemini など）を起動するとき、UI テーマに合わせるため、アプリがリモート設定（例：<code>~/.gemini/settings.json</code>）を一時的に調整することがあります。この調整は一時のもので、自動的に元に戻ります。</li>
                     <li><strong>セキュリティ</strong>：生成するすべてのコマンドは、インジェクションを防ぐため厳密にエスケープします。</li>
                 </ul>
@@ -821,7 +821,7 @@
         const LANG_META = {
             en: {
                 title: 'Privacy Policy - Agentmux',
-                description: 'Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials protected in device hardware, SSH traffic not logged.'
+                description: 'Agentmux privacy policy: no personal data collection, anonymous statistics you can turn off, credentials kept in the system keychain, SSH traffic not logged.'
             },
             'zh-TW': {
                 title: '隱私政策 - Agentmux',
