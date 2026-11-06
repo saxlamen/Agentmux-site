@@ -36,7 +36,7 @@ agreed in prose. If you change one of these sentences, change it against code.
 | §2 retention: raw events deleted after 90 days, long-term copies have no ID and no exact time | True. Raw rows keep `install_id` and second-precision `ts` for 90 days; a rollup then writes `daily_stats` at day granularity with `COUNT(DISTINCT install_id)`, kept indefinitely. | `TelemetryService.swift:280-287,415-427`; `telemetry-worker/src/index.ts:158-182`; `telemetry-dashboard/src/rollup.ts:7,108-113`; `migrations/0001,0003` |
 | §2 the random ID is created on the device and a reinstall makes a new one | True: a plain `UUID` in `UserDefaults`. It is never rotated by toggling, and `UserDefaults` is not excluded from device backups, so a restore carries the old ID to a new device. | `TelemetryService.swift:316,457-463` |
 | §5 credentials are in a "hardware-backed" store | The iOS side is the system Keychain with `kSecAttrAccessibleAfterFirstUnlock`; there is no `LAContext`, biometry or passcode gate anywhere in the app, so the app never proves the key is unlocked by a person. Android uses Keystore-backed AES-GCM. The policy now says "the operating system's own credential store" and states the missing biometric gate instead of implying one. | `Models/Server.swift:255-308`; `Services/AIAutoPilot/AIAutoPilotKeychain.swift:88-109`; Android `KeystoreManager.kt:12-48` |
-| §7 iOS sync excludes "sensitive passwords and keys, unless stored in iCloud Keychain" | The exception was framed wrongly. The CloudKit `Server` record hard-codes `keyContent = ""` and has no `password` field at all, so a secret can never be in the app's sync payload. Passwords and private keys are written twice, once synchronizable, so they replicate through **iCloud Keychain**, a different channel. §7 now describes two channels instead of one plus an exception. | `CloudKitSyncService.swift:707-741` (`:714`), `:185-189`; `Models/Server.swift:260,299-307,363-370` |
+| §7 iOS sync excludes "sensitive passwords and keys, unless stored in iCloud Keychain" | The exception was framed wrongly. The CloudKit `Server` record hard-codes `keyContent = ""` and has no `password` field at all, so a secret can never be in the app's sync payload, and only servers you add by hand are pushed at all (recents cap at 20). Passwords and private keys are written twice, once synchronizable, so they replicate through **iCloud Keychain**, a different channel. §7 now describes two channels instead of one plus an exception, and states both limits. | `CloudKitSyncService.swift:707-741` (`:714`), `:185-189`, `:281-284`, `:620`, `:671`; `Models/Server.swift:260,299-307,363-370` |
 | §7 Android puts "encrypted server configurations" in Google Drive | The file in `appDataFolder` is plain JSON; only the transport and Google's at-rest encryption protect it. Secrets are not in it. The policy now says so. | Android `GoogleDriveSyncService.kt:481,272-311,872,994,1003` |
 | The wizard says it installs tmux with "apt, dnf, pacman, brew, or apk" | The installer also handles `yum` (fedora/centos/rhel/amazonLinux) and `nix-env` (NixOS), and picks by distro as well as by binary. The list now ends with nix-env so it does not read as exhaustive. | `Services/TmuxInstaller.swift:50,57-88,212-256` |
 
@@ -99,6 +99,12 @@ current copy is in step, measured across home and privacy:
 | plans | plans | 方案 | 方案 | プラン |
 | guide | guide | 指南 | 指南 | ガイド |
 | privacy | privacy | 隱私 | 隐私 | プライバシー |
+| credential store | credential store | 憑證儲存區（Keychain） | 凭据存储区（Keychain） | 認証情報ストア（Keychain） |
+| release channel | release channel | 發佈管道 | 发布渠道 | リリースチャネル |
+| pre-warmed tab | pre-warmed | 預熱 | 预热 | 事前起動 |
+| tab (an app screen) | tab | 分頁 | 标签页 | タブ |
+| daily snapshot | snapshot | 使用快照 | 使用情况快照 | 利用のスナップショット |
+| upgrade screen | upgrade screen | 升級畫面 | 升级页面 | アップグレード画面 |
 
 Keep terms inside a locale consistent, and keep the cross-locale mapping above.
 Technical words stay untranslated in the Chinese locales (SSH, tmux, agent,
@@ -109,6 +115,14 @@ literally.
 `test_copy_i18n.py` enforces the orthography: no mainland terms or simplified
 characters in a zh-TW surface, no traditional characters or Traditional house
 terms in a zh-Hans surface, no Chinese left sitting in a ja surface.
+
+Apple and Google product names stay Latin in all four locales: Keychain, iCloud
+Keychain, Keystore, Live Activities, Google Drive, and `build number` (no
+established Chinese legal term; Apple's own 建立編號 is App Store Connect
+jargon). Japanese uses です/ます throughout, including the privacy policy, even
+though Japanese legal text often uses である体: the site reads as one voice this
+way, and half a page in である体 would read as a different author. If a Japanese
+reviewer ever asks for である体, convert the whole locale at once.
 
 ## Voice
 

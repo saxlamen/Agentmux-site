@@ -541,7 +541,7 @@
                 <div class="last-updated">Last updated: 2026-10-16</div>
                 <div class="summary-grid" aria-label="Privacy summary">
                     <div class="summary-item"><strong>01</strong><span>No personal data collection</span></div>
-                    <div class="summary-item"><strong>02</strong><span>Credentials in the system keychain</span></div>
+                    <div class="summary-item"><strong>02</strong><span>Credentials in OS-encrypted storage</span></div>
                     <div class="summary-item"><strong>03</strong><span>SSH traffic is not logged</span></div>
                 </div>
                 <p>Agentmux ("we," "our," or "the App") protects your privacy. This policy covers data handling and security on iOS and Android.</p>
@@ -552,7 +552,7 @@
                 <h2>2. Anonymous Usage Statistics</h2>
                 <p>To decide what to improve, the App sends a small amount of anonymous usage statistics. They are on by default, and the App shows you a notice before the first one goes out. You can turn them off at any time in <strong>Settings → Privacy → Share Anonymous Usage Statistics</strong>.</p>
                 <ul>
-                    <li><strong>What is sent</strong>: App version and build number, which release channel you installed from, the system version, device type (phone, tablet, or computer), app language, and plan (Free, Trial, or Pro). Once a day the App records that you used it, together with how many servers and custom agents you have (as a range: 0, 1, 2–5, or 6+), how long it has been installed, and whether features such as background alerts, Live Activities, cloud sync and AI Permission Review are on. It also counts, per day: a tab opened (which kind: terminal, file browser, editor, image viewer or web browser; whether it was new, pre-warmed or restored; for a terminal, whether it attached to an existing tmux session or created one; and which coding agent), the upgrade screen appearing and what triggered it, and a purchase completing.</li>
+                    <li><strong>What is sent</strong>: App version and build number, which release channel you installed from, the system version, device type (phone, tablet, or computer), app language, and plan (Free, Trial, or Pro). At most once a day the App records that you used it, together with how many servers and custom agents you have (as a range: 0, 1, 2–5, or 6+), how long it has been installed, and whether features such as background alerts, Live Activities, cloud sync and AI Permission Review are on. It also counts, per day: a tab opened (which kind: terminal, file browser, editor, image viewer or web browser; whether it was new, pre-warmed or restored; for a terminal, whether it attached to an existing tmux session or created one; and which coding agent), the upgrade screen appearing and what triggered it, and a purchase completing.</li>
                     <li><strong>Never sent</strong>: Server hostnames or addresses, usernames, file paths, project names, commands, terminal output, prompts, passwords, private keys, or API keys.</li>
                     <li><strong>Anonymous</strong>: Events are grouped under a random ID created on your device. That ID is not linked to your account, name, email, or any device or advertising identifier. Reinstalling the App creates a new ID. Turning statistics off and back on keeps the same ID, and restoring the App from a device backup carries the old ID with it. We cannot identify you or look up one person's data.</li>
                     <li><strong>Not used for tracking or advertising</strong>: We do not sell it or share it with third parties. Our own service on Cloudflare receives it, and we do not store your IP address.</li>
@@ -578,7 +578,7 @@
 
                 <h2>5. Local Storage & Security</h2>
                 <ul>
-                    <li><strong>SSH Credentials</strong>: The App keeps your passwords and private keys in the operating system's own credential store: the iOS system <strong>Keychain</strong> on Apple devices and <strong>Android Keystore</strong> on Android. The device encrypts that store with a key tied to it, and neither the App nor our servers keep another copy. On iOS the App reads them without asking for Face ID, Touch ID, or a screen lock.</li>
+                    <li><strong>SSH Credentials</strong>: The App keeps your passwords and private keys in the operating system's own credential store: the iOS system <strong>Keychain</strong> on Apple devices and <strong>Android Keystore</strong> on Android. The device encrypts that store with a key tied to it, and neither the App nor our servers keep another copy. On iOS no Face ID, Touch ID, or passcode is required to read them.</li>
                     <li><strong>Server Information</strong>: The App stores server configurations and project paths in its own secure storage on your device.</li>
                     <li><strong>Terminal Traffic</strong>: All communication between the App and your server is encrypted by the <strong>SSH protocol</strong>. We do not intercept or log your terminal output.</li>
                 </ul>
@@ -593,7 +593,7 @@
 
                 <h2>7. Cloud Synchronization (Pro Feature)</h2>
                 <ul>
-                    <li><strong>iOS (iCloud Sync)</strong>: If you enable iCloud Sync on iOS, your server configurations sync across your own devices through <strong>Apple's iCloud service</strong>: names, addresses, ports, usernames, the authentication method, key and project paths, folder and port-forwarding rules, plus your 20 most recent sessions and files. Passwords and private keys are never part of that data. They reach your other devices only through <strong>iCloud Keychain</strong>, Apple's own encrypted sync, if you have it switched on.</li>
+                    <li><strong>iOS (iCloud Sync)</strong>: If you enable iCloud Sync on iOS, your server configurations sync across your own devices through <strong>Apple's iCloud service</strong>: names, addresses, ports, usernames, the authentication method, key and project paths, folder and port-forwarding rules, plus your 20 most recent sessions and files. Only servers you added by hand are in this sync; ones the App discovered on its own are not. Passwords and private keys are never part of that data. They reach your other devices only through <strong>iCloud Keychain</strong>, Apple's own encrypted sync, if you have it switched on.</li>
                     <li><strong>Android (Google Drive Sync)</strong>: If you enable Google Drive Sync on Android, your server configurations are stored in your own <strong>Google Drive AppData folder</strong>, which only your App can list. Passwords and private keys stay on the device and are not in that file. Google encrypts the file in transit and at rest; the App does not encrypt its contents itself.</li>
                     <li>We do not host or operate intermediate sync servers, and we cannot access this data.</li>
                 </ul>
@@ -606,7 +606,7 @@
                 <div class="last-updated">最後更新：2026-10-16</div>
                 <div class="summary-grid" aria-label="隱私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集個人資料</span></div>
-                    <div class="summary-item"><strong>02</strong><span>憑證硬體加密保護</span></div>
+                    <div class="summary-item"><strong>02</strong><span>憑證存在系統加密區</span></div>
                     <div class="summary-item"><strong>03</strong><span>不記錄 SSH 流量</span></div>
                 </div>
                 <p>Agentmux（下稱「我們」或「本應用程式」）保護您的隱私。本政策說明我們在 iOS 與 Android 上如何處理並保護資料。</p>
@@ -615,11 +615,11 @@
                 <p>Agentmux 是給開發者用的工具。我們<strong>不會</strong>收集、儲存或傳輸您的個人資料、伺服器憑證、終端機內容或 AI 提示詞。連線與終端機操作都在您的裝置本機進行，或直接透過 SSH 在您的伺服器上進行。會送到我們服務的資料只有第 2 節說明的匿名使用統計，您可以隨時關閉。</p>
 
                 <h2>2. 匿名使用統計</h2>
-                <p>為了決定要改善哪些功能，App 會傳送少量匿名使用統計。您可以隨時到<strong>「設定 → 隱私 → 分享匿名使用統計」</strong>關閉。</p>
+                <p>為了決定要改善哪些功能，App 會傳送少量匿名使用統計。這些統計預設開啟，App 會在第一筆送出前先顯示一次說明。您可以隨時到<strong>「設定 → 隱私 → 分享匿名使用統計」</strong>關閉。</p>
                 <ul>
-                    <li><strong>傳送哪些資料</strong>：App 版本、作業系統與版本、裝置類型（手機、平板或電腦）、App 介面語言、方案（免費、試用或專業版）。App 也記錄這些事件每天的次數：開啟 App、開啟 session（含類型與使用的程式碼助理）、顯示升級畫面、完成購買。伺服器數量等數字只以區間傳送（例如「2–5」），並附上部分功能（例如雲端同步）是否開啟。</li>
+                    <li><strong>傳送哪些資料</strong>：App 版本與 build number、安裝來源的發佈管道、作業系統與版本、裝置類型（手機、平板或電腦）、App 介面語言、方案（免費、試用或專業版）。App 每天最多記錄一次使用快照：您用過 App、伺服器與自訂助理的數量（0、1、2–5、6+ 的區間）、安裝至今的時間，以及背景任務警報、Live Activities、雲端同步、AI 自動權限審查等功能是否開啟。它也按日計算：開啟分頁（哪一種：終端機、檔案瀏覽器、編輯器、圖片檢視器或網頁瀏覽器；是新開、預熱還是還原；終端機是接上既有 tmux session 還是新建；以及使用的程式碼助理）、升級畫面與其觸發原因、購買完成。</li>
                     <li><strong>絕不傳送</strong>：伺服器主機名稱或位址、使用者名稱、檔案路徑、專案名稱、指令、終端機輸出、提示詞、密碼、私鑰或 API 金鑰。</li>
-                    <li><strong>匿名</strong>：資料用您裝置上隨機產生的 ID 分組。這個 ID 不連結您的帳號、姓名、Email、裝置識別碼或廣告識別碼，重新安裝 App 就會產生新的 ID。我們無法辨識您，也找不到特定使用者的資料。</li>
+                    <li><strong>匿名</strong>：事件用您裝置上隨機產生的 UUID 分組。這個 ID 不連結您的帳號、姓名、Email、裝置識別碼或廣告識別碼。重新安裝 App 會產生新的 ID；把統計關掉再開啟，ID 不變；從裝置備份還原 App 時，舊 ID 也一起帶過去。我們無法辨識您，也找不到特定使用者的資料。</li>
                     <li><strong>不用於追蹤或廣告</strong>：我們不會出售或分享給第三方。資料由我們自己架設在 Cloudflare 上的服務接收，也不會儲存您的 IP 位址。</li>
                     <li><strong>保留期限</strong>：事件會在 90 天後從我們的服務刪除。我們也可能保留事件作長期統計，但會先移除隨機 ID 與精確時間；這些事件無法對應到任何裝置或使用者。</li>
                     <li><strong>關閉後</strong>：立即停止傳送，裝置上尚未送出的資料也會刪除。</li>
@@ -643,7 +643,7 @@
 
                 <h2>5. 本地儲存與安全</h2>
                 <ul>
-                    <li><strong>SSH 憑證</strong>：您的密碼與私鑰只儲存在系統原生、由硬體支援的加密保護區：Apple 裝置上是 iOS 系統的 <strong>Keychain</strong>，Android 上是 <strong>Android Keystore</strong>。加密用的是作業系統提供的業界標準技術。</li>
+                    <li><strong>SSH 憑證</strong>：您的密碼與私鑰只儲存在作業系統自己的憑證儲存區：Apple 裝置上是 iOS 系統的 <strong>Keychain</strong>，Android 上是 <strong>Android Keystore</strong>。這個儲存區由裝置以綁定自身的金鑰加密，App 與我們的伺服器都不另留複本。在 iOS 上，App 讀取時不會要求 Face ID、Touch ID 或螢幕鎖定。</li>
                     <li><strong>伺服器資訊</strong>：伺服器設定與專案路徑都存在您裝置上、App 自己的安全儲存區。</li>
                     <li><strong>終端機流量</strong>：App 與您的伺服器之間的所有通訊，都透過 <strong>SSH 協定</strong>加密。我們不會截取或記錄您的終端機輸出內容。</li>
                 </ul>
@@ -658,8 +658,8 @@
 
                 <h2>7. 雲端同步（Pro 功能）</h2>
                 <ul>
-                    <li><strong>iOS (iCloud 同步)</strong>：如果您在 iOS 上開啟 iCloud 同步，伺服器設定會透過 <strong>Apple 的 iCloud 服務</strong> 在您自己的裝置之間同步。密碼與金鑰等敏感資料不同步，除非存放在 iCloud Keychain。</li>
-                    <li><strong>Android (Google Drive 同步)</strong>：如果您在 Android 上開啟 Google Drive 同步，加密後的伺服器設定會直接存到您自己的 <strong>Google 雲端硬碟專用 AppData 資料夾</strong>。</li>
+                    <li><strong>iOS (iCloud 同步)</strong>：如果您在 iOS 上開啟 iCloud 同步，伺服器設定會透過 <strong>Apple 的 iCloud 服務</strong> 在您自己的裝置之間同步，同步的只有設定內容：名稱、位址、通訊埠、使用者名稱、驗證方式、金鑰與專案路徑、資料夾與通訊埠轉發規則，加上最近 20 個 session 與檔案。會同步的只有您手動加入的伺服器，App 自行發現的不在內。密碼與私鑰絕不會出現在這份資料裡；它們到您的其他裝置，只可能透過 Apple 自己的加密同步 <strong>iCloud Keychain</strong>，前提是您已開啟。</li>
+                    <li><strong>Android (Google Drive 同步)</strong>：如果您在 Android 上開啟 Google Drive 同步，未經加密的純 JSON 伺服器設定會直接存進只有您的 App 能列出的 <strong>Google 雲端硬碟 AppData 專用資料夾</strong>。密碼與私鑰留在裝置上，不在那個檔案裡。檔案受 Google 的傳輸與儲存加密保護，App 本身沒有加密內容。</li>
                     <li>我們不架設也不營運中繼同步伺服器，也存取不到這些資料。</li>
                 </ul>
 
@@ -671,7 +671,7 @@
                 <div class="last-updated">最后更新：2026-10-16</div>
                 <div class="summary-grid" aria-label="隐私摘要">
                     <div class="summary-item"><strong>01</strong><span>不收集个人资料</span></div>
-                    <div class="summary-item"><strong>02</strong><span>凭据硬件加密保护</span></div>
+                    <div class="summary-item"><strong>02</strong><span>凭据存在系统加密区</span></div>
                     <div class="summary-item"><strong>03</strong><span>不记录 SSH 流量</span></div>
                 </div>
                 <p>Agentmux（下称“我们”或“本应用程序”）保护您的隐私。本政策说明我们在 iOS 与 Android 上如何处理和保护数据。</p>
@@ -680,11 +680,11 @@
                 <p>Agentmux 是给开发者用的工具。我们<strong>不会</strong>收集、存储或传输您的个人数据、服务器凭据、终端内容或 AI 提示词。连接与终端操作都在您的设备本地进行，或直接通过 SSH 在您的服务器上进行。会送到我们服务的数据只有第 2 节说明的匿名使用统计，您可以随时关闭。</p>
 
                 <h2>2. 匿名使用统计</h2>
-                <p>为了决定要改进哪些功能，App 会发送少量匿名使用统计。您可以随时在<strong>“设置 → 隐私 → 分享匿名使用统计”</strong>中关闭。</p>
+                <p>为了决定要改进哪些功能，App 会发送少量匿名使用统计。这些统计默认开启，App 会在第一笔数据发送前先显示一次提示。您可以随时在<strong>“设置 → 隐私 → 分享匿名使用统计”</strong>中关闭。</p>
                 <ul>
-                    <li><strong>发送哪些数据</strong>：App 版本、操作系统及版本、设备类型（手机、平板或电脑）、App 界面语言、方案（免费、试用或专业版）。App 也记录这些事件每天的次数：打开 App、打开 session（含类型与使用的代码助理）、显示升级页面、完成购买。服务器数量等数字只以区间发送（例如“2–5”），并附上部分功能（例如云端同步）是否开启。</li>
+                    <li><strong>发送哪些数据</strong>：App 版本与 build number、安装来源的发布渠道、操作系统及版本、设备类型（手机、平板或电脑）、App 界面语言、方案（免费、试用或专业版）。App 每天最多记录一次使用情况快照：您用过 App、服务器与自定义助理的数量（0、1、2–5、6+ 的区间）、安装至今的时间，以及背景任务提醒、Live Activities、云端同步、AI 自动权限审查等功能是否开启。它还按天统计：打开标签页（类型：终端、文件浏览器、编辑器、图片查看器或网页浏览器；新开、预热还是还原；终端是接入现有 tmux 会话还是新建；以及使用的代码助理）、升级页面及其触发原因、购买完成。</li>
                     <li><strong>绝不发送</strong>：服务器主机名或地址、用户名、文件路径、项目名称、指令、终端输出、提示词、密码、私钥或 API 密钥。</li>
-                    <li><strong>匿名</strong>：数据用您设备上随机生成的 ID 分组。这个 ID 不关联您的账号、姓名、邮箱、设备标识符或广告标识符，重新安装 App 就会生成新的 ID。我们无法识别您，也找不到特定用户的数据。</li>
+                    <li><strong>匿名</strong>：数据用您设备上随机生成的 UUID 分组。这个 ID 不关联您的账号、姓名、邮箱、设备标识符或广告标识符。重新安装 App 会生成新的 ID；关闭统计再开启，ID 保持不变；从设备备份还原 App 时，旧 ID 也会一起带过去。我们无法识别您，也找不到特定用户的数据。</li>
                     <li><strong>不用于追踪或广告</strong>：我们不会出售或分享给第三方。数据由我们自己部署在 Cloudflare 上的服务接收，也不会存储您的 IP 地址。</li>
                     <li><strong>保留期限</strong>：事件会在 90 天后从我们的服务删除。我们也可能保留事件用于长期统计，但会先移除随机 ID 与精确时间；这些事件无法对应到任何设备或用户。</li>
                     <li><strong>关闭后</strong>：立即停止发送，设备上尚未发送的数据也会删除。</li>
@@ -708,7 +708,7 @@
 
                 <h2>5. 本地存储与安全</h2>
                 <ul>
-                    <li><strong>SSH 凭据</strong>：您的密码与私钥只存储在系统原生、由硬件支持的加密保护区：Apple 设备上是 iOS 系统的 <strong>Keychain</strong>，Android 上是 <strong>Android Keystore</strong>。加密用的是操作系统提供的行业标准技术。</li>
+                    <li><strong>SSH 凭据</strong>：您的密码与私钥只存储在操作系统自身的凭据存储区：Apple 设备上是 iOS 系统的 <strong>Keychain</strong>，Android 上是 <strong>Android Keystore</strong>。该存储区由设备用与自身绑定的密钥加密，App 和我们的服务器都不另留副本。在 iOS 上，App 读取时不会要求 Face ID、Touch ID 或屏幕锁定。</li>
                     <li><strong>服务器信息</strong>：服务器配置和项目路径都存在您设备上 App 自己的安全存储区。</li>
                     <li><strong>终端流量</strong>：App 与您的服务器之间的所有通信，都通过 <strong>SSH 协议</strong>加密。我们不会截取或记录您的终端输出内容。</li>
                 </ul>
@@ -723,8 +723,8 @@
 
                 <h2>7. 云端同步（专业版功能）</h2>
                 <ul>
-                    <li><strong>iOS (iCloud 同步)</strong>：如果您在 iOS 上开启 iCloud 同步，服务器配置会通过 <strong>Apple 的 iCloud 服务</strong> 在您自己的设备之间同步。密码与密钥等敏感数据不同步，除非存放在 iCloud Keychain。</li>
-                    <li><strong>Android (Google Drive 同步)</strong>：如果您在 Android 上开启 Google Drive 同步，加密后的服务器配置会直接存到您自己的 <strong>Google 云端硬盘专用 AppData 文件夹</strong>。</li>
+                    <li><strong>iOS (iCloud 同步)</strong>：如果您在 iOS 上开启 iCloud 同步，服务器配置会通过 <strong>Apple 的 iCloud 服务</strong> 在您自己的设备之间同步，同步的只有配置内容：名称、地址、端口、用户名、认证方式、密钥与项目路径、文件夹与端口转发规则，以及最近 20 个会话和文件。会同步的只有您手动添加的服务器，App 自行发现的不在内。密码和私钥绝不会出现在这份数据里；它们到您的其他设备，只可能通过 Apple 自己的加密同步 <strong>iCloud Keychain</strong>，前提是您已开启它。</li>
+                    <li><strong>Android (Google Drive 同步)</strong>：如果您在 Android 上开启 Google Drive 同步，未经加密的纯 JSON 服务器配置会直接存入只有您的 App 能列出的 <strong>Google 云端硬盘 AppData 专用文件夹</strong>。密码和私钥留在设备上，不在那个文件里。文件受 Google 的传输与存储加密保护，App 本身没有加密内容。</li>
                     <li>我们不架设也不运营中继同步服务器，也访问不到这些数据。</li>
                 </ul>
 
@@ -736,7 +736,7 @@
                 <div class="last-updated">最終更新日：2026-10-16</div>
                 <div class="summary-grid" aria-label="プライバシー概要">
                     <div class="summary-item"><strong>01</strong><span>個人データを収集しません</span></div>
-                    <div class="summary-item"><strong>02</strong><span>認証情報はハードウェア暗号化</span></div>
+                    <div class="summary-item"><strong>02</strong><span>認証情報は OS が暗号化して保存</span></div>
                     <div class="summary-item"><strong>03</strong><span>SSH 通信を記録しません</span></div>
                 </div>
                 <p>Agentmux（以下「当社」または「本アプリ」）は、ユーザーのプライバシーを守ります。本ポリシーは、iOS と Android におけるデータセキュリティとプライバシーの考え方を説明します。</p>
@@ -745,11 +745,11 @@
                 <p>Agentmux は開発者向けのツールです。当社は、お客様の個人データ、サーバー認証情報、ターミナルの内容、AI プロンプトを<strong>収集も保存も送信もしません</strong>。接続とターミナル操作はデバイス内のローカル、または SSH を経由して直接お客様のサーバー上で行われます。当社のサービスに送るのは、第 2 項で説明する匿名の利用統計のみです。いつでもオフにできます。</p>
 
                 <h2>2. 匿名の利用統計</h2>
-                <p>改善点を決めるため、本アプリは少量の匿名の利用統計を送信します。<strong>「設定 → プライバシー → 匿名の利用統計を共有」</strong>からいつでもオフにできます。</p>
+                <p>改善点を決めるため、本アプリは少量の匿名の利用統計を利用統計はデフォルトでオンになっており、最初のデータが送信される前に一度だけ通知を表示します。<strong>「設定 → プライバシー → 匿名の利用統計を共有」</strong>からいつでもオフにできます。</p>
                 <ul>
-                    <li><strong>送信される内容</strong>：アプリのバージョン、OS とそのバージョン、デバイスの種類（スマートフォン、タブレット、コンピュータ）、アプリの表示言語、プラン（無料、トライアル、Pro）。次に挙げるイベントが 1 日に何回起きたかも送ります。アプリの起動、セッションの開始（種類と使用したコーディングエージェント）、アップグレード画面の表示、購入の完了。サーバー数などの数値は範囲（例：「2–5」）だけで送り、一部の機能（クラウド同期など）がオンかどうかも含めます。</li>
+                    <li><strong>送信される内容</strong>：アプリのバージョンとビルド番号、インストール元のリリースチャネル、OS とそのバージョン、デバイスの種類（スマートフォン、タブレット、コンピュータ）、アプリの表示言語、プラン（無料、トライアル、Pro）。本アプリは 1 日最大 1 回、利用のスナップショットを記録します。アプリを使ったこと、サーバー数とカスタムエージェント数（0、1、2〜5、6+ の範囲）、インストールからの経過期間、バックグラウンド活動アラート、Live Activities、クラウド同期、AI 自動権限レビューなどの機能のオン/オフです。また 1 日単位で、タブを開いたこと（種類：ターミナル、ファイルブラウザ、エディタ、画像ビューア、Webブラウザ。新規・事前起動・復元の別。ターミナルは既存の tmux セッションに接続したか新規作成したか。使用したコーディングエージェント）、アップグレード画面の表示とそのきっかけ、購入の完了も数えます。</li>
                     <li><strong>送信されないもの</strong>：サーバーのホスト名やアドレス、ユーザー名、ファイルパス、プロジェクト名、コマンド、ターミナル出力、プロンプト、パスワード、秘密鍵、API キー。</li>
-                    <li><strong>匿名性</strong>：データはデバイスで生成したランダムな ID でまとめます。この ID はアカウント、氏名、メールアドレス、デバイス識別子、広告識別子と紐付けません。アプリを再インストールすると新しい ID になり、当社がお客様を特定することはありません。特定の個人のデータをたどることもできません。</li>
+                    <li><strong>匿名性</strong>：イベントはデバイスで生成したランダムな ID（UUID）でまとめます。この ID はアカウント、氏名、メールアドレス、デバイス識別子、広告識別子と紐付けません。アプリを再インストールすると新しい ID になります。利用統計をオフからオンに戻しても ID は変わらず、バックアップから復元した場合は古い ID がそのまま引き継がれます。当社がお客様を特定することはできず、特定の個人のデータをたどることもできません。</li>
                     <li><strong>トラッキングや広告には使用しません</strong>：第三者への販売や共有も行いません。データは Cloudflare 上で運用する当社のサービスが受信し、IP アドレスは保存しません。</li>
                     <li><strong>保存期間</strong>：イベントは 90 日後に当社のサービスから削除します。長期の統計用に残すこともありますが、その場合はランダムな ID と正確な時刻を取り除くため、デバイスや個人と紐付きません。</li>
                     <li><strong>オフにした場合</strong>：送信は直ちに停止し、デバイス上の未送信データは削除されます。</li>
@@ -773,7 +773,7 @@
 
                 <h2>5. ローカル保存とセキュリティ</h2>
                 <ul>
-                    <li><strong>SSH 認証情報</strong>：パスワードと秘密鍵は、プラットフォームネイティブのハードウェア暗号化領域にのみ保存します。Apple デバイスでは iOS の <strong>Keychain</strong>、Android では <strong>Android Keystore</strong> です。暗号化には、OS が提供する業界標準の方式を使います。</li>
+                    <li><strong>SSH 認証情報</strong>：パスワードと秘密鍵は、OS 自身の認証情報ストアにのみ保存します。Apple デバイスでは iOS のシステム <strong>Keychain</strong>、Android では <strong>Android Keystore</strong> です。このストアはデバイスに紐付いた鍵で暗号化され、本アプリにも当社のサーバーにも別の複写はありません。iOS では、アプリの読み取りに Face ID、Touch ID、画面ロックを求めません。</li>
                     <li><strong>サーバー情報</strong>：サーバー設定とプロジェクトパスは、デバイス上の本アプリ専用の安全な保存領域に保存します。</li>
                     <li><strong>ターミナル通信</strong>：アプリとサーバー間の通信はすべて、<strong>SSH プロトコル</strong>で暗号化します。ターミナル出力を傍受したり記録したりすることはありません。</li>
                 </ul>
@@ -788,8 +788,8 @@
 
                 <h2>7. クラウド同期（Pro機能）</h2>
                 <ul>
-                    <li><strong>iOS (iCloud同期)</strong>：iOS で iCloud 同期をオンにすると、サーバー設定は <strong>Apple の iCloud サービス</strong>を使ってお客様のデバイス間で同期されます。パスワードやキーなどの機微な情報は、iCloud キーチェーンに保存されている場合を除き、同期に含めません。</li>
-                    <li><strong>Android (Google Drive同期)</strong>：Android で Google Drive 同期をオンにすると、暗号化されたサーバー設定が直接、お客様個人の <strong>Google ドライブ AppData フォルダ</strong>に保存されます。</li>
+                    <li><strong>iOS (iCloud同期)</strong>：iOS で iCloud 同期をオンにすると、サーバー設定は <strong>Apple の iCloud サービス</strong> を通じてお客様のデバイス間で同期されます。同期されるのは設定内容だけです。名前、アドレス、ポート、ユーザー名、認証方式、鍵とプロジェクトのパス、フォルダとポートフォワーディングのルール、直近 20 件のセッションとファイルが対象です。同期されるのはお客様が手動で追加したサーバーだけで、アプリが自動で見つけたサーバーは含まれません。パスワードと秘密鍵がこのデータに含まれることはありません。他のデバイスに届くのは、Apple 自身の暗号化同期 <strong>iCloud Keychain</strong> をオンにしている場合のみです。</li>
+                    <li><strong>Android (Google Drive同期)</strong>：Android で Google Drive 同期をオンにすると、サーバー設定は平文の JSON のまま、お客様個人の <strong>Google ドライブ AppData フォルダ</strong> に保存されます。このフォルダを一覧できるのは本アプリだけです。パスワードと秘密鍵はデバイスに残り、このファイルには含まれません。守るのは Google による送信中および保存時の暗号化だけで、アプリ自体は内容を暗号化しません。</li>
                     <li>当社が中継同期サーバーを運用することはなく、この同期データにアクセスすることもありません。</li>
                 </ul>
 
@@ -825,15 +825,15 @@
             },
             'zh-TW': {
                 title: '隱私政策 - Agentmux',
-                description: 'Agentmux 隱私政策：不收集個人資料，匿名使用統計可隨時關閉，憑證硬體加密儲存（Keychain / Keystore），SSH 通訊加密，終端機流量不會被記錄。'
+                description: 'Agentmux 隱私政策：不收集個人資料，匿名使用統計可隨時關閉，憑證存放在作業系統憑證區（Keychain / Keystore），SSH 通訊加密，終端機流量不會被記錄。'
             },
             'zh-Hans': {
                 title: '隐私政策 - Agentmux',
-                description: 'Agentmux 隐私政策：不收集个人数据，匿名使用统计可随时关闭，凭据硬件加密存储（Keychain / Keystore），SSH 通信加密，终端流量不会被记录。'
+                description: 'Agentmux 隐私政策：不收集个人数据，匿名使用统计可随时关闭，凭据存放在操作系统凭据区（Keychain / Keystore），SSH 通信加密，终端流量不会被记录。'
             },
             ja: {
                 title: 'プライバシーポリシー - Agentmux',
-                description: 'Agentmux は個人データを収集しません。匿名の利用統計はオフにでき、認証情報は端末内で暗号化して保存し、SSH 通信は記録されません。'
+                description: 'Agentmux は個人データを収集しません。匿名の利用統計はオフにでき、認証情報は OS の Keychain / Keystore に保存されます。SSH 通信は記録されません。'
             }
         };
 

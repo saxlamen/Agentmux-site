@@ -396,6 +396,56 @@ class PrivacyMetaTest(unittest.TestCase):
         self.assertEqual(offenders, [], "the snippet gets cut off in the SERP:\n" + "\n".join(offenders))
 
 
+class PrivacyFactParityTest(unittest.TestCase):
+    """`privacy.html` is four hand-written versions of one legal document, so a
+    fact can be corrected in English and stay wrong in the other three. Each row
+    below is one fact the policy must state, plus a phrase that only appears if
+    it is stated in that language. Rewrite a sentence and you must update its row
+    in all four columns; drop a fact from one locale and that row fails.
+    """
+
+    FACTS = {
+        "statistics are on by default": {"en": "on by default", "zh-TW": "預設開啟", "zh-Hans": "默认开启", "ja": "デフォルトでオン"},
+        "a notice comes before the first send": {"en": "notice", "zh-TW": "說明", "zh-Hans": "提示", "ja": "通知を表示"},
+        "the build number is sent": {"en": "build number", "zh-TW": "build number", "zh-Hans": "build number", "ja": "ビルド番号"},
+        "the release channel is sent": {"en": "release channel", "zh-TW": "發佈管道", "zh-Hans": "发布渠道", "ja": "リリースチャネル"},
+        "the daily record is a snapshot, not a launch count": {"en": "At most once a day", "zh-TW": "每天最多", "zh-Hans": "每天最多", "ja": "1 日最大"},
+        "counts travel as ranges": {"en": "2–5", "zh-TW": "2–5", "zh-Hans": "2–5", "ja": "2〜5"},
+        "how long the app has been installed": {"en": "how long", "zh-TW": "安裝至今", "zh-Hans": "安装至今", "ja": "インストール"},
+        "which kind of tab was opened": {"en": "image viewer", "zh-TW": "圖片檢視", "zh-Hans": "图片查看", "ja": "画像ビューア"},
+        "new, pre-warmed or restored": {"en": "pre-warmed", "zh-TW": "預熱", "zh-Hans": "预热", "ja": "事前起動"},
+        "attached or created": {"en": "attached", "zh-TW": "接上既有", "zh-Hans": "接入现有", "ja": "接続"},
+        "what triggered the upgrade screen": {"en": "what triggered it", "zh-TW": "觸發", "zh-Hans": "触发", "ja": "きっかけ"},
+        "the identifier is a random UUID": {"en": "random ID", "zh-TW": "UUID", "zh-Hans": "UUID", "ja": "UUID"},
+        "toggling statistics keeps the identifier": {"en": "keeps the same ID", "zh-TW": "不變", "zh-Hans": "不变", "ja": "変わらず"},
+        "a device backup carries the identifier": {"en": "device backup", "zh-TW": "備份", "zh-Hans": "备份", "ja": "バックアップ"},
+        "no biometric gate on credentials": {"en": "no Face ID, Touch ID, or passcode", "zh-TW": "Face ID", "zh-Hans": "Face ID", "ja": "Face ID"},
+        "the store is keyed to the device": {"en": "tied to it", "zh-TW": "金鑰", "zh-Hans": "密钥", "ja": "鍵"},
+        "sync carries configuration only": {"en": "names, addresses", "zh-TW": "名稱、位址", "zh-Hans": "名称、地址", "ja": "名前、アドレス"},
+        "the recent-item cap is 20": {"en": "20 most recent", "zh-TW": "20", "zh-Hans": "20", "ja": "20"},
+        "only manually added servers sync": {"en": "added by hand", "zh-TW": "手動加入", "zh-Hans": "手动添加", "ja": "手動で追加"},
+        "secrets are never in the sync payload": {"en": "never part of that data", "zh-TW": "絕不會出現", "zh-Hans": "绝不会", "ja": "含まれることはありません"},
+        "iCloud Keychain is a separate channel": {"en": "iCloud Keychain", "zh-TW": "iCloud Keychain", "zh-Hans": "iCloud Keychain", "ja": "iCloud Keychain"},
+        "the Android sync file is not app-encrypted": {"en": "does not encrypt its contents", "zh-TW": "純 JSON", "zh-Hans": "纯 JSON", "ja": "平文"},
+        "Google's own encryption protects that file": {"en": "at rest", "zh-TW": "儲存加密", "zh-Hans": "存储加密", "ja": "保存時"},
+    }
+
+    def setUp(self):
+        self.privacy = locale_text(PRIVACY)
+
+    def test_every_locale_states_every_fact(self):
+        offenders = []
+        for fact, phrases in self.FACTS.items():
+            for code, phrase in phrases.items():
+                if phrase.lower() not in self.privacy.get(code, "").lower():
+                    offenders.append("%s is missing from %s (looked for %r)" % (fact, code, phrase))
+        self.assertEqual(offenders, [], "the four versions no longer agree:\n" + "\n".join(offenders))
+
+    def test_the_fact_table_itself_covers_all_four_locales(self):
+        offenders = ["%s has no phrase for %s" % (fact, code) for fact, phrases in self.FACTS.items() for code in SITE_LANGS if code not in phrases]
+        self.assertEqual(offenders, [], "a fact row is incomplete:\n" + "\n".join(offenders))
+
+
 class GuideLanguageGapTest(unittest.TestCase):
     """The homepage nav calls the guide 指南/ガイド in every locale, while the
     guide is only built for two, and build_home.py sends the other two readers
