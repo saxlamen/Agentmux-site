@@ -16,7 +16,7 @@ agentmux.saxcave.cc
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
       ├─ what-is-ssh/             [B] 1149 w / 1783 zh
-      ├─ what-is-tmux/            [BC] 1153 w / 1699 zh
+      ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
       ├─ why-agentmux/            [BC] 1238 w / 1848 zh
       ├─ setup/                   [BC] 710 w / 897 zh
@@ -28,7 +28,7 @@ agentmux.saxcave.cc
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
       ├─ what-is-ssh/             [B] 1149 w / 1783 zh
-      ├─ what-is-tmux/            [BC] 1153 w / 1699 zh
+      ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
       ├─ why-agentmux/            [BC] 1238 w / 1848 zh
       ├─ setup/                   [BC] 710 w / 897 zh
@@ -62,7 +62,7 @@ graph LR
   EN --> whynotguiide["Why not Cursor / VS Code<br>758 w / 981 zh"]:::art
   EN --> whatiscli["What is a CLI agent<br>1370 w / 2007 zh"]:::art
   EN --> whatisssh["What is SSH<br>1149 w / 1783 zh"]:::art
-  EN --> whatistmux["What is tmux<br>1153 w / 1699 zh"]:::art
+  EN --> whatistmux["What is tmux<br>1153 w / 1695 zh"]:::art
   EN --> whatistailscale["What is Tailscale<br>1266 w / 2129 zh"]:::art
   EN --> whyagentmux["vs Termius / Blink<br>1238 w / 1848 zh"]:::art
   EN --> setup["Setup wizard<br>710 w / 897 zh"]:::art

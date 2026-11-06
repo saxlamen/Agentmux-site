@@ -57,7 +57,7 @@
 <circle cx="592" cy="343" r="2.4" fill="rgba(214,255,236,0.6)"/>
 <rect x="600" y="388" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
 <text x="614" y="411" fill="#f4fbf7">What is tmux</text>
-<text x="614" y="431" fill="#8fa79d">BC | 1153 w / 1699 zh</text>
+<text x="614" y="431" fill="#8fa79d">BC | 1153 w / 1695 zh</text>
 <text x="920" y="422" fill="#6f817a">/guide/&lt;lang&gt;/what-is-tmux/</text>
 <path d="M552 417 H592" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.3"/>
 <circle cx="592" cy="417" r="2.4" fill="rgba(214,255,236,0.6)"/>

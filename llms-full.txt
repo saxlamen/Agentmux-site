@@ -13,7 +13,7 @@ Source: https://agentmux.saxcave.cc/  |  App Store: https://apps.apple.com/app/i
 
 URL: https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 The cost of running agents remotely is standby: the agent waits on you. Three parts move that wait into your pocket.
 
@@ -86,7 +86,7 @@ Not sure where to start? Help me pick a track.
 
 URL: https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 On a desktop the IDE agent usually wins. On a phone a terminal beats it, because its interface is a byte stream.
 
@@ -135,7 +135,7 @@ Agentmux is not trying to replace your IDE. It replaces the part where you sit i
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-cli/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.
 
@@ -262,7 +262,7 @@ The terminal puts an agent on your machine, and its output is characters that ca
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-ssh/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.
 
@@ -350,7 +350,7 @@ Then you put your phone away, the tunnel drops, and the agent dies with it. Unle
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tmux/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.
 
@@ -455,7 +455,7 @@ So the agent survives you putting the phone away. One problem left: getting in f
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tailscale/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.
 
@@ -552,7 +552,7 @@ The way in is settled. What is left is the phone in your hand, and what that pho
 
 URL: https://agentmux.saxcave.cc/guide/en/why-agentmux/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.
 
@@ -655,7 +655,7 @@ Decided on Agentmux? The next problem is the machine at the other end: the setup
 
 URL: https://agentmux.saxcave.cc/guide/en/setup/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.
 
@@ -701,7 +701,7 @@ The Windows discussed here is always *the machine you connect to*. If your Windo
 
 URL: https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.
 
@@ -818,7 +818,7 @@ Three things have to hold: a machine that stays awake, a session with a name, an
 
 URL: https://agentmux.saxcave.cc/guide/en/permission-review/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides.
 
@@ -956,7 +956,7 @@ Only two things leave it: the redacted text on screen and your Main Intent. They
 
 URL: https://agentmux.saxcave.cc/guide/en/troubleshooting/
 Language: en
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 SSH refused, key rejected, tmux missing, claude not found: eight real failures, each with cause and the fix to type.
 
@@ -1278,7 +1278,7 @@ Configure it only if you understand that cost and accept it deliberately. Otherw
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 遠端跑 agent 真正的成本是待命。CLI、tmux、SSH＋Tailscale 三個零件，把待命從筆電搬到口袋裡的手機。
 
@@ -1353,7 +1353,7 @@ CLI agent 真正的成本是待命，不是打字：你講三十秒，接下來�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。
 
@@ -1404,7 +1404,7 @@ Agentmux 不是要取代你的 IDE，它取代的是**坐在椅子上等**。然
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。
 
@@ -1531,7 +1531,7 @@ curl -sf localhost:8000/health | jq .db
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。
 
@@ -1619,7 +1619,7 @@ SSH 不做下面三件事：
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 tmux 是什麼，為什麼 SSH 斷線時你的 AI coding agent 不會死：session 留在伺服器上，手機只是接上去看。
 
@@ -1678,7 +1678,7 @@ tmux attach -t work       # 從任何終端機再接上去看它
 
 如果機器回你 `tmux: command not found`，解法在疑難排解那一頁。
 
-## 斷線十次，agent 一次都沒被打斷
+## 連線斷掉，agent 繼續跑
 
 你在捷運上斷了訊號，進電梯斷一次，切 Wi-Fi 又斷一次。每次都接回同一個 tmux session，斷線十次，agent 一次都沒有被打斷。它不知道你斷過線，因為它從頭到尾就沒活在你那條連線裡。
 
@@ -1724,7 +1724,7 @@ agent 現在能在你收起手機之後活下來。剩下一個問題：怎麼�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 不開 port 也能從手機連回自己的電腦：WireGuard mesh、MagicDNS 名稱或 100.x 位址，還有什麼時候根本不需要它。
 
@@ -1821,7 +1821,7 @@ mesh 的安全現在就是帳號的安全。任何能登入的裝置都在網路
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 Agentmux 對 Termius、Blink：五個功能差異、什麼時候買 Termius 比較對，以及各種工作該選哪一個。
 
@@ -1924,7 +1924,7 @@ Agentmux 為一個工作流設計：**在手機上接回正在跑的 coding agen
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/setup/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。
 
@@ -1970,7 +1970,7 @@ WSL2 裡面是一個完整的 Linux，tmux、sshd、agent 的行為都跟真的 
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
 
@@ -2087,7 +2087,7 @@ which claude
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/permission-review/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。
 
@@ -2225,7 +2225,7 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/
 Language: zh-TW
-Updated: 2026-11-04
+Updated: 2026-11-06
 
 連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。
 
