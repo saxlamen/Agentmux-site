@@ -416,5 +416,51 @@ class GuideLanguageGapTest(unittest.TestCase):
         )
 
 
+class AppLabelTest(unittest.TestCase):
+    """`privacy.html` names app switches, in four languages, and those names live
+    one repo over in the iOS app's `Localizable.strings`. Nothing linked them, so
+    the policy spent a while telling readers to look for a "Background Activity
+    Chime" that the app never showed. Skipped when the app is not checked out
+    beside the site.
+    """
+
+    APP = SRC.parent / "Agentmux"
+    LPROJ = {"en": "en", "zh-TW": "zh-Hant", "zh-Hans": "zh-Hans", "ja": "ja"}
+    # Taken from Agentmux/Resources/*.lproj/Localizable.strings on 2026-10-30:
+    # `share_usage_statistics` and `background_activity_alerts`.
+    POLICY_LABELS = {
+        "en": ["Share Anonymous Usage Statistics", "Background Activity Alerts"],
+        "zh-TW": ["分享匿名使用統計", "背景任務警報"],
+        "zh-Hans": ["分享匿名使用统计", "背景任务提醒"],
+        "ja": ["匿名の利用統計を共有", "バックグラウンド活動アラート"],
+    }
+
+    def setUp(self):
+        self.strings = {}
+        for lang, folder in self.LPROJ.items():
+            path = self.APP / "Resources" / ("%s.lproj" % folder) / "Localizable.strings"
+            if not path.exists():
+                self.skipTest("the app is not checked out beside the site (%s missing)" % path)
+            self.strings[lang] = path.read_text(encoding="utf-8")
+        self.privacy = locale_text(PRIVACY)
+
+    def test_the_policy_quotes_labels_the_app_actually_shows(self):
+        offenders = []
+        for lang, labels in self.POLICY_LABELS.items():
+            for label in labels:
+                if label not in self.strings[lang]:
+                    offenders.append("%s: the policy points at %r, which the settings screen does not show" % (lang, label))
+        self.assertEqual(offenders, [], "the app renamed a switch:\n" + "\n".join(offenders))
+
+    def test_the_policy_still_names_them(self):
+        offenders = []
+        for lang, labels in self.POLICY_LABELS.items():
+            text = self.privacy.get(lang, "")
+            for label in labels:
+                if label not in text:
+                    offenders.append("%s: the app calls it %r, the policy stopped saying so" % (lang, label))
+        self.assertEqual(offenders, [], "the policy drifted from the app:\n" + "\n".join(offenders))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

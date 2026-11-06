@@ -151,14 +151,16 @@ not.
    that behaviour so it changes on purpose rather than by accident.
 3. `zh-Hans` and `ja` have no terminology sheet of their own; the mapping table
    above is the only reference, and it is short.
-4. `privacy.html` quotes two app switch names in four languages each: the
-   statistics switch (Share Anonymous Usage Statistics / 分享匿名使用統計 /
-   分享匿名使用统计 / 匿名の利用統計を共有) and the background-alert master
-   (Background Activity Alerts / 背景任務警報 / 背景任务提醒 /
-   バックグラウンド活動アラート). The old text named a "Background Activity
-   Chime" that has never existed in the app. Nothing links the policy to
-   `Agentmux/Resources/*.lproj/Localizable.strings`, so a rename on the settings
-   screen makes the policy wrong again in four languages at once.
+4. `privacy.html` names two app switches in four languages each: the statistics
+   switch (Share Anonymous Usage Statistics / 分享匿名使用統計 / 分享匿名使用统计 /
+   匿名の利用統計を共有) and the background-alert master (Background Activity
+   Alerts / 背景任務警報 / 背景任务提醒 / バックグラウンド活動アラート). It used to
+   name a "Background Activity Chime", which the app has never shown. The names
+   live one repo over, in `Agentmux/Resources/*.lproj/Localizable.strings`, so
+   `test_copy_i18n.py`'s `AppLabelTest` now checks them in both directions: a
+   rename on the settings screen and a policy that stops naming the real label
+   each fail their own test. The test skips itself when the app is not checked
+   out beside the site.
 5. An article's `title` in `guide-src/strings/*.json` is also its on-page `<h1>`,
    its `og:title` and its JSON-LD headline. There is no way to shorten a search
    result title without changing the heading a reader sees, which is why
