@@ -77,7 +77,20 @@ CHINESE_ONLY_IN_JA = (
 # for two. The gap is a known product decision, not an oversight: shrinking
 # this set is what "the guide supports one more language" looks like, and the
 # test fails until someone deletes the language it just learned to allow.
+# The homepage nav calls the guide 指南 and ガイド, but build_home.py rewrites
+# that link to a guide locale that exists, so a zh-Hans reader lands in
+# Traditional Chinese and a Japanese reader lands in English. This is a ratchet:
+# when the guide gains a language, fix the fallback map and KNOWN_GUIDE_GAP in
+# the same commit that adds the locale to guide-src/config.json.
 KNOWN_GUIDE_GAP = {"zh-Hans", "ja"}
+GUIDE_FALLBACK = {"zh-Hans": "zh-TW", "ja": "en"}
+
+# The homepage's search snippet is written in two places that have to agree:
+# build_home.py's LANG_CONFIG paints each generated page, and LANG_META inside
+# index.source.html repaints it when a visitor switches language in the browser.
+# A SERP clips English around 60 title characters and 160 description
+# characters; CJK glyphs are about twice as wide, so those caps halve for CJK.
+META_CAPS = {"en": (60, 160), "zh-TW": (60, 100), "zh-Hans": (60, 100), "ja": (60, 100)}
 
 
 class LocaleTextParser(HTMLParser):
@@ -268,9 +281,125 @@ class GeneratedHomeTest(unittest.TestCase):
         self.assertEqual(offenders, [], "hreflang alternates are incomplete:\n" + "\n".join(offenders))
 
 
+class HomeMetaTest(unittest.TestCase):
+    """The title and description a reader sees in a search result or share card.
+
+    They live in two places that drift silently: `build_home.py` paints the
+    generated page, `LANG_META` repaints it on an in-page language switch.
+    """
+
+    def setUp(self):
+        sys.path.insert(0, str(SRC))
+        import build_home  # the module owns the copy it paints with
+
+        self.lang_config = build_home.LANG_CONFIG
+        self.meta = self._lang_meta()
+
+    def _lang_meta(self):
+        source = HOME_SOURCE.read_text(encoding="utf-8")
+        block = re.search(r"const LANG_META = \{(.*?)\n        \};", source, re.S)
+        entries = {}
+        pattern = r"(en|'zh-TW'|'zh-Hans'|ja): \{\s*title: '([^']*)',\s*description: '([^']*)'\s*\}"
+        for match in re.finditer(pattern, block.group(1), re.S):
+            entries[match.group(1).strip("'")] = (match.group(2), match.group(3))
+        return entries
+
+    def test_both_copies_cover_every_site_locale(self):
+        offenders = []
+        for name, keys in (("build_home.LANG_CONFIG", set(self.lang_config)), ("LANG_META", set(self.meta))):
+            if keys != set(SITE_LANGS):
+                offenders.append("%s covers %s" % (name, sorted(keys)))
+        self.assertEqual(offenders, [], "a locale has no search metadata:\n" + "\n".join(offenders))
+
+    def test_the_two_copies_of_home_metadata_say_the_same_thing(self):
+        offenders = []
+        for code in SITE_LANGS:
+            if code not in self.meta or code not in self.lang_config:
+                continue
+            painted = (self.lang_config[code]["title"], self.lang_config[code]["description"])
+            if painted != self.meta[code]:
+                offenders.append(
+                    "%s: LANG_CONFIG says %r while LANG_META says %r" % (code, painted[0], self.meta[code][0])
+                )
+        self.assertEqual(offenders, [], "the page and the language switcher disagree:\n" + "\n".join(offenders))
+
+    def test_home_metadata_fits_a_search_result(self):
+        offenders = []
+        for code, (title_cap, desc_cap) in META_CAPS.items():
+            painted = self.lang_config.get(code)
+            painted = (painted["title"], painted["description"]) if painted else None
+            for source, pair in (("LANG_CONFIG", painted), ("LANG_META", self.meta.get(code))):
+                if not pair:
+                    continue
+                if len(pair[0]) > title_cap:
+                    offenders.append("%s %s title %d > %d" % (code, source, len(pair[0]), title_cap))
+                if len(pair[1]) > desc_cap:
+                    offenders.append("%s %s description %d > %d" % (code, source, len(pair[1]), desc_cap))
+        self.assertEqual(offenders, [], "the snippet gets cut off in the SERP:\n" + "\n".join(offenders))
+
+    def test_guide_links_point_at_a_locale_that_exists(self):
+        config = json.loads(CONFIG.read_text(encoding="utf-8"))
+        guide_langs = {lang["code"] for lang in config["languages"]}
+        offenders = []
+        for code, cfg in self.lang_config.items():
+            href = cfg.get("guide_href", "")
+            target = re.search(r"/guide/([A-Za-z-]+)/", href)
+            want = GUIDE_FALLBACK.get(code, code)
+            if not target:
+                offenders.append("%s: guide_href %r is not a localized guide" % (code, href))
+            elif target.group(1) != want:
+                offenders.append(
+                    "%s points at %s, expected %s (update GUIDE_FALLBACK if the guide gained a language)"
+                    % (code, target.group(1), want)
+                )
+            elif target.group(1) not in guide_langs:
+                offenders.append("%s points at %s, which the guide does not build" % (code, target.group(1)))
+        self.assertEqual(offenders, [], "a homepage links to a guide that is not there:\n" + "\n".join(offenders))
+
+
+class PrivacyMetaTest(unittest.TestCase):
+    """`privacy.html` is one file for four languages, so its search metadata
+    exists twice in different ways: a static English `<head>` (what a crawler
+    without JavaScript gets, in any locale) and `LANG_META`, which repaints it
+    per language. The English pair has to agree, and every language has to fit
+    a search result.
+    """
+
+    def setUp(self):
+        self.source = PRIVACY.read_text(encoding="utf-8")
+        self.meta = self._lang_meta()
+
+    def _lang_meta(self):
+        block = re.search(r"const LANG_META = \{(.*?)\n        \};", self.source, re.S)
+        entries = {}
+        pattern = r"(en|'zh-TW'|'zh-Hans'|ja): \{\s*title: '([^']*)',\s*description: '([^']*)'\s*\}"
+        for match in re.finditer(pattern, block.group(1), re.S):
+            entries[match.group(1).strip("'")] = (match.group(2), match.group(3))
+        return entries
+
+    def test_privacy_metadata_covers_every_site_locale(self):
+        self.assertEqual(set(self.meta), set(SITE_LANGS), "privacy.html cannot describe a locale in its own language")
+
+    def test_the_english_head_matches_the_switcher(self):
+        head_title = re.search(r"<title>([^<]*)</title>", self.source).group(1)
+        head_description = re.search(r'name="description" content="([^"]*)"', self.source).group(1)
+        self.assertEqual((head_title, head_description), self.meta["en"], "privacy.html's own head disagrees with its language switcher")
+
+    def test_privacy_metadata_fits_a_search_result(self):
+        offenders = []
+        for code, (title_cap, desc_cap) in META_CAPS.items():
+            title, description = self.meta[code]
+            if len(title) > title_cap:
+                offenders.append("%s title %d > %d" % (code, len(title), title_cap))
+            if len(description) > desc_cap:
+                offenders.append("%s description %d > %d" % (code, len(description), desc_cap))
+        self.assertEqual(offenders, [], "the snippet gets cut off in the SERP:\n" + "\n".join(offenders))
+
+
 class GuideLanguageGapTest(unittest.TestCase):
     """The homepage nav calls the guide 指南/ガイド in every locale, while the
-    guide is only built for two. This test is a ratchet, not a complaint."""
+    guide is only built for two, and build_home.py sends the other two readers
+    to somebody else's language. This test is a ratchet, not a complaint."""
 
     def setUp(self):
         config = json.loads(CONFIG.read_text(encoding="utf-8"))
@@ -282,8 +411,8 @@ class GuideLanguageGapTest(unittest.TestCase):
             gap,
             KNOWN_GUIDE_GAP,
             "the guide locale set changed: %s. If one more language shipped, delete it "
-            "from KNOWN_GUIDE_GAP in this test; if one shrank, the homepage nav now "
-            "promises a guide that is not there." % sorted(gap),
+            "from KNOWN_GUIDE_GAP and from GUIDE_FALLBACK in this test; if one shrank, the "
+            "homepage nav labels a guide in a language that is not there." % sorted(gap),
         )
 
 
