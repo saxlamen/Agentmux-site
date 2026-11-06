@@ -66,6 +66,12 @@ instead of trusting a number written here: it counts reader-visible text (tags,
 script and style removed), in words for English and in CJK characters for
 Chinese and Japanese, which are not comparable units.
 
+**There is no CI gate here, on purpose.** The site repo has no
+`.github/workflows/`: GitHub Pages deploys the branch with its own build and
+deploy jobs, and neither one knows these test files exist. Running the five
+files locally before pushing is the agreed gate: it is the only check between an
+edit and a live page.
+
 Run the builder that owns the file you edited, then the tests. Home edits never
 touch `guide/`, and guide edits never touch the homepages.
 
