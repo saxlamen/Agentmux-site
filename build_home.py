@@ -42,7 +42,7 @@ FEATURE_LIST = [
 
 OFFER_DESCRIPTION = (
     "14-day full-feature trial, then a free single-server tier. "
-    "Pro unlocks multiple servers, custom agents, remote editing, file history, "
+    "Pro adds multiple servers, custom agents, remote editing, file history, "
     "branch tools, and batch actions."
 )
 

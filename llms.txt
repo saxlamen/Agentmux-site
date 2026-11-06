@@ -4,7 +4,7 @@
 
 Agentmux is a client, not a host. The code and the agent always run on a machine you own — a Mac, a Linux box, or a server. The phone reaches it over SSH, usually with Tailscale so no port is open to the public internet.
 A dropped connection does not stop the agent. Sessions are detached and attached again (tmux), so the agent keeps running on the server while the phone is locked or out of coverage.
-Pricing: 14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.
+Pricing: 14-day full-feature trial, then a free single-server tier. Pro adds multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.
 AI Permission Review screens the commands an agent wants to run: a blacklist blocks dangerous ones, an allowlist passes the ones you already trust, the rest go to an AI judgement, and you choose whether it only suggests the key or presses it.
 
 App Store: https://apps.apple.com/app/id6766158521
