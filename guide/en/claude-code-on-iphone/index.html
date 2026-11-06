@@ -52,29 +52,29 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Run Claude Code on your iPhone or iPad</h1>
-            <p>Yes. Claude Code is a program that runs on a machine you own, never on the phone. Turn on Remote Login, reach that machine through Tailscale instead of an open port, start a tmux session with a name, and run <code>claude</code> inside it. Your iPhone carries a terminal; the agent keeps working after you lock the screen.</p>
-<p>The phrase sounds obvious and is not: "Claude Code on my phone" describes two machines doing different jobs. Separate them and what is left gets short — what survives a dropped connection, why the command is missing over SSH, whether an agent should answer its own permission prompts from a train.</p>
+            <p>Yes. Claude Code is a program that runs on a machine you own, never on the phone. Turn on Remote Login, reach that machine through Tailscale instead of an open port, start a tmux session with a name, and run <code>claude</code> inside it. Your iPhone carries a terminal. The agent keeps working after you lock the screen.</p>
+<p>"Claude Code on my phone" names two machines doing two different jobs. Separate them and what is left gets short: what survives a dropped connection, why the command is missing over SSH, and whether an agent should answer its own permission prompts from a train.</p>
 
 <section id="what-the-phone-does-not-do">
-  <h2>Your phone carries a terminal. That is all.</h2>
+  <h2>Does Claude Code run on the phone?</h2>
 
-  <p>Claude Code is a program on the disk of some machine you own. A shell starts it. It reads your project through that filesystem, runs <code>git</code> and the tests, and writes its edits back into the same directory. The misconception: that some part of it now lives in your pocket.</p>
-  <p>From the phone, two things cross the wire: keys go out, characters come back. Nothing of the agent is installed there, and no copy of your repository travels. The phone draws a picture of a session living on another computer.</p>
+  <p>Claude Code is a program on the disk of some machine you own. A shell starts it. It reads your project through that machine's filesystem, runs <code>git</code> and the tests, and writes its edits back into the same directory. None of that happens in your pocket, though the phrase suggests it does.</p>
+  <p>From the phone, two things cross the wire: keys go out, characters come back. The agent is not installed there, and no copy of your repository travels. The phone draws a picture of a session running on another computer.</p>
   <ul>
-    <li><strong>On the phone.</strong> Keystrokes, display, your thumb. Lock the screen or swipe the app away and the display stops; that is the whole list.</li>
-    <li><strong>On the machine.</strong> The process, the files being edited, the tests, everything already read and decided. None of it notices your screen going dark.</li>
+    <li><strong>On the phone.</strong> Keystrokes, the display, your thumb. Lock the screen or swipe the app away and the display stops, and that is the whole list.</li>
+    <li><strong>On the machine.</strong> The process, the files being edited, the tests, and everything the agent has already read and decided. None of it notices your screen going dark.</li>
   </ul>
-  <p>Two consequences. The machine has to stay on and reachable — a laptop in a drawer with the lid shut runs nothing. The phone is the cheap half to replace.</p>
+  <p>Two consequences follow. The machine has to stay on and reachable: a laptop closed in a drawer runs nothing. The phone is the cheap half to replace.</p>
 </section>
 
 <section id="three-things-before-the-phone-matters">
-  <h2>Three things in place, in order</h2>
+  <h2>Three things to set up, in this order</h2>
 
-  <p>Skip one and the arrangement fails. Do them in this sequence.</p>
+  <p>Skip one and the arrangement fails, so work through them in this order.</p>
 
   <ol>
     <li><strong>A door into the machine.</strong> On a Mac: System Settings → General → Sharing → <strong>Remote Login</strong>. On Linux, the SSH service, a daemon called <code>sshd</code>.</li>
-    <li><strong>A private network, not an open port.</strong> Install Tailscale on the machine and the phone, sign both into one account, then connect to the MagicDNS name or the <a href="/guide/en/what-is-tailscale/"><code>100.x</code> address</a> — never a LAN address like <code>192.168.1.23</code>, which means nothing on mobile data. Forwarding port 22 instead hands your machine to every scanning bot that finds it.</li>
+    <li><strong>A private network instead of an open port.</strong> Install Tailscale on the machine and the phone, sign both into one account, then connect to the MagicDNS name or the <a href="/guide/en/what-is-tailscale/"><code>100.x</code> address</a>. Do not use a LAN address such as <code>192.168.1.23</code>, which means nothing on mobile data. Forwarding port 22 instead hands your machine to every scanning bot that finds it.</li>
     <li><strong>A tmux session with a name, and the agent inside it.</strong></li>
   </ol>
 
@@ -86,23 +86,23 @@ claude               # inside it</code></pre>
   <pre><code>tmux ls              # what exists
 tmux attach -t work  # open a window onto it</code></pre>
 
-  <p>The name matters: <code>tmux attach</code> alone takes the most recent session. If tmux is missing, Agentmux installs it.</p>
+  <p>The name matters: <code>tmux attach</code> on its own takes the most recent session, and that is a guess about which one you meant. If tmux is missing, Agentmux installs it.</p>
 </section>
 
 <section id="why-a-plain-ssh-window-kills-the-agent">
   <h2>Why a plain SSH window kills the agent</h2>
 
-  <p>Skip tmux: you SSH in, run <code>claude</code>, then pocket the phone and lock the screen.</p>
-  <p>The connection times out and closes. sshd closes the pseudo-terminal it was attached to, and the kernel sends <strong>SIGHUP</strong> to every process still on it — your shell, and Claude Code inside it. The default response is to terminate: the agent dies mid-edit, twenty minutes of reading gone.</p>
-  <p>Keeping the app open fixes nothing: Wi-Fi switches networks, cellular loses signal, one Ctrl-C lands wrong. tmux moves the session onto the machine, so what disappears is the window, not the process (<a href="/guide/en/what-is-tmux/">the mechanism</a>). The rule: <strong>the agent goes inside the session before the work starts — a running process cannot be moved into tmux afterwards.</strong></p>
+  <p>Skip tmux: you SSH in, run <code>claude</code>, then put the phone in your pocket and lock the screen.</p>
+  <p>The phone stops sending packets, the connection times out, and it closes. sshd closes the pseudo-terminal that connection was attached to, and the kernel sends <strong>SIGHUP</strong> to every process still attached to it: your shell, and Claude Code running inside your shell. Both take the default reaction and exit, so the agent dies mid-edit with twenty minutes of reading gone.</p>
+  <p>Keeping the app open fixes nothing. Wi-Fi switches networks, cellular loses signal, one Ctrl-C lands somewhere it should not. tmux moves the session onto the machine itself, so a dropped connection takes the window and leaves the process alone (<a href="/guide/en/what-is-tmux/">the mechanism</a>). <strong>The agent goes inside the session before the work starts, because a process that is already running cannot be moved into tmux afterwards.</strong></p>
 </section>
 
 <section id="what-working-from-a-phone-is-actually-like">
-  <h2>What working from a phone is actually like</h2>
+  <h2>What is working from a phone actually like?</h2>
 
-  <p>What fits a phone is one decision at a time — which is what an agent cycle is made of. It proposes a plan; you take it or send it back in a sentence. A two-line correction — "leave the serializer alone, the export job uses it" — and the phone goes away.</p>
-  <p>The on-screen keyboard is the first real cost. Backticks, pipes, quotes, backslashes and the tilde all sit two layers deep, so <code>~/src/auth/session.ts</code> takes longer than it should and one wrong segment costs a round trip. Long prompts are harder to proofread than they look, so many people draft them in a notes app.</p>
-  <p>A diff is where a phone runs out of room: forty changed lines across two files is three screens of scrolling on six inches, and a wrapped line hides whether a change sits at the end of a line or in the middle. Turn an iPad sideways and it fits without wrapping.</p>
+  <p>A phone fits one decision at a time, which is what an agent cycle is made of anyway. It proposes a plan, and you take it or send one sentence back. A two-line correction such as "leave the serializer alone, the export job uses it" is enough, and then the phone goes away.</p>
+  <p>The on-screen keyboard is the first real cost. Backticks, pipes, quotes, backslashes and the tilde all sit two layers deep, so <code>~/src/auth/session.ts</code> takes longer than it should, and one wrong segment costs a round trip. Long prompts are harder to proofread than they look, which is why many people draft them in a notes app.</p>
+  <p>A diff is where a phone runs out of room. Forty changed lines across two files is three screens of scrolling on six inches, and a wrapped line hides whether a change sits at the end of a line or in the middle. Turn an iPad sideways and that same diff fits without wrapping.</p>
   <p>One habit pays for itself: a second session for the noisy parts, so a test run cannot bury the agent's prompts.</p>
 
   <pre><code>tmux new -s tests -d    # -d starts it detached
@@ -110,33 +110,33 @@ tmux attach -t tests    # watch it, then detach</code></pre>
 </section>
 
 <section id="answering-permission-prompts-from-the-phone">
-  <h2>The agent stops and asks. From the phone, you answer.</h2>
+  <h2>Can the agent answer its own permission prompts?</h2>
 
-  <p>Claude Code does not run everything it thinks of. Before it runs a command — and, depending on configuration, before it edits a file — it stops and asks: here is the command, go ahead? That stop is where the job waits, and when only you can answer it, the waiting becomes the bottleneck.</p>
+  <p>Claude Code does not run everything it thinks of. Before it runs a command, and depending on your configuration before it edits a file, it stops and asks: here is the command, go ahead? That stop is where the job waits, and if only you can answer it, the waiting becomes the bottleneck.</p>
   <p><a href="/guide/en/permission-review/">AI Permission Review</a> answers those prompts and nothing else: it reads the prompt, then suggests or presses the key. A <strong>blacklist</strong> blocks dangerous commands and always hands a match to you. An <strong>allowlist</strong> passes commands you already trust, decided on the device. Anything matching neither goes to an <strong>AI judgement</strong>: allow, deny, or unsure, and the last two come back to you. The session's mode then decides whether it only <strong>suggests</strong> the key or <strong>presses</strong> it.</p>
-  <p>Distance does not transfer the responsibility. A command approved on cellular runs on a machine holding your <code>.env</code>, your keys, and a repository you do not own alone — and the judgement sees the screen, not the reasoning that got the agent there. Start in the mode that only suggests, allowlist the commands you approve daily, and read the screen before pressing anything when signal and attention are poor. The blacklist exists because "approve everything" is a bad default: an <code>rm -rf</code> aimed at a home directory is no gentler because you said yes on a platform.</p>
+  <p>Distance does not move the responsibility off you. A command you approve on cellular runs on a machine that holds your <code>.env</code>, your keys, and a repository you do not own alone, and the judgement sees the screen, not the reasoning that got the agent there. Start in the mode that only suggests, allowlist the commands you approve every day, and read the screen before pressing anything when the signal and your attention are both poor. The blacklist exists because "approve everything" is a bad default: an <code>rm -rf</code> aimed at a home directory is no gentler because you said yes on a train platform.</p>
 </section>
 
 <section id="claude-command-not-found-over-ssh">
   <h2>claude: command not found, but it runs in Terminal</h2>
 
-  <p>Same machine, same account, different answers: <code>claude</code> starts in Terminal and prints <code>claude: command not found</code> over SSH. It reads as the remote setup being broken, and it is the most common failure on the way in.</p>
-  <p>The cause, in two sentences. An install through npm, or under a node version nvm pins, puts its directory on the PATH from a startup file that only an <em>interactive login</em> shell reads. A connection running one command, like <code>ssh host claude</code>, starts a non-interactive shell that never reads that file.</p>
+  <p>Same machine, same account, two different answers: <code>claude</code> starts in Terminal and prints <code>claude: command not found</code> over SSH. That reads like the remote setup is broken. It is the most common failure on the way in.</p>
+  <p>An install through npm, or under a node version nvm pins, writes its directory into a startup file that only an <em>interactive login</em> shell reads, and that is how the PATH gets the entry. A connection that runs one command, like <code>ssh host claude</code>, starts a non-interactive shell, and that shell never reads the file.</p>
   <p>The fix that always works is to stop relying on the PATH. In the Terminal where it runs:</p>
 
   <pre><code>which claude
 # /Users/you/.nvm/versions/node/v20.11.0/bin/claude</code></pre>
 
-  <p>Use that absolute path, as the agent command or typed into the session. It breaks when nvm changes the node version; the durable fix, which depends on your shell and your distribution, is on <a href="/guide/en/troubleshooting/">the troubleshooting page</a>.</p>
+  <p>Use that absolute path, either as the agent command or typed into the session. It breaks when nvm changes the node version. The durable fix depends on your shell and your distribution, and <a href="/guide/en/troubleshooting/">the troubleshooting page</a> covers it.</p>
 </section>
 
 <section id="running-overnight-and-the-honest-limits">
-  <h2>Overnight works. A reboot does not.</h2>
+  <h2>Can the agent work overnight?</h2>
 
-  <p>A session on a machine that stays awake runs all night — hand it a refactor at eleven, read the result with coffee. Three limits.</p>
-  <p><strong>The machine has to stay awake.</strong> A Mac that idles into sleep takes its network interface with it, and Remote Login makes no difference: nothing is left to answer. System Settings → Battery on a laptop, Energy Saver on a desktop: lengthen or switch off idle sleep, and turn on "Wake for network access" if offered.</p>
-  <p><strong>A reboot takes the session with it.</strong> tmux does not restore sessions after a restart, and updates restart without asking. Commit before you stop for the night, so the worst case costs an hour.</p>
-  <p><strong>Waiting is not crashing.</strong> Attach and look. A fresh shell prompt means the process exited: finished, or died, and the lines above say which. A prompt asking a question has waited one word from you for six hours at no cost. From a lock screen both look the same; only one needs you to act.</p>
+  <p>A session on a machine that stays awake runs all night: hand it a refactor at eleven and read the result over coffee. Three things get in the way.</p>
+  <p><strong>The machine has to stay awake.</strong> A Mac that idles into sleep takes its network interface with it, and Remote Login makes no difference because nothing is left to answer. System Settings → Battery on a laptop, Energy Saver on a desktop: lengthen or switch off idle sleep, and turn on "Wake for network access" if your Mac offers it.</p>
+  <p><strong>A reboot takes the session with it.</strong> tmux does not restore sessions after a restart, and a software update reboots the machine without asking. Commit before you stop for the night, so the worst case costs an hour instead of the whole task.</p>
+  <p><strong>A session can be waiting rather than dead.</strong> Attach and look. A fresh shell prompt means the process exited: finished, or died, and the lines above say which. A prompt asking you a question has waited six hours for one word, at no cost. From a lock screen both look the same, and only one needs you to act.</p>
 </section>
 
 <section id="phone-or-desk">
@@ -156,7 +156,7 @@ tmux attach -t tests    # watch it, then detach</code></pre>
     </tbody>
   </table></div>
 
-  <p>A machine that stays awake, a session with a name, a private way in. Missing one, the <a href="/guide/en/setup/">setup wizard</a> asks three questions about your machine and hands back a checklist.</p>
+  <p>Three things have to hold: a machine that stays awake, a session with a name, and a private way in. If one is missing, the <a href="/guide/en/setup/">setup wizard</a> asks three questions about your machine and hands back a checklist.</p>
 </section>
 
         </article>

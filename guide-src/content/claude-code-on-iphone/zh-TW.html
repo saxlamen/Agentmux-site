@@ -1,16 +1,16 @@
 <p>可以，但 Claude Code 不會跑在你的 iPhone 上。它跑在你自己擁有的 Mac 或 Linux 機器上，手機只負責帶著終端機。做法是：打開遠端登入，用 Tailscale 取代對外開放的 port，開一個有名字的 tmux session，在裡面啟動 <code>claude</code>。鎖定螢幕之後，agent 照樣繼續跑。</p>
-<p>「在手機上跑 Claude Code」這句話聽起來很直白，其實混了兩台機器、兩種工作。把它們分開之後，剩下的問題都變短：斷線之後什麼還會活著、為什麼同一個指令在 SSH 裡找不到、agent 能不能在你搭捷運的時候自己回答自己的權限提示。</p>
+<p>「在手機上跑 Claude Code」這句話聽起來很直白，實際上講的是兩台機器、兩種工作。把它們分開之後，問題都變短了：斷線之後什麼還會活著、為什麼同一條指令在 SSH 裡找不到、agent 能不能在你搭捷運的時候自己回答權限提示。</p>
 
 <section id="what-the-phone-does-not-do">
-  <h2>手機上什麼都沒有跑，只有終端機</h2>
+  <h2>Claude Code 是跑在手機上嗎？</h2>
 
-  <p>Claude Code 是你某台機器硬碟裡的一個程式，由 shell 啟動。它透過那台機器的檔案系統讀你的專案，跑 <code>git</code>，跑測試，把改好的內容寫回同一個目錄。這句話帶來的誤解是：以為它有一部分現在住在你口袋裡。</p>
-  <p>從手機連過去，線上只跑兩樣東西：你按的鍵出去，session 印出的字元回來。手機上沒有裝任何 agent 的元件，你的 repo 也不需要搬到任何地方。手機是在顯示另一台電腦上那個 session 此刻的樣子。</p>
+  <p>Claude Code 是你某台機器硬碟裡的一個程式，由 shell 啟動。它透過那台機器的檔案系統讀你的專案，跑 <code>git</code>，跑測試，把改好的內容寫回同一個目錄。很容易以為它有一部分現在住在你口袋裡，但上面這些事沒有一項發生在手機上。</p>
+  <p>從手機連過去，線上只跑兩樣東西：你按的鍵出去，session 印出的字元回來。手機上沒有裝任何 agent 的元件，你的 repo 也不必搬到任何地方。手機顯示的，只是另一台電腦上那個 session 現在的樣子。</p>
   <ul>
-    <li><strong>手機上。</strong>按鍵、畫面、你的拇指。鎖定螢幕、把 app 滑掉、走進電梯——停掉的是畫面，停掉的就是這些。</li>
-    <li><strong>機器上。</strong>process、正在被改的檔案、正在跑的測試、它已經讀過和決定過的一切。你的螢幕變暗，它感覺不到。</li>
+    <li><strong>手機上。</strong>按鍵、畫面、你的拇指。鎖定螢幕、把 app 滑掉、走進電梯，停掉的只有畫面。</li>
+    <li><strong>機器上。</strong>process、正在被改的檔案、正在跑的測試、它已經讀過和決定過的一切。你的螢幕變暗，這一切都不會停。</li>
   </ul>
-  <p>兩個直接後果。機器必須一直開著、而且要連得到：蓋著蓋子收在抽屜裡的筆電什麼都不會跑。手機反而是這套東西裡最便宜、壞了可以換的那一半。</p>
+  <p>有兩個後果。機器必須一直開著、而且要連得到：蓋著蓋子收在抽屜裡的筆電什麼都不會跑。手機那一邊最便宜，換一支手機就恢復了。</p>
 </section>
 
 <section id="three-things-before-the-phone-matters">
@@ -20,34 +20,34 @@
 
   <ol>
     <li><strong>一個進得去那台機器的門。</strong>Mac 上是「系統設定 → 一般 → 共享 → 遠端登入」；Linux 上是 SSH 服務，一個叫 <code>sshd</code> 的 daemon。</li>
-    <li><strong>一個私有網路，不是一個對外開放的 port。</strong>機器和手機都裝 Tailscale，登入同一個帳號，然後連那台機器的 MagicDNS 名稱或 <a href="/guide/zh-TW/what-is-tailscale/"><code>100.x</code> 位址</a>，不要連 <code>192.168.1.23</code> 這種區網位址——手機切到行動網路之後，那個位址什麼都不是。另一條路是把 port 22 轉向公網，那等於把機器交給全網路的掃號機器人。</li>
+    <li><strong>一個私有網路，不要對外開放的 port。</strong>機器和手機都裝 Tailscale，登入同一個帳號，然後連那台機器的 MagicDNS 名稱或 <a href="/guide/zh-TW/what-is-tailscale/"><code>100.x</code> 位址</a>，不要連 <code>192.168.1.23</code> 這種區網位址，因為手機切到行動網路之後，那個位址什麼都不是。另一條路是把 port 22 轉向公網，那等於把機器攤在公網上，誰都能過來試你的密碼。</li>
     <li><strong>一個有名字的 tmux session，而且 agent 在裡面。</strong></li>
   </ol>
 
   <pre><code>tmux new -s work     # 取名為 work
 claude               # 在 session 裡面啟動</code></pre>
 
-  <p>之後從手機、從另一個網路接回來：</p>
+  <p>之後從手機、從另一個網路接回去的時候：</p>
 
   <pre><code>tmux ls              # 現在有哪些 session
 tmux attach -t work  # 開一個窗看進去</code></pre>
 
-  <p>名字不是裝飾。沒有名字，你就沒有可以指名要的那個 session：只打 <code>tmux attach</code> 會接上最近的一個，那是在猜你的意思。機器上還沒有 tmux 的話，Agentmux 會自己裝。</p>
+  <p>名字不是裝飾：沒有名字，你就沒有可以指名要的那個 session，只打 <code>tmux attach</code> 會接上最近的一個，那是在猜你的意思。機器上還沒有 tmux 的話，Agentmux 會自己裝。</p>
 </section>
 
 <section id="why-a-plain-ssh-window-kills-the-agent">
   <h2>只用一個 SSH 視窗，鎖定螢幕那一刻 agent 就死了</h2>
 
   <p>假設你跳過 tmux：從手機 SSH 進去，跑 <code>claude</code>，看它開始讀專案，然後把手機放進口袋、鎖定螢幕。</p>
-  <p>手機不再送封包，連線逾時、關閉。機器上 sshd 跟著關掉那條連線掛著的 pseudo-terminal，kernel 對還掛在上面的每一個 process 送出 <strong>SIGHUP</strong>：你的 shell，還有 shell 裡面的 Claude Code。預設的反應就是結束。agent 死在原地，改到一半的編輯只剩一半，讀了二十分鐘的專案也一起消失。</p>
+  <p>手機不再送封包，連線逾時、關閉。機器上的 sshd 跟著關掉那條連線所使用的 pseudo-terminal，kernel 對還掛在上面的每一個 process 送出 <strong>SIGHUP</strong>：你的 shell，還有 shell 裡面的 Claude Code。它們預設的反應就是結束。agent 停在改到一半的地方，之前讀了二十分鐘的專案也一起沒了。</p>
   <p>讓 app 開著救不了它：Wi-Fi 換一個網路、行動網路斷訊、一個 Ctrl-C 按錯地方，連線都照樣斷。tmux 把 session 從連線上搬到機器本身，所以你斷線時消失的是窗，不是 process（<a href="/guide/zh-TW/what-is-tmux/">機制在那篇 tmux 文章</a>）。結論只有一條：<strong>agent 要在開始做事之前就在 session 裡面，因為一個正在跑的 process 沒辦法之後搬進去。</strong></p>
 </section>
 
 <section id="what-working-from-a-phone-is-actually-like">
-  <h2>用手機工作，實際上是什麼樣子</h2>
+  <h2>用手機工作實際上是什麼樣子？</h2>
 
-  <p>適合手機的是「一次一個決定」，而這正好是 agent 工作循環的主體。它提出一個計畫，你用一句話核准或打回；它問要不要順便處理 migration，你選第二個。你回兩行修正——「serializer 不要動，export 那支在用它」——然後把手機收起來。</p>
-  <p>螢幕鍵盤是第一個真實的成本。backtick、pipe、引號、反斜線、代表家目錄的 tilde，全部藏在兩層之後，所以 <code>~/src/auth/session.ts</code> 這種路徑打起來比想像中久，打錯一段就是一個來回。長的 prompt 在手機上比較難寫也比較難檢查，很多人是在備忘錄裡寫好再貼進來。</p>
+  <p>手機適合一次只做一個決定，而 agent 的工作循環就是這樣：它提出一個計畫，你用一句話核准或打回；它問要不要順便處理 migration，你選第二個。你回兩行修正：「serializer 不要動，export 那支在用它」，然後把手機收起來。</p>
+  <p>螢幕鍵盤是第一筆真實的成本。backtick、pipe、引號、反斜線、代表家目錄的 tilde，全部藏在兩層之後，所以 <code>~/src/auth/session.ts</code> 這種路徑打起來比想像中久，打錯一段就是一個來回。長的 prompt 在手機上比較難寫也比較難檢查，很多人先在備忘錄裡寫好，再貼進來。</p>
   <p>讀 diff 是手機真正不夠用的地方：兩個檔案改了四十行，加上周圍的 context，在六吋螢幕上就是兩三個畫面的捲動；而且換行會讓你看不出某個改動落在行尾還是行中，而那正是你要 review 的東西。把 iPad 橫過來，同一個 diff 就不用換行。</p>
   <p>一個馬上回本的習慣：把吵的部分放進第二個 session，測試就不會蓋掉 agent 自己的提示。</p>
 
@@ -56,33 +56,33 @@ tmux attach -t tests    # 看完再 detach</code></pre>
 </section>
 
 <section id="answering-permission-prompts-from-the-phone">
-  <h2>它停下來問你，而你在手機上回答</h2>
+  <h2>agent 可以自己回答權限提示嗎？</h2>
 
-  <p>Claude Code 不是想到什麼就跑。要跑一條指令之前——依照設定，改檔案之前也會——它停下來，把問題放在畫面上：這是它要跑的指令，可以嗎？工作就在這裡等。如果只有你能回答，等的時間就是你何時抬頭看。離開書桌之後，權限提示不再是不方便，而是整件事的瓶頸。</p>
-  <p><a href="/guide/zh-TW/permission-review/">AI 自動權限審查</a>只做這件事：讀畫面上目前那一則提示，然後給你建議、或幫你按下那個鍵。三道檢查決定走到哪一步。<strong>黑名單</strong>擋掉危險指令，命中的一定交給你。<strong>白名單</strong>放行你原本就信任的指令，直接在裝置上決定，不用等。<strong>AI 判斷</strong>只處理兩邊都沒命中的，結果是允許、拒絕、或不確定，後面兩種一樣回到你手上。最後由這個 session 的模式決定它是只<strong>建議</strong>那個鍵，還是直接<strong>幫你按</strong>。</p>
-  <p>距離沒有把責任一起轉移。一條在行動網路上核准的指令，跑在一台存著你的 <code>.env</code>、你的金鑰、以及不只你一個人在用的 repo 的機器上；而判斷看到的是畫面，不是 agent 怎麼走到那一幕。所以先選只給建議的模式，把你每天核准的指令放進白名單，訊號和注意力都不好的時候，先讀畫面上那條指令再按。黑名單存在，是因為「全部核准」是個壞的預設，而距離不會讓它變得比較安全：指向家目錄的 <code>rm -rf</code>，不會因為你人在月台上就比較溫和。</p>
+  <p>Claude Code 不是想到什麼就跑。它跑每一條指令之前都會先停下來；依照設定，改檔案之前也會停。它把問題擱在畫面上：這是它要跑的指令，可以嗎？工作就在這裡等，而如果只有你能回答，要等多久就看你什麼時候抬頭。離開書桌之後，權限提示不再是不方便，而是整件事的瓶頸。</p>
+  <p><a href="/guide/zh-TW/permission-review/">AI 自動權限審查</a>只做這件事：讀畫面上目前那一則提示，然後給你建議、或幫你按下那個鍵。檢查有固定的順序。<strong>黑名單</strong>擋掉危險指令，命中的一定交給你。<strong>白名單</strong>放行你原本就信任的指令，直接在裝置上決定，不用等。<strong>AI 判斷</strong>只處理兩邊都沒命中的，結果是允許、拒絕、或不確定，後面兩種一樣回到你手上。最後由這個 session 的模式決定它是只<strong>建議</strong>那個鍵，還是直接<strong>幫你按</strong>。</p>
+  <p>人不在旁邊，責任還是你的。一條在行動網路上核准的指令，跑在那台機器上，那裡存著你的 <code>.env</code>、你的金鑰，還有一個不只你一個人在用的 repo。AI 判斷看到的是畫面，它不知道 agent 為什麼走到這一步。所以先選只給建議的模式，把你每天都會核准的指令放進白名單；訊號和注意力都不好的時候，先讀畫面上那條指令再按。黑名單會存在，是因為「全部核准」是一個壞的預設，而距離不會讓它比較安全：指向家目錄的 <code>rm -rf</code>，不會因為你人在月台上就比較溫和。</p>
 </section>
 
 <section id="claude-command-not-found-over-ssh">
   <h2>claude: command not found，但在 Terminal 裡跑得好好的</h2>
 
-  <p>同一台機器、同一個帳號，兩種結果：在 Terminal 裡打 <code>claude</code> 會跑，透過 SSH 就給你 <code>claude: command not found</code>。看起來像是遠端那套設定壞了，而它是這條路上最常見的一種。</p>
-  <p>原因兩句話。用 npm 安裝、或跑在 nvm 釘選的 node 版本下，它的目錄是被寫在只有<em>互動式 login shell</em> 會讀的啟動檔裡，PATH 裡才有那一筆。而像 <code>ssh host claude</code> 這種只跑一個指令的連線，啟動的是非互動式 shell，根本不會讀那個檔案。</p>
-  <p>一定會有效的做法是不靠 PATH。在原本能跑的 Terminal 裡：</p>
+  <p>同一台機器、同一個帳號，兩種結果：在 Terminal 裡打 <code>claude</code> 會跑，透過 SSH 就給你 <code>claude: command not found</code>。看起來像遠端那套設定壞了，但這其實是從手機連進去最常撞到的問題。</p>
+  <p>Claude Code 如果是用 npm 裝的，或是裝在 nvm 釘選的 node 版本底下，它的安裝目錄會寫進一個啟動檔。只有<em>互動式 login shell</em> 會讀那個啟動檔，PATH 裡才有那一筆。<code>ssh host claude</code> 這種只跑一條指令的連線，啟動的是非互動式 shell，它根本不會讀那個檔案。</p>
+  <p>最穩的做法是不靠 PATH。在原本跑得動的 Terminal 裡：</p>
 
   <pre><code>which claude
 # /Users/you/.nvm/versions/node/v20.11.0/bin/claude</code></pre>
 
-  <p>把整個絕對路徑當成 agent 指令，或直接打在 session 裡。nvm 換了 node 版本它就失效；長期的解法取決於你用的是 zsh 還是 bash、以及你的發行版，那些寫在<a href="/guide/zh-TW/troubleshooting/">疑難排解那頁</a>。</p>
+  <p>把那個絕對路徑整串當成 agent 指令，或直接打在 session 裡。nvm 換了 node 版本，這個路徑就會失效。之後要更穩，得看你的 shell 和發行版，那些寫在<a href="/guide/zh-TW/troubleshooting/">疑難排解那頁</a>。</p>
 </section>
 
 <section id="running-overnight-and-the-honest-limits">
   <h2>跑一整晚可以，重開機不行</h2>
 
-  <p>機器不睡，session 就能跑一整晚：十一點丟一個重構給它，早上配咖啡看結果。周圍有三個限制。</p>
+  <p>機器不睡，session 就能跑一整晚：十一點丟一個重構給它，早上配著咖啡看結果。有三件事會卡住。</p>
   <p><strong>機器要維持清醒。</strong>Mac 閒置進入睡眠時，網路介面跟著休眠，遠端登入開不開都沒用，因為沒有東西在回應。「系統設定 → 電池」（筆電）或「系統設定 → 節能」（長期開機當伺服器用的桌機）：把閒置睡眠的時間調長或關掉，有「喚醒以供網路存取」這個選項就打開。</p>
-  <p><strong>重開機會把 session 一起帶走。</strong>tmux 不會在重開機之後還原 session，而系統更新重開機之前不會問你。收工之前先 commit，最壞的情況就從損失整個任務變成損失一個小時。</p>
-  <p><strong>在等你的 agent 不是當掉的 agent。</strong>先接回去看一眼。嶄新的 shell 提示字元代表 process 已經結束：跑完了，或者死了，上面幾行會告訴你是哪一種。停在一個問題上的 session，則已經等了你一個字六小時，而且沒消耗什麼。從鎖定螢幕看兩者一模一樣；只有一種需要你動手。</p>
+  <p><strong>重開機會把 session 一起帶走。</strong>tmux 不會在重開機之後還原 session，系統更新要重開機時也不會問你。收工之前先 commit，最壞的情況就從損失整個任務變成損失一個小時。</p>
+  <p><strong>在等你的 agent 不是當掉的 agent。</strong>先接回去看一眼。一個全新的 shell 提示字元代表 process 已經結束，跑完了或是死了，上面幾行會告訴你是哪一種。另一個 session 如果停在一個問題上，它已經等你一個字等了六小時，也沒花掉什麼。從鎖定螢幕看，這兩種一模一樣，而且只有一種需要你動手。</p>
 </section>
 
 <section id="phone-or-desk">
@@ -102,5 +102,5 @@ tmux attach -t tests    # 看完再 detach</code></pre>
     </tbody>
   </table>
 
-  <p>一台不會睡的機器、一個有名字的 session、一條只有你自己人進得來的路。三樣少一樣，<a href="/guide/zh-TW/setup/">setup 那頁</a>會先問你三個問題，再照你那台機器給一份清單。</p>
+  <p>三樣東西：一台不會睡的機器、一個有名字的 session、一條只有你進得去的路。少一樣，<a href="/guide/zh-TW/setup/">setup 那頁</a>會先問你三個問題，再照你那台機器給一份清單。</p>
 </section>

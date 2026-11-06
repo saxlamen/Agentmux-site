@@ -12,29 +12,29 @@ agentmux.saxcave.cc
 ├─ /privacy.html      privacy policy
 └─ /guide/            language picker (redirects by preference)
    └─ /guide/zh-TW/  11 articles
-      ├─ why-remote-vibe-coding/  [BC] 768 w / 1080 zh
-      ├─ why-not-gui-ide/         [B] 711 w / 929 zh
-      ├─ what-is-cli/             [B] 1204 w / 1993 zh
-      ├─ what-is-ssh/             [B] 1149 w / 1817 zh
-      ├─ what-is-tmux/            [BC] 1101 w / 1730 zh
-      ├─ what-is-tailscale/       [BC] 1202 w / 2015 zh
-      ├─ why-agentmux/            [BC] 1194 w / 1762 zh
-      ├─ setup/                   [BC] 744 w / 874 zh
-      ├─ claude-code-on-iphone/   [C] 1311 w / 2205 zh
-      ├─ permission-review/       [-] 1257 w / 1826 zh
-      └─ troubleshooting/         [-] 3074 w / 4441 zh
+      ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
+      ├─ why-not-gui-ide/         [B] 758 w / 981 zh
+      ├─ what-is-cli/             [B] 1370 w / 2007 zh
+      ├─ what-is-ssh/             [B] 1149 w / 1783 zh
+      ├─ what-is-tmux/            [BC] 1153 w / 1699 zh
+      ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
+      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
+      ├─ setup/                   [BC] 710 w / 897 zh
+      ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
+      ├─ permission-review/       [-] 1258 w / 1810 zh
+      └─ troubleshooting/         [-] 3154 w / 4513 zh
    └─ /guide/en/  11 articles
-      ├─ why-remote-vibe-coding/  [BC] 768 w / 1080 zh
-      ├─ why-not-gui-ide/         [B] 711 w / 929 zh
-      ├─ what-is-cli/             [B] 1204 w / 1993 zh
-      ├─ what-is-ssh/             [B] 1149 w / 1817 zh
-      ├─ what-is-tmux/            [BC] 1101 w / 1730 zh
-      ├─ what-is-tailscale/       [BC] 1202 w / 2015 zh
-      ├─ why-agentmux/            [BC] 1194 w / 1762 zh
-      ├─ setup/                   [BC] 744 w / 874 zh
-      ├─ claude-code-on-iphone/   [C] 1311 w / 2205 zh
-      ├─ permission-review/       [-] 1257 w / 1826 zh
-      └─ troubleshooting/         [-] 3074 w / 4441 zh
+      ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
+      ├─ why-not-gui-ide/         [B] 758 w / 981 zh
+      ├─ what-is-cli/             [B] 1370 w / 2007 zh
+      ├─ what-is-ssh/             [B] 1149 w / 1783 zh
+      ├─ what-is-tmux/            [BC] 1153 w / 1699 zh
+      ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
+      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
+      ├─ setup/                   [BC] 710 w / 897 zh
+      ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
+      ├─ permission-review/       [-] 1258 w / 1810 zh
+      └─ troubleshooting/         [-] 3154 w / 4513 zh
 ```
 
 B = beginner track, C = CLI-user track.
@@ -58,17 +58,17 @@ graph LR
   ZH["/guide/zh-TW/"]:::hub
   G --> EN
   G --> ZH
-  EN --> whyremotevibecoding["Standby is the real cost<br>768 w / 1080 zh"]:::art
-  EN --> whynotguiide["Why not Cursor / VS Code<br>711 w / 929 zh"]:::art
-  EN --> whatiscli["What is a CLI agent<br>1204 w / 1993 zh"]:::art
-  EN --> whatisssh["What is SSH<br>1149 w / 1817 zh"]:::art
-  EN --> whatistmux["What is tmux<br>1101 w / 1730 zh"]:::art
-  EN --> whatistailscale["What is Tailscale<br>1202 w / 2015 zh"]:::art
-  EN --> whyagentmux["vs Termius / Blink<br>1194 w / 1762 zh"]:::art
-  EN --> setup["Setup wizard<br>744 w / 874 zh"]:::art
-  EN --> claudecodeoniphone["Claude Code on iPhone<br>1311 w / 2205 zh"]:::art
-  EN --> permissionreview["AI Permission Review<br>1257 w / 1826 zh"]:::art
-  EN --> troubleshooting["Troubleshooting (8 fixes)<br>3074 w / 4441 zh"]:::art
+  EN --> whyremotevibecoding["Standby is the real cost<br>816 w / 1115 zh"]:::art
+  EN --> whynotguiide["Why not Cursor / VS Code<br>758 w / 981 zh"]:::art
+  EN --> whatiscli["What is a CLI agent<br>1370 w / 2007 zh"]:::art
+  EN --> whatisssh["What is SSH<br>1149 w / 1783 zh"]:::art
+  EN --> whatistmux["What is tmux<br>1153 w / 1699 zh"]:::art
+  EN --> whatistailscale["What is Tailscale<br>1266 w / 2129 zh"]:::art
+  EN --> whyagentmux["vs Termius / Blink<br>1238 w / 1848 zh"]:::art
+  EN --> setup["Setup wizard<br>710 w / 897 zh"]:::art
+  EN --> claudecodeoniphone["Claude Code on iPhone<br>1405 w / 2222 zh"]:::art
+  EN --> permissionreview["AI Permission Review<br>1258 w / 1810 zh"]:::art
+  EN --> troubleshooting["Troubleshooting (8 fixes)<br>3154 w / 4513 zh"]:::art
   whyremotevibecoding --> whynotguiide
   whynotguiide --> whatiscli
   whatiscli --> whatisssh

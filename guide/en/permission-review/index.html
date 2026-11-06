@@ -52,9 +52,9 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>AI Permission Review: who answers when your agent asks</h1>
-            <p>AI Permission Review is how Agentmux answers the permission prompt an agent raises on a screen you are not looking at. Each request is checked against a blacklist that blocks dangerous commands, an allowlist of commands you already trust, and then an AI judgement. Depending on the session's mode, it suggests the key or presses it for you.</p>
-<p>Halfway through a task, the agent stops to ask "Run this command?" — and you happen to be away from the screen. The whole job sits there waiting for you. That is the moment it is built for.</p>
-<p>It does exactly one thing: answer the agent's permission prompts, one key at a time. It never types commands for you and never touches anything beyond what's on screen.</p>
+            <p>AI Permission Review answers the permission prompt an agent raises when you are not looking at the screen. A blacklist blocks dangerous commands first, an allowlist passes the commands you already trust, and an AI judgement decides the rest. The session's mode then decides whether it only suggests the key or presses it for you.</p>
+<p>Halfway through a task the agent stops and asks "Run this command?" You happen to be away from the screen, and the whole job waits on one key press.</p>
+<p>AI Permission Review exists for that moment. It answers the prompt, one key at a time. It does not type the command, and it does not touch anything else on the screen.</p>
 
 <figure class="flow" aria-label="How Permission Review decides">
   <ol>
@@ -62,7 +62,7 @@
     <li><strong>Read the screen</strong><span>Find the current prompt and redact sensitive text</span></li>
     <li><strong>Blacklist</strong><span>A dangerous command matched</span><em>Handed to you</em></li>
     <li><strong>Allowlist</strong><span>A command you trust matched; pick the key locally</span></li>
-    <li><strong>AI judgment</strong><span>Allow, deny, or unsure</span><em>Deny or unsure: handed to you</em></li>
+    <li><strong>AI judgement</strong><span>Allow, deny, or unsure</span><em>Deny or unsure: handed to you</em></li>
     <li><strong>Re-check before sending</strong><span>If the screen changed, nothing is sent</span><em>Handed to you</em></li>
     <li><strong>Suggest, or press for you</strong><span>Depends on the mode you picked</span></li>
   </ol>
@@ -70,26 +70,26 @@
 
 <section id="when-it-starts">
   <h2>It starts only when an agent stops and waits</h2>
-  <p>It only starts when an agent stops and waits for you. Agentmux already tracks the state of agents like Claude Code and Codex. When a prompt such as "Allow this?" or "Pick 1 or 2" appears, the session is marked as waiting, and the review begins at that moment.</p>
+  <p>Agentmux already tracks the state of agents like Claude Code and Codex. When a prompt such as "Allow this?" or "Pick 1 or 2" appears on screen, the session is marked as waiting, and the review starts from there.</p>
   <p>These also need to be true:</p>
   <ul>
     <li>The AI Permission Review switch in Settings is on.</li>
     <li>The session's mode is Advisor or Auto Reply, not Off.</li>
     <li>You have Pro, or you're still in the free trial.</li>
   </ul>
-  <p>Each prompt is judged once; it doesn't re-ask every few seconds. As soon as you press a key or type in the terminal yourself, any judgment in progress is cancelled and your input wins.</p>
-  <p>Sessions that aren't on screen are reviewed too. When you switch to another tab, it keeps watching in the background.</p>
+  <p>Each prompt is judged once, and Agentmux does not re-run that check every few seconds. If you press a key or type in the terminal yourself, it cancels the review in progress and takes your input instead.</p>
+  <p>Switch to another tab and the review keeps running in the background, on the sessions you are no longer looking at.</p>
 </section>
 
 <section id="read-the-screen">
   <h2>It reads the current prompt, not the scrollback</h2>
-  <p>It first picks out the current prompt on screen: the command to run, the question itself, and the choices you can pick. Older content that has scrolled up doesn't count.</p>
-  <p>Before anything goes to the AI, text that looks like a password, API key, or token is redacted. If redaction fails, the original text is not sent, and no key is pressed this time.</p>
+  <p>It picks out the prompt currently on screen: the command to run, the question itself, and the choices offered. Anything that has already scrolled up does not count.</p>
+  <p>Before the screen goes to the AI, Agentmux redacts anything that looks like a password, API key, or token. If that redaction fails, the text is not sent and no key is pressed this time.</p>
 </section>
 
 <section id="blacklist">
   <h2>The blacklist runs first, on your phone</h2>
-  <p>The blacklist is matched right on your phone and always runs first. A match is never sent to the AI; it's handed straight to you. The built-in rules cover the most dangerous kinds of operations:</p>
+  <p>Your phone does the matching, and the blacklist runs before anything else. A match is never sent to the AI: the prompt comes straight to you. The built-in rules cover the most dangerous kinds of operations:</p>
   <ul>
     <li><code>rm -rf</code> on <code>/</code>, <code>~</code>, or your home directory</li>
     <li><code>sudo</code></li>
@@ -103,20 +103,20 @@
 
 <section id="allowlist">
   <h2>The allowlist decides without the AI</h2>
-  <p>Some commands you approve every day, like running tests or a build. Add them to the allowlist, and the next match is decided right on your phone — which key to press, with no wait for the AI and no API usage.</p>
-  <p>In Auto Reply mode, you can also turn on "Allow all commands in this session" for a single session. It skips AI judgment, but the blacklist still applies, and it turns off when the session ends.</p>
-  <p>If the allowlist matches but there's no clear, safe key to press on screen, the prompt is handed to you.</p>
+  <p>Some commands you approve every day, like a test run or a build. Add them to the allowlist and the next match is settled on your phone. It picks the key locally, so there is no wait for the AI and no API usage.</p>
+  <p>In Auto Reply mode you can also turn on "Allow all commands in this session" for a single session. That skips the AI judgement. The blacklist still applies, and the setting turns itself off when the session ends.</p>
+  <p>If the allowlist matches but the screen shows no clear, safe key, the prompt comes to you instead.</p>
 </section>
 
 <section id="ai-judgment">
-  <h2>What does the AI actually decide?</h2>
-  <p>Only prompts that match neither list go to the AI. It sees the redacted screen and your <strong>Main Intent</strong> — what you want the agent to do this time, such as "fix the login page tests".</p>
+  <h2>What does the AI decide?</h2>
+  <p>Only prompts that match neither list reach the AI. It gets the redacted screen plus your <strong>Main Intent</strong>, which is what you want the agent to do this time, for example "fix the login page tests".</p>
   <p>You can choose between two engines:</p>
   <ul>
-    <li><strong>JEV decision engine</strong> (through OpenRouter or TypeSafe): built for terminal prompts, and fast. It judges in three levels: read-only, safe operations are allowed; commands that match your Main Intent are allowed; everything else — unrelated, unclear, or high-risk — is handed to you. Anything that looks suspicious or like a malicious injection is denied outright.</li>
+    <li><strong>JEV decision engine</strong> (through OpenRouter or TypeSafe): built for terminal prompts, and fast. It decides in three tiers. Safe read-only operations are allowed. Commands that match your Main Intent are allowed. Everything else comes to you, whether it is unrelated, unclear, or high-risk. Anything that looks suspicious or like a malicious injection is denied outright.</li>
     <li><strong>An OpenAI-compatible LLM</strong>: OpenAI, OpenRouter, or a model you run on your own machine.</li>
   </ul>
-  <p>The AI reaches one of three conclusions: allow, deny, or unsure. Only "allow" goes further, and the AI has to name exactly which option on screen to pick. It never picks a permanent choice such as "Always allow" or "Don't ask again".</p>
+  <p>The AI reaches one of three conclusions: allow, deny, or unsure. Only "allow" goes further, and the AI has to name the exact option on screen it wants to pick. It never picks a permanent grant such as "Always allow" or "Don't ask again".</p>
 </section>
 
 <section id="finish">
@@ -124,23 +124,23 @@
   <p>Each session has its own mode:</p>
   <ul>
     <li><strong>Advisor</strong> (default): suggestions only. A notice at the top of the screen tells you what it recommends, with an Accept button next to it. Nothing is sent until you tap it.</li>
-    <li><strong>Auto Reply</strong>: when the verdict is allow, it presses the key for you and shows a notice saying what it pressed.</li>
+    <li><strong>Auto Reply</strong>: when the verdict is allow, it presses the key for you and shows a notice saying which key it pressed.</li>
   </ul>
-  <p>Either way, it looks at the screen again right before sending a key. If the prompt changed, the options moved, or the cursor isn't on the target, nothing is sent. This keeps a change in the few seconds of judgment from turning into the wrong choice.</p>
-  <p>After Auto Reply sends a key, it waits 3 seconds before it can send another in the same session.</p>
+  <p>Either way, it looks at the screen again right before sending a key. If the prompt changed, the options moved, or the cursor is not on the target, it sends nothing. The judgement takes a few seconds, and the prompt can change in that time, so the second look is what stops a wrong option from being pressed.</p>
+  <p>After Auto Reply sends a key, Agentmux waits 3 seconds before sending another one in that session.</p>
 </section>
 
 <section id="handed-to-you">
   <h2>When does it hand the prompt back to you?</h2>
   <ul>
     <li>A blacklist rule matched.</li>
-    <li>The AI said deny, or wasn't sure.</li>
-    <li>It can't tell which key the prompt wants.</li>
-    <li>The choice is a permanent grant like "Always allow".</li>
+    <li>The AI said deny, or was unsure.</li>
+    <li>It cannot tell which key the prompt wants.</li>
+    <li>The choice is a permanent grant such as "Always allow".</li>
     <li>The screen changed before the key was sent.</li>
-    <li>Redacting sensitive text failed.</li>
+    <li>Redacting the sensitive text failed.</li>
   </ul>
-  <p>When that happens, Agentmux alerts you the usual way, exactly as it would with the review turned off.</p>
+  <p>Then Agentmux alerts you the same way it would with the review turned off.</p>
 </section>
 
 <section id="get-started">
@@ -151,17 +151,17 @@
     <li>Your own OpenAI-compatible LLM endpoint, such as the OpenAI API or a model running on your own computer.</li>
   </ul>
   <ol>
-    <li>Open Settings → AI Permission Review and turn on the switch. The first time, you'll see an explanation of what data is shared. Tap to agree, and you're taken straight to Advanced Settings.</li>
-    <li>In Advanced Settings, choose an engine, enter your API key, and tap "Test AI Endpoint Connection" to make sure it works.</li>
-    <li>Back in Settings, pick a default under Permission Review Mode (Advisor is a good start), then write down your Main Intent.</li>
-    <li>Connect to a server and start an agent. New tabs start in the default mode. To change the mode or Main Intent for one session, tap the Permission Review button in the terminal toolbar. There you can also turn on "Use My Latest Prompt" so the Main Intent follows each prompt you send in that tab.</li>
+    <li>Open Settings → AI Permission Review and turn on the switch. The first time, you see an explanation of what data is shared. Tap to agree and it takes you to Advanced Settings.</li>
+    <li>In Advanced Settings, choose an engine, enter your API key, and tap "Test AI Endpoint Connection" to confirm that it works.</li>
+    <li>Back in Settings, pick a default under Permission Review Mode (Advisor is a reasonable start), then write your Main Intent.</li>
+    <li>Connect to a server and start an agent. New tabs start in the default mode. To change the mode or the Main Intent for one session, tap the Permission Review button in the terminal toolbar. There you can also turn on "Use My Latest Prompt", so the Main Intent follows each prompt you send in that tab.</li>
   </ol>
-  <p>Try Advisor for a few days first to see whether its suggestions match how you work, before turning on Auto Reply for specific sessions.</p>
+  <p>Run Advisor for a few days first and compare its suggestions with how you actually answer. Then turn on Auto Reply for the sessions where the pattern holds.</p>
 </section>
 
 <section id="privacy">
   <h2>What data leaves your device?</h2>
-  <p>Only redacted screen excerpts and your Main Intent are sent, to the AI service you set up, using your own API key. If "Use My Latest Prompt" is on, the prompts you send in that tab become the Main Intent and are sent too. Agentmux doesn't provide or relay any AI service. A record of each decision stays on your device only; you can review or clear it in the audit log. Model reasoning is never stored.</p>
+  <p>Only two things leave it: the redacted text on screen and your Main Intent. They go to the AI service you set up, using your own API key. With "Use My Latest Prompt" on, the prompts you send in that tab become the Main Intent, so they are sent as well. Agentmux does not provide or relay an AI service. The record of each decision stays on your device, where you can review or clear it in the audit log. Model reasoning is not stored.</p>
 </section>
 
         </article>

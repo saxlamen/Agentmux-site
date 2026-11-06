@@ -52,20 +52,20 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>讓 agent 在你關掉手機後繼續跑</h1>
-            <p>tmux 是一個 terminal multiplexer：它讓 terminal session 繼續跑在你連進去的那台機器上，而不是跑在你那條連線裡面。對 AI coding agent 來說，這就是活下來與死掉的分別——SSH 連線一定會斷（手機鎖定、沒訊號），而斷掉的 SSH 通常會順手殺掉 agent 所在的 shell。</p>
+            <p>tmux 是一個 terminal multiplexer：它讓 terminal session 繼續跑在你連進去的那台機器上，不是跑在你那條連線裡面。對 AI coding agent 來說，這就是斷線之後 agent 能不能活下來的差別。SSH 連線遲早會斷（手機鎖定、沒訊號），而斷掉的 SSH 通常會把 agent 所在的 shell 一起殺掉。</p>
 <p>你把手機收起來，SSH 隧道斷了，agent 跟著死。這不是運氣問題，是機制。</p>
-<p>連線一斷，你這次登入所用的虛擬終端機（pseudo-terminal）被關閉。核心會對接在這個終端機上的每一個 process 送出 <strong>SIGHUP</strong>（hangup）：你的 shell，也包括 shell 裡面的 agent。process 除非自己特別處理過這個訊號，否則預設反應就是終止。跑到一半的東西全部作廢，agent 連再見都來不及說。<a href="/guide/zh-TW/what-is-ssh/">SSH</a> 本來只是連線行走的那條路，沒人打算讓它負責讓 agent 活下去。</p>
+<p>連線一斷，kernel 會關掉你這次登入所用的虛擬終端機（pseudo-terminal），再對接在那個終端機上的每個 process 送出 <strong>SIGHUP</strong>（hangup）：你的 shell，也包括 shell 裡面的 agent。process 除非自己處理過這個訊號，否則預設就是終止，跑到一半的東西全部作廢。<a href="/guide/zh-TW/what-is-ssh/">SSH</a> 只是連線走過的那條路，撐住 agent 的是那台機器，不是那條連線。</p>
 
 <section id="session-elsewhere">
   <h2>tmux 讓 session 活在別的地方</h2>
   <p>tmux 在伺服器上開一個 session。你的 agent 跑在那個 session 裡面，不是跑在你那條一直會斷的 SSH 連線裡。</p>
-  <p>背後的機制是一個 process。你第一次輸入 <code>tmux</code>，它會在你的帳號底下啟動一個背景程式——tmux <em>server</em>——之後你開的每個 session 都屬於它，每個 session 的虛擬終端機也由它分配，而不是由 <code>sshd</code> 分配。你的 agent 依賴的那個終端機，從此刻起屬於一個沒有理由跟著手機一起死掉的東西。</p>
-  <p>所以下次連線斷掉時，<code>sshd</code> 關閉的是它自己的虛擬終端機，而掛在那上面的只有你的 tmux client。client 結束了，session 毫無感覺。</p>
+  <p>背後的機制是一個 process。你第一次輸入 <code>tmux</code>，它就在你的帳號底下啟動一個背景程式，那是 tmux <em>server</em>，會一直活著。之後你開的每個 session 都屬於它，每個 session 的虛擬終端機也由它分配，不是由 <code>sshd</code> 分配。你的 agent 用的那個終端機從此刻起歸 tmux server 保管，跟手機那條連線沒有關係。</p>
+  <p>下次連線斷掉的時候，<code>sshd</code> 關掉的是它自己的虛擬終端機，掛在那上面的只有你的 tmux client。client 結束了，session 照樣跑。</p>
 </section>
 
 <section id="session-window-pane">
   <h2>session、window、pane 各是什麼？</h2>
-  <p>三個詞經常用來指同一件事，但只有第一個能保住你的 agent。把詞分清楚，tmux 一半的困惑就消失了。</p>
+  <p>這三個詞常常被混著用，但只有第一個能保住你的 agent。後面每一段都用得到這三個詞，所以先把它們分開。</p>
 
   <div class="table-wrap"><table>
     <thead>
@@ -85,73 +85,73 @@
       <tr>
         <td>pane</td>
         <td>一個 window 裡面的分割：左邊 agent，右邊測試或 <code>git status</code></td>
-        <td>手機那一小塊螢幕同時看到兩件事</td>
+        <td>手機那一小塊螢幕上同時看到兩件事</td>
       </tr>
     </tbody>
   </table></div>
 
-  <p>第四個詞也有用：<strong>client</strong> 就是當下正在看著這個 session 的終端機。一個 session 可以沒有 client、有一個、或有好幾個。零個不是錯誤，那就是 detach 狀態——照樣在跑，只是沒人看。</p>
-  <p>名字因此很重要。<code>tmux new -s work</code> 建立一個名叫 work 的 session，一週後還找得回來；不取名，tmux 就幫你編號，而「接回第 2 號」過了三天就沒有意義。</p>
+  <p>第四個詞也有用：<strong>client</strong> 就是當下正在看這個 session 的終端機。一個 session 可以沒有 client、有一個、或有好幾個。零個不是錯誤，那就是 detach：session 照樣在跑，只是沒人看。</p>
+  <p>名字因此很重要。<code>tmux new -s work</code> 建立的 session 一週後還找得回來；不取名，tmux 就幫你編號，而「接回第 2 號」這件事過了三天就沒有意義。</p>
 </section>
 
 <section id="detach-attach">
   <h2>detach、attach，跟關掉電視是同一件事</h2>
   <p>把電視關掉，客廳裡的畫面沒了。節目沒停，一直在播。你回來打開，接的是同一個頻道，從它播到的地方看下去。</p>
-  <p>tmux 把這兩個動作叫 <strong>detach</strong> 和 <strong>attach</strong>——關窗、開窗。兩個都碰不到機器上真正在跑的東西。</p>
-  <p>這個比喻藏了一件事，而且對你有利。電視關著的時候什麼都沒學到；tmux 的 session 把輸出留了下來。一個小時後接回來，畫面就是它現在的樣子，而那一個小時裡它印出來的東西還在 scrollback 上面，可以往上翻。</p>
+  <p>tmux 把這兩個動作叫 <strong>detach</strong> 和 <strong>attach</strong>：關窗、開窗。兩個都碰不到機器上真正在跑的東西。</p>
+  <p>這個比喻會漏掉一件事，而且漏掉的部分對你有利。電視關著的時候什麼都沒學到，tmux 的 session 卻把輸出留了下來。一個小時後接回來，畫面是它現在的樣子，那一個小時印出來的東西還在 scrollback 裡，往上翻就看得到。</p>
 </section>
 
 <section id="commands-you-type">
-  <h2>實際上要下哪些指令？</h2>
-  <p>先記四個：</p>
+  <h2>要下哪些指令？</h2>
+  <p>先記這四個：</p>
   <pre><code>tmux new -s work          # 建立一個名叫 work 的 session
 claude                    # 在裡面啟動 agent
 tmux ls                   # 列出 session：work: 1 windows
 tmux attach -t work       # 從任何終端機再接上去看它</code></pre>
-  <p><strong>detach 不是指令，是按鍵。</strong>按 Ctrl-b，放手，再按 d。前面那個鍵是 <em>prefix</em>：tmux 收下它，下一個鍵才決定要做什麼。另外兩個第一週就該學起來：</p>
+  <p><strong>detach 不是指令，是按鍵。</strong>按 Ctrl-b，放手，再按 d。前面那個鍵是 <em>prefix</em>：tmux 收下它，下一個鍵才決定要做什麼。另外兩個第一週就會用到：</p>
   <ul>
-    <li><code>Ctrl-b d</code>——detach。你的終端機變回一般的 shell，session 繼續跑。</li>
+    <li><code>Ctrl-b d</code> 就是 detach。終端機變回一般的 shell，session 繼續跑。</li>
     <li><code>Ctrl-b c</code> 開一個新的 window；<code>Ctrl-b %</code> 把一個 window 分割成兩個 pane。</li>
   </ul>
   <p>如果機器回你 <code>tmux: command not found</code>，解法在<a href="/guide/zh-TW/troubleshooting/">疑難排解</a>那一頁。</p>
 </section>
 
 <section id="what-it-means-for-agents">
-  <h2>對 agent 來說，這代表什麼</h2>
-  <p>你在捷運上訊號斷了。進電梯斷了。切 Wi-Fi 又斷了。每次都接回同一個 tmux session，斷線十次，agent 一次都沒有被打斷。它不知道你斷過線，因為它從頭到尾就沒活在你那條連線裡。</p>
-  <p>手機那三個最令人擔心的情況，其實是同一件事發生了三次：</p>
+  <h2>斷線十次，agent 一次都沒被打斷</h2>
+  <p>你在捷運上斷了訊號，進電梯斷一次，切 Wi-Fi 又斷一次。每次都接回同一個 tmux session，斷線十次，agent 一次都沒有被打斷。它不知道你斷過線，因為它從頭到尾就沒活在你那條連線裡。</p>
+  <p>手機上三個最令人擔心的情況，其實是同一件事發生了三次：</p>
   <ul>
-    <li><strong>手機鎖定。</strong>系統把 app 暫停，連線被拆掉，什麼訊號都送不到 agent。它繼續做事。</li>
-    <li><strong>二十分鐘沒訊號。</strong>連線在背景安靜地死掉，tmux client 跟著死，session 被 detach，毫髮無傷。</li>
-    <li><strong>app 被系統殺掉，或被你往上一劃。</strong>沒了的是手機上的一個 process，session 從來就不在裡面。在筆電上直接關掉終端機視窗，也是同樣的結果。</li>
+    <li><strong>手機鎖定。</strong>系統把 app 暫停，連線跟著斷掉，什麼訊號都送不到 agent。它繼續做事。</li>
+    <li><strong>二十分鐘沒訊號。</strong>連線在背景安靜地死掉，tmux client 跟著死，session 只是被 detach，內容一點沒變。</li>
+    <li><strong>系統殺掉 app，或你往上一劃。</strong>沒了的是手機上的一個 process，session 從頭就不在裡面。在筆電上關掉終端機視窗，結果一模一樣。</li>
   </ul>
-  <p>detach 不是暫停。你不在的時候，agent 繼續讀檔案、改檔案、花掉你的用量。這是整件事的重點，也是走開之前先回它一句、或者先把它停掉的理由。</p>
+  <p>detach 不是暫停。你不在的時候，agent 繼續讀檔案、改檔案、花掉你的用量。這就是重點，所以走開之前先回它一句，或是先把它停掉。</p>
 </section>
 
 <section id="two-devices">
   <h2>兩台裝置可以同時看同一個 session 嗎？</h2>
-  <p>可以，而且這不是魔術。多個 client 可以同時接在同一個 session 上。排隊時從手機開工，到公司從筆電接回同一個，你看到的是同一個畫面跑到一半——不是副本，也不是快照。</p>
-  <p>兩邊按的鍵都送進同一個程式，所以實際上一次只有一個人打字。接上去不會搬遷任何東西：session 留在建立它的那台機器上，這就是手機和筆電看到的內容一致的原因。反向也成立——你在筆電的終端機裡手動開的 session，app 一樣接得上，因為兩邊問的是同一台機器上的同一個 tmux server。</p>
+  <p>可以，而且沒有什麼魔術。多個 client 可以同時接在同一個 session 上。排隊時從手機開工，到公司從筆電接回同一個，你看到的是跑到一半的同一個畫面，不是它的副本。</p>
+  <p>兩邊按的鍵都送進同一個程式，所以一次只有一個人打字。attach 不會移動 session：它留在建立它的那台機器上，所以手機和筆電看到的內容一致。反向也成立：你在筆電的終端機裡手動開的 session，app 一樣接得上，因為兩邊問的是同一台機器上的同一個 tmux server。</p>
 </section>
 
 <section id="inside-the-app">
-  <h2>App 怎麼處理這些 session</h2>
-  <p>Agentmux 就建在同一個區分上。手機這一側的斷線是 detach，不是停止：重新連線，你回到同一個 session，而它已經跑得更遠了。你在它的終端機裡手動輸入上面那些指令，結果仍然一致，因為那是同一台機器上的同一個 session。</p>
-  <p>兩件跑腿它幫你做掉。機器上沒有 tmux 時，app 會自己裝，並判斷你的機器用的是 apt、yum、dnf、pacman、apk 還是 brew。agent 裝在 shell 看不到的地方時，app 會去查那個 PATH 問題，不會只丟給你一個毫無訊息的畫面。persistent session 屬於免費的 single-server 方案，所以這篇文章裡沒有東西是付費功能。<a href="/guide/zh-TW/setup/">設定頁</a>把整件事變成一份檢查清單。</p>
+  <h2>App 怎麼處理這些 session？</h2>
+  <p>Agentmux 用的就是上面那個區分：session 在機器上，連線只是去看它。手機這一側的斷線是 detach，不是停止：重新連線，你回到同一個 session，而它已經跑得更遠了。你在它的終端機裡手動下上面那些指令，結果一樣，因為那是同一台機器上的同一個 session。</p>
+  <p>有兩件跑腿它幫你做掉。機器上沒有 tmux 時，app 會自己裝，並判斷你的機器用的是 apt、yum、dnf、pacman、apk 還是 brew。agent 裝在 shell 看不到的地方時，app 會去查那個 PATH 問題，不會只丟給你一個毫無訊息的畫面。persistent session 屬於免費的 single-server 方案，所以上面這些都不用另外付錢。<a href="/guide/zh-TW/setup/">設定頁</a>把整件事變成一份檢查清單。</p>
 </section>
 
 <section id="what-tmux-does-not-do">
   <h2>tmux 不做的事</h2>
-  <p>tmux 只回答一個問題——這個 process 會不會活得比我的連線久——其他一概不管。</p>
+  <p>tmux 只回答一個問題：這個 process 會不會活得比你的連線久。其他它一概不管。</p>
   <ul>
     <li><strong>伺服器重開，所有 session 一起結束。</strong>它們存在 tmux server 的記憶體裡，一次斷電、一次自動更新，都會把 agent 一併帶走。活下來的是已經寫進磁碟的東西：改過的檔案、做出的 commit、你停在哪個 branch。負責存檔的是 git，不是 tmux。</li>
-    <li><strong>它不會還原 agent 已經跑過的指令。</strong>跑過的指令就是跑過了。tmux 留住的是輸出，檔案本身不會被倒回去。</li>
-    <li><strong><code>tmux kill-session -t work</code> 真的會殺掉它。</strong>關掉最後一個 window，或是 agent 自己崩潰，結果一樣。<code>tmux kill-server</code> 則把所有 session 一併帶走，而且這些都不會先問你。</li>
-    <li><strong>它不會讓機器保持醒著。</strong>一整晚開著的 Mac mini，跟關上蓋子就睡的筆電是兩回事；筆電睡著時 agent 只是被凍結，但真的斷電，session 就和第一點說的一樣消失。</li>
+    <li><strong>它不會還原 agent 已經跑過的指令。</strong>tmux 留住的是輸出，檔案不會自己回到之前的樣子。</li>
+    <li><strong><code>tmux kill-session -t work</code> 真的會殺掉它。</strong>關掉最後一個 window，或是 agent 自己崩潰，結果一樣。<code>tmux kill-server</code> 則把所有 session 一併帶走，而且 tmux 不會先問你。</li>
+    <li><strong>它不會讓機器保持醒著。</strong>整晚開著的 Mac mini，跟闔上蓋子就睡的筆電是兩回事：筆電睡著，agent 跟著暫停，真的斷電的話，session 就會整個消失。</li>
   </ul>
 </section>
 
-<p>兩分鐘就能驗證整篇。SSH 進去，跑 <code>tmux new -s work</code>，啟動 agent，按 Ctrl-b 再按 d，把連線完全關掉，然後跑 <code>tmux attach -t work</code>：同一個畫面，已經跑得更遠，有一個問題在等你回。</p>
+<p>兩分鐘就能驗證整篇。SSH 進去，跑 <code>tmux new -s work</code>，啟動 agent，按 Ctrl-b 再按 d，把連線整個關掉，然後跑 <code>tmux attach -t work</code>。畫面還是同一個，已經跑得更遠，上面有一個問題在等你回。</p>
 <p>agent 現在能在你收起手機之後活下來。剩下一個問題：怎麼從外面連進去，又不想在路由器上對公網開任何一個 port。<a href="/guide/zh-TW/what-is-tailscale/">Tailscale 回答的是這個</a>。</p>
 
         </article>

@@ -52,13 +52,13 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>An encrypted tunnel to another computer</h1>
-            <p>SSH is an encrypted channel between your device and another computer. You send keystrokes, that machine runs the commands, its output comes back, and no hop in between can read any of it. To run a coding agent remotely, SSH is how your phone reaches the machine the agent is actually running on.</p>
-<p>The last article made the case that an agent does its best work in a terminal, with full access to a filesystem and permission to execute. This one is about where that terminal lives. It does not have to be in your pocket: it can be the Mac mini at home that never gets switched off, or the workstation at the office, as long as you can reach it.</p>
+            <p>SSH is an encrypted channel between your device and another computer. You send keystrokes, that machine runs the commands, its output comes back, and no hop in between can read any of it. To run a coding agent remotely, SSH is how your phone reaches the machine the agent runs on.</p>
+<p>The last article argued that an agent does its best work in a terminal, with full access to a filesystem and permission to execute. That terminal does not have to be in your pocket. It can be the Mac mini at home that never gets switched off, or the workstation at the office, as long as your phone can route to it.</p>
 
 <section id="another-machine">
-  <h2>Why "another machine" rather than a cloud service</h2>
+  <h2>Why another machine instead of a cloud service?</h2>
   <p>Browser agents and cloud IDEs connect you to a machine too. The difference is whose machine it is.</p>
-  <p>SSH connects you to your own. Your files are there. Your API keys are there. Every package you installed, every environment variable you set. Nothing has to move onto someone else's server, and the changes stay where they were made — there is nothing to sync back afterwards.</p>
+  <p>SSH connects you to your own. Your files and API keys are already there, along with every package you installed and every environment variable you set. Nothing has to move onto someone else's server, and the changes stay where you made them, so there is nothing to sync back afterwards.</p>
   <p>The trade-off runs the other way too. A cloud environment is the better answer if you own no machine that stays on, or if a whole team needs one identical starting point. Your machine has to be awake, reachable, and set up by you.</p>
 </section>
 
@@ -71,12 +71,12 @@
       <tr><th>Part</th><th>What it names</th></tr>
     </thead>
     <tbody>
-      <tr><td>Host</td><td>Which machine — a name such as <code>mac-mini</code>, or an address such as <code>100.101.102.103</code></td></tr>
-      <tr><td>User</td><td>Which account on it. You get its files, permissions, and shell, and nothing above</td></tr>
+      <tr><td>Host</td><td>Which machine: a name such as <code>mac-mini</code>, or an address such as <code>100.101.102.103</code></td></tr>
+      <tr><td>User</td><td>Which account on it. You get its files, permissions, and shell, and nothing above that account</td></tr>
       <tr><td>Port</td><td>Which door. SSH's default is 22, so the field usually goes empty</td></tr>
     </tbody>
   </table></div>
-  <p>Two of those three are where beginners get stuck. The host has to be an address your phone can route to — the next section. And the user has to exist on that machine: an agent runs as that user, touching exactly what that user can.</p>
+  <p>Two of those three are where beginners get stuck. The host has to be an address your phone can route to; the next section covers which ones. And the user has to exist on that machine: an agent runs as that user, and it can touch exactly what that user can.</p>
 </section>
 
 <section id="lan-or-public-ip">
@@ -87,12 +87,12 @@
 </section>
 
 <section id="keys-vs-passwords">
-  <h2>Keys aren't the safer option — they're the easier one</h2>
-  <p>SSH takes passwords or keys, and the choice gets framed as security versus convenience. It is not a trade-off. Keys win on both.</p>
-  <p>A key pair is two small text files. The private one stays on the device that connects. The public one is computed from it and copied onto the machine you want to reach, into <code>authorized_keys</code> inside that account's <code>~/.ssh</code> directory. The arithmetic runs one way: the public half comes from the private half, not back the other way. <code>ssh-keygen</code> makes a pair in seconds.</p>
-  <p>At login the two halves prove the match and you type nothing. A password has to survive repeated guessing; a key that long puts guessing out of reach. Set it up once and every connection afterwards works the same way.</p>
-  <p>Why put a passphrase on the private key? Because a key is a file. Copy it off an unlocked laptop and someone else holds your key. A passphrase makes the file worthless without it — and unlike a login password it never crosses the network. It unlocks the key locally; what travels is a signed answer to a challenge.</p>
-  <p>On a phone that gap widens. A typed password goes over the wire on every connection, handing anyone who can reach the port a fresh guess. A key answers a challenge instead, and the key never leaves the device. If the key is in place and still refused, <a href="/guide/en/troubleshooting/">the usual causes are few</a>: wrong path, wrong user, wrong permissions.</p>
+  <h2>Keys are safer and need less typing</h2>
+  <p>SSH takes passwords or keys, and the choice gets framed as security versus convenience. Keys are better at both.</p>
+  <p>A key pair is two small text files. The private one stays on the device that connects. The public one is computed from it and copied onto the machine you want to reach, into <code>authorized_keys</code> inside that account's <code>~/.ssh</code> directory. The arithmetic runs one way. The public half comes from the private half, and you cannot recover the private half from the public one. <code>ssh-keygen</code> makes a pair in seconds.</p>
+  <p>At login the two halves prove the match and you type nothing. A password has to survive repeated guessing, and a key is long enough that guessing never pays. Set it up once and every connection afterwards works the same way.</p>
+  <p>Put a passphrase on the private key, because a key is a file. Copy it off an unlocked laptop and someone else holds your key. The passphrase makes that copy worthless by itself, and unlike a login password it never crosses the network: it unlocks the key on the device, and what travels is a signed answer to a challenge.</p>
+  <p>On a phone the difference matters more. A typed password goes over the wire on every connection, handing anyone who can reach the port a fresh guess. A key answers a challenge instead, and the private half never leaves the device. If the key is in place and still refused, <a href="/guide/en/troubleshooting/">the usual causes are few</a>: wrong path, wrong user, wrong permissions.</p>
 </section>
 
 <section id="what-the-app-stores">
@@ -108,7 +108,7 @@
 </section>
 
 <section id="not-a-server">
-  <h2>You don't need to turn your computer into a server</h2>
+  <h2>Do you have to turn your computer into a server?</h2>
   <p>People hear "SSH" and picture racks in a data centre. You are flipping a switch. On a Mac it is System Settings → General → Sharing → Remote Login. On Linux it is usually starting a service called <code>sshd</code>, which most distributions already ship.</p>
   <p>Nothing else about the machine changes. It is still your everyday computer, with one more door you can knock on from outside. If you would rather not remember the order of operations, <a href="/guide/en/setup/">the setup page</a> asks three questions and hands back a checklist.</p>
 </section>
@@ -126,10 +126,10 @@
       <tr><td>Screen sharing</td><td>Pictures of a desktop, steered with a finger</td><td>Text both ways: keystrokes out, printed output back</td></tr>
     </tbody>
   </table></div>
-  <p>That last row is a real limit, not a flaw in this tool. Software that exists only as a window you click cannot be driven over SSH — the same boundary the previous article stood on: an agent that speaks text is an agent that fits down the tunnel.</p>
+  <p>That last row is a real limit, not a flaw in this tool. Software that exists only as a window you click cannot be driven over SSH, which is the same boundary the previous article drew: an agent that speaks text is an agent that fits down the tunnel.</p>
 </section>
 
-<p>Then you put your phone away, the tunnel drops, and the agent dies with it — unless the session was never inside your connection to begin with. <a href="/guide/en/what-is-tmux/">That is what tmux is for</a>.</p>
+<p>Then you put your phone away, the tunnel drops, and the agent dies with it. Unless the session was never living inside your connection: <a href="/guide/en/what-is-tmux/">that is what tmux is for</a>.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/what-is-cli/">Previous<span>Why the strongest coding agents live in the terminal</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-tmux/">Next<span>Keep the agent running after you put your phone away</span></a></nav>

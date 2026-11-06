@@ -52,31 +52,31 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Your AI should be working while you sleep</h1>
-            <p>A CLI agent's real cost is standby, not typing: thirty seconds of input, then hours you can't leave. Run it on a machine that stays on, keep the session alive with tmux, and reattach over SSH and Tailscale. The agent keeps working while you sleep; standby becomes a phone and fifteen seconds.</p>
-<p>You have probably noticed it: the agent does the work, and you are the one tied down. What follows is what that tie is, why it comes apart, and what your day looks like afterwards.</p>
+            <p>A CLI agent's real cost is standby, not typing: thirty seconds of input, then hours you cannot leave. Run the agent on a machine that stays on, keep its session alive with tmux, and reattach over SSH and Tailscale. Then standby costs a phone and fifteen seconds, and the agent keeps working while you sleep.</p>
+<p>You have probably noticed it: the agent does the work, and you are the one tied down. That tie feels like a discipline problem, a question of how well you can step away. It is a physical problem. One terminal window on one laptop has to stay open.</p>
 
 <section id="the-cycle">
-  <h2>Where does the time actually go?</h2>
+  <h2>Where does the time go?</h2>
 
   <p>A round of work with a CLI agent almost always has the same rhythm:</p>
   <pre><code>You talk for 30 seconds → it runs for 5–20 minutes → it needs you to decide something → repeat</code></pre>
-  <p>Lay a whole day out in those proportions and typing turns out not to be what eats the time. Those 30 seconds are the shortest part of the whole thing. Everything after is waiting — while it reads the project, while it edits a dozen files, while the tests run. Then it stops to ask whether it should handle this migration while it is here. You answer in one line. Another five minutes, another twenty.</p>
-  <p>By the end of the day you might have produced ten minutes of input and lost several hours. Those hours were not work. They were <strong>standby</strong>. You did nothing, and you could not leave, because at any moment it needed one sentence from you.</p>
+  <p>Lay a whole day out in those proportions and typing is not what eats it. Those 30 seconds are the shortest part. Everything after them is waiting: it reads the project, it edits a dozen files, the test suite runs. Then it stops to ask whether it should handle that migration while it is already in the code. You answer in one line, then wait another five or twenty minutes.</p>
+  <p>By the end of the day you have produced maybe ten minutes of typing and lost several hours. Those hours were <strong>standby</strong>: you did nothing, and you could not leave, because at any moment it needed one sentence from you.</p>
 </section>
 
 <section id="the-binding">
   <h2>The usual setup nails standby to one laptop</h2>
 
-  <p>In the default arrangement that standby has a physical location. The agent runs in a terminal window on your laptop. The window is tied to the shell, the shell to that one machine staying awake. Two options follow:</p>
+  <p>That standby has a physical location. The agent runs in a terminal window on your laptop. The window is tied to a shell, and the shell to one machine that has to stay awake. You then have two options, and neither is cheap:</p>
   <p><strong>Sit and wait.</strong> Stay in the chair, watching a screen where nothing happens, so that you can answer within thirty seconds when it asks. An hour of your time buys three replies.</p>
-  <p><strong>Or close the laptop.</strong> The process suspends or dies, the session goes, and everything the agent had built up goes with it — which files it read, how far it got, why it chose this approach. Come back later and you open a new one, explain it all again, start from the top.</p>
-  <p>Both options pay the same bill. The work is not what ties you down. <strong>The location of that machine</strong> is.</p>
+  <p><strong>Or close the laptop.</strong> The process suspends or dies, the session goes, and everything the agent had built up goes with it: which files it read, how far it got, why it chose that approach. Come back later and you open a new window, explain the task from the beginning, and start again.</p>
+  <p>Either option costs the same, and the cause is <strong>where that machine sits</strong>. The work itself never needed you in the room.</p>
 </section>
 
 <section id="three-parts">
   <h2>What three tools undo the tie?</h2>
 
-  <p>The tie is not one solid thing. It is three layers, and each has a standard tool, decades old, that takes it apart. On their own all three are unremarkable. Stacked, they are the whole trick:</p>
+  <p>The tie has three layers, and each layer has a standard tool that has been around for decades. Any one of them looks ordinary. Stacked in the right order, they do the whole job:</p>
 
   <div class="table-wrap"><table>
     <thead>
@@ -85,7 +85,7 @@
     <tbody>
       <tr>
         <td>CLI</td>
-        <td>The agent is a plain-text process with no need for a GUI → it can live on <strong>another machine</strong></td>
+        <td>The agent is a plain-text process that needs no GUI → it can live on <strong>another machine</strong></td>
       </tr>
       <tr>
         <td>tmux</td>
@@ -98,22 +98,22 @@
     </tbody>
   </table></div>
 
-  <p>The order matters. The CLI comes first: only then can the agent leave your laptop for the Mac mini at home that never gets switched off. tmux next, so the session is pinned to that machine and keeps running when your connection drops. SSH and Tailscale last, so you can reattach to that same session from the train, the office, someone else's Wi-Fi — without opening one outward port on your router.</p>
-  <p>Drop any one and it falls apart. CLI without tmux: the agent dies on disconnect. tmux without a secure way in: you can only use it at home.</p>
+  <p>The order is not arbitrary. The CLI comes first: only then can the agent leave your laptop for the Mac mini at home that never gets switched off. tmux comes next, so the session is pinned to that machine and keeps running after your connection drops. SSH and Tailscale come last, so you can reattach to that same session from the train, the office, or someone else's Wi-Fi, without opening a single outward port on your router.</p>
+  <p>Drop any one of the three and it falls apart. CLI without tmux: the agent dies when the connection drops. tmux without a secure way in: you can only use it at home.</p>
 </section>
 
 <section id="the-payoff">
-  <h2>The result: standby costs almost nothing</h2>
+  <h2>Standby costs a phone and fifteen seconds</h2>
 
-  <p>With all three layers gone, standby costs <strong>a phone and fifteen seconds</strong> instead of <strong>a laptop and a fixed location</strong>.</p>
-  <p>Fifteen seconds changes what the activity is. You stop setting aside time to babysit it. You glance at it in a queue, at a crossing, before bed, reply "use the second approach", and put the phone away. The agent keeps going. You get on with your day.</p>
-  <p>And once standby stops requiring you, the work moves into the hours you were never going to be there anyway. Hand it a refactor and go to dinner. Start a test-fixing session before bed, read the results over breakfast. That machine sat idle every night until now.</p>
+  <p>Once all three are in place, checking in means unlocking your phone for fifteen seconds instead of finding a desk, a seat, and an outlet.</p>
+  <p>Fifteen seconds changes what the activity is. You stop setting aside a block of time to babysit it. You glance at it in a queue, at a crossing, before bed, reply "use the second approach", and put the phone away. When you look again the agent is still working, and it has moved on without you.</p>
+  <p>Once standby stops requiring you, the work moves into the hours you were never going to spend at a desk anyway. Hand it a refactor and go to dinner. Start a test-fixing session before bed, and read the results over breakfast. The machine that used to sit idle every night is now the one doing the work.</p>
 </section>
 
 <section id="alternatives">
   <h2>What else reaches your agent when you're away?</h2>
 
-  <p>There is more than one road to reaching your own agent remotely. Line them up against the same criteria and the differences show — particularly the last column, which is where people find out they are stuck, usually too late.</p>
+  <p>You have more than one way to reach your own agent from outside. Line the options up against the same criteria and the differences are plain. The last column is the one that matters: it is where people find out they are stuck.</p>
 
   <div class="table-wrap"><table>
     <thead>
@@ -131,18 +131,18 @@
         <td>You need a bag, a seat, and power</td>
         <td>Stops when you close the lid</td>
         <td>None, but the machine has to travel with you</td>
-        <td>Yes — the files are local</td>
+        <td>Yes, the files are local</td>
       </tr>
       <tr>
         <td>VNC remote desktop</td>
-        <td>Needs a screen big enough, and a mouse UI driven by finger</td>
+        <td>Needs a big enough screen, and a desktop UI driven by a finger</td>
         <td>Survives as long as the desktop session does</td>
         <td>Punch through for VNC, or stand up a VPN</td>
         <td>Yes</td>
       </tr>
       <tr>
         <td>Browser-based agent</td>
-        <td>Low — just open a browser</td>
+        <td>Low: just open a browser</td>
         <td>Lives on someone else's server</td>
         <td>None</td>
         <td>It edits a copy in a cloud sandbox, not the one on your machine</td>
@@ -159,19 +159,19 @@
         <td>A phone is enough</td>
         <td>Holds up, thanks to tmux</td>
         <td>Securing the way in is on you</td>
-        <td>Yes, but the interface is a desktop terminal moved across as-is</td>
+        <td>Yes, but the interface is a desktop terminal ported across as-is</td>
       </tr>
       <tr>
         <td>Agentmux</td>
         <td>A phone, fifteen seconds to reattach</td>
         <td>tmux is on the server, regardless of the phone</td>
         <td>Tailscale, with no public port</td>
-        <td>Yes — the copy on your own machine</td>
+        <td>Yes, the copy on your own machine</td>
       </tr>
     </tbody>
   </table></div>
 
-  <p>That last column is the watershed. An agent in someone else's cloud sandbox edits a copy, always. Your <code>.env</code> is not there. Neither is the internal package you installed this morning, or the database that only runs locally. Take the SSH and tmux road and the agent sits on your machine, in your environment, editing your files. The only thing that changed is that your phone is watching it.</p>
+  <p>An agent in someone else's cloud sandbox edits a copy, always. Your <code>.env</code> is not in that sandbox. Neither is the internal package you installed this morning, or the database that only runs locally. Take the SSH and tmux road and the agent sits on your machine, in your environment, editing your files. The only thing that changed is that your phone is watching it.</p>
 </section>
 
 <p class="track-fallback">Not sure where to start? <a href="/guide/en/">Help me pick a track</a>.</p>

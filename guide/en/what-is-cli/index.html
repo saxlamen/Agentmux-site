@@ -52,20 +52,20 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Why the strongest coding agents live in the terminal</h1>
-            <p>A CLI agent is a coding agent you talk to in text. It runs in a terminal on a machine you own — a Mac, a Linux box, a server — and inherits your permissions: read every file in the project, run any command, read the result back. Agents live in terminals because no other interface grants all three at once.</p>
-<p>"CLI" still reads like a punishment: no mouse, no buttons, one blinking cursor. Yet Claude Code, Codex, Gemini CLI and OpenCode all live there. Not because their makers are purists: the terminal grants what no other interface does — <strong>full filesystem access and permission to execute</strong>. The same grant is why it asks before running anything.</p>
+            <p>A CLI agent is a coding agent you talk to in text. It runs in a terminal on a machine you own, a Mac, a Linux box, or a server. There it inherits your permissions: read every file in the project, run any command, read the result back. Agents live in terminals because no other interface grants all three.</p>
+<p>"CLI" still reads like a punishment: no mouse, no buttons, one blinking cursor. Yet Claude Code, Codex, Gemini CLI and OpenCode all live there. Their makers are not purists. The terminal grants two things no other interface grants together: full access to your files, and permission to run commands. That same permission is why it asks you before running anything.</p>
 
 <section id="terminal">
   <h2>What is a terminal, once you strip the buttons away?</h2>
 
-  <p>Two programs are stacked here, and beginners blame the wrong one. The <strong>terminal</strong> is the display: it draws a grid of characters and forwards your keystrokes. The <strong>shell</strong> behind it — zsh, bash, fish — waits for a line of text, runs it, and prints what that program wrote.</p>
-  <p>That thinness is why an agent can drive one end to end: every command it types is one you would have typed, every error it reads the one you would have seen.</p>
+  <p>Two programs are stacked here, and beginners blame the wrong one. The <strong>terminal</strong> is the display layer: it draws a grid of characters and forwards your keystrokes. Behind it sits the <strong>shell</strong> (zsh, bash, fish), which waits for a line of text, runs it, and prints what that program wrote.</p>
+  <p>That thinness is why an agent can drive a real project end to end. The commands it types are commands you would have typed, and the errors it reads are the errors you would have seen.</p>
 </section>
 
 <section id="read-the-screen">
   <h2>Three things you read off a terminal screen</h2>
 
-  <p>Three things carry the meaning; the rest is noise.</p>
+  <p>Three parts of that screen carry the meaning. The rest is decoration.</p>
 
   <pre><code>yuki@mini ~/projects/auth (main)
 $ npm test
@@ -78,28 +78,28 @@ $ npm test
 $ echo $?
 1</code></pre>
 
-  <p><strong>The prompt</strong> — that first line — says who, on which machine, in which directory, on which branch. It stops being decorative once the machine is not in front of you: after an SSH login it is how you tell your laptop from a server you forgot you opened.</p>
-  <p><strong>Standard output</strong>, or <em>stdout</em>, is the text the program wrote. A second stream, <em>stderr</em>, keeps the complaints apart from the real output.</p>
-  <p><strong>The exit status.</strong> Every command leaves one integer behind, handed over as <code>$?</code>. Zero means the program claims success. That is the line an agent reads — the <code>1</code>, not the words "1 failed": proof its loop is not closed.</p>
+  <p><strong>The prompt</strong> is that first line. It says who you are, which machine you are on, which directory, and which branch. That line stops being decoration once the machine is not in front of you. After an SSH login it is how you tell your laptop apart from a server you forgot you were still logged into.</p>
+  <p><strong>Standard output</strong> (<em>stdout</em>) is the text the program wrote. The second stream, <em>stderr</em>, keeps its complaints separate so the real output stays readable.</p>
+  <p><strong>The exit status.</strong> Every command leaves one integer behind, and the shell hands it to you as <code>$?</code>. Zero means the program claims success. An agent reads that number rather than the words "1 failed", and a <code>1</code> is its signal that the loop is not closed yet.</p>
 </section>
 
 <section id="capability-boundary">
-  <h2>A capability boundary, not a question of looks</h2>
+  <h2>The interface decides what an agent can reach</h2>
 
-  <p>A browser agent cannot see a single file on your computer. It lives in a tab. An IDE plugin sees the files you have open, but it is usually confined to suggesting — no touching git, no running the tests, and certainly no installing packages.</p>
-  <p>A CLI agent holds the permissions you hold: it reads the whole repo, runs <code>git commit</code>, runs the suite, installs dependencies. Three tiers come with that, and the risk climbs:</p>
+  <p>A browser agent cannot see a single file on your computer. It lives inside a tab. An IDE plugin sees the files you have open but usually stops at suggestions: it cannot touch git, cannot run your tests, and cannot install packages.</p>
+  <p>A CLI agent holds the permissions you hold. It reads the whole repo, runs <code>git commit</code>, runs the test suite, and installs dependencies. Access arrives in three tiers, and the risk climbs with each one:</p>
   <ul>
-    <li><strong>Read.</strong> Every file in your home directory, <code>.ssh</code> keys included.</li>
-    <li><strong>Write.</strong> Under git, a bad write is a <code>git checkout</code> away. Outside a tracked project, nothing rolls it back.</li>
-    <li><strong>Execute.</strong> Anything you could type, including a migration, a force-push, an <code>rm -rf</code> pointed at the wrong path.</li>
+    <li><strong>Read.</strong> Every file in your home directory, including the keys in <code>.ssh</code>.</li>
+    <li><strong>Write.</strong> Inside a git project, a bad edit is one <code>git checkout</code> away. Outside one, nothing rolls it back for you.</li>
+    <li><strong>Execute.</strong> Anything you could type, including a migration, a force-push, or an <code>rm -rf</code> pointed at the wrong path.</li>
   </ul>
-  <p>No vendor designed this gap to please anyone: it is the permission set that comes with the terminal, and every other interface withholds part of it.</p>
+  <p>No vendor designed this gap to please anyone. It is the permission set that comes with the terminal, and every other interface gives away less of it.</p>
 </section>
 
 <section id="commands-an-agent-runs">
   <h2>Which commands can it run that a sandboxed agent cannot?</h2>
 
-  <p>"Execution rights," in lines on a screen:</p>
+  <p>"Execution rights" is an abstraction. Here is the same thing as lines on a screen:</p>
 
   <pre><code>npm test
 npx vitest run src/session/expire.test.ts
@@ -113,57 +113,57 @@ npm run build
 psql "$DATABASE_URL" -f db/schema.sql
 curl -sf localhost:8000/health | jq .db</code></pre>
 
-  <p>Where would those run inside a hosted sandbox? That <code>psql</code> connects to a database that exists only on your machine, using a URL from a <code>.env</code> file that was never uploaded. That <code>npm install</code> pulls an internal package from a private registry named in your <code>.npmrc</code>.</p>
-  <p>A sandboxed agent can write you a patch but cannot observe what the patch did — and an agent that cannot see the result of an edit cannot finish the task.</p>
+  <p>A hosted sandbox has nowhere to run those. That <code>psql</code> connects to a database that exists only on your machine, using a URL from a <code>.env</code> file that was never uploaded. That <code>npm install</code> pulls an internal package from a private registry named in your <code>.npmrc</code>. Those <code>git</code> commands run in a clone that carries your remote, your hooks, and your signing key.</p>
+  <p>A sandboxed agent can hand you a patch, but it cannot observe what that patch did. An agent that cannot see the result of its own edit cannot finish the task.</p>
 </section>
 
 <section id="concrete-example">
   <h2>The loop that closes without you pressing anything</h2>
 
-  <p>You say "fix this bug." A dozen of those lines follow, hands off the keyboard:</p>
+  <p>You send one line: "fix this bug." A dozen commands of that kind follow, and your hands stay off the keyboard:</p>
   <ol>
     <li>It greps for the failing message, reads three files, edits one.</li>
     <li>It runs <code>npm test</code>, reads the exit status, sees <code>1</code>.</li>
     <li>It narrows to one case, edits again, reruns the whole suite, gets <code>0</code>.</li>
-    <li>It commits, applies the migration locally, curls the endpoint that was broken.</li>
+    <li>It commits, applies the migration locally, and curls the endpoint that was broken.</li>
   </ol>
-  <p>Nothing in that chain needed a click. In a browser tab or an IDE plugin it stalls at step two: it can produce the edit but cannot run the suite, so it waits for you to run it and report back. You have become the test runner — a permission problem, not a model-quality one.</p>
+  <p>Not one step in that chain needs a click. Put the same agent in a browser tab or an IDE plugin and it stalls at step two. It can produce the edit, but it cannot run the suite, so it waits for you to run the tests and tell it what happened. You have become the test runner. That is a permissions problem, not a model-quality one.</p>
 </section>
 
 <section id="byte-stream-movable">
   <h2>Why is a byte stream worth more than a window?</h2>
 
-  <p>A terminal window is not where the program lives. The program is attached to a <strong>pseudo-terminal</strong> — a kernel object with two ends. Bytes go in one end and out the other; your window is whoever holds the far end right now. Three things follow.</p>
+  <p>The program does not live inside the terminal window. It is attached to a <strong>pseudo-terminal</strong>, a kernel object with two ends. Bytes go in one end and come out the other, and your window is whoever happens to be holding the far end right now. Three things follow from that.</p>
   <ul>
-    <li><strong>It can be saved.</strong> <code>npm test &gt; build.log</code> writes that text to a file, which a program can read a year later. A GUI's canvas is a picture, not a record.</li>
-    <li><strong>It can be chained.</strong> <code>git ls-files | grep .env</code> feeds one program's output into another's input.</li>
-    <li><strong>It can be moved.</strong> Nothing says the two ends must be in the same place. tmux parks the session on the server; your screen attaches, detaches, and attaches again from another device.</li>
+    <li><strong>It can be saved.</strong> <code>npm test &gt; build.log</code> writes that text to a file, which another program can read a year later. A GUI's canvas is a picture, and a picture is not a record.</li>
+    <li><strong>It can be chained.</strong> <code>git ls-files | grep .env</code> feeds one program's output into the next program's input.</li>
+    <li><strong>It can be moved.</strong> Nothing in the definition says the two ends have to be in the same place. tmux parks the session on the server, and your screen attaches, detaches, and attaches again from another device.</li>
   </ul>
-  <p>That third one is the payload. <strong>A byte stream can be redirected, stored, replayed, and reattached from somewhere else; a rendered window cannot.</strong> Persistent sessions, SSH, the same agent on a phone: everything else in this guide follows from that property.</p>
+  <p>The third one is the point of this guide. <strong>A byte stream can be redirected, stored, replayed, and reattached from somewhere else. A rendered window cannot.</strong> Persistent sessions, SSH, and the same agent on your phone all follow from that one property.</p>
 </section>
 
 <section id="what-full-access-costs">
   <h2>What does full access cost you?</h2>
 
-  <p>The permission that lets an agent migrate your database lets it delete one, which is why agents stop mid-task and ask: "Run this command?" That prompt is not timidity. An agent that ran everything without asking would be taking your <code>.ssh</code> directory and your production database on faith. It marks the line between tier two and tier three, drawn once the command is known.</p>
-  <p>Two habits cover most of it. <strong>Read the command line, not the summary:</strong> "I'll clean up the build cache" is a description, and only the line under it has consequences. <strong>Approve once per category:</strong> asked forty times a day to run tests, let <code>npm test</code> through on a rule once.</p>
-  <p>A prompt you were going to approve costs ten seconds. One allowed wrongly, against a live database, costs a day and a restore. That ratio is what <a href="/guide/en/permission-review/">AI Permission Review</a> exists for: blacklist first, allowlist second, a model's judgement for the rest.</p>
+  <p>The permission that lets an agent migrate your database is the permission that lets it delete one. That is why an agent stops mid-task and asks: "Run this command?" The prompt is not timidity. An agent that ran everything without asking would be deciding about your <code>.ssh</code> directory and your production database on your behalf, from guesswork. The prompt is where you draw the line between tier two and tier three, and it can only be drawn at that moment: the command is known, and it has not run yet.</p>
+  <p>Two habits cover most of the risk. <strong>Read the command, not the summary:</strong> "I'll clean up the build cache" is a description, and only the line under it has consequences. <strong>Approve a category once:</strong> if it asks you to run tests forty times a day, write one rule that lets <code>npm test</code> through.</p>
+  <p>A prompt you were going to approve anyway costs ten seconds. One you approve by mistake, against a live database, costs a day and a restore. That ratio is why <a href="/guide/en/permission-review/">AI Permission Review</a> exists: a blacklist blocks what is obviously dangerous, an allowlist passes what you already trust, and a model judges the rest.</p>
 </section>
 
 <section id="when-a-gui-is-better">
-  <h2>When a GUI is genuinely the better tool</h2>
+  <h2>When a GUI is the better tool</h2>
 
   <p>A terminal is not the right interface for everything you do to code. These are strictly worse in text:</p>
   <ul>
-    <li><strong>A live debugger.</strong> A breakpoint, one step through the loop, a variable inspected at frame four.</li>
-    <li><strong>Anything visual.</strong> Layout, spacing, a colour that is almost right. Describing a screenshot is a worse version of looking at one.</li>
-    <li><strong>Reading a large diff.</strong> Two thousand lines side by side — why you review an agent's work in a GUI even when the agent wrote it.</li>
-    <li><strong>Still learning.</strong> An editor underlining the exact token where you went wrong teaches faster than a stack trace.</li>
+    <li><strong>A live debugger.</strong> Set a breakpoint, step through the loop, inspect a variable at frame four.</li>
+    <li><strong>Anything visual.</strong> Layout, spacing, a colour that is almost right. Asking an agent to describe a screenshot is worse than looking at one.</li>
+    <li><strong>Reading a large diff.</strong> Two thousand lines side by side is why you review an agent's work in a GUI, even when the agent wrote it.</li>
+    <li><strong>Still learning.</strong> An editor underlines the exact token where you went wrong, which teaches faster than a wall of stack trace.</li>
   </ul>
-  <p>The split is not skill against laziness. It is <strong>"you are here and driving"</strong> against <strong>"it is running and you are checking in"</strong>. At a desk an IDE is often the better instrument; the best users keep both. <a href="/guide/en/why-not-gui-ide/">That division of labour</a> is its own article.</p>
+  <p>The line here is not skill against laziness. It is <strong>"you are here and driving"</strong> against <strong>"it is running and you are checking in"</strong>. At a desk an IDE is often the better instrument, and the people who get the most out of a CLI agent keep both. <a href="/guide/en/why-not-gui-ide/">That division of labour</a> is its own article.</p>
 </section>
 
-<p>The terminal gives an agent your machine, and its output is characters that can live anywhere — so the machine need not be the one you are sitting at. <a href="/guide/en/what-is-ssh/">Getting there from elsewhere is SSH's job</a>.</p>
+<p>The terminal puts an agent on your machine, and its output is characters that can live anywhere. So that machine does not have to be the one you are sitting at. <a href="/guide/en/what-is-ssh/">Getting there from somewhere else is SSH's job</a>.</p>
 
         </article>
         <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="Previous" href="/guide/en/why-not-gui-ide/">Previous<span>Why not Cursor or VS Code</span></a><a class="pager-next" data-tracks="beginner" data-label="Next" href="/guide/en/what-is-ssh/">Next<span>An encrypted tunnel to another computer</span></a></nav>

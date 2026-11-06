@@ -1,47 +1,47 @@
-<p>Install Tailscale on your computer and on your phone, sign both in to the same account, then connect with SSH to the machine's MagicDNS name or its <code>100.x</code> address. Tailscale builds an encrypted WireGuard mesh between your own devices, so no port on your router is open to the internet and no public address is involved.</p>
-<p>The agent survives a dropped connection, which only helps if there is somewhere safe to reconnect from. The obvious answer — expose port 22 to the internet — is the fastest way into trouble. Scanning bots knock on port 22 across every IP on earth, around the clock.</p>
+<p>Install Tailscale on your computer and on your phone, sign both in to the same account, then connect with SSH to the machine's MagicDNS name or its <code>100.x</code> address. Tailscale builds an encrypted WireGuard mesh between your own devices, so you open no port on your router to the internet and never point SSH at a public address.</p>
+<p>The agent survives a dropped connection, which only helps if there is somewhere safe to reconnect from. The obvious answer is to expose port 22 to the internet, and that is the fastest way into trouble. Scanning bots knock on port 22 across every IP on earth, around the clock.</p>
 <p>A second problem is duller and harder to dodge. Your home IP is dynamic, and the machine sits behind NAT, sharing one outward address with everything else at home. There was never a public address there to open.</p>
 
 <section id="the-old-way">
-  <h2>How painful the traditional fix is</h2>
+  <h2>Three jobs on the router, all by hand</h2>
   <p>The traditional fix meant the router itself: port forwarding so a public port reaches the machine, a DDNS service binding a hostname to today's IP or a static IP from your ISP, then firewall rules kept straight by hand.</p>
   <p>Get one step wrong and you cannot get in, or you have exposed your whole home network. Get them all right and a door still faces the internet.</p>
 </section>
 
 <section id="why-port-forwarding-plus-a-dynamic-ip-breaks">
-  <h2>Why port forwarding plus a dynamic IP keeps breaking</h2>
-  <p>Four moving parts, each letting go at an inconvenient moment.</p>
+  <h2>Why does port forwarding plus a dynamic IP keep breaking?</h2>
+  <p>Four parts have to hold at the same time, and any one of them gives way at an inconvenient moment.</p>
   <ul>
-    <li><strong>The address changes.</strong> Your ISP reassigns it, and a DDNS client needs a few minutes to catch up. For a window after every change, nothing you saved points at home — and if that update fails while you are away, the hostname belongs to somebody else.</li>
-    <li><strong>Sometimes the address was never yours.</strong> Behind carrier-grade NAT your router holds an address inside the ISP's own network, so no forward can work.</li>
+    <li><strong>The address changes.</strong> Your ISP reassigns it, and a DDNS client needs a few minutes to catch up. For a window after every change, nothing you saved points at home. If that update fails while you are away, the hostname belongs to somebody else.</li>
+    <li><strong>Sometimes the address is not yours.</strong> Behind carrier-grade NAT your router holds an address inside the ISP's own network, so no forward can work.</li>
     <li><strong>One forward is one more door</strong> into a network shared with a smart TV and an old camera.</li>
     <li><strong>It has to stay right forever.</strong> A firmware update resets the rules; a new router means rebuilding them.</li>
   </ul>
-  <p>The real cost is the failure mode: debugging a home router from a phone on mobile data, when what you want is unreachable.</p>
+  <p>The worst part is the debugging. You are on mobile data, trying to fix a home router from your phone, and the machine you want is unreachable.</p>
 </section>
 
 <section id="what-tailscale-does">
   <h2>What Tailscale does</h2>
-  <p>Tailscale is a WireGuard mesh. Install it on each device, sign in to the same account, and the devices build an encrypted link straight between themselves. No public entry point, no port waiting to be scanned.</p>
-  <p>Each device makes a WireGuard key pair; the private half never leaves it. The public halves are exchanged, and those are the tunnels. The account is bookkeeping: it introduces devices, tracks where each is reachable, and hands out private addresses the public internet does not route to.</p>
-  <p>MagicDNS gives each device a name you can remember and resolves it for you. NAT, an address that changed overnight, home Wi-Fi then mobile data — all handled out of sight.</p>
+  <p>Tailscale is a WireGuard mesh. Install it on each device, sign in to the same account, and the devices build an encrypted link straight between themselves. The setup opens no public entry point and leaves no port on the internet for a bot to scan.</p>
+  <p>Each device makes a WireGuard key pair, and the private half never leaves the device. The public halves are exchanged, and the tunnels are built from them. The account is bookkeeping: it introduces devices, tracks where each is reachable, and hands out private addresses the public internet does not route to.</p>
+  <p>MagicDNS gives each device a name you can remember and resolves it for you, so NAT, an address that changed overnight, and the switch from home Wi-Fi to mobile data all stay out of sight.</p>
 </section>
 
 <section id="why-the-mesh-works-on-a-phone-network">
-  <h2>Why the mesh works when your phone has no address either</h2>
-  <p>Mobile data makes it worse. Your phone has no public address either: on 4G and 5G it sits behind carrier-grade NAT, sharing one outward address with many other subscribers. A door-knocking scheme fails at both ends.</p>
-  <p>A mesh works the other way round: both sides only have to send packets <em>outward</em>. The phone sends one, the machine sends one, each learns where the other appears to be, and the two attempt a direct path through their NATs. WireGuard supplies the encryption; the mesh supplies the introductions. Where no direct path exists, traffic falls back to a relay, still encrypted end to end.</p>
+  <h2>Why the mesh works when your phone has no address</h2>
+  <p>Mobile data makes it worse. Your phone has no public address either: on 4G and 5G it sits behind carrier-grade NAT, sharing one outward address with many other subscribers. A design that depends on incoming connections fails at both ends.</p>
+  <p>A mesh works the other way round: both sides only have to send packets <em>outward</em>. The phone sends one, the machine sends one, each learns where the other appears to be, and the two attempt a direct path through their NATs. WireGuard supplies the encryption, and the mesh supplies the introductions. Where no direct path exists, traffic falls back to a relay and stays encrypted end to end.</p>
 </section>
 
 <section id="mental-model">
-  <h2>The mental model: one more address, reachable only by you</h2>
+  <h2>A private address only your devices can reach</h2>
   <p>Your machine gains a private address. Only devices signed in to the same Tailscale account can see it or reach it. The scanning bots do not know it exists, because it never appeared on the public internet.</p>
-  <p>From here on, SSH goes to that address, not to a port 22 that gets knocked on all day.</p>
+  <p>From here on, SSH goes to that address instead of a port 22 that gets knocked on all day.</p>
 </section>
 
 <section id="which-address-to-type">
-  <h2>Which address do you actually type?</h2>
-  <p>Not the LAN one. The machine holds three addresses at once, and only two are worth saving.</p>
+  <h2>Which address do you type?</h2>
+  <p>The LAN address is the one to skip. Your machine holds three addresses at once, and only two of them are worth saving.</p>
 
   <table>
     <thead>
@@ -71,30 +71,30 @@
     </tbody>
   </table>
 
-  <p>A LAN address describes a local network, not your machine. Save the name, and the entry survives the machine changing Wi-Fi, changing IP, or moving flats. <code>tailscale status</code> prints both.</p>
+  <p>A LAN address identifies a local network, not your machine. Save the name, and the entry survives the machine changing Wi-Fi, changing IP, or moving flats. <code>tailscale status</code> prints both.</p>
   <p>When SSH fails although both devices look connected, check the address first. <a href="/guide/en/troubleshooting/">Tailscale says connected, SSH still can't reach it</a> covers that, including a signed-out machine.</p>
 </section>
 
 <section id="what-it-costs-you">
-  <h2>What you give up by doing it this way</h2>
-  <p>Three costs, better known before you are on a train.</p>
-  <p><strong>One more program on the machine.</strong> It starts at boot, updates itself occasionally, and has its own bugs — one more thing to rule out before you blame SSH.</p>
-  <p><strong>A control plane you need at the wrong moment.</strong> Traffic goes device to device; introductions do not. A new laptop, a replaced phone, stale credentials — none are on your network until they sign in. Fail that sign-in while you are out and the machine is fine but unreachable. Keep another way in.</p>
-  <p><strong>A phone that has to stay connected.</strong> The tunnel is a VPN profile, and phones drop those: after a restart, when another VPN takes over, when you dismiss the prompt. Check it before debugging anything else. It carries only traffic to your own addresses.</p>
+  <h2>What does the mesh cost you?</h2>
+  <p>There are three costs, and you should know them before you are on a train.</p>
+  <p><strong>One more program on the machine.</strong> It starts at boot, updates itself occasionally, and has its own bugs. That is one more thing to rule out before you blame SSH.</p>
+  <p><strong>A control plane you need at the wrong moment.</strong> Traffic goes device to device, but the introductions do not. A new laptop, a replaced phone, or stale credentials are not on your network until they sign in. Fail that sign-in while you are out and the machine is fine but unreachable. Keep another way in.</p>
+  <p><strong>A phone that has to stay connected.</strong> The tunnel is a VPN profile, and phones drop those: after a restart, when another VPN takes over, or when you dismiss the prompt. Check it before debugging anything else. It carries only traffic to your own addresses.</p>
 </section>
 
 <section id="keys-still-matter">
-  <h2>A private network is not a reason to go back to passwords</h2>
+  <h2>A private network still needs a key</h2>
   <p>A machine nobody can reach from the internet still needs a lock on the door, for two reasons.</p>
-  <p>The mesh's security is now your account's security, and any device that signs in is inside — one device you already trusted. A laptop left in a taxi is inside the network you built, where every machine is reachable and nothing else asks questions. A key means it still has to prove something.</p>
-  <p>Then defence in depth. The mesh keeps strangers out; a key stops a stranger already in from going further. Two independent things have to fail before anyone reaches your project. A password is one guessable thing, and guessing is now easy. <a href="/guide/en/what-is-ssh/">How keys do the proving</a> covers the mechanics.</p>
+  <p>The mesh's security is now your account's security: any device that signs in is inside, and inside means a device you already trusted. A laptop left in a taxi is inside the network you built, where every machine is reachable and nothing else checks it. A key means the machine still has to prove something.</p>
+  <p>The second reason is defence in depth. The mesh keeps strangers out; a key stops a stranger who is already inside from going further. Two independent things have to fail before anyone reaches your project. A password is one guessable thing, and a key is not. <a href="/guide/en/what-is-ssh/">How keys do the proving</a> covers the mechanics.</p>
 </section>
 
 <section id="when-you-dont-need-tailscale">
-  <h2>When you don't need this at all</h2>
-  <p>If the machine and the phone are on the same Wi-Fi and always will be, skip this. The LAN address works, nothing to install, nothing to sign in to — and you lose it the moment you walk outside.</p>
-  <p>A hosted server changes the arithmetic. Its address does not move, there is no router of yours to configure, and a failed experiment cannot lock you out. The risk moves to port 22 facing the internet permanently. Some still run the mesh there, to move SSH behind a private address; others stay public and lean entirely on keys. What is not workable: a password on an exposed port.</p>
-  <p>Or if you already reach it through a network someone else runs — a work VPN — take that path: two overlapping tunnels makes debugging worse, not the connection better. Not sure which case you are in? The <a href="/guide/en/setup/">setup</a> page asks three questions and hands you a checklist.</p>
+  <h2>When you don't need Tailscale</h2>
+  <p>If the machine and the phone are on the same Wi-Fi and always will be, skip this. The LAN address works, you install nothing, and you sign in to nothing. You lose it the moment you walk outside.</p>
+  <p>A hosted server changes the arithmetic. Its address does not move, there is no router of yours to configure, and a failed experiment cannot lock you out. The risk moves to port 22 facing the internet permanently. Some people still run the mesh there, to put SSH behind a private address; others keep it public and lean on keys. What is not workable: a password on an exposed port.</p>
+  <p>If you already reach the machine through a network someone else runs, a work VPN for example, take that path. Two overlapping tunnels make debugging worse without making the connection better. If you are not sure which case you are in, the <a href="/guide/en/setup/">setup</a> page asks three questions and hands you a checklist.</p>
 </section>
 
-<p>The way in is settled. What is left is the thing in your hand, and what it assumes about why you are there.</p>
+<p>The way in is settled. What is left is the phone in your hand, and what that phone assumes about why you are there.</p>

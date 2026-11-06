@@ -1,5 +1,5 @@
-<p>把 agent 放到遠端整晚跑，大約 15 分鐘：用 SSH 連進你自己那台機器，用 tmux 讓手機斷線只是 detach、不會停止 agent，再用 Tailscale，不必對公網開 port。回答三個問題，步驟清單就照你的機器、你要跑的 agent、還有你想從哪裡連回來生成。</p>
-<p>每一步都會講<strong>為什麼要做</strong>、<strong>指令是什麼</strong>、<strong>怎麼確認成功了</strong>，還有<strong>沒成功的話去哪裡看</strong>。（那台機器是 Windows？<a href="#windows">先看這一節</a>。）</p>
+<p>把 agent 放到遠端整晚跑，大約 15 分鐘：用 SSH 連進你自己那台機器，用 tmux 讓手機斷線時只是 detach、不會停止 agent，再用 Tailscale，就不用對公網開 port。回答三個問題：你的機器、要跑的 agent、你想從哪裡連。清單會照你的答案生成。</p>
+<p>每一步都會告訴你為什麼要做、指令是什麼、怎麼確認成功了，還有沒成功的話去哪裡看。（那台機器是 Windows？<a href="#windows">先看這一節</a>。）</p>
 <div id="wizard" data-wizard-lang="zh-TW" data-load-failed="載入失敗，請重新整理。">
     <noscript><p>這個安裝精靈需要 JavaScript。你也可以直接看<a href="/guide/zh-TW/troubleshooting/">疑難排解</a>頁。</p></noscript>
 </div>
@@ -8,30 +8,30 @@
 <details id="windows" class="windows-note">
   <summary><h2>原生 Windows 沒有 tmux，改走 WSL2</h2></summary>
 
-  <p>你選了 Windows，所以精靈沒有給你清單。不是還沒做。這條路的形狀跟另外三種不一樣，給你半套清單只會害你。</p>
+  <p>你選了 Windows，所以精靈沒有給你清單。Windows 這條路跟另外三種走法不一樣，塞給你半套清單反而害你。</p>
 
-  <p>走得通，但要透過 WSL2，比 Mac 或 Linux 多幾道手續。如果你只是想讓 agent 今晚就開始工作，去租一台最便宜的雲端 VPS，照上面那條路走。那通常比在 Windows 上打通還快 — 這不是敷衍，是幫你省一個晚上。</p>
+  <p>Windows 走得通，但要經過 WSL2，比 Mac 或 Linux 多幾道手續。如果你只是想讓 agent 今晚就開始工作，去租一台最便宜的雲端 VPS，照上面那條路走。那通常比在 Windows 上打通還快，也幫你省掉一個晚上。</p>
 
-  <h3>為什麼不能直接用原生 Windows</h3>
+  <h3>為什麼原生 Windows 不行？</h3>
 
-  <p>這份指南靠三個零件：CLI、tmux、SSH。SSH 沒問題，Windows 10 和 11 都內建 OpenSSH Server，打開就能連進去拿到 PowerShell。</p>
-  <p>問題出在 tmux。<strong>它沒有原生 Windows 版本</strong>，而它是整份指南的承重牆。少了它，連線一斷，agent 收到 SIGHUP 就死（<a href="/guide/zh-TW/what-is-tmux/">機制在這裡</a>），「關掉手機它繼續跑」直接不成立。你會得到一台能 SSH 進去的 Windows，但那不是這份指南要給你的東西。</p>
-  <p>agent 本身的 Windows 支援各家不一，變動也快，這裡刻意不列清單，請看你要用的那個工具的官方文件。但注意論證的順序：<strong>agent 在原生 Windows 上跑得再好，也碰不到 tmux 那個問題。</strong>能不能跑，跟斷線後活不活得下來，是兩件事。</p>
+  <p>這份指南靠三個零件：CLI、tmux、SSH。SSH 沒問題，Windows 10 和 11 都內建 OpenSSH Server，打開就能連進去，拿到一個 PowerShell 提示字元。</p>
+  <p>問題出在 tmux。<strong>它沒有原生 Windows 版本</strong>，而它是整份指南的承重牆。少了它，手機連線一斷，agent 收到 SIGHUP 就死（<a href="/guide/zh-TW/what-is-tmux/">機制在這裡</a>），「關掉手機它還是繼續跑」這句話直接不成立。你會多出一台能 SSH 進去的 Windows，但那不是這份指南要給你的東西。</p>
+  <p>agent 本身在 Windows 上跑不跑得起來，各家不同、變動也快，這裡刻意不列清單，請查你要用的那個工具的官方文件。但順序要分清：<strong>agent 在原生 Windows 上跑得再好，也碰不到 tmux 那個問題。</strong>能不能跑是一個問題，斷線之後活不活得下來是另一個。</p>
 
   <h3>建議的做法：WSL2</h3>
 
-  <p>WSL2 裡面是一個完整的 Linux，tmux、sshd、agent 的行為都跟真的 Linux 一樣。裝好一個發行版，前面「Linux 主機」那條路每一步都適用 — 直接回到上面，第一題改選 Linux 主機。</p>
+  <p>WSL2 裡面是一個完整的 Linux，tmux、sshd、agent 的行為都跟真的 Linux 一樣。裝好一個發行版，前面「Linux 主機」那條路的每一步都適用。回到上面，第一題改選「一台 Linux 主機」。</p>
 
-  <h3>但 WSL 有三個 Mac 和 Linux 不會遇到的坑</h3>
+  <h3>WSL 有三個 Mac 和 Linux 沒有的坑</h3>
 
-  <p>三個都解得掉。先知道，免得卡住的時候以為是自己弄壞了什麼：</p>
+  <p>三個都解得掉。先知道，卡住的時候就不會以為是自己弄壞了什麼：</p>
   <ul>
-    <li><strong>網路。</strong>WSL2 跑在一台有自己 IP 的虛擬機裡，藏在 NAT 後面。裡面的 sshd 從這台 Windows 之外預設連不到。兩種解法。一是在 Windows 端設 <code>netsh interface portproxy</code> 把 port 轉進去，但 WSL 的 IP 每次重開都可能變，你會一直重設。二是在 <code>.wslconfig</code> 開鏡像網路模式 <code>networkingMode=mirrored</code>，讓 WSL 直接共用主機的網路介面，port 轉發整步消失。後者乾淨很多，需要比較新的 Windows 11。</li>
-    <li><strong>WSL 不會自己一直開著。</strong>最後一個 process 結束，發行版幾秒內關掉，虛擬機跟著收。但這份指南要的是一台<em>常開</em>的機器，所以 WSL 得在開機時就跑起來、沒人登入也留著，通常靠排程工作或 keepalive。Mac 和 Linux 上沒有這個問題要處理，這條是 WSL 獨有的。</li>
-    <li><strong>systemd 是選用的。</strong>舊的 WSL 沒有 systemd，<code>systemctl</code> 這個指令根本不存在，精靈裡「在 Linux 主機上啟用 SSH 服務」那步給的指令會直接失敗。新版可以在 <code>/etc/wsl.conf</code> 加 <code>systemd=true</code> 打開，但預設不開，舊安裝更不會有。</li>
+    <li><strong>網路。</strong>WSL2 跑在一台虛擬機裡，那台虛擬機有自己的 IP，而且躲在 NAT 後面，所以預設情況下，從那台 Windows 外面連不到裡面的 sshd。有兩種解法。一是在 Windows 端用 <code>netsh interface portproxy</code> 把 port 轉進去，但 WSL 的 IP 每次重開都可能變，你等於要一直重設。二是在 <code>.wslconfig</code> 開鏡像網路模式 <code>networkingMode=mirrored</code>，讓 WSL 直接共用主機的網路介面，port 轉發這一步整個消失。第二種乾淨很多，但需要比較新的 Windows 11。</li>
+    <li><strong>WSL 不會自己一直開著。</strong>最後一個程序結束，發行版幾秒之內就關掉，虛擬機也跟著關。你要的是一台<em>常開</em>的機器，所以 WSL 得在開機時就跑起來，沒人登入也留著，通常靠排程工作或 keepalive 撐住。Mac 和 Linux 上沒有這層問題。</li>
+    <li><strong>systemd 要自己開。</strong>舊的 WSL 根本沒有 systemd，<code>systemctl</code> 這條指令不存在，所以精靈裡「在 Linux 主機上啟用 SSH 服務」那一步給的指令會直接失敗。新版可以在 <code>/etc/wsl.conf</code> 加 <code>systemd=true</code> 打開，但預設是關的。</li>
   </ul>
 
-  <h3>還有一條路：把 Windows 留著當客戶端</h3>
+  <h3>如果 Windows 只是你工作用的那台電腦呢？</h3>
 
-  <p>這裡講的 Windows 一直都是「那台被連線的機器」。如果你的 Windows 只是你平常工作的電腦，跑 agent 的是別台 — 家裡的 Mac mini、公司的 Linux 主機、一台 VPS — 那上面這些你一個都不會遇到。這份指南對你完全成立。要設定的機器從來不是你手上這台。</p>
+  <p>這裡講的 Windows，指的從來是「那台被連進去的機器」。如果你的 Windows 只是你平常工作的電腦，agent 跑在別台上（家裡的 Mac mini、公司的 Linux 主機、一台 VPS），那上面這些你一個都不會遇到，這份指南對你完全成立。你要設定的機器，不是你手上這台。</p>
 </details>

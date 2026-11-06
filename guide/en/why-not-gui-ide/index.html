@@ -52,21 +52,21 @@
     <main class="shell guide-shell">
         <article class="guide-article">
             <h1>Why not Cursor or VS Code</h1>
-            <p>An agent inside Cursor or VS Code lives inside a GUI process, so it needs a screen, a logged-in desktop, and someone sitting in front of it. A CLI agent's interface is a stream of characters, which tmux can store whole and reattach on any device. That is an architectural difference, not a matter of taste.</p>
-<p>You already have Cursor, or VS Code with an agent extension, and it works well. So why learn SSH and tmux to do the same job? The answer only shows up when you are away from your computer.</p>
+            <p>An agent inside Cursor or VS Code runs as part of a GUI process, so it needs a screen, a logged-in desktop, and someone sitting in front of it. A CLI agent's interface is a stream of characters, which tmux can store whole and reattach on any device. The difference is architectural, not a matter of taste.</p>
+<p>You already have Cursor, or VS Code with an agent extension, and it works well. Learning SSH and tmux for the same job pays off in one situation: you are not sitting at the machine.</p>
 
 <section id="architecture">
   <h2>The difference is architectural, not a preference</h2>
 
-  <p>An agent inside a GUI IDE is part of that GUI program. It lives in the application's process, its state sits in that window's memory, its output is painted onto that canvas. So it needs a screen, a logged-in desktop session, and a person in front of it. Close the window and the agent ends. Nobody overlooked anything — it grew out of that process.</p>
-  <p>A CLI agent's interface is a byte stream. Characters in, characters out, nothing graphical anywhere along the way. And a character stream can be <strong>attached to, detached from, and attached again</strong>. tmux manages that because an 80×24 matrix of characters can be stored whole and redrawn onto any screen — your laptop, your phone, your friend's iPad. Changing device loses nothing. It was only ever characters.</p>
-  <p>So a CLI agent works remotely for one reason: <strong>a canvas of pixels cannot be serialised and reattached, and a matrix of characters can</strong>. Nothing to do with being geekier, or with text people being better. It is a difference in capability.</p>
+  <p>An agent inside a GUI IDE is part of that GUI program. It lives in the application's process, its state sits in that window's memory, and its output is painted onto a canvas. That is why it needs a screen, a logged-in desktop session, and a person in front of it. Close the window and the agent ends with it. Nobody overlooked anything: the agent grew out of that process.</p>
+  <p>A CLI agent's interface is a byte stream: characters in, characters out, and nothing graphical anywhere along the way. A stream like that can be <strong>attached to, detached from, and attached again</strong>. tmux does the bookkeeping, because an 80×24 matrix of characters can be stored whole and redrawn onto any screen: your laptop, your phone, a friend's iPad. Changing devices loses nothing, because what changed hands was only ever characters.</p>
+  <p>That is the whole reason a CLI agent works remotely: <strong>a canvas of pixels cannot be serialised and reattached, and a matrix of characters can</strong>. It is a claim about capability, not about who prefers keyboards.</p>
 </section>
 
 <section id="same-scenario">
   <h2>What happens when you close the laptop mid-task?</h2>
 
-  <p>Say you hand the agent a large refactor at the end of the day. Twenty minutes of work at least, and you are leaving now.</p>
+  <p>Suppose you hand the agent a large refactor at the end of the working day. It needs twenty minutes at least, and you are leaving now.</p>
 
   <div class="table-wrap"><table>
     <thead>
@@ -90,24 +90,24 @@
     </tbody>
   </table></div>
 
-  <p>The right-hand column has nothing to do with how clever the agent is. The session never lived on your laptop. It lives on the machine that was never switched off, and your laptop attached to it for a while. Closing the lid ended the connection, not the work.</p>
-  <p>Cursor has cloud background agents now, and those do keep running when you close the laptop. What they continue is a copy inside Cursor's own remote sandbox, not the one on your machine. That puts them with the browser agents and Codespaces discussed elsewhere on this site. It does not make them an exception to the left-hand column.</p>
+  <p>Nothing in the right-hand column depends on how clever the agent is. That session never lived on your laptop. It lives on the machine that was never switched off, and your laptop was attached to it for a while. Closing the lid ended the connection, and the work carried on without you.</p>
+  <p>Cursor has cloud background agents now, and those do keep running after you close the laptop. What keeps running is a copy inside Cursor's own remote sandbox, not the agent on your machine, which puts them with the browser agents and Codespaces discussed elsewhere on this site. The left-hand column still describes what happens to the agent on your machine.</p>
 </section>
 
 <section id="why-not-vnc">
   <h2>"Couldn't you just use remote desktop?"</h2>
 
-  <p>This is the most common objection, and in theory it is airtight. The desktop is still on that machine. VNC back into it, Cursor is still open, problem solved.</p>
-  <p>In practice the two ship different things. <strong>VNC sends pixels. SSH sends characters.</strong> A full screen update is hundreds of kilobytes to a few megabytes of image data; the same screen as characters is a few kilobytes of text. Three orders of magnitude.</p>
-  <p>You hit that gap daily. On the train, in a lift, anywhere you are down to one bar, VNC turns into a slideshow and a single scroll takes three seconds to redraw. SSH characters arrive instantly on the same connection.</p>
-  <p>Even with bandwidth to spare you are still facing a desktop UI built for a mouse and a 1440p display, crammed onto a six-inch touchscreen. Hitting a menu item means zoom, aim, tap. Driving an interface by touch that was never designed for touch is its own punishment.</p>
+  <p>This is the most common objection, and in theory it is airtight. The desktop is still running on that machine. VNC back into it and Cursor is still open, so the problem looks solved.</p>
+  <p>In practice the two ship different things. <strong>VNC sends pixels. SSH sends characters.</strong> One full screen update is hundreds of kilobytes to a few megabytes of image data, and the same screen as characters is a few kilobytes of text, a gap of roughly three orders of magnitude.</p>
+  <p>You hit that gap on ordinary days. On a train, in a lift, anywhere you are down to one bar, VNC turns into a slideshow and a single scroll takes three seconds to redraw. SSH characters arrive instantly on the same connection.</p>
+  <p>Even with bandwidth to spare you are still facing a desktop UI built for a mouse and a 1440p display, crammed onto a six-inch touchscreen. Hitting a menu item means zoom, aim, tap. An interface nobody designed for touch does not get easier just because the connection is fast.</p>
 </section>
 
 <section id="honest-ending">
   <h2>At your desk the IDE is often the better tool</h2>
 
-  <p>GUI IDEs are not bad. At your desk an IDE is often the better tool — go-to-definition, refactoring, a debugger, none of which works on a phone. The division is simpler than it looks. <strong>An IDE suits "you are here and you are driving". A CLI agent plus remote access suits "it is running and you are checking in".</strong> The people who get the most out of either use both: the IDE on the Mac during the day, Agentmux to rejoin the same agent on the same project after they leave.</p>
-  <p>Agentmux isn't here to replace your IDE. It's here to replace <strong>sitting in a chair, waiting</strong>.</p>
+  <p>An IDE is not the wrong tool, and at your desk it is often the better one: go-to-definition, refactoring, a debugger, none of which work over a phone connection. <strong>An IDE suits "you are here and you are driving". A CLI agent plus remote access suits "it is running and you are checking in".</strong> Use both if you can: the IDE on the Mac while you are at the desk, and Agentmux to rejoin the same agent on the same project once you have left it.</p>
+  <p>Agentmux is not trying to replace your IDE. It replaces the part where you sit in a chair and wait. Then you put the phone in your pocket, the signal drops in the tunnel, and what happens to that session is a problem of its own.</p>
 </section>
 
         </article>
