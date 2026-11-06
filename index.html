@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentmux - Run SSH, tmux & Claude Code on iOS & Android</title>
+    <title>Agentmux - SSH, tmux and coding agents on iOS & Android</title>
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta id="meta-description" name="description" content="Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.">
+    <meta id="meta-description" name="description" content="Reattach to tmux sessions on your own machine from your phone, and drive Claude Code, Codex, Gemini or OpenCode over SSH. One server is free.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/">
@@ -16,14 +16,14 @@
     <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/ja/">
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
-    <meta id="og-title" property="og:title" content="Agentmux - Run SSH, tmux & Claude Code on iOS & Android">
-    <meta id="og-description" property="og:description" content="Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.">
+    <meta id="og-title" property="og:title" content="Agentmux - SSH, tmux and coding agents on iOS & Android">
+    <meta id="og-description" property="og:description" content="Reattach to tmux sessions on your own machine from your phone, and drive Claude Code, Codex, Gemini or OpenCode over SSH. One server is free.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agentmux.saxcave.cc/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta id="twitter-title" name="twitter:title" content="Agentmux - Run SSH, tmux & Claude Code on iOS & Android">
-    <meta id="twitter-description" name="twitter:description" content="Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.">
+    <meta id="twitter-title" name="twitter:title" content="Agentmux - SSH, tmux and coding agents on iOS & Android">
+    <meta id="twitter-description" name="twitter:description" content="Reattach to tmux sessions on your own machine from your phone, and drive Claude Code, Codex, Gemini or OpenCode over SSH. One server is free.">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
     <link rel="stylesheet" href="/site.css">
@@ -32,7 +32,7 @@
     <meta property="og:image:width" content="2752">
     <meta property="og:image:height" content="2064">
     <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, {"@type": "WebSite", "@id": "https://agentmux.saxcave.cc/#website", "url": "https://agentmux.saxcave.cc/", "name": "Agentmux", "description": "Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.", "inLanguage": "en", "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "SoftwareApplication", "@id": "https://agentmux.saxcave.cc/#app", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "description": "Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.", "inLanguage": "en", "applicationCategory": "DeveloperApplication", "operatingSystem": "iOS, iPadOS, Android", "image": "https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp", "featureList": ["SSH to your own machine over keys or passwords", "Persistent tmux sessions that keep running when the connection drops", "Run CLI coding agents such as Claude Code, Codex, Gemini, and OpenCode", "Remote file editing with file history and branch tools", "AI Permission Review: blacklist, allowlist, and AI judgement on the commands an agent wants to run", "Multiple servers, custom agents, and batch actions on Pro"], "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.", "availability": "https://schema.org/InStock"}, "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, {"@type": "WebSite", "@id": "https://agentmux.saxcave.cc/#website", "url": "https://agentmux.saxcave.cc/", "name": "Agentmux", "description": "Reattach to tmux sessions on your own machine from your phone, and drive Claude Code, Codex, Gemini or OpenCode over SSH. One server is free.", "inLanguage": "en", "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "SoftwareApplication", "@id": "https://agentmux.saxcave.cc/#app", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "description": "Reattach to tmux sessions on your own machine from your phone, and drive Claude Code, Codex, Gemini or OpenCode over SSH. One server is free.", "inLanguage": "en", "applicationCategory": "DeveloperApplication", "operatingSystem": "iOS, iPadOS, Android", "image": "https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp", "featureList": ["SSH to your own machine over keys or passwords", "Persistent tmux sessions that keep running when the connection drops", "Run CLI coding agents such as Claude Code, Codex, Gemini, and OpenCode", "Remote file editing with file history and branch tools", "AI Permission Review: blacklist, allowlist, and AI judgement on the commands an agent wants to run", "Multiple servers, custom agents, and batch actions on Pro"], "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.", "availability": "https://schema.org/InStock"}, "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}]}</script>
 </head>
 <body>
     <nav class="nav" aria-label="Main navigation">
@@ -75,10 +75,10 @@
                         <span class="active">Run SSH, tmux, and AI agents on iOS &amp; Android</span>
                     </div>
                     <h1>
-                        <span class="active">Your coding agents, <span class="accent">wherever SSH lives.</span></span>
+                        <span class="active">Your coding agents, <span class="accent">reachable over SSH.</span></span>
                     </h1>
                     <p class="hero-copy">
-                        <span class="active">Agentmux turns your phone and tablet into a command center for remote projects, persistent tmux sessions, and AI coding agents like Claude, Codex, Gemini, and OpenCode.</span>
+                        <span class="active">Agentmux is an SSH client for phones and tablets: reattach to tmux sessions on your own machine, then launch coding agents like Claude, Codex, Gemini, and OpenCode.</span>
                     </p>
                     <div class="hero-actions" id="download">
                         <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
@@ -132,10 +132,10 @@
                             <span class="active">30-second workflow</span>
                         </div>
                         <h2>
-                            <span class="active">Open the project. Resume the agent.</span>
+                            <span class="active">Open the project, resume the agent.</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux keeps remote sessions, agents, and project context close together so a phone check can turn into real progress.</span>
+                            <span class="active">Sessions, agents, and project files sit together, so a check on your phone turns into a reply or an edit.</span>
                         </p>
                     </div>
                     <div class="demo-media" aria-hidden="true">
@@ -156,13 +156,13 @@
             <section id="features" class="features">
                 <div class="section-head">
                     <div class="eyebrow">
-                        <span class="active">Built for real remote development sessions</span>
+                        <span class="active">Built for sessions that outlive your phone</span>
                     </div>
                     <h2>
-                        <span class="active">The SSH app for the agent era.</span>
+                        <span class="active">The SSH client for CLI agents.</span>
                     </h2>
                     <p>
-                        <span class="active">Not a tiny terminal with a keyboard bolted on. Agentmux is shaped around sessions, agents, files, edits, and docs.</span>
+                        <span class="active">A terminal shrunk to phone size is not the hard part. Sessions, agents, files, and docs each need real room.</span>
                     </p>
                 </div>
 
@@ -202,10 +202,10 @@
                     <div class="showcase-copy">
                         <strong>AGENT LAUNCHER</strong>
                         <h2>
-                            <span class="active">Claude, Codex, Gemini, OpenCode. One tap.</span>
+                            <span class="active">Claude, Codex, Gemini, OpenCode: one tap.</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux keeps agent choices close to the project: launch a shell, open files, or start the right AI assistant without rebuilding context.</span>
+                            <span class="active">A shell, the project's files, and the agents all start from that project, so you open the menu and get to work.</span>
                         </p>
                     </div>
                     <div class="showcase-media">
@@ -227,7 +227,7 @@
                             <span class="active">Pick up every server where you left off.</span>
                         </h2>
                         <p>
-                            <span class="active">Reconnect to tmux-backed work across Macs, Linux boxes, and remote projects without rebuilding context.</span>
+                            <span class="active">Reconnect to tmux work on Macs, Linux boxes, and remote projects, right where it stopped.</span>
                         </p>
                     </div>
                 </article>
@@ -236,7 +236,7 @@
                     <div class="showcase-copy">
                         <strong>PROJECT FILES</strong>
                         <h2>
-                            <span class="active">Browse project folders on a bigger canvas.</span>
+                            <span class="active">Browse a whole project on a tablet screen.</span>
                         </h2>
                         <p>
                             <span class="active">Move through source files, builds, and Markdown docs without typing long paths. Pro adds branch switching, history, and batch file tools.</span>
@@ -259,7 +259,7 @@
                             <span class="active">Edit remote code without leaving SSH.</span>
                         </h2>
                         <p>
-                            <span class="active">Line numbers and syntax highlighting make source readable on the go. Pro turns that viewer into a remote editor with quick saves over SSH.</span>
+                            <span class="active">Line numbers and syntax highlighting make source readable on a phone. Pro adds saving, so edits go back over the same SSH connection.</span>
                         </p>
                     </div>
                 </article>
@@ -269,13 +269,13 @@
                 <div class="plan-panel">
                     <div>
                         <div class="eyebrow">
-                            <span class="active">Free trial, then choose your workspace</span>
+                            <span class="active">Free for 14 days, then pick a plan</span>
                         </div>
                         <h2>
                             <span class="active">Pro is for people who live in remote projects.</span>
                         </h2>
                         <p>
-                            <span class="active">Agentmux includes a 14-day full-feature trial. After that, free users can keep a focused single-server SSH workflow; Pro unlocks the full workspace.</span>
+                            <span class="active">Every feature is open for 14 days. After that the free tier keeps one server, persistent sessions, and the core terminal; Pro adds the rest.</span>
                         </p>
                     </div>
                     <div class="plan-list">
@@ -300,7 +300,7 @@
                     <span class="active">Take your dev box with you.</span>
                 </h2>
                 <p>
-                    <span class="active">Available on iOS, iPadOS, and Android. Connect to your servers and keep coding agents running anywhere.</span>
+                    <span class="active">iOS, iPadOS, and Android. The agent runs on your own machine; the app is how you get back to it.</span>
                 </p>
                 <div class="final-cta-actions">
                     <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">

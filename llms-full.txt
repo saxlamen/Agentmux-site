@@ -15,7 +15,7 @@ URL: https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/
 Language: en
 Updated: 2026-11-06
 
-The cost of running agents remotely is standby: the agent waits on you. Three parts move that wait into your pocket.
+The cost of running agents remotely is standby: the agent waits on you. tmux and SSH move that wait to your phone.
 
 A CLI agent's real cost is standby, not typing: thirty seconds of input, then hours you cannot leave. Run the agent on a machine that stays on, keep its session alive with tmux, and reattach over SSH and Tailscale. Then standby costs a phone and fifteen seconds, and the agent keeps working while you sleep.
 
@@ -88,7 +88,7 @@ URL: https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/
 Language: en
 Updated: 2026-11-06
 
-On a desktop the IDE agent usually wins. On a phone a terminal beats it, because its interface is a byte stream.
+On a desktop the IDE agent usually wins. On a phone a terminal wins: a byte stream can be stored and reattached.
 
 An agent inside Cursor or VS Code runs as part of a GUI process, so it needs a screen, a logged-in desktop, and someone sitting in front of it. A CLI agent's interface is a stream of characters, which tmux can store whole and reattach on any device. The difference is architectural, not a matter of taste.
 
@@ -137,7 +137,7 @@ URL: https://agentmux.saxcave.cc/guide/en/what-is-cli/
 Language: en
 Updated: 2026-11-06
 
-Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.
+Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell is, and when a GUI tool wins.
 
 A CLI agent is a coding agent you talk to in text. It runs in a terminal on a machine you own, a Mac, a Linux box, or a server. There it inherits your permissions: read every file in the project, run any command, read the result back. Agents live in terminals because no other interface grants all three.
 
@@ -258,13 +258,13 @@ The line here is not skill against laziness. It is **"you are here and driving"*
 
 The terminal puts an agent on your machine, and its output is characters that can live anywhere. So that machine does not have to be the one you are sitting at. Getting there from somewhere else is SSH's job.
 
-## An encrypted tunnel to another computer
+## SSH is a tunnel to a machine you own
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-ssh/
 Language: en
 Updated: 2026-11-06
 
-What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.
+SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.
 
 SSH is an encrypted channel between your device and another computer. You send keystrokes, that machine runs the commands, its output comes back, and no hop in between can read any of it. To run a coding agent remotely, SSH is how your phone reaches the machine the agent runs on.
 
@@ -352,7 +352,7 @@ URL: https://agentmux.saxcave.cc/guide/en/what-is-tmux/
 Language: en
 Updated: 2026-11-06
 
-What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.
+tmux is a terminal multiplexer: the session lives on the server, so a dropped SSH detaches instead of killing the agent.
 
 tmux is a terminal multiplexer: it keeps a terminal session running on the machine you connect to, rather than inside the connection you came through. For an AI coding agent, that is the difference between surviving and dying. SSH connections drop when a phone locks or a signal goes, and a dropped SSH normally kills the agent's shell.
 
@@ -451,13 +451,13 @@ Checking this takes two minutes. SSH in, run `tmux new -s work`, start an agent,
 
 So the agent survives you putting the phone away. One problem left: getting in from outside without opening a port to the whole internet. Tailscale answers that.
 
-## Don't open a port to the public internet
+## Tailscale: no port open to the internet
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tailscale/
 Language: en
 Updated: 2026-11-06
 
-How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.
+Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.
 
 Install Tailscale on your computer and on your phone, sign both in to the same account, then connect with SSH to the machine's MagicDNS name or its `100.x` address. Tailscale builds an encrypted WireGuard mesh between your own devices, so you open no port on your router to the internet and never point SSH at a public address.
 
@@ -554,7 +554,7 @@ URL: https://agentmux.saxcave.cc/guide/en/why-agentmux/
 Language: en
 Updated: 2026-11-06
 
-Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.
+Agentmux vs Termius and Blink: five capability differences, and the cases where Termius is the better tool.
 
 A general SSH client assumes you opened it to type commands. Agentmux assumes you opened it to rejoin an agent that is already running. Take Termius or Blink if you need Mosh, SOCKS5 forwarding, or host sync across platforms. Take Agentmux if your work is coding agents on several servers rather than one-off commands on one host.
 
@@ -657,7 +657,7 @@ URL: https://agentmux.saxcave.cc/guide/en/setup/
 Language: en
 Updated: 2026-11-06
 
-Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.
+Answer three questions and get the steps for your machine, the agent you want to run, and where you connect from: SSH, tmux, Tailscale.
 
 Setting up an agent that works all night takes about fifteen minutes: SSH into a machine you own, tmux so a dropped phone connection detaches instead of stopping the agent, and Tailscale so no port faces the public internet. Answer three questions about your machine, your agent, and where you connect from, and the wizard builds the checklist.
 
@@ -703,7 +703,7 @@ URL: https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/
 Language: en
 Updated: 2026-11-06
 
-Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.
+Claude Code runs on a machine you own, not on the phone. Remote Login, Tailscale, a named tmux session, and the PATH problem SSH causes.
 
 Yes. Claude Code is a program that runs on a machine you own, never on the phone. Turn on Remote Login, reach that machine through Tailscale instead of an open port, start a tmux session with a name, and run `claude` inside it. Your iPhone carries a terminal. The agent keeps working after you lock the screen.
 
@@ -958,7 +958,7 @@ URL: https://agentmux.saxcave.cc/guide/en/troubleshooting/
 Language: en
 Updated: 2026-11-06
 
-SSH refused, key rejected, tmux missing, claude not found: eight real failures, each with cause and the fix to type.
+SSH refused, key rejected, tmux missing, claude not found: eight failures, each with a cause and a command to type.
 
 Remote development over SSH, tmux and Tailscale fails in eight recognizable ways: `Operation timed out`, `Permission denied (publickey)`, a password that is correct but rejected, `tmux not found`, `claude: command not found`, Tailscale showing connected but unreachable, Remote Login on but the Mac refusing, and `sudo: a terminal is required`. Each one has a symptom, a cause, and a fix.
 
@@ -1280,7 +1280,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/
 Language: zh-TW
 Updated: 2026-11-06
 
-遠端跑 agent 真正的成本是待命。CLI、tmux、SSH＋Tailscale 三個零件，把待命從筆電搬到口袋裡的手機。
+遠端跑 agent 的成本是待命：機器不關機、tmux、SSH 加 Tailscale，待命變成一支手機加十五秒。
 
 CLI agent 真正的成本是待命，不是打字：你講三十秒，接下來幾個小時不能離開位子。把它跑在你從來沒關過的機器上，用 tmux 讓 session 斷線照跑，再用 SSH 加 Tailscale 從手機接回去，待命就變成一部手機加十五秒，而它在你睡覺的時候繼續工作。
 
@@ -1406,7 +1406,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/
 Language: zh-TW
 Updated: 2026-11-06
 
-為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。
+因為終端機給的是完整檔案存取和執行權限，別的介面做不到。終端機是什麼，什麼時候該用 GUI。
 
 CLI agent 是一個用文字跟你對話的 coding agent。它跑在你自己擁有的機器上，一台 Mac、一台 Linux 主機、或一台伺服器，並沿用你在那台機器上的權限：讀整個專案的檔案、執行任何指令、把結果讀回來。它住在終端機裡，因為沒有別的介面能同時給你這三樣。
 
@@ -1527,7 +1527,7 @@ curl -sf localhost:8000/health | jq .db
 
 終端機把 agent 放進你自己的機器，而它的輸出是可以住在任何地方的字元。所以那台機器不必是你正坐著的這一台。從別的地方連過去，是 SSH 的工作。
 
-## 一條通往另一台電腦的加密隧道
+## SSH：通往另一台電腦的隧道
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/
 Language: zh-TW
@@ -1726,7 +1726,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/
 Language: zh-TW
 Updated: 2026-11-06
 
-不開 port 也能從手機連回自己的電腦：WireGuard mesh、MagicDNS 名稱或 100.x 位址，還有什麼時候根本不需要它。
+不開 port 也能從手機連回去：WireGuard mesh、MagicDNS 名稱、100.x 位址，什麼時候不需要 Tailscale。
 
 在家裡的電腦和手上的手機都安裝 Tailscale，兩邊登入同一個帳號，接著 SSH 連線時填那台機器的 MagicDNS 名稱或 `100.x` 開頭的位址。Tailscale 在你自己的裝置之間建立 WireGuard 加密 mesh，所以不需要對公網開放任何 port，也不需要一個固定的公網位址。
 
@@ -1823,7 +1823,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/
 Language: zh-TW
 Updated: 2026-11-06
 
-Agentmux 對 Termius、Blink：五個功能差異、什麼時候買 Termius 比較對，以及各種工作該選哪一個。
+Agentmux 對 Termius、Blink：五個功能差異，以及什麼時候選 Termius 比較好。
 
 通用的 SSH app 假設你打開它是為了打指令；Agentmux 假設你是要接回一個已經在跑的 agent。需要 Mosh、SOCKS5 轉發，或跨平台同步主機清單，就買 Termius 或 Blink。如果你整天在好幾台伺服器的 agent 之間切換，就買 Agentmux：一個贏在範圍，一個贏在接回的深度。
 
@@ -1926,7 +1926,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/setup/
 Language: zh-TW
 Updated: 2026-11-06
 
-回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。
+回答三個問題，拿到照你的答案生成的步驟清單：機器、要跑的 agent、從哪裡連回來。
 
 把 agent 放到遠端整晚跑，大約 15 分鐘：用 SSH 連進你自己那台機器，用 tmux 讓手機斷線時只是 detach、不會停止 agent，再用 Tailscale，就不用對公網開 port。回答三個問題：你的機器、要跑的 agent、你想從哪裡連。清單會照你的答案生成。
 
@@ -1972,7 +1972,7 @@ URL: https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/
 Language: zh-TW
 Updated: 2026-11-06
 
-在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
+Claude Code 跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
 
 可以，但 Claude Code 不會跑在你的 iPhone 上。它跑在你自己擁有的 Mac 或 Linux 機器上，手機只負責帶著終端機。做法是：打開遠端登入，用 Tailscale 取代對外開放的 port，開一個有名字的 tmux session，在裡面啟動 `claude`。鎖定螢幕之後，agent 照樣繼續跑。
 
@@ -2221,13 +2221,13 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 離開裝置的只有兩樣：遮蔽過的畫面片段，和你的主要意圖。它們送到你自己設定的 AI 服務，用的是你自己的 API key。開啟「使用我最近的提示」之後，你在那個分頁送出的提示會成為主要意圖，也一起送出。Agentmux 不提供也不經手任何 AI 服務。每次判斷的紀錄只存在你的裝置上，可以在稽核紀錄裡查看或清除。模型的推理內容不會儲存。
 
-## 卡住了看這裡
+## 卡住了怎麼辦
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/
 Language: zh-TW
 Updated: 2026-11-06
 
-連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。
+連不上、金鑰被拒、找不到 tmux、agent 指令不存在：八個卡點，各有原因和解法。
 
 透過 SSH、tmux、Tailscale 做遠端開發，最常卡住的就是下面這八種：`Operation timed out`、`Permission denied (publickey)`、密碼正確卻被拒絕、找不到 tmux、`claude: command not found`、Tailscale 顯示已連線卻連不到、遠端登入開著但 Mac 不接、`sudo: a terminal is required`。每一種都分成症狀、原因，和你可以照著做的解法。
 

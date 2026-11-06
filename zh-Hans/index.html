@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentmux - 在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 Claude Code</title>
+    <title>Agentmux - 在 iPhone、iPad 与 Android 接回 tmux 与 AI Agent</title>
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta id="meta-description" name="description" content="专为移动端打造的 SSH 与 tmux 工具：在 iPhone、iPad 上运行 Claude Code、Codex 等 AI 编码智能体，断线自动重连，随时推进远程项目。">
+    <meta id="meta-description" name="description" content="Agent 跑在你自己的机器上，手机只负责接回去：用 SSH 接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，也能浏览和编辑远程文件。">
     <link rel="canonical" href="https://agentmux.saxcave.cc/zh-Hans/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/">
@@ -16,14 +16,14 @@
     <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/ja/">
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
-    <meta id="og-title" property="og:title" content="Agentmux - 在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 Claude Code">
-    <meta id="og-description" property="og:description" content="专为移动端打造的 SSH 与 tmux 工具：在 iPhone、iPad 上运行 Claude Code、Codex 等 AI 编码智能体，断线自动重连，随时推进远程项目。">
+    <meta id="og-title" property="og:title" content="Agentmux - 在 iPhone、iPad 与 Android 接回 tmux 与 AI Agent">
+    <meta id="og-description" property="og:description" content="Agent 跑在你自己的机器上，手机只负责接回去：用 SSH 接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，也能浏览和编辑远程文件。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agentmux.saxcave.cc/zh-Hans/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta id="twitter-title" name="twitter:title" content="Agentmux - 在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 Claude Code">
-    <meta id="twitter-description" name="twitter:description" content="专为移动端打造的 SSH 与 tmux 工具：在 iPhone、iPad 上运行 Claude Code、Codex 等 AI 编码智能体，断线自动重连，随时推进远程项目。">
+    <meta id="twitter-title" name="twitter:title" content="Agentmux - 在 iPhone、iPad 与 Android 接回 tmux 与 AI Agent">
+    <meta id="twitter-description" name="twitter:description" content="Agent 跑在你自己的机器上，手机只负责接回去：用 SSH 接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，也能浏览和编辑远程文件。">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
     <link rel="stylesheet" href="/site.css">
@@ -32,7 +32,7 @@
     <meta property="og:image:width" content="2752">
     <meta property="og:image:height" content="2064">
     <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, {"@type": "WebSite", "@id": "https://agentmux.saxcave.cc/#website", "url": "https://agentmux.saxcave.cc/", "name": "Agentmux", "description": "专为移动端打造的 SSH 与 tmux 工具：在 iPhone、iPad 上运行 Claude Code、Codex 等 AI 编码智能体，断线自动重连，随时推进远程项目。", "inLanguage": "zh-Hans", "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "SoftwareApplication", "@id": "https://agentmux.saxcave.cc/zh-Hans/#app", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/zh-Hans/", "description": "专为移动端打造的 SSH 与 tmux 工具：在 iPhone、iPad 上运行 Claude Code、Codex 等 AI 编码智能体，断线自动重连，随时推进远程项目。", "inLanguage": "zh-Hans", "applicationCategory": "DeveloperApplication", "operatingSystem": "iOS, iPadOS, Android", "image": "https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp", "featureList": ["SSH to your own machine over keys or passwords", "Persistent tmux sessions that keep running when the connection drops", "Run CLI coding agents such as Claude Code, Codex, Gemini, and OpenCode", "Remote file editing with file history and branch tools", "AI Permission Review: blacklist, allowlist, and AI judgement on the commands an agent wants to run", "Multiple servers, custom agents, and batch actions on Pro"], "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.", "availability": "https://schema.org/InStock"}, "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, {"@type": "WebSite", "@id": "https://agentmux.saxcave.cc/#website", "url": "https://agentmux.saxcave.cc/", "name": "Agentmux", "description": "Agent 跑在你自己的机器上，手机只负责接回去：用 SSH 接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，也能浏览和编辑远程文件。", "inLanguage": "zh-Hans", "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "SoftwareApplication", "@id": "https://agentmux.saxcave.cc/zh-Hans/#app", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/zh-Hans/", "description": "Agent 跑在你自己的机器上，手机只负责接回去：用 SSH 接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，也能浏览和编辑远程文件。", "inLanguage": "zh-Hans", "applicationCategory": "DeveloperApplication", "operatingSystem": "iOS, iPadOS, Android", "image": "https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp", "featureList": ["SSH to your own machine over keys or passwords", "Persistent tmux sessions that keep running when the connection drops", "Run CLI coding agents such as Claude Code, Codex, Gemini, and OpenCode", "Remote file editing with file history and branch tools", "AI Permission Review: blacklist, allowlist, and AI judgement on the commands an agent wants to run", "Multiple servers, custom agents, and batch actions on Pro"], "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.", "availability": "https://schema.org/InStock"}, "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}]}</script>
 </head>
 <body>
     <nav class="nav" aria-label="Main navigation">
@@ -78,7 +78,7 @@
                 <div>
                     <div class="eyebrow">
 
-                        <span class="active">在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 AI Agent</span>
+                        <span class="active">在 iPhone、iPad、Android 上操作 SSH、tmux 与 AI Agent</span>
                     </div>
                     <h1>
 
@@ -86,7 +86,7 @@
                     </h1>
                     <p class="hero-copy">
 
-                        <span class="active">Agentmux 把手机与平板变成远程项目指挥中心：接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，临时改代码也不慌。</span>
+                        <span class="active">Agentmux 让手机和平板接回你机器上跑着的 tmux 会话，也能启动 Claude、Codex、Gemini、OpenCode，顺手改几行代码。</span>
                     </p>
                     <div class="hero-actions" id="download">
                         <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
@@ -147,7 +147,7 @@
                         </h2>
                         <p>
 
-                            <span class="active">Agentmux 把远程会话、Agent 与项目上下文放在一起，手机上也能真正推进工作。</span>
+                            <span class="active">会话、Agent 和项目文件都在同一个 app 里，手机上看一眼就能回复或改文件。</span>
                         </p>
                     </div>
                     <div class="demo-media" aria-hidden="true">
@@ -169,15 +169,15 @@
                 <div class="section-head">
                     <div class="eyebrow">
 
-                        <span class="active">为真正的远程开发会话设计</span>
+                        <span class="active">会话不在手机上跑</span>
                     </div>
                     <h2>
 
-                        <span class="active">Agent 时代的<br>SSH app。</span>
+                        <span class="active">Agent 用的<br>SSH app。</span>
                     </h2>
                     <p>
 
-                        <span class="active">不是把终端缩小塞进屏幕。Agentmux 是为真正的远程工作流设计：会话、Agent、文件、编辑、文档一次到位。</span>
+                        <span class="active">手机上的终端往往只剩一个键盘。Agentmux 把会话、Agent、文件、编辑分成各自的画面。</span>
                     </p>
                 </div>
 
@@ -228,7 +228,7 @@
                         </h2>
                         <p>
 
-                            <span class="active">Agentmux 把 Shell、文件和 AI Agent 放在项目旁边，少切换、少中断，不用重新找上下文。</span>
+                            <span class="active">一个项目菜单里有 Shell、文件和 Agent，要开哪个直接点，不用切来切去。</span>
                         </p>
                     </div>
                     <div class="showcase-media">
@@ -336,7 +336,7 @@
                 </h2>
                 <p>
 
-                    <span class="active">现已支持 iOS、iPadOS 与 Android。随时连接服务器，让 AI coding agents 在哪都能继续工作。</span>
+                    <span class="active">支持 iOS、iPadOS 与 Android。Agent 跑在你自己的机器上，手机只负责接回去。</span>
                 </p>
                 <div class="final-cta-actions">
                     <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">

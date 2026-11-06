@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>An encrypted tunnel to another computer — Agentmux Guide</title>
+    <title>SSH is a tunnel to a machine you own — Agentmux Guide</title>
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.">
+    <meta name="description" content="SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
@@ -17,8 +17,8 @@
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="An encrypted tunnel to another computer">
-    <meta property="og:description" content="What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.">
+    <meta property="og:title" content="SSH is a tunnel to a machine you own">
+    <meta property="og:description" content="SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp">
     <meta property="og:image:width" content="1320">
@@ -27,13 +27,13 @@
     <meta property="article:published_time" content="2026-07-30">
     <meta property="article:modified_time" content="2026-11-06">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="An encrypted tunnel to another computer">
-    <meta name="twitter:description" content="What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.">
+    <meta name="twitter:title" content="SSH is a tunnel to a machine you own">
+    <meta name="twitter:description" content="SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.">
     <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "An encrypted tunnel to another computer", "description": "What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "An encrypted tunnel to another computer", "item": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "SSH is a tunnel to a machine you own", "description": "SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "SSH is a tunnel to a machine you own", "item": "https://agentmux.saxcave.cc/guide/en/what-is-ssh/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -51,7 +51,7 @@
     </nav>
     <main class="shell guide-shell">
         <article class="guide-article">
-            <h1>An encrypted tunnel to another computer</h1>
+            <h1>SSH is a tunnel to a machine you own</h1>
             <p>SSH is an encrypted channel between your device and another computer. You send keystrokes, that machine runs the commands, its output comes back, and no hop in between can read any of it. To run a coding agent remotely, SSH is how your phone reaches the machine the agent runs on.</p>
 <p>The last article argued that an agent does its best work in a terminal, with full access to a filesystem and permission to execute. That terminal does not have to be in your pocket. It can be the Mac mini at home that never gets switched off, or the workstation at the office, as long as your phone can route to it.</p>
 

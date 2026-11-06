@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Don&#x27;t open a port to the public internet — Agentmux Guide</title>
+    <title>Tailscale: no port open to the internet — Agentmux Guide</title>
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="description" content="How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.">
+    <meta name="description" content="Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.">
     <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
@@ -17,8 +17,8 @@
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="Don&#x27;t open a port to the public internet">
-    <meta property="og:description" content="How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.">
+    <meta property="og:title" content="Tailscale: no port open to the internet">
+    <meta property="og:description" content="Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.">
     <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp">
     <meta property="og:image:width" content="1320">
@@ -27,13 +27,13 @@
     <meta property="article:published_time" content="2026-07-30">
     <meta property="article:modified_time" content="2026-11-06">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Don&#x27;t open a port to the public internet">
-    <meta name="twitter:description" content="How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.">
+    <meta name="twitter:title" content="Tailscale: no port open to the internet">
+    <meta name="twitter:description" content="Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.">
     <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp">
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Don't open a port to the public internet", "description": "How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "image": ["https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Don't open a port to the public internet", "item": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Tailscale: no port open to the internet", "description": "Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "image": ["https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Tailscale: no port open to the internet", "item": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -51,7 +51,7 @@
     </nav>
     <main class="shell guide-shell">
         <article class="guide-article">
-            <h1>Don&#x27;t open a port to the public internet</h1>
+            <h1>Tailscale: no port open to the internet</h1>
             <p>Install Tailscale on your computer and on your phone, sign both in to the same account, then connect with SSH to the machine's MagicDNS name or its <code>100.x</code> address. Tailscale builds an encrypted WireGuard mesh between your own devices, so you open no port on your router to the internet and never point SSH at a public address.</p>
 <p>The agent survives a dropped connection, which only helps if there is somewhere safe to reconnect from. The obvious answer is to expose port 22 to the internet, and that is the fastest way into trouble. Scanning bots knock on port 22 across every IP on earth, around the clock.</p>
 <p>A second problem is duller and harder to dodge. Your home IP is dynamic, and the machine sits behind NAT, sharing one outward address with everything else at home. There was never a public address there to open.</p>

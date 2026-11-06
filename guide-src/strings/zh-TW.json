@@ -9,7 +9,7 @@
     "listJoin": "、",
     "labelColon": "：",
     "trackIndexTitle": "Agentmux 指南",
-    "trackIndexDescription": "從零開始，學會讓 AI coding agent 在你自己的機器上整晚工作，再用手機接回來。",
+    "trackIndexDescription": "在自己的機器上讓 AI coding agent 整晚工作，再從手機接回 session。",
     "extendedReading": "延伸閱讀",
     "ctaLine": "14 天全功能試用，支援 iOS 與 Android。",
     "ctaButton": "在 App Store 下載",
@@ -21,34 +21,34 @@
     "tracks": {
       "beginner": {
         "title": "我沒開過終端機",
-        "blurb": "會用 AI 寫 code，但沒碰過 SSH。從頭建立整套心智模型。"
+        "blurb": "會用 AI 寫 code，但沒碰過 SSH。從終端機是什麼開始。"
       },
       "cliuser": {
         "title": "我已經在跑 CLI agent",
-        "blurb": "已經在 Mac 上用 Claude Code 或 Codex，只缺遠端接回來那一段。"
+        "blurb": "已經在 Mac 上跑 Claude Code 或 Codex，只差從手機連過去。"
       }
     }
   },
   "articles": {
     "why-remote-vibe-coding": {
       "title": "你的 AI 應該在你睡覺時工作",
-      "description": "遠端跑 agent 真正的成本是待命。CLI、tmux、SSH＋Tailscale 三個零件，把待命從筆電搬到口袋裡的手機。"
+      "description": "遠端跑 agent 的成本是待命：機器不關機、tmux、SSH 加 Tailscale，待命變成一支手機加十五秒。"
     },
     "why-not-gui-ide": {
       "title": "為什麼不是 Cursor / VS Code",
       "description": "GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。"
     },
     "troubleshooting": {
-      "title": "卡住了看這裡",
-      "description": "連不上、金鑰被拒、找不到 tmux、agent 指令不存在 — 遠端開發設定最常見的八個卡點與解法。"
+      "title": "卡住了怎麼辦",
+      "description": "連不上、金鑰被拒、找不到 tmux、agent 指令不存在：八個卡點，各有原因和解法。"
     },
     "what-is-cli": {
       "title": "為什麼最強的 coding agent 都住在終端機裡",
-      "description": "為什麼 coding agent 都住在終端機：完整的檔案系統存取與執行權限。終端機到底是什麼，以及什麼時候該用圖形介面。",
+      "description": "因為終端機給的是完整檔案存取和執行權限，別的介面做不到。終端機是什麼，什麼時候該用 GUI。",
       "image": "/resource/iphone-raw-launch-any-agent.webp"
     },
     "what-is-ssh": {
-      "title": "一條通往另一台電腦的加密隧道",
+      "title": "SSH：通往另一台電腦的隧道",
       "description": "SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。",
       "image": "/resource/iphone-raw-edit-code-over-ssh.webp"
     },
@@ -59,22 +59,22 @@
     },
     "what-is-tailscale": {
       "title": "不要對公網開 port",
-      "description": "不開 port 也能從手機連回自己的電腦：WireGuard mesh、MagicDNS 名稱或 100.x 位址，還有什麼時候根本不需要它。",
+      "description": "不開 port 也能從手機連回去：WireGuard mesh、MagicDNS 名稱、100.x 位址，什麼時候不需要 Tailscale。",
       "image": "/resource/Darkmode_serverlist.webp"
     },
     "why-agentmux": {
       "title": "為什麼不是 Termius / Blink",
-      "description": "Agentmux 對 Termius、Blink：五個功能差異、什麼時候買 Termius 比較對，以及各種工作該選哪一個。",
+      "description": "Agentmux 對 Termius、Blink：五個功能差異，以及什麼時候選 Termius 比較好。",
       "image": "/resource/Serverview_tmux_agents.webp"
     },
     "setup": {
       "title": "15 分鐘，讓你的 agent 開始整晚工作",
-      "description": "回答三個問題，拿到只屬於你的步驟清單：你的機器、你要跑的 agent，以及你想從哪裡連回來。",
+      "description": "回答三個問題，拿到照你的答案生成的步驟清單：機器、要跑的 agent、從哪裡連回來。",
       "image": "/resource/ipad-raw-browse-remote-projects.webp"
     },
     "claude-code-on-iphone": {
       "title": "在 iPhone、iPad 上跑 Claude Code",
-      "description": "在 iPhone、iPad 跑 Claude Code：它跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。",
+      "description": "Claude Code 跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。",
       "image": "/resource/iphone-raw-run-coding-agents-anywhere.webp"
     },
     "permission-review": {

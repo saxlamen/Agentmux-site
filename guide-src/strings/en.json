@@ -9,7 +9,7 @@
     "listJoin": ", ",
     "labelColon": ": ",
     "trackIndexTitle": "Agentmux Guide",
-    "trackIndexDescription": "Start from nothing and end with an AI coding agent working through the night on your own machine, reachable from your phone.",
+    "trackIndexDescription": "A guide to running Claude Code, Codex, or any CLI agent on a machine you own, and reaching it from your phone over SSH.",
     "extendedReading": "Further reading",
     "ctaLine": "14-day full-feature trial, available on iOS and Android.",
     "ctaButton": "Download on the App Store",
@@ -21,60 +21,60 @@
     "tracks": {
       "beginner": {
         "title": "I've never opened a terminal",
-        "blurb": "You write code with AI but have never touched SSH. Build the whole mental model from scratch."
+        "blurb": "You write code with AI but have never touched SSH. Start at what a shell does, then SSH."
       },
       "cliuser": {
         "title": "I already run CLI agents",
-        "blurb": "Claude Code or Codex is already running on your Mac. You just need the part where you reach it from anywhere."
+        "blurb": "Claude Code or Codex already runs on your Mac. What's missing is SSH, tmux, and the address to type."
       }
     }
   },
   "articles": {
     "why-remote-vibe-coding": {
       "title": "Your AI should be working while you sleep",
-      "description": "The cost of running agents remotely is standby: the agent waits on you. Three parts move that wait into your pocket."
+      "description": "The cost of running agents remotely is standby: the agent waits on you. tmux and SSH move that wait to your phone."
     },
     "why-not-gui-ide": {
       "title": "Why not Cursor or VS Code",
-      "description": "On a desktop the IDE agent usually wins. On a phone a terminal beats it, because its interface is a byte stream."
+      "description": "On a desktop the IDE agent usually wins. On a phone a terminal wins: a byte stream can be stored and reattached."
     },
     "troubleshooting": {
       "title": "Stuck? Start here",
-      "description": "SSH refused, key rejected, tmux missing, claude not found: eight real failures, each with cause and the fix to type."
+      "description": "SSH refused, key rejected, tmux missing, claude not found: eight failures, each with a cause and a command to type."
     },
     "what-is-cli": {
       "title": "Why the strongest coding agents live in the terminal",
-      "description": "Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell actually is, and when a GUI tool wins.",
+      "description": "Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell is, and when a GUI tool wins.",
       "image": "/resource/iphone-raw-launch-any-agent.webp"
     },
     "what-is-ssh": {
-      "title": "An encrypted tunnel to another computer",
-      "description": "What SSH is, how host, user and port work, why keys beat passwords, and why you reach your own machine over a private address, not an open port.",
+      "title": "SSH is a tunnel to a machine you own",
+      "description": "SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.",
       "image": "/resource/iphone-raw-edit-code-over-ssh.webp"
     },
     "what-is-tmux": {
       "title": "Keep the agent running after you put your phone away",
-      "description": "What is tmux, and why your AI coding agent survives a dropped SSH: the session lives on the server, so your phone only ever attaches to it.",
+      "description": "tmux is a terminal multiplexer: the session lives on the server, so a dropped SSH detaches instead of killing the agent.",
       "image": "/resource/ipad-raw-session-command-center.webp"
     },
     "what-is-tailscale": {
-      "title": "Don't open a port to the public internet",
-      "description": "How to reach your own computer from your phone without opening a port: a WireGuard mesh, a MagicDNS name or a 100.x address, and when to skip it.",
+      "title": "Tailscale: no port open to the internet",
+      "description": "Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.",
       "image": "/resource/Darkmode_serverlist.webp"
     },
     "why-agentmux": {
       "title": "Why not Termius or Blink",
-      "description": "Agentmux vs Termius and Blink: five capability differences, the cases where Termius is the better buy, and which tool fits which job.",
+      "description": "Agentmux vs Termius and Blink: five capability differences, and the cases where Termius is the better tool.",
       "image": "/resource/Serverview_tmux_agents.webp"
     },
     "setup": {
       "title": "15 minutes to an agent that works all night",
-      "description": "Answer three questions and get a checklist built for your setup: your machine, the agent you want to run, and where you plan to connect from.",
+      "description": "Answer three questions and get the steps for your machine, the agent you want to run, and where you connect from: SSH, tmux, Tailscale.",
       "image": "/resource/ipad-raw-browse-remote-projects.webp"
     },
     "claude-code-on-iphone": {
       "title": "Run Claude Code on your iPhone or iPad",
-      "description": "Run Claude Code from an iPhone or iPad. It runs on your own machine; the phone carries the terminal — Remote Login, Tailscale, tmux, and the PATH gotcha.",
+      "description": "Claude Code runs on a machine you own, not on the phone. Remote Login, Tailscale, a named tmux session, and the PATH problem SSH causes.",
       "image": "/resource/iphone-raw-run-coding-agents-anywhere.webp"
     },
     "permission-review": {

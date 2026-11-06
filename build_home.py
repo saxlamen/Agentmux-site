@@ -49,8 +49,8 @@ OFFER_DESCRIPTION = (
 LANG_CONFIG = {
     "en": {
         "html_lang": "en",
-        "title": "Agentmux - Run SSH, tmux & Claude Code on iOS & Android",
-        "description": "Mobile command center for remote projects: SSH, persistent tmux sessions, file editing, and AI coding agents like Claude Code, Codex, and OpenCode on iPhone, iPad, and Android.",
+        "title": "Agentmux - SSH, tmux and coding agents on iOS & Android",
+        "description": "Reattach to tmux sessions on your own machine from your phone, and drive Claude Code, Codex, Gemini or OpenCode over SSH. One server is free.",
         "canonical": "https://agentmux.saxcave.cc/",
         "out_dir": "",
         "guide_href": "/guide/en/",
@@ -59,8 +59,8 @@ LANG_CONFIG = {
     },
     "zh-TW": {
         "html_lang": "zh-TW",
-        "title": "Agentmux - 在 iPhone、iPad 上掌控 SSH、tmux 與 Claude Code",
-        "description": "專為行動裝置打造的 SSH 與 tmux 工具：在 iPhone、iPad 上執行 Claude Code、Codex 等 AI Coding Agents，斷線自動重連，隨時推進遠端專案。",
+        "title": "Agentmux - 在 iPhone、iPad 與 Android 接回 tmux 與 AI Agent",
+        "description": "Agent 跑在你自己的機器上，手機只負責接回去：用 SSH 接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，也能瀏覽和編輯遠端檔案。",
         "canonical": "https://agentmux.saxcave.cc/zh-TW/",
         "out_dir": "zh-TW",
         "guide_href": "/guide/zh-TW/",
@@ -69,8 +69,8 @@ LANG_CONFIG = {
     },
     "zh-Hans": {
         "html_lang": "zh-Hans",
-        "title": "Agentmux - 在 iPhone、iPad 与 Android 上掌控 SSH、tmux 与 Claude Code",
-        "description": "专为移动端打造的 SSH 与 tmux 工具：在 iPhone、iPad 上运行 Claude Code、Codex 等 AI 编码智能体，断线自动重连，随时推进远程项目。",
+        "title": "Agentmux - 在 iPhone、iPad 与 Android 接回 tmux 与 AI Agent",
+        "description": "Agent 跑在你自己的机器上，手机只负责接回去：用 SSH 接回 tmux 会话、启动 Claude、Codex、Gemini、OpenCode，也能浏览和编辑远程文件。",
         "canonical": "https://agentmux.saxcave.cc/zh-Hans/",
         "out_dir": "zh-Hans",
         "guide_href": "/guide/zh-TW/",
@@ -79,8 +79,8 @@ LANG_CONFIG = {
     },
     "ja": {
         "html_lang": "ja",
-        "title": "Agentmux - iPhone・iPad から SSH・tmux・Claude Code を操作",
-        "description": "スマホやタブレットで快適に動く SSH & tmux クライアント。外出先でも iPhone・iPad から Claude Code やコーディングエージェントの作業をそのまま継続できます。",
+        "title": "Agentmux - iPhone・iPad・Android で tmux とコーディングエージェント",
+        "description": "エージェントは自分のマシンで実行。SSH で tmux セッションに再接続し、Claude、Codex、Gemini、OpenCode を操作。ファイル閲覧やリモート編集も可能。",
         "canonical": "https://agentmux.saxcave.cc/ja/",
         "out_dir": "ja",
         "guide_href": "/guide/en/",

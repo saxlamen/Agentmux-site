@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentmux - iPhone・iPad から SSH・tmux・Claude Code を操作</title>
+    <title>Agentmux - iPhone・iPad・Android で tmux とコーディングエージェント</title>
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta id="meta-description" name="description" content="スマホやタブレットで快適に動く SSH & tmux クライアント。外出先でも iPhone・iPad から Claude Code やコーディングエージェントの作業をそのまま継続できます。">
+    <meta id="meta-description" name="description" content="エージェントは自分のマシンで実行。SSH で tmux セッションに再接続し、Claude、Codex、Gemini、OpenCode を操作。ファイル閲覧やリモート編集も可能。">
     <link rel="canonical" href="https://agentmux.saxcave.cc/ja/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/">
@@ -16,14 +16,14 @@
     <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/ja/">
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
-    <meta id="og-title" property="og:title" content="Agentmux - iPhone・iPad から SSH・tmux・Claude Code を操作">
-    <meta id="og-description" property="og:description" content="スマホやタブレットで快適に動く SSH & tmux クライアント。外出先でも iPhone・iPad から Claude Code やコーディングエージェントの作業をそのまま継続できます。">
+    <meta id="og-title" property="og:title" content="Agentmux - iPhone・iPad・Android で tmux とコーディングエージェント">
+    <meta id="og-description" property="og:description" content="エージェントは自分のマシンで実行。SSH で tmux セッションに再接続し、Claude、Codex、Gemini、OpenCode を操作。ファイル閲覧やリモート編集も可能。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agentmux.saxcave.cc/ja/">
     <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta id="twitter-title" name="twitter:title" content="Agentmux - iPhone・iPad から SSH・tmux・Claude Code を操作">
-    <meta id="twitter-description" name="twitter:description" content="スマホやタブレットで快適に動く SSH & tmux クライアント。外出先でも iPhone・iPad から Claude Code やコーディングエージェントの作業をそのまま継続できます。">
+    <meta id="twitter-title" name="twitter:title" content="Agentmux - iPhone・iPad・Android で tmux とコーディングエージェント">
+    <meta id="twitter-description" name="twitter:description" content="エージェントは自分のマシンで実行。SSH で tmux セッションに再接続し、Claude、Codex、Gemini、OpenCode を操作。ファイル閲覧やリモート編集も可能。">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
     <link rel="stylesheet" href="/site.css">
@@ -32,7 +32,7 @@
     <meta property="og:image:width" content="2752">
     <meta property="og:image:height" content="2064">
     <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, {"@type": "WebSite", "@id": "https://agentmux.saxcave.cc/#website", "url": "https://agentmux.saxcave.cc/", "name": "Agentmux", "description": "スマホやタブレットで快適に動く SSH & tmux クライアント。外出先でも iPhone・iPad から Claude Code やコーディングエージェントの作業をそのまま継続できます。", "inLanguage": "ja", "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "SoftwareApplication", "@id": "https://agentmux.saxcave.cc/ja/#app", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/ja/", "description": "スマホやタブレットで快適に動く SSH & tmux クライアント。外出先でも iPhone・iPad から Claude Code やコーディングエージェントの作業をそのまま継続できます。", "inLanguage": "ja", "applicationCategory": "DeveloperApplication", "operatingSystem": "iOS, iPadOS, Android", "image": "https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp", "featureList": ["SSH to your own machine over keys or passwords", "Persistent tmux sessions that keep running when the connection drops", "Run CLI coding agents such as Claude Code, Codex, Gemini, and OpenCode", "Remote file editing with file history and branch tools", "AI Permission Review: blacklist, allowlist, and AI judgement on the commands an agent wants to run", "Multiple servers, custom agents, and batch actions on Pro"], "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.", "availability": "https://schema.org/InStock"}, "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, {"@type": "WebSite", "@id": "https://agentmux.saxcave.cc/#website", "url": "https://agentmux.saxcave.cc/", "name": "Agentmux", "description": "エージェントは自分のマシンで実行。SSH で tmux セッションに再接続し、Claude、Codex、Gemini、OpenCode を操作。ファイル閲覧やリモート編集も可能。", "inLanguage": "ja", "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}, {"@type": "SoftwareApplication", "@id": "https://agentmux.saxcave.cc/ja/#app", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/ja/", "description": "エージェントは自分のマシンで実行。SSH で tmux セッションに再接続し、Claude、Codex、Gemini、OpenCode を操作。ファイル閲覧やリモート編集も可能。", "inLanguage": "ja", "applicationCategory": "DeveloperApplication", "operatingSystem": "iOS, iPadOS, Android", "image": "https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp", "featureList": ["SSH to your own machine over keys or passwords", "Persistent tmux sessions that keep running when the connection drops", "Run CLI coding agents such as Claude Code, Codex, Gemini, and OpenCode", "Remote file editing with file history and branch tools", "AI Permission Review: blacklist, allowlist, and AI judgement on the commands an agent wants to run", "Multiple servers, custom agents, and batch actions on Pro"], "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "14-day full-feature trial, then a free single-server tier. Pro unlocks multiple servers, custom agents, remote editing, file history, branch tools, and batch actions.", "availability": "https://schema.org/InStock"}, "publisher": {"@id": "https://agentmux.saxcave.cc/#organization"}}]}</script>
 </head>
 <body>
     <nav class="nav" aria-label="Main navigation">
@@ -82,11 +82,11 @@
                     </div>
                     <h1>
 
-                        <span class="active">AI Agents を<br><span class="accent">SSH の先へ。</span></span>
+                        <span class="active">エージェントを、<br><span class="accent">SSH で続ける。</span></span>
                     </h1>
                     <p class="hero-copy">
 
-                        <span class="active">Agentmux はスマホやタブレットをリモート開発の司令塔にします。tmux セッションに戻り、Claude、Codex、Gemini、OpenCode をすぐ起動できます。</span>
+                        <span class="active">Agentmux はスマホやタブレットから、自分のマシンの tmux セッションに再接続します。Claude、Codex、Gemini、OpenCode はすぐ起動できます。</span>
                     </p>
                     <div class="hero-actions" id="download">
                         <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
@@ -143,11 +143,11 @@
                         </div>
                         <h2>
 
-                            <span class="active">プロジェクトを開き、Agent の続きへ。</span>
+                            <span class="active">プロジェクトを開き、Agent を続ける。</span>
                         </h2>
                         <p>
 
-                            <span class="active">Agentmux はリモートセッション、Agent、プロジェクト文脈を近くに置き、スマホから実作業へすぐ戻れます。</span>
+                            <span class="active">セッション、Agent、プロジェクトのファイルが同じ画面に並び、スマホから作業を続けられます。</span>
                         </p>
                     </div>
                     <div class="demo-media" aria-hidden="true">
@@ -169,15 +169,15 @@
                 <div class="section-head">
                     <div class="eyebrow">
 
-                        <span class="active">実際のリモート開発セッションのために</span>
+                        <span class="active">接続が切れても続くセッション</span>
                     </div>
                     <h2>
 
-                        <span class="active">エージェント時代の<br>SSH アプリ。</span>
+                        <span class="active">エージェント用の<br>SSH アプリ。</span>
                     </h2>
                     <p>
 
-                        <span class="active">小さなターミナルを押し込むだけではありません。セッション、エージェント、ファイル、編集、ドキュメントまで、実作業に合わせて設計しています。</span>
+                        <span class="active">ターミナルをスマホに縮小しただけではありません。セッション、エージェント、ファイル、編集は、それぞれ別々の場所に置いてあります。</span>
                     </p>
                 </div>
 
@@ -201,7 +201,7 @@
                         </h3>
                         <p>
 
-                            <span class="active">通信が変わっても作業文脈を失わず、スマホやタブレットからすぐ元の状態に戻れます。</span>
+                            <span class="active">通信が変わっても作業はそのまま。スマホから元の状態にすぐ戻れます。</span>
                         </p>
                     </article>
                     <article class="feature-card">
@@ -228,7 +228,7 @@
                         </h2>
                         <p>
 
-                            <span class="active">Shell、ファイル、AI エージェントをプロジェクトのすぐそばに置き、文脈を失わずに作業を続けられます。</span>
+                            <span class="active">プロジェクトごとに Shell、ファイル、AI エージェントを起動できるので、開き直す必要はありません。</span>
                         </p>
                     </div>
                     <div class="showcase-media">
@@ -252,7 +252,7 @@
                         </h2>
                         <p>
 
-                            <span class="active">Mac、Linux、リモートプロジェクト、tmux の作業状態へスマホやタブレットからすぐ戻れます。</span>
+                            <span class="active">Mac、Linux、リモートプロジェクト。tmux の作業に、スマホからすぐ戻れます。</span>
                         </p>
                     </div>
                 </article>
@@ -299,15 +299,15 @@
                     <div>
                         <div class="eyebrow">
 
-                            <span class="active">まず全機能を試用、そのあとワークスペースを選ぶ</span>
+                            <span class="active">まず 14 日間、全機能を試せます</span>
                         </div>
                         <h2>
 
-                            <span class="active">Pro はリモートプロジェクトで<br>本気で作業する人へ。</span>
+                            <span class="active">Pro は複数のサーバーで<br>作業する人向け。</span>
                         </h2>
                         <p>
 
-                            <span class="active">Agentmux は 14 日間の全機能トライアル付き。試用後も単一サーバーの SSH ワークフローは使え、Pro でワークスペース全体をアンロックできます。</span>
+                            <span class="active">14 日間は全機能が使えます。そのあとも単一サーバーの SSH と永続セッションは無料のまま。Pro で複数サーバーや編集機能が加わります。</span>
                         </p>
                     </div>
                     <div class="plan-list">
@@ -315,7 +315,7 @@
                             <strong>Free</strong>
                             <span>
 
-                                <span class="active">単一サーバー SSH、継続セッション、基本ターミナルワークフロー。</span>
+                                <span class="active">単一サーバー SSH、永続セッション、基本ターミナル機能。</span>
                             </span>
                         </div>
                         <div class="plan-item">
@@ -336,7 +336,7 @@
                 </h2>
                 <p>
 
-                    <span class="active">iOS、iPadOS、Android に対応。いつでもサーバーに接続し、どこでも AI エージェントを稼働できます。</span>
+                    <span class="active">iOS、iPadOS、Android に対応。Agent はサーバーで動き続け、アプリはそこに戻るためのものです。</span>
                 </p>
                 <div class="final-cta-actions">
                     <a class="primary-btn download-cta" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">
