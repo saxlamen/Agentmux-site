@@ -1,5 +1,8 @@
 # Guide copy: house rules
 
+This file governs the guide only. The home page, the privacy policy, and the
+four-language picture live in [`../COPY.md`](../COPY.md).
+
 Everything under `content/<slug>/{en,zh-TW}.html` is a **fragment** — no `<html>`,
 `<head>`, `<style>`, `<script>`. The title, `<h1>`, meta description, and og tags
 come from `strings/<lang>.json`; the fragment supplies the body only.
