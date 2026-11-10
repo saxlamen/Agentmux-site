@@ -11,7 +11,7 @@ agentmux.saxcave.cc
 ├─ /ja/               home ja
 ├─ /privacy.html      privacy policy
 └─ /guide/            language picker (redirects by preference)
-   └─ /guide/zh-TW/  11 articles
+   └─ /guide/zh-TW/  12 articles
       ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
@@ -19,11 +19,12 @@ agentmux.saxcave.cc
       ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
       ├─ why-agentmux/            [BC] 1238 w / 1848 zh
-      ├─ setup/                   [BC] 710 w / 897 zh
+      ├─ setup/                   [BC] 385 w / 459 zh
+      ├─ windows-server/          [-] 992 w / 1229 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
       ├─ permission-review/       [-] 1258 w / 1810 zh
       └─ troubleshooting/         [-] 3154 w / 4513 zh
-   └─ /guide/en/  11 articles
+   └─ /guide/en/  12 articles
       ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
@@ -31,7 +32,8 @@ agentmux.saxcave.cc
       ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
       ├─ why-agentmux/            [BC] 1238 w / 1848 zh
-      ├─ setup/                   [BC] 710 w / 897 zh
+      ├─ setup/                   [BC] 385 w / 459 zh
+      ├─ windows-server/          [-] 992 w / 1229 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
       ├─ permission-review/       [-] 1258 w / 1810 zh
       └─ troubleshooting/         [-] 3154 w / 4513 zh
@@ -65,7 +67,8 @@ graph LR
   EN --> whatistmux["What is tmux<br>1153 w / 1695 zh"]:::art
   EN --> whatistailscale["What is Tailscale<br>1266 w / 2129 zh"]:::art
   EN --> whyagentmux["vs Termius / Blink<br>1238 w / 1848 zh"]:::art
-  EN --> setup["Setup wizard<br>710 w / 897 zh"]:::art
+  EN --> setup["Setup wizard<br>385 w / 459 zh"]:::art
+  EN --> windowsserver["windows-server<br>992 w / 1229 zh"]:::art
   EN --> claudecodeoniphone["Claude Code on iPhone<br>1405 w / 2222 zh"]:::art
   EN --> permissionreview["AI Permission Review<br>1258 w / 1810 zh"]:::art
   EN --> troubleshooting["Troubleshooting (8 fixes)<br>3154 w / 4513 zh"]:::art

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Windows PC can be the server — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/windows-server/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/windows-server/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/windows-server/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Your Windows PC can be the server">
+    <meta property="og:description" content="Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/windows-server/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad running coding agents over SSH">
+    <meta property="article:published_time" content="2026-11-06">
+    <meta property="article:modified_time" content="2026-11-06">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Your Windows PC can be the server">
+    <meta name="twitter:description" content="Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Your Windows PC can be the server", "description": "Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/windows-server/", "url": "https://agentmux.saxcave.cc/guide/en/windows-server/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-06", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Your Windows PC can be the server", "item": "https://agentmux.saxcave.cc/guide/en/windows-server/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/en/">Guide home</a>
+                <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+                <a class="lang-switch" href="/guide/zh-TW/windows-server/">繁體中文</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>Your Windows PC can be the server</h1>
+            <p>Yes. Agentmux connects to a native Windows PC over SSH, with no Linux layer inside it. Turn on the OpenSSH Server that ships with Windows 10 or 11, add that machine the way you add any other, and Agentmux gives you a PowerShell terminal, persistent sessions through <strong>psmux</strong>, and your coding agent.</p>
+<p>The old answer was "put WSL2 in front of it", and the reason was one missing program. tmux has no Windows build, and tmux is the piece that keeps an agent alive when your phone drops. A program written for Windows covers that gap now, so WSL2 stopped being the only way in.</p>
+
+<section id="what-the-pc-needs">
+  <h2>Two things have to be true on the PC</h2>
+  <p>The first is an SSH door. Windows 10 and 11 both carry an OpenSSH Server as an optional feature, and you add it with one PowerShell command, run as administrator:</p>
+  <pre><code># PowerShell, as administrator
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType Automatic</code></pre>
+  <p>The installer adds an inbound firewall rule named <code>OpenSSH-Server-In-TCP</code>. If the machine sits behind a stricter firewall than that, that rule is the first thing to look at. The second command starts the service now, the third keeps it running after a reboot, which matters more here than on a Mac: a Windows PC reboots for updates on its own schedule.</p>
+  <p>The second thing is the multiplexer. Agentmux asks the host what it is. A Windows host answers differently, and the app changes course: PowerShell for its own commands instead of <code>sh -c</code>, drive paths instead of slash paths, and psmux instead of tmux. It decides this by itself. There is no switch for you to find, and it does not care whether your login shell is PowerShell or <code>cmd.exe</code>.</p>
+</section>
+
+<section id="why-psmux">
+  <h2>Why psmux and not tmux</h2>
+  <p>psmux is a separate program with a command line modelled on tmux: sessions, windows, panes, <code>send-keys</code>, <code>capture-pane</code>. It also installs a <code>tmux.exe</code> alias, so muscle memory survives. Agentmux looks for <code>psmux</code>, then <code>pmux</code>, then <code>tmux.exe</code>, and keeps whichever it finds, so a box that already has one of them is left alone.</p>
+  <p>It is not a port, and it does not pretend to be one. The app checks what the program actually answers instead of trusting a version string, and a capability it cannot prove goes unused. The differences below come out of those checks, not out of a compatibility list.</p>
+  <p>If you want the mechanism behind the requirement, <a href="/guide/en/what-is-tmux/">what tmux is for</a> is short and does not care which program fills the role: the connection dies, the shell receives SIGHUP, and an agent without a multiplexer dies with it.</p>
+</section>
+
+<section id="installing-psmux">
+  <h2>What happens when psmux is missing</h2>
+  <p>The app installs it. It tries <code>winget install -e --id marlocarlo.psmux</code> first, then Scoop, then <code>cargo install psmux</code>, whichever package manager is present, and reconnects. You are not typing anything on the phone.</p>
+  <p>A machine with none of those three is the one case where you have to intervene. The app says so plainly: <em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em> A stripped Windows install or a server with winget removed lands here. Grab the binary, put it on <code>PATH</code>, reconnect.</p>
+</section>
+
+<section id="what-you-get">
+  <h2>What works on a Windows session</h2>
+  <ul>
+    <li><strong>Sessions are persistent.</strong> List them, create one detached, attach, rename, kill one, kill several at once. <code>Ctrl-b d</code> detaches you back to a PowerShell prompt and leaves the Agentmux tab open.</li>
+    <li><strong>The agent runs in your project.</strong> Launch Claude Code, Codex, or your own command from a Windows path like <code>C:\Users\you\src\app</code>, spaces and all.</li>
+    <li><strong>The app can still read the screen.</strong> Whether a pane is waiting for a permission prompt, working, or idle comes from the pane itself, and AI Permission Review can press the key on Windows instead of only naming the key it would press.</li>
+    <li><strong>Both shells work.</strong> Windows PowerShell 5.1 and PowerShell 7, password or key authentication, drive letters, UNC paths, and folder names with spaces.</li>
+  </ul>
+</section>
+
+<section id="what-is-different">
+  <h2>What is different from a Linux box</h2>
+  <ul>
+    <li><strong>Files travel over SFTP.</strong> Browsing, editing and transfers use the SFTP subsystem rather than the shell, so if your OpenSSH install has it switched off, the file features say so instead of failing quietly. The terminal does not need it.</li>
+    <li><strong>The file browser refuses two actions.</strong> Running a script, and Git operations. That is deliberate: a Windows host never answers them with a shell error you have to interpret.</li>
+    <li><strong>No pane path.</strong> psmux has no <code>pane_current_path</code>, so the app cannot tell you which folder a pane is sitting in, and the line that reports the running program names PowerShell instead. That line also refreshes more slowly than on Linux.</li>
+    <li><strong>Attachments land in the temp folder.</strong> A photo or file you attach goes to <code>/tmp</code> on a Linux or Mac host, and to the Windows temp folder on a Windows one. The path typed into the terminal is the real one either way.</li>
+    <li><strong>Windows is the machine you connect into.</strong> There is no Agentmux that runs on Windows. If your Windows PC is the one you work at and the agent lives elsewhere, nothing here applies to you.</li>
+  </ul>
+</section>
+
+<section id="wsl2-still-an-option">
+  <h2>Should you still use WSL2?</h2>
+  <p>One reason survives: you want a Linux userland, with <code>apt</code>, systemd, and slash-separated paths, rather than a Windows box that behaves like a server. Inside WSL2 every Linux step in this guide still applies.</p>
+  <p>The three traps are still there. WSL2 runs in a virtual machine behind NAT, so nothing outside the PC reaches the sshd inside it until you forward the port with <code>netsh interface portproxy</code> or turn on mirrored networking in <code>.wslconfig</code>. WSL shuts the distribution down seconds after its last process exits, so keeping it always on needs a scheduled task. systemd is off by default on older installs, and the wizard's service commands assume it exists.</p>
+  <p>So: pick WSL2 when you want Linux programs. Pick the native path when you want this PC to be your server, because there is no virtual machine in it to keep awake and no address that changes on reboot.</p>
+</section>
+
+<p>The door is open and the sessions survive. What is left is the address you type on the phone, and <a href="/guide/en/what-is-tailscale/">whether that address is safe to reach from the street</a>.</p>
+
+        </article>
+        
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14-day full-feature trial, available on iOS and Android.</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">Home</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="mailto:atmux-support@saxcave.cc">Support</a>
+        </div>
+    </footer>
+</body>
+</html>

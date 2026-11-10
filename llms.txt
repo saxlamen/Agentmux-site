@@ -29,6 +29,7 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [Tailscale: no port open to the internet](https://agentmux.saxcave.cc/guide/en/what-is-tailscale/): Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.
 - [Why not Termius or Blink](https://agentmux.saxcave.cc/guide/en/why-agentmux/): Agentmux vs Termius and Blink: five capability differences, and the cases where Termius is the better tool.
 - [15 minutes to an agent that works all night](https://agentmux.saxcave.cc/guide/en/setup/): Answer three questions and get the steps for your machine, the agent you want to run, and where you connect from: SSH, tmux, Tailscale.
+- [Your Windows PC can be the server](https://agentmux.saxcave.cc/guide/en/windows-server/): Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.
 - [Run Claude Code on your iPhone or iPad](https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/): Claude Code runs on a machine you own, not on the phone. Remote Login, Tailscale, a named tmux session, and the PATH problem SSH causes.
 - [AI Permission Review: who answers when your agent asks](https://agentmux.saxcave.cc/guide/en/permission-review/): Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides.
 - [Stuck? Start here](https://agentmux.saxcave.cc/guide/en/troubleshooting/): SSH refused, key rejected, tmux missing, claude not found: eight failures, each with a cause and a command to type.
@@ -43,6 +44,7 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [不要對公網開 port](https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/): 不開 port 也能從手機連回去：WireGuard mesh、MagicDNS 名稱、100.x 位址，什麼時候不需要 Tailscale。
 - [為什麼不是 Termius / Blink](https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/): Agentmux 對 Termius、Blink：五個功能差異，以及什麼時候選 Termius 比較好。
 - [15 分鐘，讓你的 agent 開始整晚工作](https://agentmux.saxcave.cc/guide/zh-TW/setup/): 回答三個問題，拿到照你的答案生成的步驟清單：機器、要跑的 agent、從哪裡連回來。
+- [你的 Windows 電腦也可以當主機](https://agentmux.saxcave.cc/guide/zh-TW/windows-server/): 原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。
 - [在 iPhone、iPad 上跑 Claude Code](https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/): Claude Code 跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
 - [AI 自動權限審查：agent 問你時，誰來回答](https://agentmux.saxcave.cc/guide/zh-TW/permission-review/): Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。
 - [卡住了怎麼辦](https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/): 連不上、金鑰被拒、找不到 tmux、agent 指令不存在：八個卡點，各有原因和解法。

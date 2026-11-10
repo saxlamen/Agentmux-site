@@ -6,30 +6,13 @@
 <script src="/guide/assets/wizard.js" defer></script>
 
 <details id="windows" class="windows-note">
-  <summary><h2>原生 Windows 沒有 tmux，改走 WSL2</h2></summary>
+  <summary><h2>那台機器是 Windows</h2></summary>
 
-  <p>你選了 Windows，所以精靈沒有給你清單。Windows 這條路跟另外三種走法不一樣，塞給你半套清單反而害你。</p>
+  <p>你選了 Windows，所以精靈給你這一節而不是清單。Windows 需要兩樣另外三條路不需要的東西，塞半套清單會在最關鍵的地方斷掉。</p>
 
-  <p>Windows 走得通，但要經過 WSL2，比 Mac 或 Linux 多幾道手續。如果你只是想讓 agent 今晚就開始工作，去租一台最便宜的雲端 VPS，照上面那條路走。那通常比在 Windows 上打通還快，也幫你省掉一個晚上。</p>
+  <p>先講結論：Windows 10 和 11 都有 OpenSSH Server，用 PowerShell 打開就好。撐住 session 的是 <strong>psmux</strong>：指令照 tmux 那套設計，為 Windows 寫的。那台機器沒裝的話，Agentmux 會幫你裝。不用 WSL2、不用虛擬機，也不用轉 port。指令、Windows 的 session 能做什麼、跟 Linux 主機哪裡不一樣，全部在<a href="/guide/zh-TW/windows-server/">這篇 Windows 主機指南</a>。</p>
 
-  <h3>為什麼原生 Windows 不行？</h3>
-
-  <p>這份指南靠三個零件：CLI、tmux、SSH。SSH 沒問題，Windows 10 和 11 都內建 OpenSSH Server，打開就能連進去，拿到一個 PowerShell 提示字元。</p>
-  <p>問題出在 tmux。<strong>它沒有原生 Windows 版本</strong>，而它是整份指南的承重牆。少了它，手機連線一斷，agent 收到 SIGHUP 就死（<a href="/guide/zh-TW/what-is-tmux/">機制在這裡</a>），「關掉手機它還是繼續跑」這句話直接不成立。你會多出一台能 SSH 進去的 Windows，但那不是這份指南要給你的東西。</p>
-  <p>agent 本身在 Windows 上跑不跑得起來，各家不同、變動也快，這裡刻意不列清單，請查你要用的那個工具的官方文件。但順序要分清：<strong>agent 在原生 Windows 上跑得再好，也碰不到 tmux 那個問題。</strong>能不能跑是一個問題，斷線之後活不活得下來是另一個。</p>
-
-  <h3>建議的做法：WSL2</h3>
-
-  <p>WSL2 裡面是一個完整的 Linux，tmux、sshd、agent 的行為都跟真的 Linux 一樣。裝好一個發行版，前面「Linux 主機」那條路的每一步都適用。回到上面，第一題改選「一台 Linux 主機」。</p>
-
-  <h3>WSL 有三個 Mac 和 Linux 沒有的坑</h3>
-
-  <p>三個都解得掉。先知道，卡住的時候就不會以為是自己弄壞了什麼：</p>
-  <ul>
-    <li><strong>網路。</strong>WSL2 跑在一台虛擬機裡，那台虛擬機有自己的 IP，而且躲在 NAT 後面，所以預設情況下，從那台 Windows 外面連不到裡面的 sshd。有兩種解法。一是在 Windows 端用 <code>netsh interface portproxy</code> 把 port 轉進去，但 WSL 的 IP 每次重開都可能變，你等於要一直重設。二是在 <code>.wslconfig</code> 開鏡像網路模式 <code>networkingMode=mirrored</code>，讓 WSL 直接共用主機的網路介面，port 轉發這一步整個消失。第二種乾淨很多，但需要比較新的 Windows 11。</li>
-    <li><strong>WSL 不會自己一直開著。</strong>最後一個程序結束，發行版幾秒之內就關掉，虛擬機也跟著關。你要的是一台<em>常開</em>的機器，所以 WSL 得在開機時就跑起來，沒人登入也留著，通常靠排程工作或 keepalive 撐住。Mac 和 Linux 上沒有這層問題。</li>
-    <li><strong>systemd 要自己開。</strong>舊的 WSL 根本沒有 systemd，<code>systemctl</code> 這條指令不存在，所以精靈裡「在 Linux 主機上啟用 SSH 服務」那一步給的指令會直接失敗。新版可以在 <code>/etc/wsl.conf</code> 加 <code>systemd=true</code> 打開，但預設是關的。</li>
-  </ul>
+  <p>想要的是 Linux 那個生態而不是一台 Windows，就繼續用 WSL2。WSL2 裡面是完整的 Linux，「Linux 主機」那條路照樣適用，回去把第一題改成「一台 Linux 主機」。它附帶三個 Mac 沒有的坑：sshd 躲在虛擬機的 NAT 後面、WSL 最後一個程序結束後幾秒發行版就關掉、舊版預設沒有 systemd。三個坑的解法寫在<a href="/guide/zh-TW/windows-server/#wsl2-still-an-option">那篇 WSL2 那一節</a>。</p>
 
   <h3>如果 Windows 只是你工作用的那台電腦呢？</h3>
 

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你的 Windows 電腦也可以當主機 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-TW/windows-server/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/windows-server/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/windows-server/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="zh_TW">
+    <meta property="og:title" content="你的 Windows 電腦也可以當主機">
+    <meta property="og:description" content="原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-TW/windows-server/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad 透過 SSH 跑 coding agent">
+    <meta property="article:published_time" content="2026-11-06">
+    <meta property="article:modified_time" content="2026-11-06">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="你的 Windows 電腦也可以當主機">
+    <meta name="twitter:description" content="原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "你的 Windows 電腦也可以當主機", "description": "原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/windows-server/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/windows-server/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-06", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "你的 Windows 電腦也可以當主機", "item": "https://agentmux.saxcave.cc/guide/zh-TW/windows-server/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/zh-TW/">指南首頁</a>
+                <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
+                <a class="lang-switch" href="/guide/en/windows-server/">English</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>你的 Windows 電腦也可以當主機</h1>
+            <p>支援。Agentmux 可以直接用 SSH 連一台原生 Windows 電腦，裡面不必裝 Linux。打開 Windows 10 或 11 就有的 OpenSSH Server，把那台機器加進來，你拿到的是 PowerShell 終端機、靠 <strong>psmux</strong> 撐住的持久 session，還有你的 coding agent。</p>
+<p>過去的標準答案是「先塞一個 WSL2」。理由只有一個：少了 tmux，手機一斷線，agent 跟著死。現在有一個為 Windows 寫的程式補上這個位置，WSL2 就從必經之路變成你可以選的路。</p>
+
+<section id="what-the-pc-needs">
+  <h2>那台 Windows 上要準備兩樣東西</h2>
+  <p>第一樣是一扇 SSH 的門。Windows 10 和 11 都把 OpenSSH Server 做成可選擇的功能，用 PowerShell 以管理者身分裝一次：</p>
+  <pre><code># PowerShell，以管理者身分執行
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType Automatic</code></pre>
+  <p>安裝過程會自動加一條名為 <code>OpenSSH-Server-In-TCP</code> 的入站防火牆規則。如果你的機器防火牆比較嚴，先檢查那一條。第二行現在就把服務開起來，第三行讓它重開機之後還在。這條在 Windows 上比在 Mac 上要緊，因為 Windows 會自己決定什麼時候更新重開。</p>
+  <p>第二樣是 multiplexer。Agentmux 會先問那台機器是什麼系統，Windows 的答案不一樣，所以 app 走另一條路：自己的指令改用 PowerShell 而不是 <code>sh -c</code>，路徑用磁碟機代號而不是斜線，multiplexer 用 psmux 而不是 tmux。這一切都是 app 自己判斷，你不用找開關。你的登入 shell 是 PowerShell 還是 <code>cmd.exe</code>，它也不在意。</p>
+</section>
+
+<section id="why-psmux">
+  <h2>為什麼是 psmux 不是 tmux</h2>
+  <p>psmux 是另一個程式，指令列照 tmux 的設計：session、window、pane、<code>send-keys</code>、<code>capture-pane</code> 都有，還會順便裝一個 <code>tmux.exe</code> 的別名，手上的按法不用改。Agentmux 依序找 <code>psmux</code>、<code>pmux</code>、<code>tmux.exe</code>，找到哪個就用哪個，所以那台機器早就裝過就不會動它。</p>
+  <p>它不是 tmux 的 port，也不假裝是。app 會看那個程式實際回什麼，而不是看版本字串，缺的功能就乾脆不用。底下那份「哪裡不一樣」的清單就是這樣來的。</p>
+  <p>想知道為什麼非要有這個程式，<a href="/guide/zh-TW/what-is-tmux/">這篇</a>講得很短：連線斷掉，shell 收到 SIGHUP，沒有 multiplexer 的 agent 就跟著走了。</p>
+</section>
+
+<section id="installing-psmux">
+  <h2>沒裝 psmux 會怎樣</h2>
+  <p>app 會幫你裝。它先試 <code>winget install -e --id marlocarlo.psmux</code>，沒有就試 Scoop，再沒有就試 <code>cargo install psmux</code>，用機器上有的那個裝完再重連。手機這邊你什麼都不用打。</p>
+  <p>只有那種三個套件管理工具都沒有的機器要你動手。app 會直接把話說清楚：<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em> 被精簡過的 Windows 安裝、或把 winget 移除的伺服器會落在這一段。自己抓 binary，放到 <code>PATH</code> 裡，再重連一次。</p>
+</section>
+
+<section id="what-you-get">
+  <h2>在 Windows 的 session 裡能做什麼</h2>
+  <ul>
+    <li><strong>session 不會因為斷線消失。</strong>列出來、建立、接回、改名、關一個、一次關好幾個都可以。<code>Ctrl-b d</code> 讓你回到 PowerShell 提示字元，Agentmux 的分頁也不會被關掉。</li>
+    <li><strong>agent 跑在你的專案裡。</strong>從 <code>C:\Users\you\src\app</code> 這種 Windows 路徑啟動 Claude Code、Codex，或你自己的指令，目錄名字裡有空白也照樣走得通。</li>
+    <li><strong>app 還是讀得到螢幕。</strong>那個 pane 是在等權限回答、在做事、還是空著，是從 pane 本身讀出來的。AI 自動權限審查在 Windows 上會真的把鍵按下去，不是只告訴你按哪一個。</li>
+    <li><strong>兩種 shell 都支援。</strong>Windows PowerShell 5.1 和 PowerShell 7，密碼或金鑰認證，磁碟機代號、UNC 路徑、目錄名字裡有空白。</li>
+  </ul>
+</section>
+
+<section id="what-is-different">
+  <h2>跟 Linux 主機比，哪裡不一樣</h2>
+  <ul>
+    <li><strong>檔案走 SFTP。</strong>瀏覽、編輯、傳輸用的是 SFTP subsystem，不是 shell。如果你的 OpenSSH 安裝把 SFTP 關掉了，檔案功能會明講，不會默默失敗。Terminal 不需要它。</li>
+    <li><strong>檔案管理有兩個動作不給你用。</strong>跑 script 和 Git 操作在 Windows 上直接關閉，所以那台機器不會回你一段要自己解讀的 shell 錯誤。</li>
+    <li><strong>讀不到 pane 的目前目錄。</strong>psmux 沒有 <code>pane_current_path</code>，所以 app 沒辦法告訴你那個 pane 停在哪個目錄；回報執行中程式的那一列只會顯示 PowerShell。那一列更新也比 Linux 慢一點。</li>
+    <li><strong>附加的檔案落在暫存目錄。</strong>Linux 和 Mac 主機上，你附加的照片或檔案會進 <code>/tmp</code>；Windows 主機上會進 Windows 的暫存目錄。兩種情況打進終端機的路徑都是真的那一個。</li>
+    <li><strong>Windows 是被連進去的那台。</strong>沒有跑在 Windows 上的 Agentmux。如果你的 Windows 只是你工作用的電腦，agent 住在別台，這一整篇跟你無關。</li>
+  </ul>
+</section>
+
+<section id="wsl2-still-an-option">
+  <h2>WSL2 還值得用嗎</h2>
+  <p>有一個理由留下來了：你要的是 Linux 那個生態，有 <code>apt</code>、systemd、斜線路徑，而不是把一台 Windows 當伺服器。WSL2 裡面是完整的 Linux，這份指南 Linux 那條路的每一步都照樣適用。</p>
+  <p>三個坑也還在。WSL2 跑在 NAT 後面的一台虛擬機裡，所以那台 Windows 外面連不到裡面的 sshd，你要用 <code>netsh interface portproxy</code> 把 port 轉進去，或在 <code>.wslconfig</code> 開鏡像網路模式。最後一個程序結束後幾秒，發行版就關掉，要讓它常開得靠排程工作撐住。舊版預設沒有 systemd，而安裝精靈給的服務指令假設它有。</p>
+  <p>要跑 Linux 的程式，選 WSL2。要讓這台 Windows 變成你的伺服器，選原生那條路：裡面沒有虛擬機要維持開著，也沒有每次重開就可能變的 IP。</p>
+</section>
+
+<p>門開了，session 也活得下來。剩下的問題是手機上要打哪個位址，以及<a href="/guide/zh-TW/what-is-tailscale/">那個位址從外面連進來安不安全</a>。</p>
+
+        </article>
+        
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta">
+            <p>14 天全功能試用，支援 iOS 與 Android。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下載</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">首頁</a>
+            <a href="/privacy.html">隱私政策</a>
+            <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
+        </div>
+    </footer>
+</body>
+</html>

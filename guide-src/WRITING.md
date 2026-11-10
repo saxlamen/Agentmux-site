@@ -67,6 +67,14 @@ Keep headings under about 10 words.
   100.x addresses are the addresses to use, not LAN IPs.
 - tmux sessions persist: a dropped phone connection detaches, it does not stop
   the agent. The app can install tmux when missing, and probes for PATH problems.
+- Windows 10 and 11 work as an SSH host. The app detects the host itself, no
+  switch: its own commands go through PowerShell, and psmux is the multiplexer.
+  It looks for `psmux`, then `pmux`, then `tmux.exe`, and installs with winget,
+  then Scoop, then cargo when none is found. Browsing, editing and transferring
+  files need the SFTP subsystem; running a script and Git operations from the
+  file browser are refused on Windows. psmux has no `pane_current_path`, so the
+  status strip cannot name a pane's folder. Windows is only ever the host: there
+  is no Agentmux that runs on Windows. Article: `windows-server`.
 - Agents it drives: Claude Code, Codex, Gemini, OpenCode, or any custom CLI
   command. From the phone you can launch, watch, reply to prompts, and answer
   permission requests.
@@ -83,6 +91,8 @@ Keep headings under about 10 words.
 - Privacy: no personal data collection, optional anonymous usage statistics,
   hardware-backed credential storage, SSH traffic encrypted and never logged.
 - The setup page is an interactive wizard: three questions, then a checklist.
+  "A Windows PC" gets the explainer at `#windows` on that page and the
+  `windows-server` article instead of a checklist.
 - App Store `id6766158521`; Google Play `cc.saxcave.agentmux`. The guide exists in
   en and zh-TW; only the homepages exist in zh-Hans and ja.
 - `troubleshooting` already covers: SSH timeouts, `Permission denied (publickey)`,

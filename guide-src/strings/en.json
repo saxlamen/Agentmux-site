@@ -80,6 +80,10 @@
     "permission-review": {
       "title": "AI Permission Review: who answers when your agent asks",
       "description": "Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides."
+    },
+    "windows-server": {
+      "title": "Your Windows PC can be the server",
+      "description": "Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed."
     }
   }
 }
