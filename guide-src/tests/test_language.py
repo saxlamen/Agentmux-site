@@ -87,6 +87,12 @@ SIMPLIFIED_ONLY = set(
     "账购责资车轨轻辑迁违递遗邮释钟钥银链问闲队难顶顺预频题额风馆驶骑顾驻类紧纪"
     "纯约细织终绍结给络绝继绩维绿缓编缩联脑艰节药获营虑补规笔简电时东书写语读会"
     "见儿并于广盖"
+    # Ten more that exist only in simplified orthography. Each one either leaked
+    # into the Windows copy this cycle and the suite stayed green (别 in 别條路,
+    # 选 in 可选择, 径 in 路径), or is a neighbour of a character already listed.
+    # Verified absent from every zh-Hant source in this repo before adding, which
+    # is why 里 and 救 are not here: they are correct Traditional Chinese.
+    "别选径样经层识坏苏确"
 )
 
 

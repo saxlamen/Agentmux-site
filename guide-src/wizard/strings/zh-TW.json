@@ -65,17 +65,41 @@
       "verifyHint": "用廠商給的帳密或金鑰連上去，跑一次驗證指令，能印出使用者名稱就代表這台機器已經可以正常使用 SSH。",
       "failHint": "如果連不上，先檢查廠商後台的防火牆或安全群組規則有沒有放行 SSH 用的那個 port，這是 VPS 最常見的卡點，通常不是 SSH 設定本身出了問題。"
     },
+    "enable-ssh-windows": {
+      "title": "在 Windows 打開 SSH 伺服器",
+      "why": "Windows 10 和 11 都把 OpenSSH Server 做成可選擇的功能，預設關著。那三行在同一個「以管理者身分執行」的 PowerShell 視窗跑：第一行安裝，第二行現在開起來，第三行讓它重開機之後還在。Windows 會自己決定什麼時候更新、什麼時候重開，所以第三行不是想跑才跑。",
+      "verifyHint": "在 PowerShell 跑驗證指令。Status 是 Running、StartType 是 Automatic 就是你要的結果：現在連得到，重開機之後也連得到。安裝的過程已經順便加了 OpenSSH-Server-In-TCP 那條入站防火牆規則。",
+      "failHint": "Add-WindowsCapability 需要管理者權限，也要連得到 Windows Update。如果他說找不到這個功能，先確認是 Windows 10 1809 以上。機器上連得到、手機連不到的話，下一個嫌疑是防火牆。"
+    },
+    "keep-awake-windows": {
+      "title": "別讓電腦自己睡",
+      "why": "multiplexer 撐住的是斷線，不是睡覺。電腦睡過去，agent 跟著暫停，手機怎麼連都進不去，那你整晚工作就沒意義了。這兩行把接上電源時的睡眠和休眠都設成「從不」。",
+      "verifyHint": "跑驗證指令。看到 Current AC Power Setting Index: 0x00000000 就是接電時永不睡眠，其他數字是秒數。",
+      "failHint": "公司帳號的電腦會被群組原則把睡眠蓋回來，你剛設的未必留得住，隔天早上再看一次。Windows Update 的作用時段也要注意：重開機是把所有 session 關掉，跟斷線是兩回事。"
+    },
     "install-agent": {
       "title": "在機器上裝好你選的 agent",
       "why": "Agentmux 接的是已經在你機器上跑得動的 CLI agent，App 不負責安裝它，也不負責幫你登入。照你選的那個工具的官方安裝步驟，先在這台機器上裝好、登入好。",
       "verifyHint": "跑驗證指令，看到印出一段路徑（不是空白或錯誤訊息），就代表至少有一個 agent 指令已經裝在這個帳號的 PATH 找得到的地方。",
       "failHint": "如果指令在你自己開的終端機能跑，透過 SSH 卻找不到，多半是 PATH 只在你手動登入時才生效，不是沒裝好，通常換成絕對路徑就能解決。"
     },
+    "install-agent-windows": {
+      "title": "在 Windows 機器上裝 agent",
+      "why": "Agentmux 接的是機器上已經能跑的 CLI agent，它不會幫你裝、也不會幫你登入。用那個工具自己的 Windows 安裝方式，裝在你之後要連進去的那個帳號。機器上有 Node.js 的話，多數是跑一條 npm 指令的事。",
+      "verifyHint": "在 PowerShell 或 cmd 跑驗證指令。印出路徑代表這個帳號的 PATH 找得到那個指令；什麼都沒有就是沒裝，或裝在 PATH 外面。其他 agent 照樣查：where.exe codex、where.exe gemini、where.exe opencode。",
+      "failHint": "自己開的終端機跑得到、Agentmux 找不到的話，通常是 PATH 只給那個 shell 用。先重啟 SSH 服務讓它重新讀一次環境：Restart-Service sshd，還是不行就登出再登入。"
+    },
     "tmux-handled": {
       "title": "tmux：不需要動作",
       "why": "你不用自己裝 tmux。Agentmux 連上去會用機器上現成的套件管理器（apt、dnf、yum、pacman、apk、brew、nix-env）幫你裝好。",
       "verifyHint": "這步沒有要你做的事，直接看下一步。",
       "failHint": "如果之後 app 顯示自動安裝失敗，多半是 sudo 需要 TTY。"
+    },
+    "psmux-handled": {
+      "title": "psmux：不用做什麼",
+      "why": "Windows 上沒有 tmux，Agentmux 用的是 psmux，一個指令照 tmux 那套設計的程式。它會先找 psmux、pmux、tmux.exe，找不到就用機器上現成的套件管理工具裝：先 winget，沒有再 Scoop，再沒有 cargo。",
+      "verifyHint": "這一步不用做什麼。想自己確認就在 PowerShell 打 where.exe psmux，印出路徑代表有了。",
+      "failHint": "app 說 winget、Scoop、cargo 都找不到的話就自己裝：跑這一步給的指令，或是抓 binary 把那個資料夾加進 PATH，再重連一次。"
     },
     "tailscale-host": {
       "title": "在這台機器上安裝並登入 Tailscale",
@@ -100,6 +124,12 @@
       "why": "跟 Mac 一樣，只在同一個 Wi-Fi 或區網底下連線時，得先知道這台 Linux 主機的 IP，SSH 才知道要連去哪裡。",
       "verifyHint": "跑這行指令，會印出這台機器目前所有網路介面的 IP，通常第一個就是你要用的區網位址（像 192.168.x.x 開頭）。",
       "failHint": "如果印出好幾個位址不確定該選哪個，通常要挑跟你手機同一個網段（例如同樣是 192.168.1.x）開頭的那一個。"
+    },
+    "find-lan-address-windows": {
+      "title": "找出電腦在區域網路的位址",
+      "why": "不走 Tailscale、要用同一個 Wi-Fi 連的話，你得先知道這台 PC 自己的 IP，因為 SSH 要有東西可以打。Windows 通常不只一個位址：Wi-Fi、有線網路、還有一些裝了就一直在的虛擬介面。",
+      "verifyHint": "這個會每個介面印一段，里面有 IPv4 位址。挑跟你手機同一個網路的那一個，例如另一個 192.168.1.x。",
+      "failHint": "什麼都沒印，代表那個介面沒連上。單獨跑 ipconfig 看全部介面，或是改走 Tailscale，那條路不用管 traffic 從哪個介面走。"
     },
     "add-server": {
       "title": "在 Agentmux 裡新增這台伺服器",

@@ -91,8 +91,10 @@ Keep headings under about 10 words.
 - Privacy: no personal data collection, optional anonymous usage statistics,
   hardware-backed credential storage, SSH traffic encrypted and never logged.
 - The setup page is an interactive wizard: three questions, then a checklist.
-  "A Windows PC" gets the explainer at `#windows` on that page and the
-  `windows-server` article instead of a checklist.
+  Every answer produces one, Windows included: its steps cover enabling
+  OpenSSH Server, keeping the PC awake, installing the agent on Windows, and
+  psmux. No answer is routed to prose any more, so `steps.json` has no
+  `explain` targets.
 - App Store `id6766158521`; Google Play `cc.saxcave.agentmux`. The guide exists in
   en and zh-TW; only the homepages exist in zh-Hans and ja.
 - `troubleshooting` already covers: SSH timeouts, `Permission denied (publickey)`,

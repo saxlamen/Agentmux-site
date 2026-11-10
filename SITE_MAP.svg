@@ -75,13 +75,13 @@
 <circle cx="592" cy="565" r="2.4" fill="rgba(214,255,236,0.6)"/>
 <rect x="600" y="610" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
 <text x="614" y="633" fill="#f4fbf7">Setup wizard</text>
-<text x="614" y="653" fill="#8fa79d">BC | 385 w / 459 zh</text>
+<text x="614" y="653" fill="#8fa79d">BC | 414 w / 495 zh</text>
 <text x="920" y="644" fill="#6f817a">/guide/&lt;lang&gt;/setup/</text>
 <path d="M552 639 H592" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.3"/>
 <circle cx="592" cy="639" r="2.4" fill="rgba(214,255,236,0.6)"/>
 <rect x="600" y="684" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
 <text x="614" y="707" fill="#f4fbf7">windows-server</text>
-<text x="614" y="727" fill="#8fa79d">- | 992 w / 1229 zh</text>
+<text x="614" y="727" fill="#8fa79d">BC | 992 w / 1229 zh</text>
 <text x="920" y="718" fill="#6f817a">/guide/&lt;lang&gt;/windows-server/</text>
 <path d="M552 713 H592" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.3"/>
 <circle cx="592" cy="713" r="2.4" fill="rgba(214,255,236,0.6)"/>
@@ -99,12 +99,12 @@
 <circle cx="592" cy="861" r="2.4" fill="rgba(214,255,236,0.6)"/>
 <rect x="600" y="906" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
 <text x="614" y="929" fill="#f4fbf7">Troubleshooting (8 fixes)</text>
-<text x="614" y="949" fill="#8fa79d">- | 3154 w / 4513 zh</text>
+<text x="614" y="949" fill="#8fa79d">- | 3272 w / 4654 zh</text>
 <text x="920" y="940" fill="#6f817a">/guide/&lt;lang&gt;/troubleshooting/</text>
 <path d="M552 935 H592" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.3"/>
 <circle cx="592" cy="935" r="2.4" fill="rgba(214,255,236,0.6)"/>
 <text x="26" y="1004" fill="#f4fbf7" font-size="15">Reading orders (pager prev/next)</text>
-<text x="26" y="1030" fill="#8fa79d">beginner: Standby is the real cost  &gt;  Why not Cursor / VS Code  &gt;  What is a CLI agent  &gt;  What is SSH  &gt;  What is tmux  &gt;  What is Tailscale  &gt;  vs Termius / Blink  &gt;  Setup wizard</text>
-<text x="26" y="1056" fill="#8fa79d">cliuser: Standby is the real cost  &gt;  What is tmux  &gt;  What is Tailscale  &gt;  vs Termius / Blink  &gt;  Setup wizard  &gt;  Claude Code on iPhone</text>
+<text x="26" y="1030" fill="#8fa79d">beginner: Standby is the real cost  &gt;  Why not Cursor / VS Code  &gt;  What is a CLI agent  &gt;  What is SSH  &gt;  What is tmux  &gt;  What is Tailscale  &gt;  vs Termius / Blink  &gt;  Setup wizard  &gt;  windows-server</text>
+<text x="26" y="1056" fill="#8fa79d">cliuser: Standby is the real cost  &gt;  What is tmux  &gt;  What is Tailscale  &gt;  vs Termius / Blink  &gt;  Setup wizard  &gt;  windows-server  &gt;  Claude Code on iPhone</text>
 <text x="26" y="1082" fill="#6f817a">further reading: cliuser also gets Why not Cursor / VS Code; beginner also gets Claude Code on iPhone</text>
 </svg>

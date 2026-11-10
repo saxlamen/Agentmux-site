@@ -143,11 +143,13 @@ class TestWizardData(unittest.TestCase):
             if all(answers.get(k) in v for k, v in s.get("when", {}).items())
         ]
 
-    def test_the_unconditional_steps_are_exactly_the_expected_two(self):
+    def test_the_only_unconditional_step_is_add_server(self):
         # The test below depends on knowing which steps match unconditionally.
-        # Pin that here so adding a third one cannot silently weaken it.
+        # Pin that here so adding another one cannot silently weaken it.
+        # tmux-handled used to sit here: it no longer does, because a Windows
+        # host has no tmux and psmux-handled replaced it for that answer.
         unconditional = [s["id"] for s in self.data["steps"] if not s.get("when")]
-        self.assertEqual(unconditional, ["tmux-handled", "add-server"])
+        self.assertEqual(unconditional, ["add-server"])
 
     def _explained(self):
         """Option ids that answer with prose instead of steps, per question."""
@@ -229,7 +231,11 @@ class TestWizardData(unittest.TestCase):
         anchors = sorted(
             {a for m in self._explained().values() for a in m.values()}
         )
-        self.assertTrue(anchors, "no explainer anchors declared")
+        if not anchors:
+            # No answer is routed to prose any more, so there is nothing to
+            # resolve. test_no_machine_answer_is_routed_to_prose below pins
+            # that state, which is what this assertion used to stand for.
+            return
         for lang in self.config["languages"]:
             fragment = SRC / "content" / "setup" / "{0}.html".format(lang["code"])
             if not fragment.exists():
@@ -269,6 +275,56 @@ class TestWizardData(unittest.TestCase):
                     r"\bopen\b",
                     "{0} ships expanded in {1}".format(anchor, lang["code"]),
                 )
+
+    def test_no_machine_answer_is_routed_to_prose(self):
+        # Windows was the last answer the wizard answered with an anchor to a
+        # section instead of steps, because native Windows had no multiplexer to
+        # set up. Agentmux 1.5.0 drives psmux on a Windows host, so the answer
+        # got a checklist. Re-declaring an explainer here would exempt Windows
+        # from every step test above while reading fine in steps.json.
+        self.assertEqual(self._explained().get("machine", {}), {})
+
+    def test_each_machine_is_told_about_the_multiplexer_it_actually_gets(self):
+        # Windows runs psmux, everything else runs tmux, and which step a reader
+        # sees is decided by `when` in the data. A wrong mapping is a data bug
+        # the renderer cannot catch: both steps read identically well.
+        machine = [q for q in self.data["questions"] if q["id"] == "machine"][0]
+        multiplexers = ("tmux-handled", "psmux-handled")
+        for option in machine["options"]:
+            expected = "psmux-handled" if option == "windows" else "tmux-handled"
+            matches = [
+                s["id"]
+                for s in self.data["steps"]
+                if s["id"] in multiplexers
+                and option in s.get("when", {}).get("machine", [])
+            ]
+            self.assertEqual(
+                matches,
+                [expected],
+                "{0} is told about {1} instead of {2}".format(option, matches, expected),
+            )
+
+    def test_no_windows_step_hands_the_reader_a_posix_command(self):
+        # Every Windows answer now gets its own steps rather than reusing the
+        # POSIX ones. This is what kept shipping `which claude` and
+        # `systemctl status ssh` to a reader holding a PowerShell prompt: the
+        # text was fine, the command was not, and no other test looks inside
+        # `commands` or `verify`.
+        posix_marks = ("sudo ", "systemctl", "apt-get", "brew ", "which ", "getifaddr")
+        for step in self.data["steps"]:
+            if "windows" not in step.get("when", {}).get("machine", []):
+                continue
+            for field in ("commands", "verify"):
+                values = step.get(field, [])
+                if isinstance(values, str):
+                    values = [values]
+                for line in values:
+                    for mark in posix_marks:
+                        self.assertNotIn(
+                            mark,
+                            line,
+                            "{0}.{1} uses {2} on a Windows step".format(step["id"], field, mark),
+                        )
 
     def test_every_agent_option_except_shell_has_an_install_step(self):
         # The agent dimension free-rides on the other two: for any combination
@@ -321,7 +377,7 @@ class TestWizardData(unittest.TestCase):
         # Without it they reach the final step with no address at all — and
         # the machine-only and reach tests above both stay green, because
         # enable-ssh-* and the Tailscale steps satisfy them independently.
-        for machine in ("mac", "linux"):
+        for machine in ("mac", "linux", "windows"):
             gated = [
                 s
                 for s in self.data["steps"]

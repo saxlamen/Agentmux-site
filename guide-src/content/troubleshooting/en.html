@@ -93,6 +93,8 @@ Match All
   <h3>Cause</h3>
   <p>tmux is not installed on the target machine yet, and Agentmux is the one meant to install it: it detects whether the machine uses apt, yum, dnf, pacman, apk (Alpine), or brew, then runs the matching command over SSH. Usually you wait for it to finish.</p>
   <p>When that fails, the usual reason is <code>sudo</code>. The install command includes it, the channel is non-interactive, and <code>sudo</code> has no terminal to ask for a password on (see <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a> below). Second most common: Homebrew on a Mac while connected as root. Homebrew refuses to run as root by design.</p>
+  <p>A Windows host is the same story with a different program: Agentmux installs psmux there, over winget, then Scoop, then cargo. A machine with none of the three gets a message that says exactly that, <em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em> That is not a broken install, it is a PC with no package manager, and the manual line is below.</p>
+
   <p>A rarer case is easy to misread. tmux <em>is</em> installed, just somewhere Agentmux did not see when it probed the PATH, such as Linuxbrew under <code>~/.linuxbrew</code> or MacPorts under <code>/opt/local/bin</code>. The message reads the same, but the problem is the PATH, not a missing install. Handle it as described in <a href="#agent-command-not-found">claude: command not found, but it runs fine in the desktop terminal</a> below.</p>
 
   <h3>Fix</h3>
@@ -115,6 +117,10 @@ sudo apk add tmux
 
 # Mac (do not run as root)
 brew install tmux</code></pre>
+  <p>On Windows, install psmux instead of tmux:</p>
+  <pre><code># Windows (PowerShell)
+winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements</code></pre>
+  <p>No winget on that machine means Scoop or cargo if you use either, and otherwise a binary you place in a folder that is already on <code>PATH</code>. Reconnect afterwards either way; the app probes for the program when a session starts.</p>
 </section>
 
 <section id="agent-command-not-found">

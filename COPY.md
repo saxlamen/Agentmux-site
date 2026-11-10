@@ -11,11 +11,12 @@ the site speaks **four languages** while the guide speaks two.
 | Home | `index.source.html` (39 copy slots per locale, switched with `data-lang`) | `python3 build_home.py` | en, zh-TW, zh-Hans, ja | 413 en words / 547 / 527 / 809 CJK chars |
 | Home search metadata | `build_home.py` `LANG_CONFIG` (paints each page) **and** `LANG_META` inside `index.source.html` (repaints on an in-page language switch) | `python3 build_home.py` | en, zh-TW, zh-Hans, ja | title + description per locale |
 | Home structured data | `build_home.py` `FEATURE_LIST`, `OFFER_DESCRIPTION` | same | en | 6 feature lines |
-| Guide articles | `guide-src/content/<slug>/{en,zh-TW}.html` | `python3 guide-src/build.py` | en, zh-TW | 15,743 en words / 22,403 zh chars, 11 articles |
-| Guide titles, meta, UI | `guide-src/strings/{en,zh-TW}.json` (51 strings each) | same | en, zh-TW | 2,657 / 1,421 chars |
-| Setup wizard | `guide-src/wizard/strings/{en,zh-TW}.json` (69 strings each) | copied to `guide/assets/` | en, zh-TW | 6,396 / 2,748 chars |
+| Guide articles | `guide-src/content/<slug>/{en,zh-TW}.html` | `python3 guide-src/build.py` | en, zh-TW | 16,619 en words / 23,379 zh chars, 12 articles |
+| Guide titles, meta, UI | `guide-src/strings/{en,zh-TW}.json` (53 strings each) | same | en, zh-TW | 2,810 / 1,513 chars |
+| Setup wizard | `guide-src/wizard/strings/{en,zh-TW}.json` (89 strings each) | copied to `guide/assets/` | en, zh-TW | 9,967 / 4,310 chars |
 | Guide language picker | built from `guide-src/config.json` | `build.py` | en, zh-TW | — |
-| Privacy policy | `privacy.html` (four locales in one file) | static | en, zh-TW, zh-Hans, ja | 1,020 en words / 1,601 / 1,579 / 2,589 CJK |
+| Privacy policy | `privacy.html` (four locales in one file) | static | en, zh-TW, zh-Hans, ja | 1,245 en words / 1,895 / 1,878 / 3,092 CJK |
+| Announcement popup | `announce.json` | hand-edited, deployed as-is by Pages | en, de, es, fr, ja, ko, pt-BR, ru, zh-Hans, zh-Hant | 1 title + 1 message + 1 button label per locale |
 | 404 | `404.html` | static | **en only** | 260 words |
 | `llms.txt`, `llms-full.txt`, `sitemap.xml`, `SITE_MAP.*` | built | `build.py`, `site_map.py` | en + zh-TW | — |
 
@@ -42,10 +43,31 @@ agreed in prose. If you change one of these sentences, change it against code.
 
 Three findings are **not** site problems and are left for the app:
 `share_usage_statistics_desc` promises the statistics "never include servers"
-while the client sends the server *count* as a range; `Info.plist` sets
+while the client sends the server *count* as a range; and `Info.plist` sets
 `NSAllowsArbitraryLoads = true`, so HTTPS is not enforced app-wide even though
-telemetry itself uses it; and the wizard's question text is fine but Windows has
-no checklist because `steps.json` maps that option to an explainer anchor.
+telemetry itself uses it.
+
+### Windows hosting claims
+
+The `windows-server` article, the setup page's Windows section, and the five
+Windows steps in the wizard make claims of their own. Same rule as the table
+above: each row was read out of the app, not reasoned out.
+
+| Claim in the Windows copy | What the code actually does | Evidence |
+|---|---|---|
+| A Windows host gets psmux, installed over winget, then Scoop, then cargo | The install script looks for `winget.exe` under `LOCALAPPDATA`, then `Get-Command scoop`, then `cargo.exe`, and stops with "Neither winget, scoop, nor cargo was found on the Windows server" when none of the three exists. It then looks in `scoop\shims` and `.cargo\bin` | `Agentmux/Services/TmuxInstaller.swift:415-452` |
+| The app first asks the host where `psmux.exe`, `pmux.exe` or `tmux.exe` already are, and reads `%TEMP%` too | The environment probe returns the Windows scratch directory and the `where.exe` results, because PATH can lag behind an installer on purpose | `Agentmux/Services/RemoteCommandSupport.swift:133-142` |
+| Attach stages its file in `/tmp` on a POSIX host and in the Windows scratch directory on a Windows host | The path is picked per host OS and quoted when the folder name contains a space | `Agentmux/Views/TerminalHostView+Attach.swift:463`, `Agentmux/Services/SSHManager.swift:903` |
+| A new psmux session does not start in the previous pane's directory | A comment in the code says `pane_current_path` expands to nothing on psmux, while `capture-pane` and `list-panes` do answer | `Agentmux/Services/TmuxController.swift:175` |
+| A Windows server is pinned to its own shell dialect instead of being probed as POSIX | A configured Windows server skips the POSIX home probe, and `RemoteFileBrowserHomeResolver.shouldProbePOSIXHome` gates the fallback | `Agentmux/Views/RemoteFileBrowserView.swift:883-905` |
+| The Windows behaviour was measured on real machines | A validation matrix of individual commands, with measured timings and which fallbacks the app has to keep on Windows | `docs/WINDOWS_SSH_PSMUX_PLAN.md:237`, `:275` |
+
+Two sentences in `windows-server` were verified earlier against a checkout of
+the `AgentmuxCore` package that is not in this working tree: that Attach writes
+its file over SFTP rather than through a heredoc, and that the file browser's
+Git integration (status, diff, log, blame) is switched off on Windows hosts.
+Neither symbol exists in the app target here, so re-check both in that package
+before rewriting those sentences, and delete them if the code has moved again.
 
 ## Commands
 
@@ -59,6 +81,7 @@ python3 guide-src/tests/test_site_map.py   # the map stays honest
 python3 guide-src/tests/test_wizard_data.py
 python3 guide-src/tests/test_copy_i18n.py  # the four-locale surfaces
 python3 tools/copy_stats.py                # sizes of every copy surface
+python3 scripts/check_announce.py announce.json   # the popup payload, see below
 ```
 
 The size column in the table below comes from `tools/copy_stats.py`. Run it
@@ -161,6 +184,40 @@ not.
   same commit that adds it to `guide-src/config.json`; if the set no longer
   matches, the test says so.
 
+## The announcement payload
+
+`announce.json` is one in-app release popup. `../docs/archive/announce.schema.json`
+and `../docs/TELEMETRY.md` describe the wire format and are the reference; this
+section records the parts that are copy or judgement.
+
+- **One payload, one slot.** Publishing a new object replaces the previous one
+  for everybody. A feature note about 1.4.5 is gone the moment 1.5.0's appears.
+- **The line budgets the iOS popup can render:** title 34 characters, message
+  140 on iPhone (an iPad allows 180), button label 26. They come from the
+  popup's SwiftUI layout rather than the schema, and longer text is cut. The
+  1.5.0 message is 149 characters in English: it fits iPad and is cut on iPhone.
+  The app's text layout has not been re-measured since the popup shipped, so
+  work to 140 and put the point in the first half of the sentence.
+- **`minAppVersion` is advisory in the schema and applied by the app**, so
+  nothing stops a payload about a feature an older build lacks. A feature that
+  arrived in one release must set `minAppVersion` and the same value per
+  platform under `platforms`, or readers on an older build tap a button for a
+  screen they do not have. The live payload (`2026-11-10-windows-and-attach`
+  since 2026-11-10, expiring 2026-12-20) gates itself to 1.5.0 that way, and its
+  CTA is `guide/en/windows-server/`.
+- **`scripts/check_announce.py`** validates the rules that are easy to get wrong
+  by hand: schema keys and types, `expiresAt` later than `publishAt`, real
+  semver in the version gates, both `platforms` keys, the ten locale keys the
+  apps ask for, `zh-Hans` and `zh-Hant` written in their own script, and an
+  `https` CTA whose path exists on this site (a HEAD request, so run it after
+  the page is deployed). It checks none of the copy: no length budgets, no
+  terminology, no simplified characters in `zh-Hant`, no banned marketing words.
+  It uses only the standard library, so it runs anywhere Python does.
+- The popup is a **release note you cannot reread**: dismissed once, never
+  offered again on that device, and `expiresAt` is not a dismissal. Say one
+  thing, put the detail behind the button, and expect a reader to tap it or
+  ignore it rather than read it twice.
+
 ## Known gaps
 
 1. `404.html` is English-only while everything else speaks four.
@@ -185,11 +242,14 @@ not.
    its `og:title` and its JSON-LD headline. There is no way to shorten a search
    result title without changing the heading a reader sees, which is why
    `test_build.py` caps it. Five headings changed in the last strings pass.
-6. The wizard's "A Windows PC" answer is an explainer answer by design: it opens
-   the setup article's `#windows` section (which exists in en and zh-TW) and
-   never builds a plan, guarded in `guide-src/wizard.js:216-220`. Copy
-   consequence: the machine question must not promise a checklist for every
-   answer.
+6. The setup wizard builds a plan for every answer, Windows included. It used to
+   answer "A Windows PC" with the setup article's `#windows` section and no
+   checklist, because there was nothing on Windows to install; Agentmux 1.5.0
+   drives psmux there, so Windows now has five steps of its own. Two tests hold
+   the new state: `test_no_machine_answer_is_routed_to_prose` (no machine answer
+   may go back to being prose) and `test_no_windows_step_hands_the_reader_a_posix_command`
+   (the old bug: a Windows reader handed `which claude`). The `explain`
+   mechanism in `guide-src/wizard.js` still exists and is now unused.
 7. `wizard/strings/*.json`'s `ui.loadFailed` text is duplicated verbatim inside
    `guide-src/content/setup/{en,zh-TW}.html` (`data-load-failed`). Change one and
    the guide's fallback message stops matching the wizard's.

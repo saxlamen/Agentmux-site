@@ -8,7 +8,7 @@
 <details id="windows" class="windows-note">
   <summary><h2>That machine runs Windows</h2></summary>
 
-  <p>You picked Windows, so the wizard handed you an explainer instead of a checklist. Windows needs two programs the other three paths do not, and half a checklist would have left you at the interesting part with nothing to follow.</p>
+  <p>Answer "a Windows PC" and the wizard hands you a checklist like every other answer: switch on the SSH server, stop the PC from sleeping, install your agent, and psmux gets installed by itself. This section is for the two things that stop people arriving from the other paths: what replaces tmux on a Windows host, and whether the WSL2 route they read about somewhere else is still required.</p>
   <p>The short version: Windows 10 and 11 ship an OpenSSH Server you switch on in PowerShell, and persistence comes from <strong>psmux</strong>, a tmux-compatible program written for Windows, which Agentmux installs when the host is missing it. You do not need WSL2, a virtual machine, or a port forward. <a href="/guide/en/windows-server/">The Windows server article</a> has the commands, what a Windows session gives you, and what is still different from a Linux box.</p>
   <p>WSL2 is still the right pick when you want Linux userland programs rather than a Windows box. Inside it the "Linux box" path applies unchanged, so answer the wizard's first question that way. Three snags come with it, none of which a Mac has: sshd sits behind NAT inside the virtual machine, the distribution shuts down seconds after WSL's last process exits, and systemd is off by default on older installs. All three are written out with their fixes in <a href="/guide/en/windows-server/#wsl2-still-an-option">the WSL2 section of that article</a>.</p>
 

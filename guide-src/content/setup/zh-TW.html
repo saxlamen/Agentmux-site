@@ -8,7 +8,7 @@
 <details id="windows" class="windows-note">
   <summary><h2>那台機器是 Windows</h2></summary>
 
-  <p>你選了 Windows，所以精靈給你這一節而不是清單。Windows 需要兩樣另外三條路不需要的東西，塞半套清單會在最關鍵的地方斷掉。</p>
+  <p>選「一台 Windows 電腦」，精靈會跟其他答案一樣給你清單：打開 SSH 伺服器、別讓電腦睡、裝你的 agent，psmux 它會自己處理。這一節處理兩件從別條路過來的人一定會卡住的事：Windows 上取代 tmux 的是什麼，還有你在別處讀過的 WSL2 現在還要不要走。</p>
 
   <p>先講結論：Windows 10 和 11 都有 OpenSSH Server，用 PowerShell 打開就好。撐住 session 的是 <strong>psmux</strong>：指令照 tmux 那套設計，為 Windows 寫的。那台機器沒裝的話，Agentmux 會幫你裝。不用 WSL2、不用虛擬機，也不用轉 port。指令、Windows 的 session 能做什麼、跟 Linux 主機哪裡不一樣，全部在<a href="/guide/zh-TW/windows-server/">這篇 Windows 主機指南</a>。</p>
 

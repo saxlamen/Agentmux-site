@@ -37,10 +37,11 @@
         return data.questions.every(function (q) { return answers[q.id]; });
     }
 
-    // Some options answer the reader with prose instead of a checklist — the
-    // machine question offers Windows, which this guide handles through a
-    // section on the page rather than steps of its own. steps.json maps those
-    // option ids to an anchor so the behaviour stays in the data.
+    // Some options answer the reader with prose instead of a checklist. The
+    // mapping lives in steps.json under a question's `explain` key, so the
+    // behaviour stays in the data. Nothing uses it today: every machine answer,
+    // Windows included, now gets real steps. Windows was the last prose answer,
+    // and it lost that treatment when psmux made a checklist possible.
     function explainAnchor() {
         for (var i = 0; i < data.questions.length; i++) {
             var map = data.questions[i].explain;

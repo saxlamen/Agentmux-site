@@ -65,17 +65,41 @@
       "verifyHint": "Connect with the credentials the provider gave you and run the verification command. A username in return means SSH works on this machine.",
       "failHint": "If you can't connect, check the firewall or security group rules in the provider's console and make sure the SSH port is open. That is where a VPS most often stops you, not the SSH configuration itself."
     },
+    "enable-ssh-windows": {
+      "title": "Turn on the SSH server in Windows",
+      "why": "Windows 10 and 11 carry an OpenSSH Server as an optional feature, switched off by default. Run the three lines in one PowerShell window opened as administrator: the first installs it, the second starts it now, the third starts it again after every reboot. A Windows PC updates and reboots on a schedule of its own, so that third line is not optional.",
+      "verifyHint": "Run the verification command in PowerShell. Status Running together with StartType Automatic is the result you want: SSH answers now, and it answers again after a reboot. The installer added an inbound firewall rule named OpenSSH-Server-In-TCP along the way.",
+      "failHint": "Add-WindowsCapability needs administrator rights and a machine that can reach Windows Update. If it reports the capability as unknown, check that this is Windows 10 1809 or newer. If SSH answers on the PC but not from your phone, the firewall is the next suspect."
+    },
+    "keep-awake-windows": {
+      "title": "Stop the PC from sleeping",
+      "why": "A multiplexer keeps an agent alive through a dropped connection, not through a sleeping machine. While the PC sleeps the agent is frozen and nothing on the phone can reach it, which is the whole reason you are setting this up. These two lines set sleep and hibernate to Never while the charger is in.",
+      "verifyHint": "Run the verification command. Current AC Power Setting Index: 0x00000000 means Never on AC power; any other value is a number of seconds.",
+      "failHint": "A machine on a work account can have sleep put back by a group policy, which overrides what you just set, so look again the next morning. Check Windows Update's active hours too: a reboot closes every session, and that is a different failure from a dropped connection."
+    },
     "install-agent": {
       "title": "Install the agent you picked on the machine",
       "why": "Agentmux attaches to a CLI agent that already runs on your machine; it doesn't install one or sign you in. Follow the official install instructions for the tool you picked, and get it installed and signed in on that machine first.",
       "verifyHint": "Run the verification command. A printed path means at least one agent command is where this account's PATH can find it; nothing printed means the command is missing.",
       "failHint": "If the command works in a terminal you opened yourself but not over SSH, the PATH is probably set only for interactive logins, not a broken install. The absolute path works either way."
     },
+    "install-agent-windows": {
+      "title": "Install the agent on the Windows machine",
+      "why": "Agentmux attaches to a CLI agent that already runs on the machine; it does not install one or sign you in. Install the tool you picked with its own Windows instructions, into the account you will connect as. If Node.js is on the machine, most of them are one npm command.",
+      "verifyHint": "Run the verification command in PowerShell or cmd. A printed path means the command is on this account's PATH; nothing printed means it is missing or outside PATH. Check the others the same way: where.exe codex, where.exe gemini, where.exe opencode.",
+      "failHint": "If the command runs in a terminal you opened but Agentmux cannot find it, PATH is set for that shell only. Restart the SSH service so it reads the environment again: Restart-Service sshd. If that does not help, sign out and back in."
+    },
     "tmux-handled": {
       "title": "tmux: nothing to do",
       "why": "You don't need to install tmux yourself. Once Agentmux connects it installs tmux with whichever package manager the machine has (apt, dnf, yum, pacman, apk, brew, nix-env).",
       "verifyHint": "Nothing to do in this step. Move on to the next one.",
       "failHint": "If the app later reports that the automatic install failed, the cause is usually that sudo wants a TTY."
+    },
+    "psmux-handled": {
+      "title": "psmux: nothing to do",
+      "why": "A Windows host has no tmux, so Agentmux uses psmux, a separate program with a command line modelled on tmux. It looks for psmux, pmux, or tmux.exe first, and installs one over winget, then Scoop, then cargo, whichever the machine already has.",
+      "verifyHint": "Nothing to do in this step. If you want to look for yourself, run where.exe psmux: a printed path means it is there.",
+      "failHint": "If the app says none of winget, Scoop, or cargo was found, install it yourself: run the command in this step, or take a binary and add its folder to PATH, then reconnect."
     },
     "tailscale-host": {
       "title": "Install Tailscale on the machine and sign in",
@@ -100,6 +124,12 @@
       "why": "Same as on the Mac: connecting over the same Wi-Fi or local network needs the machine's IP before SSH knows where to go.",
       "verifyHint": "This prints an IP for every network interface on the machine. The first is usually the local address, typically one starting 192.168.",
       "failHint": "If several addresses print, pick the one on your phone's subnet, for example another 192.168.1.x."
+    },
+    "find-lan-address-windows": {
+      "title": "Find the PC's address on your local network",
+      "why": "Connecting over the same Wi-Fi without Tailscale needs the PC's own IP address, because SSH has to dial something. A Windows machine usually has more than one address: Wi-Fi, ethernet, and whatever virtual adapters are installed.",
+      "verifyHint": "This prints a block per adapter with its IPv4 address. Pick the one on the same network as your phone, for example another 192.168.1.x.",
+      "failHint": "If nothing prints, that adapter is not connected. Run ipconfig by itself to see every adapter, or go through Tailscale, which does not care which adapter carries the traffic."
     },
     "add-server": {
       "title": "Add the server in Agentmux",

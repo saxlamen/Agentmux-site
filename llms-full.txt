@@ -13,7 +13,7 @@ Source: https://agentmux.saxcave.cc/  |  App Store: https://apps.apple.com/app/i
 
 URL: https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 The cost of running agents remotely is standby: the agent waits on you. tmux and SSH move that wait to your phone.
 
@@ -86,7 +86,7 @@ Not sure where to start? Help me pick a track.
 
 URL: https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 On a desktop the IDE agent usually wins. On a phone a terminal wins: a byte stream can be stored and reattached.
 
@@ -135,7 +135,7 @@ Agentmux is not trying to replace your IDE. It replaces the part where you sit i
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-cli/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell is, and when a GUI tool wins.
 
@@ -262,7 +262,7 @@ The terminal puts an agent on your machine, and its output is characters that ca
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-ssh/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.
 
@@ -350,7 +350,7 @@ Then you put your phone away, the tunnel drops, and the agent dies with it. Unle
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tmux/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 tmux is a terminal multiplexer: the session lives on the server, so a dropped SSH detaches instead of killing the agent.
 
@@ -455,7 +455,7 @@ So the agent survives you putting the phone away. One problem left: getting in f
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tailscale/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.
 
@@ -552,7 +552,7 @@ The way in is settled. What is left is the phone in your hand, and what that pho
 
 URL: https://agentmux.saxcave.cc/guide/en/why-agentmux/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Agentmux vs Termius and Blink: five capability differences, and the cases where Termius is the better tool.
 
@@ -655,7 +655,7 @@ Decided on Agentmux? The next problem is the machine at the other end: the setup
 
 URL: https://agentmux.saxcave.cc/guide/en/setup/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Answer three questions and get the steps for your machine, the agent you want to run, and where you connect from: SSH, tmux, Tailscale.
 
@@ -667,7 +667,7 @@ The setup wizard needs JavaScript. You can also go straight to the troubleshooti
 
 ## That machine runs Windows
 
-You picked Windows, so the wizard handed you an explainer instead of a checklist. Windows needs two programs the other three paths do not, and half a checklist would have left you at the interesting part with nothing to follow.
+Answer "a Windows PC" and the wizard hands you a checklist like every other answer: switch on the SSH server, stop the PC from sleeping, install your agent, and psmux gets installed by itself. This section is for the two things that stop people arriving from the other paths: what replaces tmux on a Windows host, and whether the WSL2 route they read about somewhere else is still required.
 
 The short version: Windows 10 and 11 ship an OpenSSH Server you switch on in PowerShell, and persistence comes from **psmux**, a tmux-compatible program written for Windows, which Agentmux installs when the host is missing it. You do not need WSL2, a virtual machine, or a port forward. The Windows server article has the commands, what a Windows session gives you, and what is still different from a Linux box.
 
@@ -681,7 +681,7 @@ The Windows discussed here is always *the machine you connect to*. If your Windo
 
 URL: https://agentmux.saxcave.cc/guide/en/windows-server/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.
 
@@ -754,7 +754,7 @@ The door is open and the sessions survive. What is left is the address you type 
 
 URL: https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Claude Code runs on a machine you own, not on the phone. Remote Login, Tailscale, a named tmux session, and the PATH problem SSH causes.
 
@@ -871,7 +871,7 @@ Three things have to hold: a machine that stays awake, a session with a name, an
 
 URL: https://agentmux.saxcave.cc/guide/en/permission-review/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides.
 
@@ -1009,7 +1009,7 @@ Only two things leave it: the redacted text on screen and your Main Intent. They
 
 URL: https://agentmux.saxcave.cc/guide/en/troubleshooting/
 Language: en
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 SSH refused, key rejected, tmux missing, claude not found: eight failures, each with a cause and a command to type.
 
@@ -1153,6 +1153,8 @@ tmux is not installed on the target machine yet, and Agentmux is the one meant t
 
 When that fails, the usual reason is `sudo`. The install command includes it, the channel is non-interactive, and `sudo` has no terminal to ask for a password on (see sudo: a terminal is required to read the password below). Second most common: Homebrew on a Mac while connected as root. Homebrew refuses to run as root by design.
 
+A Windows host is the same story with a different program: Agentmux installs psmux there, over winget, then Scoop, then cargo. A machine with none of the three gets a message that says exactly that, *Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.* That is not a broken install, it is a PC with no package manager, and the manual line is below.
+
 A rarer case is easy to misread. tmux *is* installed, just somewhere Agentmux did not see when it probed the PATH, such as Linuxbrew under `~/.linuxbrew` or MacPorts under `/opt/local/bin`. The message reads the same, but the problem is the PATH, not a missing install. Handle it as described in claude: command not found, but it runs fine in the desktop terminal below.
 
 ### Fix
@@ -1180,6 +1182,15 @@ sudo apk add tmux
 # Mac (do not run as root)
 brew install tmux
 ```
+
+On Windows, install psmux instead of tmux:
+
+```
+# Windows (PowerShell)
+winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements
+```
+
+No winget on that machine means Scoop or cargo if you use either, and otherwise a binary you place in a folder that is already on `PATH`. Reconnect afterwards either way; the app probes for the program when a session starts.
 
 ## claude: command not found, but it runs fine in the desktop terminal
 
@@ -1331,7 +1342,7 @@ Configure it only if you understand that cost and accept it deliberately. Otherw
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 遠端跑 agent 的成本是待命：機器不關機、tmux、SSH 加 Tailscale，待命變成一支手機加十五秒。
 
@@ -1406,7 +1417,7 @@ CLI agent 真正的成本是待命，不是打字：你講三十秒，接下來�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。
 
@@ -1457,7 +1468,7 @@ Agentmux 不是要取代你的 IDE，它取代的是**坐在椅子上等**。然
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 因為終端機給的是完整檔案存取和執行權限，別的介面做不到。終端機是什麼，什麼時候該用 GUI。
 
@@ -1584,7 +1595,7 @@ curl -sf localhost:8000/health | jq .db
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。
 
@@ -1672,7 +1683,7 @@ SSH 不做下面三件事：
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 tmux 是什麼，為什麼 SSH 斷線時你的 AI coding agent 不會死：session 留在伺服器上，手機只是接上去看。
 
@@ -1777,7 +1788,7 @@ agent 現在能在你收起手機之後活下來。剩下一個問題：怎麼�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 不開 port 也能從手機連回去：WireGuard mesh、MagicDNS 名稱、100.x 位址，什麼時候不需要 Tailscale。
 
@@ -1874,7 +1885,7 @@ mesh 的安全現在就是帳號的安全。任何能登入的裝置都在網路
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Agentmux 對 Termius、Blink：五個功能差異，以及什麼時候選 Termius 比較好。
 
@@ -1977,7 +1988,7 @@ Agentmux 為一個工作流設計：**在手機上接回正在跑的 coding agen
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/setup/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 回答三個問題，拿到照你的答案生成的步驟清單：機器、要跑的 agent、從哪裡連回來。
 
@@ -1989,7 +2000,7 @@ Updated: 2026-11-06
 
 ## 那台機器是 Windows
 
-你選了 Windows，所以精靈給你這一節而不是清單。Windows 需要兩樣另外三條路不需要的東西，塞半套清單會在最關鍵的地方斷掉。
+選「一台 Windows 電腦」，精靈會跟其他答案一樣給你清單：打開 SSH 伺服器、別讓電腦睡、裝你的 agent，psmux 它會自己處理。這一節處理兩件從別條路過來的人一定會卡住的事：Windows 上取代 tmux 的是什麼，還有你在別處讀過的 WSL2 現在還要不要走。
 
 先講結論：Windows 10 和 11 都有 OpenSSH Server，用 PowerShell 打開就好。撐住 session 的是 **psmux**：指令照 tmux 那套設計，為 Windows 寫的。那台機器沒裝的話，Agentmux 會幫你裝。不用 WSL2、不用虛擬機，也不用轉 port。指令、Windows 的 session 能做什麼、跟 Linux 主機哪裡不一樣，全部在這篇 Windows 主機指南。
 
@@ -2003,7 +2014,7 @@ Updated: 2026-11-06
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/windows-server/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。
 
@@ -2076,7 +2087,7 @@ app 會幫你裝。它先試 `winget install -e --id marlocarlo.psmux`，沒有�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Claude Code 跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
 
@@ -2193,7 +2204,7 @@ which claude
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/permission-review/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。
 
@@ -2331,7 +2342,7 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/
 Language: zh-TW
-Updated: 2026-11-06
+Updated: 2026-11-10
 
 連不上、金鑰被拒、找不到 tmux、agent 指令不存在：八個卡點，各有原因和解法。
 
@@ -2475,6 +2486,8 @@ Agentmux 提示找不到 tmux，或者你自己連上去手動打 `tmux` 時看�
 
 自動安裝失敗，最常見的原因是 `sudo`。安裝指令裡帶了它，但這條通道是非互動式的，`sudo` 沒有終端機可以問你密碼（見下面 sudo: a terminal is required to read the password）。其次是在 Mac 上用 Homebrew 安裝、但連線身分是 root，因為 Homebrew 設計上拒絕以 root 執行。
 
+Windows 主機是同一個故事，只是程式換了：那裡 Agentmux 裝的是 psmux，先試 winget、再 Scoop、最後 cargo。三個都沒有的機器會收到直接把話說清楚的訊息：*Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.* 那不是安裝壞掉，是那台電腦沒有套件管理工具，手動安裝的指令在下面。
+
 還有一種少見但容易誤判的情況：tmux 已經裝了，只是裝在 Agentmux 探測 PATH 時沒看到的地方，例如 Linuxbrew 裝在 `~/.linuxbrew`，MacPorts 裝在 `/opt/local/bin`。訊息一樣是「找不到 tmux」，問題卻出在 PATH，不是沒裝。照下面 claude: command not found，但桌面終端機明明可以跑 那節處理。
 
 ### 解法
@@ -2502,6 +2515,15 @@ sudo apk add tmux
 # Mac（不要用 root 身分執行）
 brew install tmux
 ```
+
+Windows 上要裝的是 psmux，不是 tmux：
+
+```
+# Windows（PowerShell）
+winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements
+```
+
+那台機器沒有 winget 的話，你有在用 Scoop 或 cargo 就用它們，不然就抓一個 binary 放進已經在 `PATH` 裡的資料夾。兩種做法之後都要重連一次，因為 app 是開 session 的時候才去探那個程式。
 
 ## claude: command not found，但桌面終端機明明可以跑
 

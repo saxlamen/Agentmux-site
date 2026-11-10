@@ -9,9 +9,7 @@
         "windows",
         "none"
       ],
-      "explain": {
-        "windows": "windows"
-      }
+      "explain": {}
     },
     {
       "id": "agent",
@@ -80,6 +78,34 @@
       "troubleshoot": "cannot-connect"
     },
     {
+      "id": "enable-ssh-windows",
+      "when": {
+        "machine": [
+          "windows"
+        ]
+      },
+      "commands": [
+        "Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0",
+        "Start-Service sshd",
+        "Set-Service -Name sshd -StartupType Automatic"
+      ],
+      "verify": "Get-Service sshd | Select-Object Status,StartType",
+      "troubleshoot": "cannot-connect"
+    },
+    {
+      "id": "keep-awake-windows",
+      "when": {
+        "machine": [
+          "windows"
+        ]
+      },
+      "commands": [
+        "powercfg /change standby-timeout-ac 0",
+        "powercfg /change hibernate-timeout-ac 0"
+      ],
+      "verify": "powercfg /query SCHEME_CURRENT SUB_SLEEP STANDBYIDLE"
+    },
+    {
       "id": "install-agent",
       "when": {
         "agent": [
@@ -87,13 +113,56 @@
           "codex",
           "gemini",
           "opencode"
+        ],
+        "machine": [
+          "mac",
+          "linux",
+          "vps",
+          "none"
         ]
       },
       "verify": "which claude || which codex || which gemini || which opencode",
       "troubleshoot": "agent-command-not-found"
     },
     {
-      "id": "tmux-handled"
+      "id": "install-agent-windows",
+      "when": {
+        "agent": [
+          "claude",
+          "codex",
+          "gemini",
+          "opencode"
+        ],
+        "machine": [
+          "windows"
+        ]
+      },
+      "verify": "where.exe claude",
+      "troubleshoot": "agent-command-not-found"
+    },
+    {
+      "id": "psmux-handled",
+      "when": {
+        "machine": [
+          "windows"
+        ]
+      },
+      "commands": [
+        "winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements"
+      ],
+      "verify": "where.exe psmux",
+      "troubleshoot": "tmux-not-found"
+    },
+    {
+      "id": "tmux-handled",
+      "when": {
+        "machine": [
+          "mac",
+          "linux",
+          "vps",
+          "none"
+        ]
+      }
     },
     {
       "id": "tailscale-host",
@@ -141,6 +210,21 @@
       },
       "commands": [
         "hostname -I"
+      ],
+      "troubleshoot": "cannot-connect"
+    },
+    {
+      "id": "find-lan-address-windows",
+      "when": {
+        "reach": [
+          "lan"
+        ],
+        "machine": [
+          "windows"
+        ]
+      },
+      "commands": [
+        "ipconfig | findstr /i IPv4"
       ],
       "troubleshoot": "cannot-connect"
     },
