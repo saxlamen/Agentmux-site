@@ -74,7 +74,7 @@
     "keep-awake-windows": {
       "title": "別讓電腦自己睡",
       "why": "multiplexer 撐住的是斷線，不是睡覺。電腦睡過去，agent 跟著暫停，手機怎麼連都進不去，那你整晚工作就沒意義了。這兩行把接上電源時的睡眠和休眠都設成「從不」。",
-      "verifyHint": "跑驗證指令。看到 Current AC Power Setting Index: 0x00000000 就是接電時永不睡眠，其他數字是秒數。",
+      "verifyHint": "跑驗證指令。接上電源那行結尾是 0x00000000，就是永不睡眠；其他數字是秒數。數字前面那個標籤會跟著 Windows 的顯示語言走，所以看數字，不要去找特定的英文字。",
       "failHint": "公司帳號的電腦會被群組原則把睡眠蓋回來，你剛設的未必留得住，隔天早上再看一次。Windows Update 的作用時段也要注意：重開機是把所有 session 關掉，跟斷線是兩回事。"
     },
     "install-agent": {
@@ -86,7 +86,7 @@
     "install-agent-windows": {
       "title": "在 Windows 機器上裝 agent",
       "why": "Agentmux 接的是機器上已經能跑的 CLI agent，它不會幫你裝、也不會幫你登入。用那個工具自己的 Windows 安裝方式，裝在你之後要連進去的那個帳號。機器上有 Node.js 的話，多數是跑一條 npm 指令的事。",
-      "verifyHint": "在 PowerShell 或 cmd 跑驗證指令。印出路徑代表這個帳號的 PATH 找得到那個指令；什麼都沒有就是沒裝，或裝在 PATH 外面。其他 agent 照樣查：where.exe codex、where.exe gemini、where.exe opencode。",
+      "verifyHint": "在 PowerShell 或 cmd 跑驗證指令。印出路徑代表這個帳號的 PATH 找得到那個指令；它回一行說找不到檔案，就是沒裝、或裝在 PATH 外面。其他 agent 照樣查：where.exe codex、where.exe gemini、where.exe opencode。",
       "failHint": "自己開的終端機跑得到、Agentmux 找不到的話，通常是 PATH 只給那個 shell 用。先重啟 SSH 服務讓它重新讀一次環境：Restart-Service sshd，還是不行就登出再登入。"
     },
     "tmux-handled": {
@@ -98,7 +98,7 @@
     "psmux-handled": {
       "title": "psmux：不用做什麼",
       "why": "Windows 上沒有 tmux，Agentmux 用的是 psmux，一個指令照 tmux 那套設計的程式。它會先找 psmux、pmux、tmux.exe，找不到就用機器上現成的套件管理工具裝：先 winget，沒有再 Scoop，再沒有 cargo。",
-      "verifyHint": "這一步不用做什麼。想自己確認就在 PowerShell 打 where.exe psmux，印出路徑代表有了。",
+      "verifyHint": "這一步不用做什麼。想自己確認就在 PowerShell 打 where.exe psmux，印出路徑代表有了；真的沒裝的時候它會回一行說找不到，不會完全沒輸出。",
       "failHint": "app 說 winget、Scoop、cargo 都找不到的話就自己裝：跑這一步給的指令，或是抓 binary 把那個資料夾加進 PATH，再重連一次。"
     },
     "tailscale-host": {

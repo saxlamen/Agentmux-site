@@ -74,7 +74,7 @@
     "keep-awake-windows": {
       "title": "Stop the PC from sleeping",
       "why": "A multiplexer keeps an agent alive through a dropped connection, not through a sleeping machine. While the PC sleeps the agent is frozen and nothing on the phone can reach it, which is the whole reason you are setting this up. These two lines set sleep and hibernate to Never while the charger is in.",
-      "verifyHint": "Run the verification command. Current AC Power Setting Index: 0x00000000 means Never on AC power; any other value is a number of seconds.",
+      "verifyHint": "Run the verification command. The line for AC power ends in 0x00000000, which means Never; any other value is a number of seconds. Windows prints the label around that number in its own display language, so read the number and not the words.",
       "failHint": "A machine on a work account can have sleep put back by a group policy, which overrides what you just set, so look again the next morning. Check Windows Update's active hours too: a reboot closes every session, and that is a different failure from a dropped connection."
     },
     "install-agent": {
@@ -86,7 +86,7 @@
     "install-agent-windows": {
       "title": "Install the agent on the Windows machine",
       "why": "Agentmux attaches to a CLI agent that already runs on the machine; it does not install one or sign you in. Install the tool you picked with its own Windows instructions, into the account you will connect as. If Node.js is on the machine, most of them are one npm command.",
-      "verifyHint": "Run the verification command in PowerShell or cmd. A printed path means the command is on this account's PATH; nothing printed means it is missing or outside PATH. Check the others the same way: where.exe codex, where.exe gemini, where.exe opencode.",
+      "verifyHint": "Run the verification command in PowerShell or cmd. A printed path means the command is on this account's PATH; a line saying the files could not be found means the tool is missing or outside PATH. Check the others the same way: where.exe codex, where.exe gemini, where.exe opencode.",
       "failHint": "If the command runs in a terminal you opened but Agentmux cannot find it, PATH is set for that shell only. Restart the SSH service so it reads the environment again: Restart-Service sshd. If that does not help, sign out and back in."
     },
     "tmux-handled": {

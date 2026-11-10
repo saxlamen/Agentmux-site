@@ -60,6 +60,9 @@ above: each row was read out of the app, not reasoned out.
 | Attach stages its file in `/tmp` on a POSIX host and in the Windows scratch directory on a Windows host | The path is picked per host OS and quoted when the folder name contains a space | `Agentmux/Views/TerminalHostView+Attach.swift:463`, `Agentmux/Services/SSHManager.swift:903` |
 | A new psmux session does not start in the previous pane's directory | A comment in the code says `pane_current_path` expands to nothing on psmux, while `capture-pane` and `list-panes` do answer | `Agentmux/Services/TmuxController.swift:175` |
 | A Windows server is pinned to its own shell dialect instead of being probed as POSIX | A configured Windows server skips the POSIX home probe, and `RemoteFileBrowserHomeResolver.shouldProbePOSIXHome` gates the fallback | `Agentmux/Views/RemoteFileBrowserView.swift:883-905` |
+| The sleep check is a number, not an English label | `powercfg /query SCHEME_CURRENT SUB_SLEEP STANDBYIDLE` answers `目前的 AC 電源設定索引: 0x00000000` on a Chinese Windows and `Current AC Power Setting Index:` on an English one. The value is what means Never, so the wizard's verify text points at the number | measured 2026-11-10 over SSH on `shilin-pc`, Windows 11 10.0.26300, display language zh-TW |
+| `where.exe` does not fail silently | A name that is not on PATH prints `INFO: Could not find files for the given pattern(s).`, so "nothing printed" is not a thing a reader will see | same host; `where.exe scoop` on a machine with Scoop absent |
+| psmux really is a winget package under that id | `winget list --name psmux` reports `psmux marlocarlo.psmux 3.4.0 winget`, and `where.exe psmux` resolves to `AppData\Local\Microsoft\WinGet\Links\psmux.exe` | same host |
 | The Windows behaviour was measured on real machines | A validation matrix of individual commands, with measured timings and which fallbacks the app has to keep on Windows | `docs/WINDOWS_SSH_PSMUX_PLAN.md:237`, `:275` |
 
 Two sentences in `windows-server` were verified earlier against a checkout of
@@ -68,6 +71,12 @@ its file over SFTP rather than through a heredoc, and that the file browser's
 Git integration (status, diff, log, blame) is switched off on Windows hosts.
 Neither symbol exists in the app target here, so re-check both in that package
 before rewriting those sentences, and delete them if the code has moved again.
+
+The live box could not answer one thing: OpenSSH Server is already installed on
+`shilin-pc`, so `Add-WindowsCapability` there never reaches the failure path.
+The wizard's failure hints for that step (no administrator rights, no route to
+Windows Update, an unknown capability) are still a paraphrase of what the cmdlet
+can report, not a measured message. They are written as paraphrases on purpose.
 
 ## Commands
 
