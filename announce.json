@@ -1,66 +1,67 @@
 {
-  "id": "2026-09-29-permission-review",
+  "id": "2026-11-10-windows-and-attach",
   "schemaVersion": 2,
-  "timestamp": "2026-09-29T00:00:00Z",
-  "publishAt": "2026-09-29T00:00:00Z",
-  "expiresAt": "2026-11-15T23:59:59Z",
+  "timestamp": "2026-11-10T00:00:00Z",
+  "expiresAt": "2026-12-20T23:59:59Z",
+  "minAppVersion": "1.5.0",
   "minAppVersions": {
-    "ios": "1.4.5"
+    "ios": "1.5.0",
+    "android": "1.5.0"
   },
   "hideForPro": false,
-  "platforms": ["ios"],
-  "title": "New: AI Permission Review",
-  "message": "Let AI review your agent's permission prompts: dangerous commands are held for you, and safe steps get a suggestion or an automatic reply. Use the JEV engine through OpenRouter or TypeSafe, or your own OpenAI-compatible LLM endpoint. Turn it on in Settings → AI Permission Review.",
+  "platforms": ["ios", "android"],
+  "title": "1.5.0: Windows servers and an Attach button",
+  "message": "Add a Windows PC over OpenSSH and it works like any other server. The new Attach button uploads a photo or file and types its path into the terminal.",
   "action": {
-    "label": "Learn how it works",
+    "label": "Set up a Windows server",
     "type": "url",
-    "url": "https://agentmux.saxcave.cc/guide/en/permission-review/"
+    "url": "https://agentmux.saxcave.cc/guide/en/windows-server/"
   },
   "localized": {
     "zh-Hant": {
-      "title": "新功能：AI 自動權限審查",
-      "message": "讓 AI 替你看 agent 的權限提示：危險指令擋下來交給你，安全的步驟給建議或自動回覆。可使用 OpenRouter 或 TypeSafe 的 JEV 引擎，或你自己的 OpenAI 相容 LLM 端點。前往「設定 → AI 自動權限審查」開啟。",
-      "actionLabel": "了解運作方式"
+      "title": "1.5.0：Windows 伺服器與「附加」按鈕",
+      "message": "用 OpenSSH 加入你的 Windows 電腦，它就像其他伺服器一樣可用。新的「附加」按鈕會上傳照片或檔案，並把路徑打入終端機。",
+      "actionLabel": "設定 Windows 伺服器"
     },
     "zh-Hans": {
-      "title": "新功能：AI 自动权限审查",
-      "message": "让 AI 替你看 agent 的权限提示：危险命令拦下来交给你，安全的步骤给出建议或自动回复。可使用 OpenRouter 或 TypeSafe 的 JEV 引擎，或你自己的 OpenAI 兼容 LLM 端点。前往“设置 → AI 自动权限审查”开启。",
-      "actionLabel": "了解运作方式"
+      "title": "1.5.0：Windows 服务器与“添加附件”按钮",
+      "message": "用 OpenSSH 添加你的 Windows 电脑，它就像其他服务器一样可用。新的“添加附件”按钮会上传照片或文件，并把路径输入终端。",
+      "actionLabel": "设置 Windows 服务器"
     },
     "ja": {
-      "title": "新機能：AI 自動権限レビュー",
-      "message": "エージェントの権限確認を AI がチェックします。危険なコマンドはブロックしてあなたに任せ、安全な操作は提案または自動で応答します。OpenRouter または TypeSafe の JEV エンジン、あるいはご自身の OpenAI 互換 LLM エンドポイントを利用できます。「設定 → AI 自動権限レビュー」で有効にしてください。",
-      "actionLabel": "仕組みを見る"
+      "title": "1.5.0：Windows サーバーと「添付」ボタン",
+      "message": "OpenSSH で Windows PC を追加すると、他のサーバーと同じように使えます。新しい「添付」ボタンは写真やファイルをアップロードし、そのパスをターミナルに入力します。",
+      "actionLabel": "Windows サーバーの設定手順"
     },
     "ko": {
-      "title": "새 기능: AI 자동 권한 검토",
-      "message": "AI가 에이전트의 권한 프롬프트를 대신 확인합니다. 위험한 명령은 차단해 사용자에게 넘기고, 안전한 단계는 제안하거나 자동으로 응답합니다. OpenRouter 또는 TypeSafe의 JEV 엔진이나 직접 운영하는 OpenAI 호환 LLM 엔드포인트를 사용할 수 있습니다. 설정 → AI 자동 권한 검토에서 켜세요.",
-      "actionLabel": "작동 방식 보기"
+      "title": "1.5.0: Windows 서버와 '첨부' 버튼",
+      "message": "OpenSSH로 Windows PC를 추가하면 다른 서버처럼 쓸 수 있다. 새 '첨부' 버튼은 사진이나 파일을 올리고 그 경로를 터미널에 입력한다.",
+      "actionLabel": "Windows 서버 설정 안내"
     },
     "de": {
-      "title": "Neu: KI-Berechtigungsprüfung",
-      "message": "Die KI prüft die Berechtigungsabfragen deines Agenten: Gefährliche Befehle werden dir überlassen, sichere Schritte bekommen einen Vorschlag oder eine automatische Antwort. Nutze die JEV-Engine über OpenRouter oder TypeSafe oder deinen eigenen OpenAI-kompatiblen LLM-Endpunkt. Aktivierbar unter Einstellungen → KI-Berechtigungsprüfung.",
-      "actionLabel": "So funktioniert es"
+      "title": "1.5.0: Windows-Server und Anhängen-Button",
+      "message": "Füge deinen Windows-PC über OpenSSH hinzu und er funktioniert wie jeder andere Server. Der neue Anhängen-Button lädt ein Bild oder eine Datei hoch und schreibt den Pfad ins Terminal.",
+      "actionLabel": "Windows-Server einrichten"
     },
     "fr": {
-      "title": "Nouveau : vérification automatique des autorisations par IA",
-      "message": "L’IA examine les demandes d’autorisation de votre agent : les commandes dangereuses vous sont laissées, les étapes sûres reçoivent une suggestion ou une réponse automatique. Utilisez le moteur JEV via OpenRouter ou TypeSafe, ou votre propre point de terminaison LLM compatible OpenAI. À activer dans Réglages → Vérification automatique des autorisations par IA.",
-      "actionLabel": "Voir comment ça marche"
+      "title": "1.5.0 : serveurs Windows et bouton Joindre",
+      "message": "Ajoutez votre PC Windows en OpenSSH et il fonctionne comme tout autre serveur. Le nouveau bouton Joindre téléverse une photo ou un fichier et saisit son chemin dans le terminal.",
+      "actionLabel": "Configurer un serveur Windows"
     },
     "es": {
-      "title": "Nuevo: revisión automática de permisos con IA",
-      "message": "La IA revisa los avisos de permiso de tu agente: los comandos peligrosos quedan en tus manos y los pasos seguros reciben una sugerencia o una respuesta automática. Usa el motor JEV a través de OpenRouter o TypeSafe, o tu propio endpoint de LLM compatible con OpenAI. Actívala en Ajustes → Revisión automática de permisos con IA.",
-      "actionLabel": "Ver cómo funciona"
+      "title": "1.5.0: servidores Windows y botón Adjuntar",
+      "message": "Añade tu PC Windows por OpenSSH y funciona como cualquier otro servidor. El nuevo botón Adjuntar sube una foto o un archivo y escribe su ruta en el terminal.",
+      "actionLabel": "Configurar un servidor Windows"
     },
     "pt-BR": {
-      "title": "Novo: revisão automática de permissões com IA",
-      "message": "A IA analisa os pedidos de permissão do seu agente: comandos perigosos ficam com você e etapas seguras recebem uma sugestão ou uma resposta automática. Use o mecanismo JEV via OpenRouter ou TypeSafe, ou seu próprio endpoint de LLM compatível com OpenAI. Ative em Ajustes → Revisão automática de permissões com IA.",
-      "actionLabel": "Ver como funciona"
+      "title": "1.5.0: servidores Windows e botão Anexar",
+      "message": "Adicione seu PC Windows por OpenSSH e ele funciona como qualquer outro servidor. O novo botão Anexar envia uma foto ou arquivo e digita o caminho no terminal.",
+      "actionLabel": "Configurar um servidor Windows"
     },
     "ru": {
-      "title": "Новое: AI-автопроверка разрешений",
-      "message": "AI проверяет запросы разрешений вашего агента: опасные команды остаются за вами, а для безопасных шагов предлагается ответ или отправляется автоматически. Используйте движок JEV через OpenRouter или TypeSafe либо свою OpenAI-совместимую конечную точку LLM. Включается в разделе «Настройки → AI-автопроверка разрешений».",
-      "actionLabel": "Как это работает"
+      "title": "1.5.0: Windows-серверы и кнопка «Прикрепить»",
+      "message": "Добавьте ПК с Windows по OpenSSH — он работает как любой другой сервер. Новая кнопка «Прикрепить» загружает фото или файл и вводит путь в терминале.",
+      "actionLabel": "Настроить Windows-сервер"
     }
   }
 }
