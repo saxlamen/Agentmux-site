@@ -68,6 +68,7 @@ above: each row was read out of the app, not reasoned out.
 | The three command names really come from one package, and are removed together | A cold install printed `找到 psmux [marlocarlo.psmux] 版本 3.4.0`, downloaded `psmux-v3.4.0-windows-x64.zip` (9.54 MB, hash verified), then `新增的命令列別名: "psmux"` / `"pmux"` / `"tmux"` and `已成功安裝`. After `winget uninstall`, `dir /b %LOCALAPPDATA%\Microsoft\WinGet\Links` went from `claude.exe pmux.exe psmux.exe tmux.exe` to `claude.exe` alone | measured 2026-11-10 over SSH on `shilin-pc`, winget v1.29.380 |
 | Hand-installing psmux needs no re-login and no elevation | With `WinGet\Links` already on PATH, `where.exe psmux` resolved in the same cmd session right after the cold install, and the install never stopped for an answer | same host |
 | `--accept-package-agreements` is install-only | `winget uninstall -e --id marlocarlo.psmux --accept-package-agreements` fails with `無法辨識目前命令的引數名稱: [--accept-package-agreements]` and prints the usage text. The site only ever shows the install form, which is legal | same host |
+| The guide quotes the app's no-package-manager sentence word for word | That sentence is one string in the app, `installer_no_windows_package_manager` in `Agentmux/Resources/<locale>.lproj/Localizable.strings`. The guide's en page quotes the en value, its zh-TW pages quote the zh-Hant value, so a reader is told what the app will actually show them | guarded by `MultiplexerNamingTest` in `test_copy_i18n.py` |
 | On a cold box the app installs psmux by itself, with nobody touching a keyboard | After the manual `winget uninstall` on `shilin-pc` left the box cold, no install command was run by hand, and `WinGet\Links\psmux.exe` reappeared about a minute later while the only thing connected to that host was Agentmux on the phone. `psmux --version` answered normally afterwards, and `psmux list-sessions` reported no server, so the install and the session are two separate steps | measured 2026-11-11, same host |
 | The `psmux.exe` on PATH is a symlink | `dir` reports `<SYMLINK>` into `WinGet\Packages\marlocarlo.psmux_Microsoft.Winget.Source_8wekyb3d8bbwe\psmux.exe`. Running it through PATH works, which is what `where.exe psmux` followed earlier | same host |
 | What a missing psmux looks like in cmd | `'psmux' is not recognized as an internal or external command,` followed by `operable program or batch file.` | same host, while the box was cold |
@@ -90,6 +91,29 @@ One half of the psmux story is still open: the app installs the program on a
 cold box, but no session existed afterwards, so "the app then opens a session"
 is not yet observed. Opening the session by hand in Agentmux and seeing `psmux
 list-sessions` report it is the remaining check.
+
+### The word for the multiplexer
+
+Until 1.5.0 the app's install flow said "tmux" on every host, in all ten
+locales, while the only text that named psmux was three English-only Swift
+literals. Since then the rule is: **the program is named after the host, the
+protocol is named tmux everywhere.** A Windows host gets psmux in the button,
+the badge, the step rows and the failure messages, because that is what winget,
+`where.exe` and `psmux --version` all answer with. Sessions, keys and commands
+stay tmux on both hosts: "kill tmux session", `Ctrl-b`, "Switch tmux windows",
+and the whole vocabulary this guide teaches.
+
+- The decision lives in one place: `MultiplexerNaming.name(distro:serverOS:)` in
+  `Agentmux/Services/TmuxInstaller.swift`. 17 keys take the name as `%@`, and
+  the three installer messages are now localized strings instead of literals.
+- Consequence for this site: wherever the guide quotes one of those sentences it
+  must quote the app's value **for that locale**, not a hand translation of the
+  English. The zh-TW pages quote the zh-Hant string.
+- `MultiplexerNamingTest` in `test_copy_i18n.py` is the ratchet: all 20 keys
+  present in all 10 app locales, exactly one `%@` each, no literal program name
+  left in the 17, psmux named in both Windows messages, and the quoted sentence
+  still findable in the guide's en and zh-TW pages. Program names are matched as
+  words, because "Agentmux" is spelled with tmux at the end.
 
 ## Commands
 

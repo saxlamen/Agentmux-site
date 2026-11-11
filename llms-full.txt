@@ -681,7 +681,7 @@ The Windows discussed here is always *the machine you connect to*. If your Windo
 
 URL: https://agentmux.saxcave.cc/guide/en/windows-server/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-11
 
 Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.
 
@@ -1011,7 +1011,7 @@ Only two things leave it: the redacted text on screen and your Main Intent. They
 
 URL: https://agentmux.saxcave.cc/guide/en/troubleshooting/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-11
 
 SSH refused, key rejected, tmux missing, claude not found: eight failures, each with a cause and a command to type.
 
@@ -2018,7 +2018,7 @@ Updated: 2026-11-10
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/windows-server/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-11
 
 原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。
 
@@ -2053,7 +2053,7 @@ psmux 是另一個程式，指令列照 tmux 的設計：session、window、pane
 
 app 會幫你裝。它先試 `winget install -e --id marlocarlo.psmux`，沒有就試 Scoop，再沒有就試 `cargo install psmux`，用機器上有的那個裝完再重連。手機這邊你什麼都不用打。
 
-只有那種三個套件管理工具都沒有的機器要你動手。app 會直接把話說清楚：*Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.* 被精簡過的 Windows 安裝、或把 winget 移除的伺服器會落在這一段。自己抓 binary，放到 `PATH` 裡，再重連一次。
+只有那種三個套件管理工具都沒有的機器要你動手。app 會直接把話說清楚：*這台 Windows 伺服器上找不到 winget、scoop 或 cargo。請手動安裝 psmux，然後重新連線。* 被精簡過的 Windows 安裝、或把 winget 移除的伺服器會落在這一段。自己抓 binary，放到 `PATH` 裡，再重連一次。
 
 那樣裝完會在同一個資料夾留下三個名字：`psmux.exe`、`pmux.exe`、`tmux.exe`。在那台機器打 `tmux`，跑起來的是 psmux；`psmux --version` 也會先印一行 `tmux 3.4.0`，再印它自己的版本。沒有裝兩次。
 
@@ -2348,7 +2348,7 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-11
 
 連不上、金鑰被拒、找不到 tmux、agent 指令不存在：八個卡點，各有原因和解法。
 
@@ -2492,7 +2492,7 @@ Agentmux 提示找不到 tmux，或者你自己連上去手動打 `tmux` 時看�
 
 自動安裝失敗，最常見的原因是 `sudo`。安裝指令裡帶了它，但這條通道是非互動式的，`sudo` 沒有終端機可以問你密碼（見下面 sudo: a terminal is required to read the password）。其次是在 Mac 上用 Homebrew 安裝、但連線身分是 root，因為 Homebrew 設計上拒絕以 root 執行。
 
-Windows 主機是同一個故事，只是程式換了：那裡 Agentmux 裝的是 psmux，先試 winget、再 Scoop、最後 cargo。三個都沒有的機器會收到直接把話說清楚的訊息：*Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.* 那不是安裝壞掉，是那台電腦沒有套件管理工具，手動安裝的指令在下面。
+Windows 主機是同一個故事，只是程式換了：那裡 Agentmux 裝的是 psmux，先試 winget、再 Scoop、最後 cargo。三個都沒有的機器會收到直接把話說清楚的訊息：*這台 Windows 伺服器上找不到 winget、scoop 或 cargo。請手動安裝 psmux，然後重新連線。* 那不是安裝壞掉，是那台電腦沒有套件管理工具，手動安裝的指令在下面。
 
 還有一種少見但容易誤判的情況：tmux 已經裝了，只是裝在 Agentmux 探測 PATH 時沒看到的地方，例如 Linuxbrew 裝在 `~/.linuxbrew`，MacPorts 裝在 `/opt/local/bin`。訊息一樣是「找不到 tmux」，問題卻出在 PATH，不是沒裝。照下面 claude: command not found，但桌面終端機明明可以跑 那節處理。
 

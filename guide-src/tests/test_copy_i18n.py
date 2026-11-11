@@ -512,5 +512,107 @@ class AppLabelTest(unittest.TestCase):
         self.assertEqual(offenders, [], "the policy drifted from the app:\n" + "\n".join(offenders))
 
 
+class MultiplexerNamingTest(unittest.TestCase):
+    """The install flow names the program the host runs: tmux on a POSIX host,
+    psmux on Windows, where winget, `where.exe` and `psmux --version` all answer
+    psmux. The name arrives as a `%@` placeholder in 17 keys, in all ten app
+    locales, and the guide quotes one of the Windows installer messages
+    verbatim. The keys and the quote live one repo apart, so both are checked
+    here. Skipped when the app is not checked out beside the site.
+    """
+
+    APP = SRC.parent / "Agentmux"
+    APP_LOCALES = ["en", "zh-Hant", "zh-Hans", "ja", "ko", "de", "es", "fr", "pt-BR", "ru"]
+    # Keys whose value used to spell "tmux" and now takes the name as an
+    # argument: the badge, the banner, the install sheet and its explainer.
+    NAMED_KEYS = [
+        "install_tmux", "install_tmux_title", "installing_tmux",
+        "checking_tmux", "checking_tmux_status",
+        "tmux_not_detected", "tmux_installed", "tmux_is_ready", "tmux_ready",
+        "step_install_success", "step_verify", "step_verify_pending",
+        "step_verify_verifying", "step_verify_failed", "step_verify_success",
+        "how_to_install_desc", "logs_waiting_to_start",
+    ]
+    # The two messages that can only be about psmux. They were Swift literals
+    # until 2026-11, which made them the only psmux text in the app and English
+    # only at that.
+    WINDOWS_KEYS = [
+        "installer_no_windows_package_manager",
+        "installer_psmux_missing_after_install",
+    ]
+    # Guide pages that quote the no-package-manager sentence, per site locale.
+    QUOTED_IN = {
+        "en": ["guide-src/content/windows-server/en.html", "guide-src/content/troubleshooting/en.html"],
+        "zh-TW": ["guide-src/content/windows-server/zh-TW.html", "guide-src/content/troubleshooting/zh-TW.html"],
+    }
+    APP_LOCALE_OF_SITE_LOCALE = {"en": "en", "zh-TW": "zh-Hant"}
+
+    @staticmethod
+    def parse(text):
+        # One key per line. The value class must exclude the newline as well as
+        # the quote and the backslash, or a malformed line lets the match run on
+        # into the next entry and the "value" spans half the file.
+        pairs = re.findall(r'^"((?:[^"\\\n]|\\.)*)" = "((?:[^"\\\n]|\\.)*)";', text, re.M)
+        return dict(pairs)
+
+    def setUp(self):
+        self.values = {}
+        for loc in self.APP_LOCALES:
+            path = self.APP / "Resources" / ("%s.lproj" % loc) / "Localizable.strings"
+            if not path.exists():
+                self.skipTest("the app is not checked out beside the site (%s missing)" % path)
+            self.values[loc] = self.parse(path.read_text(encoding="utf-8"))
+
+    def test_every_locale_carries_every_named_key(self):
+        missing = [
+            "%s: %s" % (loc, key)
+            for loc in self.APP_LOCALES
+            for key in self.NAMED_KEYS + self.WINDOWS_KEYS
+            if key not in self.values[loc]
+        ]
+        self.assertEqual(missing, [], "a locale lost a key the app now formats with an argument:\n" + "\n".join(missing))
+
+    PROGRAM_TOKEN = re.compile(r"(?<![A-Za-z0-9_])(tmux|psmux)(?![A-Za-z0-9_])")
+
+    def test_no_named_value_spells_a_program_name_anymore(self):
+        # The point of the change: the value must not decide the program. One
+        # %@ and no literal name, in every locale, or a Windows host is told to
+        # install a program it cannot have. The name is matched as a word, not
+        # as a substring: "Agentmux" is spelled with tmux at the end, and nine
+        # locales mention the app by name in these very sentences.
+        offenders = []
+        for loc in self.APP_LOCALES:
+            for key in self.NAMED_KEYS:
+                value = self.values[loc].get(key, "")
+                if self.PROGRAM_TOKEN.search(value):
+                    offenders.append("%s.%s still names a program: %s" % (loc, key, value[:60]))
+                if value.count("%") != 1:
+                    offenders.append("%s.%s has %d specifiers, expected one: %s" % (loc, key, value.count("%"), value[:60]))
+        self.assertEqual(offenders, [], "\n".join(offenders))
+
+    def test_the_windows_messages_name_psmux_in_every_locale(self):
+        offenders = []
+        for loc in self.APP_LOCALES:
+            for key in self.WINDOWS_KEYS:
+                value = self.values[loc].get(key, "")
+                named = [match.group(1) for match in self.PROGRAM_TOKEN.finditer(value)]
+                if "psmux" not in named:
+                    offenders.append("%s.%s names %s, not psmux: %s" % (loc, key, named or "nothing", value[:60]))
+        self.assertEqual(offenders, [], "a Windows installer message stopped naming what it installs:\n" + "\n".join(offenders))
+
+    def test_the_guide_quotes_the_message_the_app_shows(self):
+        # The site quotes this sentence to tell a reader what to expect. If the
+        # app rewords it, the guide is quoting a message nobody sees, and in
+        # Traditional Chinese it must be the sentence the app shows a zh-Hant
+        # user, not the English one translated by hand.
+        offenders = []
+        for site_locale, pages in self.QUOTED_IN.items():
+            want = self.values[self.APP_LOCALE_OF_SITE_LOCALE[site_locale]]["installer_no_windows_package_manager"]
+            text = "\n".join((SRC / page).read_text(encoding="utf-8") for page in pages)
+            if want not in text:
+                offenders.append("%s: the app now says %r and the guide no longer contains it" % (site_locale, want))
+        self.assertEqual(offenders, [], "\n".join(offenders))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

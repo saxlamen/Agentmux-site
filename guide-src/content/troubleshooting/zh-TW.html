@@ -93,7 +93,7 @@ Match All
   <h3>原因</h3>
   <p>目標機器上還沒裝 tmux，而 Agentmux 會替你裝。它會先偵測這台機器用的是 apt、yum、dnf、pacman、apk（Alpine）還是 brew，再透過 SSH 跑對應的安裝指令。多數情況你等它跑完就好。</p>
   <p>自動安裝失敗，最常見的原因是 <code>sudo</code>。安裝指令裡帶了它，但這條通道是非互動式的，<code>sudo</code> 沒有終端機可以問你密碼（見下面 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a>）。其次是在 Mac 上用 Homebrew 安裝、但連線身分是 root，因為 Homebrew 設計上拒絕以 root 執行。</p>
-  <p>Windows 主機是同一個故事，只是程式換了：那裡 Agentmux 裝的是 psmux，先試 winget、再 Scoop、最後 cargo。三個都沒有的機器會收到直接把話說清楚的訊息：<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em> 那不是安裝壞掉，是那台電腦沒有套件管理工具，手動安裝的指令在下面。</p>
+  <p>Windows 主機是同一個故事，只是程式換了：那裡 Agentmux 裝的是 psmux，先試 winget、再 Scoop、最後 cargo。三個都沒有的機器會收到直接把話說清楚的訊息：<em>這台 Windows 伺服器上找不到 winget、scoop 或 cargo。請手動安裝 psmux，然後重新連線。</em> 那不是安裝壞掉，是那台電腦沒有套件管理工具，手動安裝的指令在下面。</p>
 
   <p>還有一種少見但容易誤判的情況：tmux 已經裝了，只是裝在 Agentmux 探測 PATH 時沒看到的地方，例如 Linuxbrew 裝在 <code>~/.linuxbrew</code>，MacPorts 裝在 <code>/opt/local/bin</code>。訊息一樣是「找不到 tmux」，問題卻出在 PATH，不是沒裝。照下面 <a href="#agent-command-not-found">claude: command not found，但桌面終端機明明可以跑</a> 那節處理。</p>
 
