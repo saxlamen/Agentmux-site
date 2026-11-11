@@ -81,7 +81,7 @@
 <circle cx="592" cy="639" r="2.4" fill="rgba(214,255,236,0.6)"/>
 <rect x="600" y="684" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
 <text x="614" y="707" fill="#f4fbf7">windows-server</text>
-<text x="614" y="727" fill="#8fa79d">BC | 992 w / 1229 zh</text>
+<text x="614" y="727" fill="#8fa79d">BC | 1028 w / 1277 zh</text>
 <text x="920" y="718" fill="#6f817a">/guide/&lt;lang&gt;/windows-server/</text>
 <path d="M552 713 H592" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.3"/>
 <circle cx="592" cy="713" r="2.4" fill="rgba(214,255,236,0.6)"/>
@@ -99,7 +99,7 @@
 <circle cx="592" cy="861" r="2.4" fill="rgba(214,255,236,0.6)"/>
 <rect x="600" y="906" width="300" height="58" rx="10" fill="#121a1d" stroke="rgba(214,255,236,0.2)"/>
 <text x="614" y="929" fill="#f4fbf7">Troubleshooting (8 fixes)</text>
-<text x="614" y="949" fill="#8fa79d">- | 3272 w / 4654 zh</text>
+<text x="614" y="949" fill="#8fa79d">- | 3309 w / 4707 zh</text>
 <text x="920" y="940" fill="#6f817a">/guide/&lt;lang&gt;/troubleshooting/</text>
 <path d="M552 935 H592" fill="none" stroke="rgba(214,255,236,0.4)" stroke-width="1.3"/>
 <circle cx="592" cy="935" r="2.4" fill="rgba(214,255,236,0.6)"/>

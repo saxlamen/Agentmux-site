@@ -174,6 +174,7 @@ brew install tmux</code></pre>
   <p>Windows 上要裝的是 psmux，不是 tmux：</p>
   <pre><code># Windows（PowerShell）
 winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements</code></pre>
+  <p>psmux 已經裝過的話，winget 不會再裝一次，它會回說沒有較新的版本；用 SSH 連進去時它也不會停下來問你什麼。那樣的輸出就代表東西已經在了。</p>
   <p>那台機器沒有 winget 的話，你有在用 Scoop 或 cargo 就用它們，不然就抓一個 binary 放進已經在 <code>PATH</code> 裡的資料夾。兩種做法之後都要重連一次，因為 app 是開 session 的時候才去探那個程式。</p>
 </section>
 

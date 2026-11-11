@@ -718,6 +718,8 @@ The app installs it. It tries `winget install -e --id marlocarlo.psmux` first, t
 
 A machine with none of those three is the one case where you have to intervene. The app says so plainly: *Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.* A stripped Windows install or a server with winget removed lands here. Grab the binary, put it on `PATH`, reconnect.
 
+Installing it that way leaves three names for the same program in one folder: `psmux.exe`, `pmux.exe` and `tmux.exe`. Type `tmux` on that machine and psmux is what runs, and `psmux --version` prints a `tmux 3.4.0` line before its own version. Nothing is installed twice.
+
 ## What works on a Windows session
 
 - **Sessions are persistent.** List them, create one detached, attach, rename, kill one, kill several at once. `Ctrl-b d` detaches you back to a PowerShell prompt and leaves the Agentmux tab open.
@@ -1189,6 +1191,8 @@ On Windows, install psmux instead of tmux:
 # Windows (PowerShell)
 winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements
 ```
+
+If psmux is already installed, winget does not install it again: it answers that no newer version is available, and over SSH it does not stop to ask you anything. That output means the program is present.
 
 No winget on that machine means Scoop or cargo if you use either, and otherwise a binary you place in a folder that is already on `PATH`. Reconnect afterwards either way; the app probes for the program when a session starts.
 
@@ -2051,6 +2055,8 @@ app 會幫你裝。它先試 `winget install -e --id marlocarlo.psmux`，沒有�
 
 只有那種三個套件管理工具都沒有的機器要你動手。app 會直接把話說清楚：*Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.* 被精簡過的 Windows 安裝、或把 winget 移除的伺服器會落在這一段。自己抓 binary，放到 `PATH` 裡，再重連一次。
 
+那樣裝完會在同一個資料夾留下三個名字：`psmux.exe`、`pmux.exe`、`tmux.exe`。在那台機器打 `tmux`，跑起來的是 psmux；`psmux --version` 也會先印一行 `tmux 3.4.0`，再印它自己的版本。沒有裝兩次。
+
 ## 在 Windows 的 session 裡能做什麼
 
 - **session 不會因為斷線消失。**列出來、建立、接回、改名、關一個、一次關好幾個都可以。`Ctrl-b d` 讓你回到 PowerShell 提示字元，Agentmux 的分頁也不會被關掉。
@@ -2522,6 +2528,8 @@ Windows 上要裝的是 psmux，不是 tmux：
 # Windows（PowerShell）
 winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements
 ```
+
+psmux 已經裝過的話，winget 不會再裝一次，它會回說沒有較新的版本；用 SSH 連進去時它也不會停下來問你什麼。那樣的輸出就代表東西已經在了。
 
 那台機器沒有 winget 的話，你有在用 Scoop 或 cargo 就用它們，不然就抓一個 binary 放進已經在 `PATH` 裡的資料夾。兩種做法之後都要重連一次，因為 app 是開 session 的時候才去探那個程式。
 

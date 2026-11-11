@@ -120,6 +120,7 @@ brew install tmux</code></pre>
   <p>On Windows, install psmux instead of tmux:</p>
   <pre><code># Windows (PowerShell)
 winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements</code></pre>
+  <p>If psmux is already installed, winget does not install it again: it answers that no newer version is available, and over SSH it does not stop to ask you anything. That output means the program is present.</p>
   <p>No winget on that machine means Scoop or cargo if you use either, and otherwise a binary you place in a folder that is already on <code>PATH</code>. Reconnect afterwards either way; the app probes for the program when a session starts.</p>
 </section>
 

@@ -77,6 +77,7 @@ Set-Service -Name sshd -StartupType Automatic</code></pre>
   <h2>What happens when psmux is missing</h2>
   <p>The app installs it. It tries <code>winget install -e --id marlocarlo.psmux</code> first, then Scoop, then <code>cargo install psmux</code>, whichever package manager is present, and reconnects. You are not typing anything on the phone.</p>
   <p>A machine with none of those three is the one case where you have to intervene. The app says so plainly: <em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em> A stripped Windows install or a server with winget removed lands here. Grab the binary, put it on <code>PATH</code>, reconnect.</p>
+  <p>Installing it that way leaves three names for the same program in one folder: <code>psmux.exe</code>, <code>pmux.exe</code> and <code>tmux.exe</code>. Type <code>tmux</code> on that machine and psmux is what runs, and <code>psmux --version</code> prints a <code>tmux 3.4.0</code> line before its own version. Nothing is installed twice.</p>
 </section>
 
 <section id="what-you-get">

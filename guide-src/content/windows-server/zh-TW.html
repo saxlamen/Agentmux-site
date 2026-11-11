@@ -23,6 +23,7 @@ Set-Service -Name sshd -StartupType Automatic</code></pre>
   <h2>沒裝 psmux 會怎樣</h2>
   <p>app 會幫你裝。它先試 <code>winget install -e --id marlocarlo.psmux</code>，沒有就試 Scoop，再沒有就試 <code>cargo install psmux</code>，用機器上有的那個裝完再重連。手機這邊你什麼都不用打。</p>
   <p>只有那種三個套件管理工具都沒有的機器要你動手。app 會直接把話說清楚：<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em> 被精簡過的 Windows 安裝、或把 winget 移除的伺服器會落在這一段。自己抓 binary，放到 <code>PATH</code> 裡，再重連一次。</p>
+  <p>那樣裝完會在同一個資料夾留下三個名字：<code>psmux.exe</code>、<code>pmux.exe</code>、<code>tmux.exe</code>。在那台機器打 <code>tmux</code>，跑起來的是 psmux；<code>psmux --version</code> 也會先印一行 <code>tmux 3.4.0</code>，再印它自己的版本。沒有裝兩次。</p>
 </section>
 
 <section id="what-you-get">
