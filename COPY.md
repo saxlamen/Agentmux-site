@@ -94,7 +94,7 @@ list-sessions` report it is the remaining check.
 
 ### The word for the multiplexer
 
-Until 1.5.0 the app's install flow said "tmux" on every host, in all ten
+Before this change the app's install flow said "tmux" on every host, in all ten
 locales, while the only text that named psmux was three English-only Swift
 literals. Since then the rule is: **the program is named after the host, the
 protocol is named tmux everywhere.** A Windows host gets psmux in the button,
@@ -125,7 +125,9 @@ python3 guide-src/tests/test_language.py   # zh-Hant guide copy
 python3 guide-src/tests/test_build.py      # guide builder, 82 tests
 python3 guide-src/tests/test_site_map.py   # the map stays honest
 python3 guide-src/tests/test_wizard_data.py
-python3 guide-src/tests/test_copy_i18n.py  # the four-locale surfaces
+python3 guide-src/tests/test_copy_i18n.py  # the four-locale surfaces, plus the
+                                           # app's own labels and the multiplexer
+                                           # name across its ten locales
 python3 tools/copy_stats.py                # sizes of every copy surface
 python3 scripts/check_announce.py announce.json   # the popup payload, see below
 ```
