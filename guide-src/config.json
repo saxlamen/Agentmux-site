@@ -5,7 +5,7 @@
     "playStoreUrl": "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"
   },
   "analytics": {
-    "posthogKey": "",
+    "posthogKey": "phc_yXNQ6YDiCq8v7B8cp83zdTN3uavyWCdQcPv6YqibpvMX",
     "posthogHost": "https://us.i.posthog.com"
   },
   "seo": {
