@@ -72,7 +72,7 @@
         <li><a href="#sec-2">What each one does, capability by capability</a></li>
         <li><a href="#sec-3">Why does Agentmux list tmux sessions first?</a></li>
         <li><a href="#sec-4">What does the app do while you are away?</a></li>
-        <li><a href="#sec-5">Can you edit a file without opening vim?</a></li>
+        <li><a href="#sec-5">Can you edit a file or send a screenshot without opening vim?</a></li>
         <li><a href="#sec-6">Where do your private keys live?</a></li>
         <li><a href="#sec-7">Siri can hand the screen to Shortcuts</a></li>
         <li><a href="#sec-8">Fixes you&#x27;ll feel if you read CJK</a></li>
@@ -133,12 +133,12 @@
       <tr>
         <td>Prompt to allow a command</td>
         <td>You are the reviewer, in the chair</td>
-        <td>AI Permission Review: blacklist, allowlist, AI judgement; suggests or presses the key (Pro)</td>
+        <td>AI Permission Review: blacklist, allowlist, AI judgement with your latest prompt; suggests or presses the key (Pro)</td>
       </tr>
       <tr>
-        <td>One line in a file</td>
-        <td>Vim over SSH, on a phone keyboard</td>
-        <td>Runestone editor, Ink Markdown preview, branch tools, Files app (Pro)</td>
+        <td>One line in a file or sending a screenshot</td>
+        <td>Vim over SSH, or manual <code>scp</code></td>
+        <td>Runestone editor, Ink Markdown preview, branch tools, Files app, and shortcut-bar Attach upload (Pro)</td>
       </tr>
       <tr>
         <td>Private keys</td>
@@ -148,7 +148,7 @@
       <tr>
         <td>Automation from outside</td>
         <td>Nothing to call: no session or agent model exposed</td>
-        <td>6 App Intents over four entity types: Server, Project, TMUXSession, RecentSession</td>
+        <td>10 App Intents over four entity types: Server, Project, TMUXSession, RecentSession</td>
       </tr>
       <tr>
         <td>Unreliable mobile networks</td>
@@ -158,12 +158,12 @@
       <tr>
         <td>Port forwarding</td>
         <td>Local, remote, dynamic SOCKS5</td>
-        <td>Local only</td>
+        <td>Local forwarding (saved rules plus one-tap temporary forwards for <code>localhost</code> URLs)</td>
       </tr>
       <tr>
         <td>Host configuration at scale</td>
         <td>Synced on iOS, Android, Windows, macOS, Linux; shared host lists</td>
-        <td>Multiple servers and batch actions (Pro); mobile only</td>
+        <td>Mac, Linux, and Windows (OpenSSH + psmux) hosts; multiple servers and batch actions (Pro); mobile only</td>
       </tr>
     </tbody>
   </table></div>
@@ -184,9 +184,9 @@
 </section>
 
 <section id="editor-git-files">
-  <h2 id="sec-5">Can you edit a file without opening vim?</h2>
-  <p>Changing one line of code does not mean wrestling vim on a phone keyboard. The built-in Runestone editor opens the file and lets you edit it. For a README an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools (switching branches, reading diffs) and Files app integration are Pro features, available during the 14-day trial.</p>
-  <p>The loop closes on one device: the agent changes files, you read the diff, you answer, it goes on. Every step that needs a second machine waits for a desk.</p>
+  <h2 id="sec-5">Can you edit a file or send a screenshot without opening vim?</h2>
+  <p>Changing one line of code does not mean wrestling vim on a phone keyboard. The built-in Runestone editor opens the file and lets you edit it. For a README an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. The shortcut bar's Attach button uploads a photo, file, or clipboard image over SFTP and types its remote path straight into the terminal for your agent to read. Git tools (switching branches, reading diffs), file history, and Files app integration are Pro features, available during the 14-day trial.</p>
+  <p>The loop closes on one device: you hand the agent a screenshot, read its diff, answer, and it goes on. Every step that needs a second machine waits for a desk.</p>
 </section>
 
 <section id="keychain-isolation">
@@ -198,7 +198,7 @@
 <section id="siri-shortcuts">
   <h2 id="sec-7">Siri can hand the screen to Shortcuts</h2>
   <p><code>GetCurrentSessionContextIntent</code> lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal lands in iOS Shortcuts, ready for Notes, Messages, or anything else you build. <code>ContinueLastSessionIntent</code> is blunter: "continue working in Agentmux" reattaches to your last session.</p>
-  <p>General SSH apps cannot do this, structurally: they have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 6 App Intents across four entity types: Server, Project, TMUXSession, RecentSession.</p>
+  <p>General SSH apps cannot do this, structurally: they have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 10 App Intents across four entity types: Server, Project, TMUXSession, RecentSession.</p>
 </section>
 
 <section id="cjk-fixes">
@@ -210,7 +210,7 @@
   <h2 id="sec-9">Which tool for which job?</h2>
   <p><strong>Mostly manual terminal work on one host.</strong> You log in to run commands you chose: restart a service, tail a log, check a disk. Take a general SSH client. If you want to test the idea first, the free single-server tier covers one server, persistent sessions, and the core terminal.</p>
   <p><strong>Living inside agents on several servers.</strong> One refactoring on the Mac mini, another running tests on a Linux box, a third started from a train. That is Agentmux, and specifically Pro: multiple servers, custom agents, remote editing, file history, branch tools, batch actions.</p>
-  <p><strong>An agent in a browser tab or a cloud sandbox.</strong> The convenience is real, and the cost is that the files and the credentials no longer sit on your machine. Agentmux never hosts the work: it is a client, and the code and the agent stay on hardware you own, a Mac, a Linux box, or a server. Renting one is defensible if you are at peace with your project and its keys living there.</p>
+  <p><strong>An agent in a browser tab or a cloud sandbox.</strong> The convenience is real, and the cost is that the files and the credentials no longer sit on your machine. Agentmux never hosts the work: it is a client, and the code and the agent stay on hardware you own—a Mac, a Linux box, or a <a href="/guide/en/windows-server/">Windows PC over OpenSSH and psmux</a>. Renting one is defensible if you are at peace with your project and its keys living there.</p>
   <p>Tailscale is the recommended way in: no port open to the public internet, and machines addressed by MagicDNS names or 100.x addresses rather than LAN IPs.</p>
 </section>
 

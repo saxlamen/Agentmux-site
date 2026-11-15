@@ -657,13 +657,13 @@ One row per capability. Where you cannot check a competitor's behaviour from out
 | Back to a tmux session | tmux ls, then tmux attach -t | Sessions listed on connect; one tap reattaches |
 | After a drop | The prompt returns; finding the session is on you | A detach, not a death: you land on the screen you left |
 | A twenty-minute agent run | No notion of a run to report from | Dynamic Island and Lock Screen progress; a sound at the end |
-| Prompt to allow a command | You are the reviewer, in the chair | AI Permission Review: blacklist, allowlist, AI judgement; suggests or presses the key (Pro) |
-| One line in a file | Vim over SSH, on a phone keyboard | Runestone editor, Ink Markdown preview, branch tools, Files app (Pro) |
+| Prompt to allow a command | You are the reviewer, in the chair | AI Permission Review: blacklist, allowlist, AI judgement with your latest prompt; suggests or presses the key (Pro) |
+| One line in a file or sending a screenshot | Vim over SSH, or manual scp | Runestone editor, Ink Markdown preview, branch tools, Files app, and shortcut-bar Attach upload (Pro) |
 | Private keys | Not verifiable from outside | Keychain / Keystore, never the local database; iCloud sync carries server names only |
-| Automation from outside | Nothing to call: no session or agent model exposed | 6 App Intents over four entity types: Server, Project, TMUXSession, RecentSession |
+| Automation from outside | Nothing to call: no session or agent model exposed | 10 App Intents over four entity types: Server, Project, TMUXSession, RecentSession |
 | Unreliable mobile networks | Mosh is a reason to buy this kind of app | Standard SSH plus tmux reattachment, which is not Mosh |
-| Port forwarding | Local, remote, dynamic SOCKS5 | Local only |
-| Host configuration at scale | Synced on iOS, Android, Windows, macOS, Linux; shared host lists | Multiple servers and batch actions (Pro); mobile only |
+| Port forwarding | Local, remote, dynamic SOCKS5 | Local forwarding (saved rules plus one-tap temporary forwards for localhost URLs) |
+| Host configuration at scale | Synced on iOS, Android, Windows, macOS, Linux; shared host lists | Mac, Linux, and Windows (OpenSSH + psmux) hosts; multiple servers and batch actions (Pro); mobile only |
 
 Read the last three rows first: they are where Agentmux loses.
 
@@ -679,11 +679,11 @@ Agents routinely run for tens of minutes, and that waiting period is what this i
 
 An app built around a shell has nothing to report once it is closed, because it holds no notion of a run. Here a named session on a named server is running, and the system reports on it. When that session stops to ask whether to allow a command, AI Permission Review can look first: dangerous commands are held, safe ones get a suggestion or a key press (Pro).
 
-## Can you edit a file without opening vim?
+## Can you edit a file or send a screenshot without opening vim?
 
-Changing one line of code does not mean wrestling vim on a phone keyboard. The built-in Runestone editor opens the file and lets you edit it. For a README an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools (switching branches, reading diffs) and Files app integration are Pro features, available during the 14-day trial.
+Changing one line of code does not mean wrestling vim on a phone keyboard. The built-in Runestone editor opens the file and lets you edit it. For a README an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. The shortcut bar's Attach button uploads a photo, file, or clipboard image over SFTP and types its remote path straight into the terminal for your agent to read. Git tools (switching branches, reading diffs), file history, and Files app integration are Pro features, available during the 14-day trial.
 
-The loop closes on one device: the agent changes files, you read the diff, you answer, it goes on. Every step that needs a second machine waits for a desk.
+The loop closes on one device: you hand the agent a screenshot, read its diff, answer, and it goes on. Every step that needs a second machine waits for a desk.
 
 ## Where do your private keys live?
 
@@ -695,7 +695,7 @@ Ask any tool the same question: which of my private keys leave this device when 
 
 `GetCurrentSessionContextIntent` lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal lands in iOS Shortcuts, ready for Notes, Messages, or anything else you build. `ContinueLastSessionIntent` is blunter: "continue working in Agentmux" reattaches to your last session.
 
-General SSH apps cannot do this, structurally: they have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 6 App Intents across four entity types: Server, Project, TMUXSession, RecentSession.
+General SSH apps cannot do this, structurally: they have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 10 App Intents across four entity types: Server, Project, TMUXSession, RecentSession.
 
 ## Fixes you'll feel if you read CJK
 
@@ -707,7 +707,7 @@ Version 1.3.10 fixed three things an English-only user never notices and a Chine
 
 **Living inside agents on several servers.** One refactoring on the Mac mini, another running tests on a Linux box, a third started from a train. That is Agentmux, and specifically Pro: multiple servers, custom agents, remote editing, file history, branch tools, batch actions.
 
-**An agent in a browser tab or a cloud sandbox.** The convenience is real, and the cost is that the files and the credentials no longer sit on your machine. Agentmux never hosts the work: it is a client, and the code and the agent stay on hardware you own, a Mac, a Linux box, or a server. Renting one is defensible if you are at peace with your project and its keys living there.
+**An agent in a browser tab or a cloud sandbox.** The convenience is real, and the cost is that the files and the credentials no longer sit on your machine. Agentmux never hosts the work: it is a client, and the code and the agent stay on hardware you own—a Mac, a Linux box, or a Windows PC over OpenSSH and psmux. Renting one is defensible if you are at peace with your project and its keys living there.
 
 Tailscale is the recommended way in: no port open to the public internet, and machines addressed by MagicDNS names or 100.x addresses rather than LAN IPs.
 
@@ -2074,13 +2074,13 @@ Agentmux 圍繞的是「一個已經在跑的 agent」，它的任務是縮短�
 | 接回 tmux session | 自己打 tmux ls，再打 tmux attach -t | 連上就把伺服器上現有的 session 列出來，點一下接回 |
 | 斷線之後 | prompt 回來了，session 要自己找 | detach 不是死亡：你落在離開時那個畫面 |
 | 跑幾十分鐘的 agent | 沒有「一次執行」這層概念可以回報進度 | 動態島與鎖定螢幕顯示進度，跑完可以播提示音 |
-| 問你要不要准一個指令 | 你人必須坐在螢幕前 | AI 自動權限審查：黑名單擋掉、白名單放過、其餘交給 AI 判斷，再給建議或幫你按（Pro） |
-| 改檔案裡的一行 | 用手機鍵盤跟 vim 肉搏 | Runestone 編輯器、Ink 雙欄 Markdown 預覽、分支工具、Files app 整合（Pro） |
+| 問你要不要准一個指令 | 你人必須坐在螢幕前 | AI 自動權限審查：黑名單擋掉、白名單放過、其餘結合你最近的提示交給 AI 判斷，再給建議或幫你按（Pro） |
+| 改檔案裡的一行或傳截圖 | 用手機鍵盤跟 vim 肉搏，或回桌機再 scp | Runestone 編輯器、Ink 雙欄 Markdown 預覽、分支工具、Files app，以及快捷列「附加」上傳（Pro） |
 | 私鑰放在哪裡 | 從外部查證不到 | Keychain／Keystore，絕不寫進本機資料庫；iCloud 同步只帶走伺服器名稱 |
-| 從 app 外面自動化 | 沒有 session、專案、agent 這層模型可以交給系統 | 6 個 App Intent，涵蓋四種 entity：Server、Project、TMUXSession、RecentSession |
+| 從 app 外面自動化 | 沒有 session、專案、agent 這層模型可以交給系統 | 10 個 App Intent，涵蓋四種 entity：Server、Project、TMUXSession、RecentSession |
 | 不穩的行動網路 | Mosh 是買這類 app 的理由 | 只有標準 SSH 加 tmux 自動重連，不等於 Mosh |
-| Port forwarding | Local、Remote、Dynamic（SOCKS5）都有 | 只有 Local |
-| 大規模的主機設定 | 五個平台同步，主機清單能共享給團隊 | 多伺服器與批次操作（Pro），平台只有手機與平板 |
+| Port forwarding | Local、Remote、Dynamic（SOCKS5）都有 | Local forwarding（支援固定規則，以及偵測到 localhost 網址時一鍵暫時轉發） |
+| 大規模的主機設定 | 五個平台同步，主機清單能共享給團隊 | 支援 Mac、Linux 與 Windows（OpenSSH + psmux）；多伺服器與批次操作（Pro），平台只有手機與平板 |
 
 先看最後三列。Agentmux 就是在那裡輸的，那也決定了哪些讀者該留在通用工具那一邊。
 
@@ -2096,11 +2096,11 @@ agent 常常一跑就是幾十分鐘，這個功能就是為那段等待做的�
 
 圍繞 shell 的 app 關掉之後沒有東西可回報，因為它沒有「還在跑」這層概念。這邊是某台伺服器上某個有名字的 session 在跑，系統的面板替它回報。等它停下來問你要不要允許某個指令時，AI 自動權限審查可以先替你看一眼：危險的擋下來，安全的給建議或直接幫你按（Pro）。
 
-## 在手機上改檔案，一定要開 vim 嗎？
+## 在手機上改檔案或傳截圖，一定要開 vim 嗎？
 
-臨時改一行程式碼，不必在手機上跟 vim 肉搏。內建的 Runestone 編輯器直接開檔案讓你改。要看 agent 產出的 README，Ink 提供雙欄 Markdown 預覽，原始碼和排版同時看得到。Git 工具（切換分支、查 diff）和 Files app 整合是 Pro 功能，14 天試用期間也用得到。
+臨時改一行程式碼，不必在手機上跟 vim 肉搏。內建的 Runestone 編輯器直接開檔案讓你改。要看 agent 產出的 README，Ink 提供雙欄 Markdown 預覽，原始碼和排版同時看得到。快捷列的「附加」按鈕可直接拍照、從相片或檔案 App 挑選或貼上剪貼簿圖片，透過 SFTP 上傳並把遠端路徑自動打進終端機交給 agent 看。Git 工具（切換分支、查 diff）、檔案歷史和 Files app 整合是 Pro 功能，14 天試用期間也用得到。
 
-重點是整個循環在一台裝置上閉合：agent 改檔案，你看 diff，你回答，它繼續跑。每多一個步驟要換到另一台機器，你就多跑一趟書桌。
+重點是整個循環在一台裝置上閉合：你傳截圖給 agent、看 diff、回答它，它繼續跑。每多一個步驟要換到另一台機器，你就多跑一趟書桌。
 
 ## 你的私鑰放在哪裡？
 
@@ -2112,7 +2112,7 @@ agent 常常一跑就是幾十分鐘，這個功能就是為那段等待做的�
 
 對 Siri 說「從 Agentmux 取得目前終端內容」，`GetCurrentSessionContextIntent` 就把終端當下的內容抓進 iOS 捷徑，可以接去記事本、訊息，或任何你自己組的流程。`ContinueLastSessionIntent` 更直接：一句「在 Agentmux 繼續工作」就接回上一個 session。
 
-這類自動化，通用的 SSH app 結構上做不到：它們沒有 session、專案、agent 這一層語意模型可以交給系統。Agentmux 目前實作 6 個 App Intent，涵蓋 Server、Project、TMUXSession、RecentSession 四種 entity。
+這類自動化，通用的 SSH app 結構上做不到：它們沒有 session、專案、agent 這一層語意模型可以交給系統。Agentmux 目前實作 10 個 App Intent，涵蓋 Server、Project、TMUXSession、RecentSession 四種 entity。
 
 ## 三個只有繁中使用者會有感的修正
 
@@ -2124,7 +2124,7 @@ agent 常常一跑就是幾十分鐘，這個功能就是為那段等待做的�
 
 **整天住在好幾台伺服器的 agent 裡。**一個在 Mac mini 上重構，另一個在 Linux 機器上跑測試，第三個是你上火車前開的。這就是 Agentmux，而且具體來說是 Pro：多伺服器、自訂 agent、遠端編輯、檔案歷史、分支工具、批次操作。
 
-**agent 活在瀏覽器分頁或雲端沙箱裡。**方便是真的，代價是檔案和憑證不再存在你的機器上。Agentmux 從不代跑你的工作：它是 client，程式碼和 agent 留在你自己擁有的硬體上，一台 Mac、一台 Linux 機器、或一台伺服器。把專案和金鑰放到別人租給你的環境裡，只要你覺得安心，那也是合理的選擇。
+**agent 活在瀏覽器分頁或雲端沙箱裡。**方便是真的，代價是檔案和憑證不再存在你的機器上。Agentmux 從不代跑你的工作：它是 client，程式碼和 agent 留在你自己擁有的硬體上——Mac、Linux 主機，或走 OpenSSH 加 psmux 的 Windows 電腦。把專案和金鑰放到別人租給你的環境裡，只要你覺得安心，那也是合理的選擇。
 
 怎麼連進去跟選哪個 app 一樣重要。標準 SSH 加金鑰或密碼就夠，建議走 Tailscale，因為不用對公網開 port。位置要用 MagicDNS 名稱或 100.x 位址，不是區網 IP。
 
@@ -3493,13 +3493,13 @@ Agentmux 围绕的是「一个已经在运行的 agent」，它的任务是缩�
 | 接回 tmux session | 自己输入 tmux ls，再输入 tmux attach -t | 连上就把服务器上现有的 session 列出来，点一下接回 |
 | 掉线之后 | 提示符回来了，session 要自己找 | detach 不是终止：你回到离开时那个画面 |
 | 跑几十分钟的 agent | 没有「一次运行」这层概念可以汇报进度 | 灵动岛与锁屏显示进度，跑完可以播放提示音 |
-| 问你要不要准许一条命令 | 你人必须坐在屏幕前 | AI 自动权限审查：黑名单拦截、白名单放行、其余交给 AI 判断，再给建议或帮你按（Pro） |
-| 改文件里的一行 | 用手机键盘跟 vim 肉搏 | Runestone 编辑器、Ink 双栏 Markdown 预览、分支工具、Files 应用集成（Pro） |
+| 问你要不要准许一条命令 | 你人必须坐在屏幕前 | AI 自动权限审查：黑名单拦截、白名单放行、其余结合你最近的提示交给 AI 判断，再给建议或帮你按（Pro） |
+| 改文件里的一行或传截图 | 用手机键盘跟 vim 肉搏，或回桌面再 scp | Runestone 编辑器、Ink 双栏 Markdown 预览、分支工具、Files 应用，以及快捷栏添加附件上传（Pro） |
 | 私钥放在哪里 | 从外部查证不到 | Keychain／Keystore，绝不写入本地数据库；iCloud 同步只带走服务器名称 |
-| 从应用外面自动化 | 没有 session、项目、agent 这层模型可以交给系统 | 6 个 App Intent，涵盖四种 entity：Server、Project、TMUXSession、RecentSession |
+| 从应用外面自动化 | 没有 session、项目、agent 这层模型可以交给系统 | 10 个 App Intent，涵盖四种 entity：Server、Project、TMUXSession、RecentSession |
 | 不稳的移动网络 | Mosh 是买这类应用的理由 | 只有标准 SSH 加 tmux 自动重连，不等同于 Mosh |
-| Port forwarding | Local、Remote、Dynamic（SOCKS5）都有 | 只有 Local |
-| 大规模的主机配置 | 五个平台同步，主机列表能共享给团队 | 多服务器与批量操作（Pro），平台只有手机与平板 |
+| Port forwarding | Local、Remote、Dynamic（SOCKS5）都有 | Local forwarding（支持固定规则，以及检测到 localhost 地址时一键临时转发） |
+| 大规模的主机配置 | 五个平台同步，主机列表能共享给团队 | 支持 Mac、Linux 与 Windows（OpenSSH + psmux）；多服务器与批量操作（Pro），平台只有手机与平板 |
 
 先看最后三行。Agentmux 就是在那里输的，那也决定了哪些读者该留在通用工具那一边。
 
@@ -3515,11 +3515,11 @@ agent 常常一跑就是几十分钟，这个功能就是为那段等待做的�
 
 围绕 shell 的应用关掉之后没有东西可汇报，因为它没有「还在跑」这层概念。这边是某台服务器上某个有名字的 session 在跑，系统的面板替它汇报。等它停下来问你要不要允许某条命令时，AI 自动权限审查可以先替你看一眼：危险的拦下来，安全的给建议或直接帮你按（Pro）。
 
-## 在手机上改文件，一定要开 vim 吗？
+## 在手机上改文件或传截图，一定要开 vim 吗？
 
-临时改一行代码，不必在手机上跟 vim 肉搏。内置的 Runestone 编辑器直接打开文件让你改。要看 agent 产出的 README，Ink 提供双栏 Markdown 预览，源码和排版同时看得到。Git 工具（切换分支、查看 diff）和 Files 应用集成是 Pro 功能，14 天试用期间也用得到。
+临时改一行代码，不必在手机上跟 vim 肉搏。内置的 Runestone 编辑器直接打开文件让你改。要看 agent 产出的 README，Ink 提供双栏 Markdown 预览，源码和排版同时看得到。快捷栏的添加附件按钮可直接拍照、从照片或文件 App 选取或粘贴剪贴板图片，通过 SFTP 上传并把远程路径自动输入终端交给 agent 查看。Git 工具（切换分支、查看 diff）、文件历史和 Files 应用集成是 Pro 功能，14 天试用期间也用得到。
 
-重点是不用换设备就能走完这一轮：agent 改文件，你看 diff，你回答，它继续跑。每多一个步骤要换到另一台机器，你就多跑一趟书桌。
+重点是不用换设备就能走完这一轮：你把截图传给 agent、看 diff、回答它，它继续跑。每多一个步骤要换到另一台机器，你就多跑一趟书桌。
 
 ## 你的私钥放在哪里？
 
@@ -3531,7 +3531,7 @@ agent 常常一跑就是几十分钟，这个功能就是为那段等待做的�
 
 对 Siri 说「从 Agentmux 获取当前终端内容」，`GetCurrentSessionContextIntent` 就把终端当下的内容抓进 iOS 快捷指令，可以接去备忘录、信息，或任何你自己搭的流程。`ContinueLastSessionIntent` 更直接：一句「在 Agentmux 继续工作」就接回上一个 session。
 
-这类自动化，通用的 SSH 应用从结构上做不到：它们没有 session、项目、agent 这一层语义模型可以交给系统。Agentmux 目前实现了 6 个 App Intent，涵盖 Server、Project、TMUXSession、RecentSession 四种 entity。
+这类自动化，通用的 SSH 应用从结构上做不到：它们没有 session、项目、agent 这一层语义模型可以交给系统。Agentmux 目前实现了 10 个 App Intent，涵盖 Server、Project、TMUXSession、RecentSession 四种 entity。
 
 ## 三个专门针对中文体验的修复
 
@@ -4952,13 +4952,13 @@ Agentmux はどこかですでに動いているエージェントを中心に�
 | tmux セッションへの復帰 | tmux ls のあと tmux attach -t | 接続時にセッション一覧を表示し、1 タップで再アタッチ |
 | 回線切断後 | プロンプトが戻るだけで、セッションを探すのは自分 | 切断ではなくデタッチ。離れたときと同じ画面に復帰 |
 | 20 分かかるエージェント実行 | 実行状況を報告する仕組みがない | Dynamic Island とロック画面に進捗を表示し、完了時に通知音 |
-| コマンド実行の許可プロンプト | 毎回自分で画面を見て判断 | AI 自動権限レビュー：ブラックリスト、許可リスト、AI 判定。キーの提案または自動押下（Pro） |
-| ファイルの 1 行編集 | スマホのキーボードで SSH 越しに Vim | Runestone エディタ、Ink Markdown プレビュー、ブランチ操作、ファイルアプリ連携（Pro） |
+| コマンド実行の許可プロンプト | 毎回自分で画面を見て判断 | AI 自動権限レビュー：ブラックリスト、許可リスト、最新プロンプトも踏まえた AI 判定。キー提案または自動押下（Pro） |
+| ファイルの 1 行編集や画像送信 | スマホで Vim、または PC から手動で scp | Runestone エディタ、Ink Markdown プレビュー、ブランチ操作、ファイル連携、ショートカットバーの添付アップロード（Pro） |
 | 秘密鍵の保存場所 | 外部からは確認不可 | Keychain / Keystore に保存し、ローカル DB には保存しない。iCloud 同期はサーバー名のみ |
-| 外部からの自動化 | 呼び出せるものがない（セッションやエージェントのモデルを持たないため） | 4 種類のエンティティ（Server、Project、TMUXSession、RecentSession）に対する 6 つの App Intents |
+| 外部からの自動化 | 呼び出せるものがない（セッションやエージェントのモデルを持たないため） | 4 種類のエンティティ（Server、Project、TMUXSession、RecentSession）に対する 10 個の App Intents |
 | 不安定なモバイル回線 | Mosh 対応がこの種のアプリを選ぶ理由になる | 標準 SSH＋tmux 自動再アタッチ（Mosh ではない） |
-| ポートフォワーディング | ローカル、リモート、動的 SOCKS5 | ローカルのみ |
-| 大規模なホスト設定管理 | iOS、Android、Windows、macOS、Linux 間で同期、ホスト一覧の共有 | 複数サーバーと一括操作（Pro）、モバイル専用 |
+| ポートフォワーディング | ローカル、リモート、動的 SOCKS5 | ローカル転送（保存済みルール＋localhost URL 検出時のワンタップ一時転送） |
+| 大規模なホスト設定管理 | iOS、Android、Windows、macOS、Linux 間で同期、ホスト一覧の共有 | Mac・Linux・Windows（OpenSSH + psmux）対応、複数サーバーと一括操作（Pro）、モバイル専用 |
 
 まず最後の 3 行から読んでください。そこが Agentmux の弱い部分です。
 
@@ -4974,11 +4974,11 @@ Agentmux はどこかですでに動いているエージェントを中心に�
 
 シェルを中心に作られたアプリは、閉じられると「実行中のジョブ」という概念を持たないため何も報告できません。Agentmux では名前付きのサーバー上で名前付きのセッションが動いており、システムがその状態を報告します。コマンド実行の許可を求めて停止したときは、AI 自動権限レビューが先に確認します。危険なコマンドは保留し、安全なコマンドにはキーの提案または自動入力を行います（Pro）。
 
-## vim を開かずにファイルを編集できるか
+## vim を開かずにファイル編集や画像送信ができるか
 
-コードを 1 行直すために、スマホのキーボードで vim と格闘する必要はありません。内蔵の Runestone エディタでファイルを開いてそのまま編集できます。エージェントが生成した README は、Ink による 2 カラムの Markdown プレビューでソースと描画結果を並べて確認できます。
+コードを 1 行直すために、スマホのキーボードで vim と格闘する必要はありません。内蔵の Runestone エディタでファイルを開いてそのまま編集できます。エージェントが生成した README は、Ink による 2 カラムの Markdown プレビューでソースと描画結果を並べて確認できます。ショートカットバーの添付ボタンを使えば、カメラ・写真・ファイル・クリップボードから SFTP 経由で画像をアップロードし、そのリモートパスをターミナルへ自動入力できます。
 
-Git ツール（ブランチ切り替え、diff の閲覧）とファイルアプリ連携は Pro 機能ですが、14 日間の無料トライアル期間中も利用できます。エージェントがファイルを変更し、こちらが diff を読んで指示を返し、またエージェントが進めるというループが 1 台の端末で完結します。別のマシンが必要になる作業まで机に戻るのを待つ必要はありません。
+Git ツール（ブランチ切り替え、diff の閲覧）、ファイル履歴、ファイルアプリ連携は Pro 機能ですが、14 日間の無料トライアル期間中も利用できます。スクリーンショットをエージェントに渡し、diff を読んで指示を返し、また進めるというループが 1 台の端末で完結します。
 
 ## 秘密鍵はどこに保存されるか
 
@@ -4990,7 +4990,7 @@ Git ツール（ブランチ切り替え、diff の閲覧）とファイルア�
 
 `GetCurrentSessionContextIntent` を使えば、Siri に「Agentmux から現在のターミナル内容を取得」と話しかけるだけで、画面に表示されている内容が iOS のショートカットに渡り、メモやメッセージなど任意のフローへ送れます。`ContinueLastSessionIntent` はさらに直接的で、「Agentmux で作業を続ける」と伝えるだけで直前のセッションに再アタッチします。
 
-汎用 SSH アプリには構造的にこれができません。セッション、プロジェクト、エージェントといった意味モデルをシステムに公開していないためです。Agentmux は Server、Project、TMUXSession、RecentSession の 4 つのエンティティ型に対して 6 つの App Intents を実装しています。
+汎用 SSH アプリには構造的にこれができません。セッション、プロジェクト、エージェントといった意味モデルをシステムに公開していないためです。Agentmux は Server、Project、TMUXSession、RecentSession の 4 つのエンティティ型に対して 10 個の App Intents を実装しています。
 
 ## 日本語・中国語・韓国語を読む人が気づく修正
 
@@ -5004,7 +5004,7 @@ Git ツール（ブランチ切り替え、diff の閲覧）とファイルア�
 
 **ブラウザのタブやクラウドサンドボックス上のエージェント。**手軽さは確かですが、コードや認証情報を自分のマシン以外に置くことになります。Agentmux は作業環境をホストしません。
 
-Agentmux はあくまでクライアントであり、コードもエージェントもあなたが所有する Mac、Linux マシン、またはサーバー上に留まります。プロジェクトや鍵をクラウドに置くことを許容できるなら、クラウドを借りる選択も合理的です。
+Agentmux はあくまでクライアントであり、コードもエージェントもあなたが所有する Mac、Linux マシン、または OpenSSH と psmux で動く Windows PC 上に留まります。プロジェクトや鍵をクラウドに置くことを許容できるなら、クラウドを借りる選択も合理的です。
 
 接続経路には Tailscale を推奨します。インターネットにポートを開放する必要がなく、MagicDNS 名や 100.x アドレスで接続できます。
 

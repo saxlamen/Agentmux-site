@@ -72,7 +72,7 @@
         <li><a href="#sec-2">每個功能擺在一起，誰做得到？</a></li>
         <li><a href="#sec-3">為什麼要先列 tmux session？</a></li>
         <li><a href="#sec-4">你不在的時候，app 在做什麼？</a></li>
-        <li><a href="#sec-5">在手機上改檔案，一定要開 vim 嗎？</a></li>
+        <li><a href="#sec-5">在手機上改檔案或傳截圖，一定要開 vim 嗎？</a></li>
         <li><a href="#sec-6">你的私鑰放在哪裡？</a></li>
         <li><a href="#sec-7">Siri 可以把終端畫面交給捷徑</a></li>
         <li><a href="#sec-8">三個只有繁中使用者會有感的修正</a></li>
@@ -133,12 +133,12 @@
       <tr>
         <td>問你要不要准一個指令</td>
         <td>你人必須坐在螢幕前</td>
-        <td>AI 自動權限審查：黑名單擋掉、白名單放過、其餘交給 AI 判斷，再給建議或幫你按（Pro）</td>
+        <td>AI 自動權限審查：黑名單擋掉、白名單放過、其餘結合你最近的提示交給 AI 判斷，再給建議或幫你按（Pro）</td>
       </tr>
       <tr>
-        <td>改檔案裡的一行</td>
-        <td>用手機鍵盤跟 vim 肉搏</td>
-        <td>Runestone 編輯器、Ink 雙欄 Markdown 預覽、分支工具、Files app 整合（Pro）</td>
+        <td>改檔案裡的一行或傳截圖</td>
+        <td>用手機鍵盤跟 vim 肉搏，或回桌機再 <code>scp</code></td>
+        <td>Runestone 編輯器、Ink 雙欄 Markdown 預覽、分支工具、Files app，以及快捷列「附加」上傳（Pro）</td>
       </tr>
       <tr>
         <td>私鑰放在哪裡</td>
@@ -148,7 +148,7 @@
       <tr>
         <td>從 app 外面自動化</td>
         <td>沒有 session、專案、agent 這層模型可以交給系統</td>
-        <td>6 個 App Intent，涵蓋四種 entity：Server、Project、TMUXSession、RecentSession</td>
+        <td>10 個 App Intent，涵蓋四種 entity：Server、Project、TMUXSession、RecentSession</td>
       </tr>
       <tr>
         <td>不穩的行動網路</td>
@@ -158,12 +158,12 @@
       <tr>
         <td>Port forwarding</td>
         <td>Local、Remote、Dynamic（SOCKS5）都有</td>
-        <td>只有 Local</td>
+        <td>Local forwarding（支援固定規則，以及偵測到 <code>localhost</code> 網址時一鍵暫時轉發）</td>
       </tr>
       <tr>
         <td>大規模的主機設定</td>
         <td>五個平台同步，主機清單能共享給團隊</td>
-        <td>多伺服器與批次操作（Pro），平台只有手機與平板</td>
+        <td>支援 Mac、Linux 與 Windows（OpenSSH + psmux）；多伺服器與批次操作（Pro），平台只有手機與平板</td>
       </tr>
     </tbody>
   </table></div>
@@ -184,9 +184,9 @@
 </section>
 
 <section id="editor-git-files">
-  <h2 id="sec-5">在手機上改檔案，一定要開 vim 嗎？</h2>
-  <p>臨時改一行程式碼，不必在手機上跟 vim 肉搏。內建的 Runestone 編輯器直接開檔案讓你改。要看 agent 產出的 README，Ink 提供雙欄 Markdown 預覽，原始碼和排版同時看得到。Git 工具（切換分支、查 diff）和 Files app 整合是 Pro 功能，14 天試用期間也用得到。</p>
-  <p>重點是整個循環在一台裝置上閉合：agent 改檔案，你看 diff，你回答，它繼續跑。每多一個步驟要換到另一台機器，你就多跑一趟書桌。</p>
+  <h2 id="sec-5">在手機上改檔案或傳截圖，一定要開 vim 嗎？</h2>
+  <p>臨時改一行程式碼，不必在手機上跟 vim 肉搏。內建的 Runestone 編輯器直接開檔案讓你改。要看 agent 產出的 README，Ink 提供雙欄 Markdown 預覽，原始碼和排版同時看得到。快捷列的「附加」按鈕可直接拍照、從相片或檔案 App 挑選或貼上剪貼簿圖片，透過 SFTP 上傳並把遠端路徑自動打進終端機交給 agent 看。Git 工具（切換分支、查 diff）、檔案歷史和 Files app 整合是 Pro 功能，14 天試用期間也用得到。</p>
+  <p>重點是整個循環在一台裝置上閉合：你傳截圖給 agent、看 diff、回答它，它繼續跑。每多一個步驟要換到另一台機器，你就多跑一趟書桌。</p>
 </section>
 
 <section id="keychain-isolation">
@@ -198,7 +198,7 @@
 <section id="siri-shortcuts">
   <h2 id="sec-7">Siri 可以把終端畫面交給捷徑</h2>
   <p>對 Siri 說「從 Agentmux 取得目前終端內容」，<code>GetCurrentSessionContextIntent</code> 就把終端當下的內容抓進 iOS 捷徑，可以接去記事本、訊息，或任何你自己組的流程。<code>ContinueLastSessionIntent</code> 更直接：一句「在 Agentmux 繼續工作」就接回上一個 session。</p>
-  <p>這類自動化，通用的 SSH app 結構上做不到：它們沒有 session、專案、agent 這一層語意模型可以交給系統。Agentmux 目前實作 6 個 App Intent，涵蓋 Server、Project、TMUXSession、RecentSession 四種 entity。</p>
+  <p>這類自動化，通用的 SSH app 結構上做不到：它們沒有 session、專案、agent 這一層語意模型可以交給系統。Agentmux 目前實作 10 個 App Intent，涵蓋 Server、Project、TMUXSession、RecentSession 四種 entity。</p>
 </section>
 
 <section id="cjk-fixes">
@@ -210,7 +210,7 @@
   <h2 id="sec-9">你的工作是哪一種，就買哪一種</h2>
   <p><strong>主要是一台主機上的手動終端工作。</strong>你登入是為了跑自己挑的指令：重啟服務、tail log、看磁碟。那就買通用的 SSH client。想先試試以 session 為中心的做法，免費的單伺服器方案就涵蓋一台伺服器、持久 session 和核心終端機。</p>
   <p><strong>整天住在好幾台伺服器的 agent 裡。</strong>一個在 Mac mini 上重構，另一個在 Linux 機器上跑測試，第三個是你上火車前開的。這就是 Agentmux，而且具體來說是 Pro：多伺服器、自訂 agent、遠端編輯、檔案歷史、分支工具、批次操作。</p>
-  <p><strong>agent 活在瀏覽器分頁或雲端沙箱裡。</strong>方便是真的，代價是檔案和憑證不再存在你的機器上。Agentmux 從不代跑你的工作：它是 client，程式碼和 agent 留在你自己擁有的硬體上，一台 Mac、一台 Linux 機器、或一台伺服器。把專案和金鑰放到別人租給你的環境裡，只要你覺得安心，那也是合理的選擇。</p>
+  <p><strong>agent 活在瀏覽器分頁或雲端沙箱裡。</strong>方便是真的，代價是檔案和憑證不再存在你的機器上。Agentmux 從不代跑你的工作：它是 client，程式碼和 agent 留在你自己擁有的硬體上——Mac、Linux 主機，或走 OpenSSH 加 psmux 的 <a href="/guide/zh-TW/windows-server/">Windows 電腦</a>。把專案和金鑰放到別人租給你的環境裡，只要你覺得安心，那也是合理的選擇。</p>
   <p>怎麼連進去跟選哪個 app 一樣重要。標準 SSH 加金鑰或密碼就夠，建議走 Tailscale，因為不用對公網開 port。位置要用 MagicDNS 名稱或 100.x 位址，不是區網 IP。</p>
 </section>
 

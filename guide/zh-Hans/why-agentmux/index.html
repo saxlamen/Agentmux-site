@@ -72,7 +72,7 @@
         <li><a href="#sec-2">每个功能摆在一起，谁做得到？</a></li>
         <li><a href="#sec-3">为什么先列 tmux session？</a></li>
         <li><a href="#sec-4">你不在的时候，应用在做什么？</a></li>
-        <li><a href="#sec-5">在手机上改文件，一定要开 vim 吗？</a></li>
+        <li><a href="#sec-5">在手机上改文件或传截图，一定要开 vim 吗？</a></li>
         <li><a href="#sec-6">你的私钥放在哪里？</a></li>
         <li><a href="#sec-7">Siri 可以把终端画面交给快捷指令</a></li>
         <li><a href="#sec-8">三个专门针对中文体验的修复</a></li>
@@ -133,12 +133,12 @@
       <tr>
         <td>问你要不要准许一条命令</td>
         <td>你人必须坐在屏幕前</td>
-        <td>AI 自动权限审查：黑名单拦截、白名单放行、其余交给 AI 判断，再给建议或帮你按（Pro）</td>
+        <td>AI 自动权限审查：黑名单拦截、白名单放行、其余结合你最近的提示交给 AI 判断，再给建议或帮你按（Pro）</td>
       </tr>
       <tr>
-        <td>改文件里的一行</td>
-        <td>用手机键盘跟 vim 肉搏</td>
-        <td>Runestone 编辑器、Ink 双栏 Markdown 预览、分支工具、Files 应用集成（Pro）</td>
+        <td>改文件里的一行或传截图</td>
+        <td>用手机键盘跟 vim 肉搏，或回桌面再 <code>scp</code></td>
+        <td>Runestone 编辑器、Ink 双栏 Markdown 预览、分支工具、Files 应用，以及快捷栏添加附件上传（Pro）</td>
       </tr>
       <tr>
         <td>私钥放在哪里</td>
@@ -148,7 +148,7 @@
       <tr>
         <td>从应用外面自动化</td>
         <td>没有 session、项目、agent 这层模型可以交给系统</td>
-        <td>6 个 App Intent，涵盖四种 entity：Server、Project、TMUXSession、RecentSession</td>
+        <td>10 个 App Intent，涵盖四种 entity：Server、Project、TMUXSession、RecentSession</td>
       </tr>
       <tr>
         <td>不稳的移动网络</td>
@@ -158,12 +158,12 @@
       <tr>
         <td>Port forwarding</td>
         <td>Local、Remote、Dynamic（SOCKS5）都有</td>
-        <td>只有 Local</td>
+        <td>Local forwarding（支持固定规则，以及检测到 <code>localhost</code> 地址时一键临时转发）</td>
       </tr>
       <tr>
         <td>大规模的主机配置</td>
         <td>五个平台同步，主机列表能共享给团队</td>
-        <td>多服务器与批量操作（Pro），平台只有手机与平板</td>
+        <td>支持 Mac、Linux 与 Windows（OpenSSH + psmux）；多服务器与批量操作（Pro），平台只有手机与平板</td>
       </tr>
     </tbody>
   </table></div>
@@ -184,9 +184,9 @@
 </section>
 
 <section id="editor-git-files">
-  <h2 id="sec-5">在手机上改文件，一定要开 vim 吗？</h2>
-  <p>临时改一行代码，不必在手机上跟 vim 肉搏。内置的 Runestone 编辑器直接打开文件让你改。要看 agent 产出的 README，Ink 提供双栏 Markdown 预览，源码和排版同时看得到。Git 工具（切换分支、查看 diff）和 Files 应用集成是 Pro 功能，14 天试用期间也用得到。</p>
-  <p>重点是不用换设备就能走完这一轮：agent 改文件，你看 diff，你回答，它继续跑。每多一个步骤要换到另一台机器，你就多跑一趟书桌。</p>
+  <h2 id="sec-5">在手机上改文件或传截图，一定要开 vim 吗？</h2>
+  <p>临时改一行代码，不必在手机上跟 vim 肉搏。内置的 Runestone 编辑器直接打开文件让你改。要看 agent 产出的 README，Ink 提供双栏 Markdown 预览，源码和排版同时看得到。快捷栏的添加附件按钮可直接拍照、从照片或文件 App 选取或粘贴剪贴板图片，通过 SFTP 上传并把远程路径自动输入终端交给 agent 查看。Git 工具（切换分支、查看 diff）、文件历史和 Files 应用集成是 Pro 功能，14 天试用期间也用得到。</p>
+  <p>重点是不用换设备就能走完这一轮：你把截图传给 agent、看 diff、回答它，它继续跑。每多一个步骤要换到另一台机器，你就多跑一趟书桌。</p>
 </section>
 
 <section id="keychain-isolation">
@@ -198,7 +198,7 @@
 <section id="siri-shortcuts">
   <h2 id="sec-7">Siri 可以把终端画面交给快捷指令</h2>
   <p>对 Siri 说「从 Agentmux 获取当前终端内容」，<code>GetCurrentSessionContextIntent</code> 就把终端当下的内容抓进 iOS 快捷指令，可以接去备忘录、信息，或任何你自己搭的流程。<code>ContinueLastSessionIntent</code> 更直接：一句「在 Agentmux 继续工作」就接回上一个 session。</p>
-  <p>这类自动化，通用的 SSH 应用从结构上做不到：它们没有 session、项目、agent 这一层语义模型可以交给系统。Agentmux 目前实现了 6 个 App Intent，涵盖 Server、Project、TMUXSession、RecentSession 四种 entity。</p>
+  <p>这类自动化，通用的 SSH 应用从结构上做不到：它们没有 session、项目、agent 这一层语义模型可以交给系统。Agentmux 目前实现了 10 个 App Intent，涵盖 Server、Project、TMUXSession、RecentSession 四种 entity。</p>
 </section>
 
 <section id="cjk-fixes">
