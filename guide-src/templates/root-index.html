@@ -51,10 +51,16 @@
     </main>
     <script>
         (function () {
+            var links = document.querySelectorAll('.lang-cards a');
+            for (var j = 0; j < links.length; j++) {
+                links[j].addEventListener('click', function () {
+                    try { localStorage.setItem('preferred-lang', this.getAttribute('hreflang')); } catch (e) {}
+                });
+            }
+            if (new URLSearchParams(location.search).has('choose')) return;
             var saved = localStorage.getItem('preferred-lang');
             var pick = saved || navigator.language || '';
             if (!pick) return;
-            var links = document.querySelectorAll('.lang-cards a');
             var i, code;
             // Two passes on purpose. A single pass that accepts an exact match
             // OR a base-code match takes whichever comes first in config order,

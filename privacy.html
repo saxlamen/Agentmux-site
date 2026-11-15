@@ -874,7 +874,8 @@
             });
             const guideLink = document.getElementById('nav-guide-link');
             if (guideLink) {
-                guideLink.setAttribute('href', (lang === 'zh-TW' || lang === 'zh-Hans') ? '/guide/zh-TW/' : '/guide/en/');
+                const guideLang = ['zh-TW', 'zh-Hans', 'ja'].includes(lang) ? lang : 'en';
+                guideLink.setAttribute('href', `/guide/${guideLang}/`);
             }
         }
 

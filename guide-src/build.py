@@ -538,7 +538,7 @@ def _lang_switch(config: dict, lang: str, slug: str = None) -> tuple:
     """Target URL and label for the top-nav language switcher."""
     if len(config.get("languages", [])) > 2:
         labels = {"zh-TW": "語言", "zh-Hans": "语言", "en": "Language", "ja": "言語"}
-        return "/guide/", labels.get(lang, "Language")
+        return "/guide/?choose=1", labels.get(lang, "Language")
     other_code = "en" if lang == "zh-TW" else "zh-TW"
     other_label = "English" if lang == "zh-TW" else "繁體中文"
     matrix = config.get("content", {})
