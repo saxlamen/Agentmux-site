@@ -78,7 +78,7 @@
     </tbody>
   </table>
 
-  <p>先看最後三列。Agentmux 就是在那裡輸的，那也決定了哪些讀者該留在通用工具那一邊。</p>
+  <p>前七列是跑 coding agent 每天都會遇到的操作；最後三列則是界線所在，留給確實需要那些功能的通用 SSH 工具。</p>
 </section>
 
 <section id="tmux-first-reconnect">
@@ -112,8 +112,8 @@
 </section>
 
 <section id="cjk-fixes">
-  <h2>三個只有繁中使用者會有感的修正</h2>
-  <p>1.3.10 修掉三個英文圈使用者感覺不到、繁中讀者一眼就懂的毛病：全形字選取時對齊跑掉，連結跨行時複製出來斷成好幾截，詞句裡出現一個斜線就被當成檔案路徑。沒有實際處理過中日韓文字的人，不會踩到這三個坑。</p>
+  <h2>專為中日韓（CJK）文字調整的終端體驗</h2>
+  <p>只測英文的終端機 App 很少注意這三個問題，但繁中、簡中、日韓讀者一眼就會踩到：全形字選取時對齊跑掉、跨行折疊的連結複製出來斷成好幾截、詞句裡出現斜線就被誤判成檔案路徑。Agentmux 原生就處理好這三件事。</p>
 </section>
 
 <section id="pick-by-job">
@@ -125,15 +125,9 @@
 </section>
 
 <section id="when-not-to-use">
-  <h2>什麼時候該買 Termius 而不是 Agentmux</h2>
-  <p>下面任何一條如果是你的主要工作，就去買通用工具。</p>
-  <ul>
-    <li>你在很不穩定的行動網路下工作，需要 <strong>Mosh</strong> 撐住連線。Agentmux 只有標準 SSH，靠 tmux 自動重連補回來，但那不等於 Mosh。</li>
-    <li>你需要 <strong>Remote／Dynamic（SOCKS5）port forwarding</strong>。Agentmux 只有 Local。從某個網路打隧道出去、或叫瀏覽器走跳板主機，是你每天在做的事。這樣的話，這是硬缺口，不是偏好問題。</li>
-    <li>你要在 iOS／Android／Windows／macOS／Linux 之間同步大量主機設定，或跟團隊共享主機清單。Agentmux 是手機與平板的 client：Pro 有多伺服器與批次操作，沒有共享給同事這回事。</li>
-    <li>你是 SRE 或系統管理員，要在幾十上百台伺服器上做維運。能被腳本操作的主機清單，勝過一個要你點來點去的 session 清單。</li>
-  </ul>
-  <p>Agentmux 為一個工作流設計：<strong>在手機上接回正在跑的 coding agent。</strong>它不是通用的維運工具。如果你一週的工作就是一條一條零散的指令，這些差別對你沒有價值。</p>
+  <h2>什麼情況留給通用工具，為什麼多數人可以直接選 Agentmux</h2>
+  <p>如果你的日常工作是在幾十台主機之間做 SRE 維運、跨桌機與團隊共享大量主機清單，或每天都必須依賴 <strong>Mosh</strong> 與 <strong>Remote／SOCKS5 port forwarding</strong>，Termius 或 Blink 仍然比較合適。</p>
+  <p>除此之外——只要你在 Mac、Linux 或 Windows 主機上跑 Claude Code、Codex、Gemini、OpenCode，或有任何會跑好幾分鐘的終端任務——<strong>Agentmux 就是為這個工作流設計的</strong>：點一下接回 tmux、鎖定螢幕看進度、AI 自動權限審查、快捷列傳截圖與手機改檔。加上提供 14 天全功能試用與免費單伺服器方案，先拿主力機器試跑幾乎沒有門檻。</p>
 </section>
 
 <section id="ipad-vs-iphone">

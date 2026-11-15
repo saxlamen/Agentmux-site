@@ -78,7 +78,7 @@
     </tbody>
   </table>
 
-  <p>Read the last three rows first: they are where Agentmux loses.</p>
+  <p>The first seven rows cover what an agent workflow repeats every day; the last three are the clear boundaries where a general SSH client still fits.</p>
 </section>
 
 <section id="tmux-first-reconnect">
@@ -112,8 +112,8 @@
 </section>
 
 <section id="cjk-fixes">
-  <h2>Fixes you'll feel if you read CJK</h2>
-  <p>Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once: selection drifting out of alignment on full-width characters, a link that wraps across lines copying out as several separate pieces, and a lone slash inside CJK text read as a file path.</p>
+  <h2>Built for CJK text, not just ASCII</h2>
+  <p>English-only terminal apps rarely notice three details that Chinese, Japanese, and Korean readers hit immediately: selection drifting out of alignment on full-width characters, a wrapped URL copying out in broken pieces, and a lone slash inside CJK text being mistaken for a file path. Agentmux handles all three cleanly out of the box.</p>
 </section>
 
 <section id="pick-by-job">
@@ -125,15 +125,9 @@
 </section>
 
 <section id="when-not-to-use">
-  <h2>When Termius is the better buy</h2>
-  <p>If one of these is your main job, buy the general tool.</p>
-  <ul>
-    <li>You work on very unreliable mobile networks and need <strong>Mosh</strong> to hold the connection. Agentmux speaks standard SSH and compensates with automatic tmux reattachment, which is not the same thing as Mosh.</li>
-    <li>You need <strong>remote or dynamic (SOCKS5) port forwarding</strong>. Agentmux only does local, and that is a capability gap rather than a preference.</li>
-    <li>You want to sync a large host configuration across iOS, Android, Windows, macOS, and Linux, or share a host list with a team. Agentmux is a mobile client: multiple servers and batch actions on Pro, nothing shared.</li>
-    <li>You are an SRE or sysadmin running operations across dozens or hundreds of servers. An inventory you script against beats a list you tap through.</li>
-  </ul>
-  <p>Agentmux is built for one workflow: <strong>rejoining a running coding agent from your phone.</strong> It is not a general-purpose operations tool. If your week is a stream of one-off commands, there is nothing here worth switching for.</p>
+  <h2>Where a general client still fits—and why to start with Agentmux</h2>
+  <p>A general SSH client such as Termius or Blink still fits if your primary work is managing dozens of servers for ops, syncing host inventories across desktop and mobile teams, or relying on <strong>Mosh</strong> and <strong>remote / SOCKS5 port forwarding</strong> every day.</p>
+  <p>For everyone else—especially if you run Claude Code, Codex, Gemini, OpenCode, or long builds on a Mac, Linux box, or Windows PC—<strong>Agentmux is built specifically for that loop</strong>: one-tap tmux reattachment, Lock Screen progress, AI Permission Review, SFTP uploads, and mobile editing. With a 14-day full-feature trial followed by a free single-server tier, you can test it on your main machine without giving up anything first.</p>
 </section>
 
 <section id="ipad-vs-iphone">

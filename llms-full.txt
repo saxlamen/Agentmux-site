@@ -665,7 +665,7 @@ One row per capability. Where you cannot check a competitor's behaviour from out
 | Port forwarding | Local, remote, dynamic SOCKS5 | Local forwarding (saved rules plus one-tap temporary forwards for localhost URLs) |
 | Host configuration at scale | Synced on iOS, Android, Windows, macOS, Linux; shared host lists | Mac, Linux, and Windows (OpenSSH + psmux) hosts; multiple servers and batch actions (Pro); mobile only |
 
-Read the last three rows first: they are where Agentmux loses.
+The first seven rows cover what an agent workflow repeats every day; the last three are the clear boundaries where a general SSH client still fits.
 
 ## Why does Agentmux list tmux sessions first?
 
@@ -697,9 +697,9 @@ Ask any tool the same question: which of my private keys leave this device when 
 
 General SSH apps cannot do this, structurally: they have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 10 App Intents across four entity types: Server, Project, TMUXSession, RecentSession.
 
-## Fixes you'll feel if you read CJK
+## Built for CJK text, not just ASCII
 
-Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once: selection drifting out of alignment on full-width characters, a link that wraps across lines copying out as several separate pieces, and a lone slash inside CJK text read as a file path.
+English-only terminal apps rarely notice three details that Chinese, Japanese, and Korean readers hit immediately: selection drifting out of alignment on full-width characters, a wrapped URL copying out in broken pieces, and a lone slash inside CJK text being mistaken for a file path. Agentmux handles all three cleanly out of the box.
 
 ## Which tool for which job?
 
@@ -711,19 +711,11 @@ Version 1.3.10 fixed three things an English-only user never notices and a Chine
 
 Tailscale is the recommended way in: no port open to the public internet, and machines addressed by MagicDNS names or 100.x addresses rather than LAN IPs.
 
-## When Termius is the better buy
+## Where a general client still fits—and why to start with Agentmux
 
-If one of these is your main job, buy the general tool.
+A general SSH client such as Termius or Blink still fits if your primary work is managing dozens of servers for ops, syncing host inventories across desktop and mobile teams, or relying on **Mosh** and **remote / SOCKS5 port forwarding** every day.
 
-- You work on very unreliable mobile networks and need **Mosh** to hold the connection. Agentmux speaks standard SSH and compensates with automatic tmux reattachment, which is not the same thing as Mosh.
-
-- You need **remote or dynamic (SOCKS5) port forwarding**. Agentmux only does local, and that is a capability gap rather than a preference.
-
-- You want to sync a large host configuration across iOS, Android, Windows, macOS, and Linux, or share a host list with a team. Agentmux is a mobile client: multiple servers and batch actions on Pro, nothing shared.
-
-- You are an SRE or sysadmin running operations across dozens or hundreds of servers. An inventory you script against beats a list you tap through.
-
-Agentmux is built for one workflow: **rejoining a running coding agent from your phone.** It is not a general-purpose operations tool. If your week is a stream of one-off commands, there is nothing here worth switching for.
+For everyone else—especially if you run Claude Code, Codex, Gemini, OpenCode, or long builds on a Mac, Linux box, or Windows PC—**Agentmux is built specifically for that loop**: one-tap tmux reattachment, Lock Screen progress, AI Permission Review, SFTP uploads, and mobile editing. With a 14-day full-feature trial followed by a free single-server tier, you can test it on your main machine without giving up anything first.
 
 ## iPad with a keyboard vs iPhone check-ins
 
@@ -2082,7 +2074,7 @@ Agentmux 圍繞的是「一個已經在跑的 agent」，它的任務是縮短�
 | Port forwarding | Local、Remote、Dynamic（SOCKS5）都有 | Local forwarding（支援固定規則，以及偵測到 localhost 網址時一鍵暫時轉發） |
 | 大規模的主機設定 | 五個平台同步，主機清單能共享給團隊 | 支援 Mac、Linux 與 Windows（OpenSSH + psmux）；多伺服器與批次操作（Pro），平台只有手機與平板 |
 
-先看最後三列。Agentmux 就是在那裡輸的，那也決定了哪些讀者該留在通用工具那一邊。
+前七列是跑 coding agent 每天都會遇到的操作；最後三列則是界線所在，留給確實需要那些功能的通用 SSH 工具。
 
 ## 為什麼要先列 tmux session？
 
@@ -2114,9 +2106,9 @@ agent 常常一跑就是幾十分鐘，這個功能就是為那段等待做的�
 
 這類自動化，通用的 SSH app 結構上做不到：它們沒有 session、專案、agent 這一層語意模型可以交給系統。Agentmux 目前實作 10 個 App Intent，涵蓋 Server、Project、TMUXSession、RecentSession 四種 entity。
 
-## 三個只有繁中使用者會有感的修正
+## 專為中日韓（CJK）文字調整的終端體驗
 
-1.3.10 修掉三個英文圈使用者感覺不到、繁中讀者一眼就懂的毛病：全形字選取時對齊跑掉，連結跨行時複製出來斷成好幾截，詞句裡出現一個斜線就被當成檔案路徑。沒有實際處理過中日韓文字的人，不會踩到這三個坑。
+只測英文的終端機 App 很少注意這三個問題，但繁中、簡中、日韓讀者一眼就會踩到：全形字選取時對齊跑掉、跨行折疊的連結複製出來斷成好幾截、詞句裡出現斜線就被誤判成檔案路徑。Agentmux 原生就處理好這三件事。
 
 ## 你的工作是哪一種，就買哪一種
 
@@ -2128,19 +2120,11 @@ agent 常常一跑就是幾十分鐘，這個功能就是為那段等待做的�
 
 怎麼連進去跟選哪個 app 一樣重要。標準 SSH 加金鑰或密碼就夠，建議走 Tailscale，因為不用對公網開 port。位置要用 MagicDNS 名稱或 100.x 位址，不是區網 IP。
 
-## 什麼時候該買 Termius 而不是 Agentmux
+## 什麼情況留給通用工具，為什麼多數人可以直接選 Agentmux
 
-下面任何一條如果是你的主要工作，就去買通用工具。
+如果你的日常工作是在幾十台主機之間做 SRE 維運、跨桌機與團隊共享大量主機清單，或每天都必須依賴 **Mosh** 與 **Remote／SOCKS5 port forwarding**，Termius 或 Blink 仍然比較合適。
 
-- 你在很不穩定的行動網路下工作，需要 **Mosh** 撐住連線。Agentmux 只有標準 SSH，靠 tmux 自動重連補回來，但那不等於 Mosh。
-
-- 你需要 **Remote／Dynamic（SOCKS5）port forwarding**。Agentmux 只有 Local。從某個網路打隧道出去、或叫瀏覽器走跳板主機，是你每天在做的事。這樣的話，這是硬缺口，不是偏好問題。
-
-- 你要在 iOS／Android／Windows／macOS／Linux 之間同步大量主機設定，或跟團隊共享主機清單。Agentmux 是手機與平板的 client：Pro 有多伺服器與批次操作，沒有共享給同事這回事。
-
-- 你是 SRE 或系統管理員，要在幾十上百台伺服器上做維運。能被腳本操作的主機清單，勝過一個要你點來點去的 session 清單。
-
-Agentmux 為一個工作流設計：**在手機上接回正在跑的 coding agent。**它不是通用的維運工具。如果你一週的工作就是一條一條零散的指令，這些差別對你沒有價值。
+除此之外——只要你在 Mac、Linux 或 Windows 主機上跑 Claude Code、Codex、Gemini、OpenCode，或有任何會跑好幾分鐘的終端任務——**Agentmux 就是為這個工作流設計的**：點一下接回 tmux、鎖定螢幕看進度、AI 自動權限審查、快捷列傳截圖與手機改檔。加上提供 14 天全功能試用與免費單伺服器方案，先拿主力機器試跑幾乎沒有門檻。
 
 ## iPad 外接鍵盤 vs iPhone 零碎時間
 
@@ -3501,7 +3485,7 @@ Agentmux 围绕的是「一个已经在运行的 agent」，它的任务是缩�
 | Port forwarding | Local、Remote、Dynamic（SOCKS5）都有 | Local forwarding（支持固定规则，以及检测到 localhost 地址时一键临时转发） |
 | 大规模的主机配置 | 五个平台同步，主机列表能共享给团队 | 支持 Mac、Linux 与 Windows（OpenSSH + psmux）；多服务器与批量操作（Pro），平台只有手机与平板 |
 
-先看最后三行。Agentmux 就是在那里输的，那也决定了哪些读者该留在通用工具那一边。
+前七行是跑 coding agent 每天都会遇到的操作；最后三行则是边界所在，留给确实需要那些功能的通用 SSH 工具。
 
 ## 为什么先列 tmux session？
 
@@ -3533,9 +3517,9 @@ agent 常常一跑就是几十分钟，这个功能就是为那段等待做的�
 
 这类自动化，通用的 SSH 应用从结构上做不到：它们没有 session、项目、agent 这一层语义模型可以交给系统。Agentmux 目前实现了 10 个 App Intent，涵盖 Server、Project、TMUXSession、RecentSession 四种 entity。
 
-## 三个专门针对中文体验的修复
+## 专为中日韩（CJK）文字优化的终端体验
 
-1.3.10 修掉了三个英文圈用户感觉不到、中文读者一眼就懂的毛病：全角字符选中时对齐跑偏，链接跨行时复制出来断成好几截，词句里出现一个斜杠就被当成文件路径。没有实际处理过中日韩文字的人，不会踩到这三个坑。
+只测英文的终端应用很少注意这三个问题，但中文、日韩读者一眼就会踩到：全角字符选中时对齐跑偏、跨行折行的链接复制出来断成好几截、词句里出现斜杠就被误判成文件路径。Agentmux 原生就处理好了这三件事。
 
 ## 你的工作是哪一种，就买哪一种
 
@@ -3547,19 +3531,11 @@ agent 常常一跑就是几十分钟，这个功能就是为那段等待做的�
 
 怎么连进去跟选哪个应用一样重要。标准 SSH 加密钥或密码就够，建议走 Tailscale，因为不用对公网开端口。地址要用 MagicDNS 名称或 100.x 地址，不是局域网 IP。
 
-## 什么时候该买 Termius 而不是 Agentmux
+## 什么情况留给通用工具，为什么多数人可以直接选 Agentmux
 
-下面任何一条如果是你的主要工作，就去买通用工具。
+如果你的日常工作是在几十台主机之间做 SRE 运维、跨桌面与团队共享大量主机列表，或者每天都必须依赖 **Mosh** 与 **Remote／SOCKS5 port forwarding**，Termius 或 Blink 仍然更合适。
 
-- 你在很不稳定的移动网络下工作，需要 **Mosh** 撑住连接。Agentmux 只有标准 SSH，靠 tmux 自动重连补回来，但那不等同于 Mosh。
-
-- 你需要 **Remote／Dynamic（SOCKS5）port forwarding**。Agentmux 只有 Local。从某个网络打隧道出去、或让浏览器走跳板机，是你每天在做的事。这样的话，这是硬缺口，不是偏好问题。
-
-- 你要在 iOS／Android／Windows／macOS／Linux 之间同步大量主机配置，或跟团队共享主机列表。Agentmux 是手机与平板的 client：Pro 有多服务器与批量操作，没有共享给同事这回事。
-
-- 你是 SRE 或系统管理员，要在几十上百台服务器上做运维。能被脚本操作的主机列表，胜过一个要你点来点去的 session 列表。
-
-Agentmux 为一个工作流设计：**在手机上接回正在运行的 coding agent。**它不是通用的运维工具。如果你一周的工作就是一条一条零散的命令，这些差别对你没有价值。
+除此之外——只要你在 Mac、Linux 或 Windows 主机上跑 Claude Code、Codex、Gemini、OpenCode，或有任何会跑几分钟的终端任务——**Agentmux 就是为这个工作流设计的**：点一下接回 tmux、锁屏看进度、AI 自动权限审查、快捷栏传截图与手机改文件。加上提供 14 天全功能试用与免费单服务器方案，先拿主力机器试跑几乎没有门槛。
 
 ## iPad 外接键盘 vs iPhone 碎片时间
 
@@ -4960,7 +4936,7 @@ Agentmux はどこかですでに動いているエージェントを中心に�
 | ポートフォワーディング | ローカル、リモート、動的 SOCKS5 | ローカル転送（保存済みルール＋localhost URL 検出時のワンタップ一時転送） |
 | 大規模なホスト設定管理 | iOS、Android、Windows、macOS、Linux 間で同期、ホスト一覧の共有 | Mac・Linux・Windows（OpenSSH + psmux）対応、複数サーバーと一括操作（Pro）、モバイル専用 |
 
-まず最後の 3 行から読んでください。そこが Agentmux の弱い部分です。
+最初の 7 行はエージェント作業で毎日使う領域、最後の 3 行は汎用 SSH クライアントが引き続き向いている境界です。
 
 ## なぜ Agentmux は最初に tmux セッションを並べるのか
 
@@ -4992,9 +4968,9 @@ Git ツール（ブランチ切り替え、diff の閲覧）、ファイル履�
 
 汎用 SSH アプリには構造的にこれができません。セッション、プロジェクト、エージェントといった意味モデルをシステムに公開していないためです。Agentmux は Server、Project、TMUXSession、RecentSession の 4 つのエンティティ型に対して 10 個の App Intents を実装しています。
 
-## 日本語・中国語・韓国語を読む人が気づく修正
+## 日本語・中国語・韓国語（CJK）を前提にしたターミナル処理
 
-バージョン 1.3.10 では、英語しか使わない人には気づかれにくいものの CJK テキストを読む人にはすぐわかる 3 つの問題が修正されました。全角文字で選択範囲がずれる問題、行をまたいで折り返されたリンクをコピーすると複数行に分断される問題、CJK テキスト内の単独のスラッシュがファイルパスとして誤認識される問題です。
+英語圏だけのターミナルアプリでは見過ごされがちですが、日本語・中国語・韓国語を読む人ならすぐ気づく 3 点——全角文字で選択範囲がずれる問題、折り返された URL がコピー時に分断される問題、CJK テキスト内の単独スラッシュがファイルパスと誤認識される問題——に最初から対応しています。
 
 ## 用途別の選び方
 
@@ -5008,19 +4984,11 @@ Agentmux はあくまでクライアントであり、コードもエージェ�
 
 接続経路には Tailscale を推奨します。インターネットにポートを開放する必要がなく、MagicDNS 名や 100.x アドレスで接続できます。
 
-## Termius の方が適しているケース
+## 汎用クライアントが合うケースと、Agentmux から始める理由
 
-主な用途が次のいずれかに当てはまる場合は、汎用 SSH クライアントを選んでください。
+数十台規模のサーバー運用、PC・スマホ・チーム間でのホスト一覧共有、あるいは不安定な回線での **Mosh** や **リモート / SOCKS5 ポートフォワーディング**が毎日の主業務なら、Termius や Blink の方が適しています。
 
-- 非常に不安定なモバイル回線で接続を維持するために **Mosh** が必要なとき。Agentmux は標準 SSH を使い tmux の自動再アタッチで補いますが、Mosh とは仕組みが異なります。
-
-- **リモートまたは動的（SOCKS5）ポートフォワーディング**が必要なとき。Agentmux が対応しているのはローカルフォワーディングのみで、機能上の制約です。
-
-- iOS、Android、Windows、macOS、Linux の間で大規模なホスト設定を同期したり、チームでホスト一覧を共有したりしたいとき。Agentmux はモバイル専用クライアントであり、Pro で複数サーバーや一括操作には対応していますが、共有機能はありません。
-
-- 数十台・数百台のサーバーを運用する SRE やシステム管理者のとき。画面をタップして選ぶリストよりも、スクリプトで扱えるインベントリの方が適しています。
-
-Agentmux は**「動いているコーディングエージェントにスマートフォンから戻る」**という 1 つのワークフローに特化して作られています。汎用的な運用管理ツールではありません。日々の作業が単発コマンドの連続であれば、乗り換える理由はありません。
+それ以外で、Mac・Linux・Windows マシン上の Claude Code、Codex、Gemini、OpenCode、または数分以上かかるターミナル作業をスマホから確認したいなら、**Agentmux はまさにそのワークフロー専用に作られています**。1 タップでの tmux 再接続、ロック画面の進捗表示、AI 自動権限レビュー、SFTP 画像添付、モバイル編集まで揃い、14 日間の全機能トライアル後は無料のシングルサーバープランでそのまま試せます。
 
 ## iPad でのキーボード作業と iPhone での確認
 
