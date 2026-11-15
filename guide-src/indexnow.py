@@ -34,7 +34,7 @@ def find_key() -> str:
     for file in WEB_ROOT.iterdir():
         if KEY_FILE.match(file.name):
             return file.name[:-4]
-    raise SystemExit("no IndexNow key: create an empty <32 hex chars>.txt in the site root")
+    raise SystemExit("no IndexNow key: create <32 hex chars>.txt containing the key in the site root")
 
 
 def sitemap_urls(limit: int) -> list:
