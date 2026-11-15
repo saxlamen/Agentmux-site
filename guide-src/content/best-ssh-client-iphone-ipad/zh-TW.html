@@ -1,0 +1,67 @@
+<p>iPhone 與 iPad 最適合哪一款 SSH App，取決於你打開它主要做什麼：跨電腦與手機管理大量主機清單選 Termius；在訊號不穩的環境搭配 iPad 實體鍵盤用 Mosh 選 Blink Shell；若主要用來接回 tmux session 與 Claude Code、Codex 等 CLI agent，選 Agentmux。</p>
+<p>這幾款 App 底層都能走 SSH，差別在於設計核心是「主機列表」、「本地 UNIX 終端機」，還是「正在跑的 agent session」。完整的能力對照表可看 <a href="/guide/zh-TW/why-agentmux/">Agentmux 與一般 SSH App 的差異</a>。</p>
+
+<section id="three-jobs">
+  <h2>三種用途，各自對應的工具</h2>
+  <p>先看你每天在手機或 iPad 上最常重複哪一種工作，再選對應的工具。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>主要用途</th>
+        <th>適合工具</th>
+        <th>關鍵原因</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>跨桌機與手機管理共用主機清單</td>
+        <td>Termius</td>
+        <td>支援 iOS、Android、macOS、Windows、Linux 主機設定同步與完整 port forwarding</td>
+      </tr>
+      <tr>
+        <td>在訊號不穩的行動網路搭配 iPad 鍵盤工作</td>
+        <td>Blink Shell</td>
+        <td>支援 Mosh 與接近本地 UNIX 的終端環境，針對外接鍵盤優化</td>
+      </tr>
+      <tr>
+        <td>隨時接回 Claude Code、Codex 或長時間 tmux 任務</td>
+        <td>Agentmux</td>
+        <td>連線直接列出 tmux session、鎖定螢幕顯示進度，並內建 AI 自動權限審查</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="termius">
+  <h2>Termius：適合管理主機清單與跨平台同步</h2>
+  <p>如果你的痛點是管幾十台主機、把金鑰與 snippet 同步到各個裝置，或需要 local、remote 與動態 SOCKS5 port forwarding 與 Mosh，Termius 是最成熟的一般型工具。</p>
+  <p>但拿來盯 CLI coding agent 時，每次斷線重連都只會回到空白 shell，得自己重打 <code>tmux ls</code> 和 <code>tmux attach -t</code>；鎖定手機螢幕後也不會顯示 agent 是否跑完。</p>
+</section>
+
+<section id="blink-shell">
+  <h2>Blink Shell：適合 Mosh 與 iPad 鍵盤操作</h2>
+  <p>如果你常帶著 iPad 與實體鍵盤在移動中寫程式，Blink Shell 的 Mosh 連線能在高延遲或不穩定的 Wi-Fi 下保持輸入流暢。</p>
+  <p>不過它同樣是把終端當成通用 shell 來設計，並未針對 tmux session 切換、agent 權限確認提示或鎖定螢幕進度追蹤做專門流程。</p>
+</section>
+
+<section id="agentmux">
+  <h2>Agentmux：專為 tmux 與 CLI coding agent 設計</h2>
+  <p>Agentmux 假設程式碼與 agent 已經跑在你自己的 Mac、Linux 或 Windows 主機上。點進伺服器時不會先給你空白提示字元，而是直接列出正在跑的 tmux session，點一下就回到離開時的畫面。</p>
+  <ul>
+    <li><strong>離開螢幕也能追蹤：</strong>任務執行期間在動態島與鎖定螢幕顯示進度，跑完時發出提示音。</li>
+    <li><strong>AI 自動權限審查：</strong>黑名單擋掉危險指令、白名單放行信任指令，其餘交給 AI 判斷並可選擇僅建議按鍵或自動按下（Pro）。</li>
+    <li><strong>手機改檔不必硬敲 Vim：</strong>內建 Runestone 程式碼編輯器、Markdown 預覽與分支工具（Pro）。</li>
+    <li><strong>清楚的取捨：</strong>僅提供手機／平板 App（iOS、iPadOS、Android），只支援 local port forwarding，且採用標準 SSH + tmux 而非 Mosh。</li>
+  </ul>
+  <p>提供 14 天全功能試用，之後可繼續使用免費的單一伺服器方案。</p>
+</section>
+
+<section id="ipad-vs-iphone">
+  <h2>iPad 與 iPhone 該怎麼挑</h2>
+  <p>如果你常在 iPad 上接實體鍵盤、在高鐵或弱 Wi-Fi 下直接操作遠端 shell，Mosh（Blink 或 Termius）會比較重要；如果你多半是用 iPhone 零碎時間查看進度、回覆 Claude Code 或 Codex 的確認提示、順手看幾行 diff，以 session 為中心、一鍵接回的設計會省下最多操作步驟。</p>
+</section>
+
+<section id="next-steps">
+  <h2>下一步從哪裡開始</h2>
+  <p>想用 Tailscale 與 tmux 把自己的 Mac、Linux 或 Windows 電腦連起來，可以直接跑一遍 3 題的 <a href="/guide/zh-TW/setup/">設定精靈</a>；如果想看更細的功能與架構對比，可參考 <a href="/guide/zh-TW/why-agentmux/">Agentmux 設計比較</a>。</p>
+</section>

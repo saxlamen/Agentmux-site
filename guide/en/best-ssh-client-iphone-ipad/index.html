@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best SSH client for iPhone and iPad — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Best SSH client for iPhone and iPad">
+    <meta property="og:description" content="Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad running coding agents over SSH">
+    <meta property="article:published_time" content="2026-11-10">
+    <meta property="article:modified_time" content="2026-11-10">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Best SSH client for iPhone and iPad">
+    <meta name="twitter:description" content="Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="phc_yXNQ6YDiCq8v7B8cp83zdTN3uavyWCdQcPv6YqibpvMX">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Best SSH client for iPhone and iPad", "description": "Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/", "url": "https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-10", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Best SSH client for iPhone and iPad", "item": "https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/en/">Guide home</a>
+                <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/best-ssh-client-iphone-ipad/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/best-ssh-client-iphone-ipad/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/best-ssh-client-iphone-ipad/" hreflang="ja">日本語</a>
+        <a href="/guide/en/best-ssh-client-iphone-ipad/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">Best SSH client for iPhone and iPad</span></nav>
+        <article class="guide-article">
+            <h1>Best SSH client for iPhone and iPad</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">Three jobs, three different tools</a></li>
+        <li><a href="#sec-2">Termius: built for host lists and cross-platform teams</a></li>
+        <li><a href="#sec-3">Blink Shell: built for Mosh and iPad keyboards</a></li>
+        <li><a href="#sec-4">Agentmux: built for tmux and CLI coding agents</a></li>
+        <li><a href="#sec-5">How to choose for iPad vs iPhone</a></li>
+        <li><a href="#sec-6">Where to start</a></li>
+    </ol>
+</details>
+            <p>The best SSH client for iPhone and iPad depends on what you open it to do. Choose Termius if you manage many servers across desktop and mobile, Blink Shell if you rely on Mosh over unstable networks, and Agentmux if you connect mainly to tmux sessions and CLI coding agents.</p>
+<p>Every app in this category speaks SSH and gives you a shell prompt. Where they diverge is what they treat as the primary unit—a host list, a local UNIX terminal, or a running agent session. A fuller capability matrix lives in <a href="/guide/en/why-agentmux/">Agentmux vs general SSH clients</a>.</p>
+
+<section id="three-jobs">
+  <h2 id="sec-1">Three jobs, three different tools</h2>
+  <p>Before installing an app, match it to the workflow you repeat most often on your phone or iPad.</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>Primary job</th>
+        <th>Best fit</th>
+        <th>Why it wins there</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Managing shared host lists across desktop and mobile</td>
+        <td>Termius</td>
+        <td>Host configuration sync across iOS, Android, macOS, Windows, and Linux; full port forwarding</td>
+      </tr>
+      <tr>
+        <td>Working on flaky cellular links with an iPad keyboard</td>
+        <td>Blink Shell</td>
+        <td>Mosh support and a local UNIX-style shell built around hardware keyboards</td>
+      </tr>
+      <tr>
+        <td>Checking on Claude Code, Codex, or long tmux runs</td>
+        <td>Agentmux</td>
+        <td>Lists running tmux sessions on connect, tracks agent runs on the Lock Screen, and screens permission prompts</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14-day full-feature trial, available on iOS and Android.</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="termius">
+  <h2 id="sec-2">Termius: built for host lists and cross-platform teams</h2>
+  <p>Termius is the standard choice when your main problem is organizing dozens of hosts and keeping snippets, keys, and port forwarding rules synced between a laptop and a phone. It supports local, remote, and dynamic SOCKS5 forwarding as well as Mosh.</p>
+  <p>For running CLI coding agents, the friction is what happens after you connect: Termius drops you at a shell prompt, so finding the right session means typing <code>tmux ls</code> and <code>tmux attach -t</code> each time, and nothing surfaces agent progress once you lock your phone.</p>
+</section>
+
+<section id="blink-shell">
+  <h2 id="sec-3">Blink Shell: built for Mosh and iPad keyboards</h2>
+  <p>Blink Shell shines on an iPad with a hardware keyboard when you travel on trains or weak Wi-Fi. Mosh keeps keystrokes responsive over high-latency links without waiting for every TCP round-trip.</p>
+  <p>Like Termius, Blink treats the terminal as a general shell rather than an agent workspace: reattaching to specific tmux sessions, reviewing agent permission prompts, or watching long background runs on the Lock Screen are not part of its model.</p>
+</section>
+
+<section id="agentmux">
+  <h2 id="sec-4">Agentmux: built for tmux and CLI coding agents</h2>
+  <p>Agentmux assumes the code and agent already run on a Mac, Linux box, or Windows host you own. When you tap a server, it skips the empty prompt and lists your running tmux sessions so one tap puts you back on the exact screen you left.</p>
+  <ul>
+    <li><strong>Away-from-keyboard feedback:</strong> Dynamic Island and Lock Screen progress while a run continues, plus a sound when it finishes.</li>
+    <li><strong>AI Permission Review:</strong> A blacklist blocks dangerous commands, an allowlist passes trusted ones, and AI judgement handles the rest—either suggesting the key or pressing it (Pro).</li>
+    <li><strong>Remote file edits:</strong> Runestone code editor, Markdown preview, and branch tools over SSH without falling back to Vim on a touch keyboard (Pro).</li>
+    <li><strong>Clear trade-offs:</strong> Mobile only (iOS, iPadOS, Android), local port forwarding only, and standard SSH plus tmux rather than Mosh.</li>
+  </ul>
+  <p>It starts with a 14-day full-feature trial followed by a free single-server tier.</p>
+</section>
+
+<section id="ipad-vs-iphone">
+  <h2 id="sec-5">How to choose for iPad vs iPhone</h2>
+  <p>If you carry an iPad with a keyboard and spend hours writing code directly in a remote shell over spotty Wi-Fi, Mosh in Blink or Termius matters more. If you mostly check in from an iPhone while away from your desk—reattaching to Claude Code or Codex, answering a permission prompt, or inspecting a diff—session-first reattachment saves the most friction.</p>
+</section>
+
+<section id="next-steps">
+  <h2 id="sec-6">Where to start</h2>
+  <p>If you want to connect your own Mac, Linux, or Windows machine over Tailscale and tmux, follow the 3-question <a href="/guide/en/setup/">setup wizard</a>. If you want a side-by-side breakdown of SSH, keys, and tmux behavior, read <a href="/guide/en/why-agentmux/">why Agentmux works differently from general SSH apps</a>.</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="Previous" href="/guide/en/why-agentmux/">Previous<span>Why not Termius or Blink</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="Next" href="/guide/en/setup/">Next<span>15 minutes to an agent that works all night</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14-day full-feature trial, available on iOS and Android.</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">Home</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="mailto:atmux-support@saxcave.cc">Support</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

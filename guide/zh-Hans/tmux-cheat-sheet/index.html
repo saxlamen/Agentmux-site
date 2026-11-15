@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tmux 常用命令速查表 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="创建、列出、接回与脱离 tmux session，拆分 pane、复制滚动模式，以及适合 SSH 与手机的 ~/.tmux.conf。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:title" content="tmux 常用命令速查表">
+    <meta property="og:description" content="创建、列出、接回与脱离 tmux session，拆分 pane、复制滚动模式，以及适合 SSH 与手机的 ~/.tmux.conf。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad 上的 session 指挥中心">
+    <meta property="article:published_time" content="2026-11-15">
+    <meta property="article:modified_time" content="2026-11-15">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="tmux 常用命令速查表">
+    <meta name="twitter:description" content="创建、列出、接回与脱离 tmux session，拆分 pane、复制滚动模式，以及适合 SSH 与手机的 ~/.tmux.conf。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="phc_yXNQ6YDiCq8v7B8cp83zdTN3uavyWCdQcPv6YqibpvMX">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "tmux 常用命令速查表", "description": "创建、列出、接回与脱离 tmux session，拆分 pane、复制滚动模式，以及适合 SSH 与手机的 ~/.tmux.conf。", "inLanguage": "zh-Hans", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/", "url": "https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-15", "dateModified": "2026-11-15"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首页", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/"}, {"@type": "ListItem", "position": 4, "name": "tmux 常用命令速查表", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/zh-Hans/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/zh-Hans/">指南首页</a>
+                <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">简体中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/tmux-cheat-sheet/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/tmux-cheat-sheet/" hreflang="zh-Hans" aria-current="page">简体中文</a>
+        <a href="/guide/ja/tmux-cheat-sheet/" hreflang="ja">日本語</a>
+        <a href="/guide/en/tmux-cheat-sheet/" hreflang="en">English</a>
+    </div>
+</details>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-Hans/">首页</a><span aria-hidden="true">/</span><a href="/guide/zh-Hans/">指南首页</a><span aria-hidden="true">/</span><span aria-current="page">tmux 常用命令速查表</span></nav>
+        <article class="guide-article">
+            <h1>tmux 常用命令速查表</h1>
+            <details class="guide-toc">
+    <summary>本页目录</summary>
+    <ol>
+        <li><a href="#sec-1">Session：创建、列表、接回、脱离</a></li>
+        <li><a href="#sec-2">Window 与 Pane 操作</a></li>
+        <li><a href="#sec-3">滚动画面与复制模式</a></li>
+        <li><a href="#sec-4">适合 SSH 与手机的精简 ~/.tmux.conf</a></li>
+        <li><a href="#sec-5">在手机上跳过前缀快捷键</a></li>
+    </ol>
+</details>
+            <p>用 <code>tmux new -s work</code> 创建命名 session，按 <code>Ctrl+b d</code> 暂时脱离而不中断程序，用 <code>tmux ls</code> 列出所有运行中的 session，再用 <code>tmux attach -t work</code> 接回画面。以下命令在 macOS 与 Linux 通过 SSH 均可直接使用。</p>
+<p>这页是 <a href="/guide/zh-Hans/what-is-tmux/">tmux 原理说明</a> 的常用速查表。把高频几行存下来；如果是从手机操作，也可以直接点选来代替输入前缀组合键。</p>
+
+<section id="sessions">
+  <h2 id="sec-1">Session：创建、列表、接回、脱离</h2>
+  <p>Session 是在 SSH 断线后仍留在远程机器上的单位。建议按仓库名或任务命名，这样 <code>tmux ls</code> 才不会只剩一排数字。</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>目的</th>
+        <th>命令</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>创建命名 session</td>
+        <td><code>tmux new -s work</code></td>
+        <td>创建名为 <code>work</code> 的 session 并立刻进入</td>
+      </tr>
+      <tr>
+        <td>存在就接回、没有就创建</td>
+        <td><code>tmux new -As work</code></td>
+        <td>最适合写进快捷指令或脚本的单行写法</td>
+      </tr>
+      <tr>
+        <td>列出当前所有 session</td>
+        <td><code>tmux ls</code></td>
+        <td>显示名称、window 数量与是否已连接</td>
+      </tr>
+      <tr>
+        <td>接回已有 session</td>
+        <td><code>tmux attach -t work</code></td>
+        <td>简写：<code>tmux a -t work</code></td>
+      </tr>
+      <tr>
+        <td>暂时脱离（后台继续跑）</td>
+        <td><code>Ctrl+b d</code></td>
+        <td>回到外层 shell，里面的 agent 不会停止</td>
+      </tr>
+      <tr>
+        <td>重命名当前 session</td>
+        <td><code>Ctrl+b $</code></td>
+        <td>输入新名称后按 Enter</td>
+      </tr>
+      <tr>
+        <td>关闭已结束的 session</td>
+        <td><code>tmux kill-session -t work</code></td>
+        <td>结束 <code>work</code> 里的所有 window 与 pane</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能试用，支持 iOS 与 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+    </div>
+</aside>
+
+<section id="windows-and-panes">
+  <h2 id="sec-2">Window 与 Pane 操作</h2>
+  <p>先按 <code>Ctrl+b</code> 并松开，再按后面的功能键。在同一个 session 里，window 像标签页，pane 则是把单个窗口拆分成多块。</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>动作</th>
+        <th>快捷键</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>新建 window</td>
+        <td><code>Ctrl+b c</code></td>
+      </tr>
+      <tr>
+        <td>切换上一个 / 下一个 window</td>
+        <td><code>Ctrl+b p</code> / <code>Ctrl+b n</code></td>
+      </tr>
+      <tr>
+        <td>重命名当前 window</td>
+        <td><code>Ctrl+b ,</code></td>
+      </tr>
+      <tr>
+        <td>上下拆分 pane</td>
+        <td><code>Ctrl+b "</code></td>
+      </tr>
+      <tr>
+        <td>左右拆分 pane</td>
+        <td><code>Ctrl+b %</code></td>
+      </tr>
+      <tr>
+        <td>在 pane 之间移动</td>
+        <td><code>Ctrl+b</code> 后按方向键</td>
+      </tr>
+      <tr>
+        <td>放大 / 还原当前 pane</td>
+        <td><code>Ctrl+b z</code></td>
+      </tr>
+      <tr>
+        <td>关闭当前 pane</td>
+        <td>输入 <code>exit</code> 或按 <code>Ctrl+d</code></td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p>在手机屏幕上，分开创建独立 session 或用 <code>Ctrl+b z</code> 放大单个 pane，会比左右并排分屏好读得多。</p>
+</section>
+
+<section id="copy-mode">
+  <h2 id="sec-3">滚动画面与复制模式</h2>
+  <p>在 tmux 里直接滑动终端通常滚不动历史输出，必须进入 copy mode 或开启鼠标支持。</p>
+  <ul>
+    <li><strong>进入滚动 / 复制模式：</strong>按 <code>Ctrl+b [</code>，之后可用方向键、<code>PageUp</code> 或输入 <code>/</code> 向上搜索文本。</li>
+    <li><strong>退出复制模式：</strong>按 <code>q</code> 或 <code>Esc</code> 回到实时输入行。</li>
+    <li><strong>可视化切换 session：</strong>按 <code>Ctrl+b s</code>，用方向键挑选要接回的 session。</li>
+  </ul>
+</section>
+
+<section id="tmux-conf">
+  <h2 id="sec-4">适合 SSH 与手机的精简 ~/.tmux.conf</h2>
+  <p>在远程主机的 <code>~/.tmux.conf</code> 加入这四行，再执行 <code>tmux source-file ~/.tmux.conf</code> 生效：</p>
+  <pre><code>set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on</code></pre>
+  <ul>
+    <li><code>mouse on</code> 让触控滚动与点击切换 pane 通过 SSH 也能生效。</li>
+    <li><code>history-limit 10000</code> 保留足够的历史行数，方便回看 agent 的长段 diff 与测试输出。</li>
+    <li><code>escape-time 10</code> 消除在 Vim 或 CLI agent 按 <code>Esc</code> 时的延迟感。</li>
+    <li><code>focus-events on</code> 让编辑器与终端工具能检测你何时切回窗口。</li>
+  </ul>
+</section>
+
+<section id="phone-without-prefix">
+  <h2 id="sec-5">在手机上跳过前缀快捷键</h2>
+  <p>在手机虚拟键盘上反复按 <code>Ctrl+b</code> 组合键很慢。<a href="/guide/zh-Hans/why-agentmux/">Agentmux</a> 会在连接时自动列出运行中的 tmux session、点一下就能接回，并提供 14 天全功能试用与免费单服务器方案。如果主机还没配好，可以先走一遍 <a href="/guide/zh-Hans/setup/">配置向导</a>。</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="上一篇" href="/guide/zh-Hans/what-is-tmux/">上一篇<span>让 agent 在你关掉手机后继续跑</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="下一篇" href="/guide/zh-Hans/what-is-tailscale/">下一篇<span>不要对公网开端口</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14 天全功能试用，支持 iOS 与 Android。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/zh-Hans/">首页</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

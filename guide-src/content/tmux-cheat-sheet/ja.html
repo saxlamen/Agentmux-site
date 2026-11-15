@@ -1,0 +1,131 @@
+<p>名前付きセッションは <code>tmux new -s work</code> で作成し、<code>Ctrl+b d</code> で処理を止めずにデタッチ、<code>tmux ls</code> で一覧表示、<code>tmux attach -t work</code> で再接続します。以下のコマンドは macOS と Linux の SSH 接続先でそのまま使えます。</p>
+<p>このページは <a href="/guide/ja/what-is-tmux/">tmux の仕組み解説</a> に対応した早見表です。よく使うコマンドだけ控えておくか、スマホからならプレフィックスキーを打たずにタップ操作で切り替えられます。</p>
+
+<section id="sessions">
+  <h2>セッションの作成・一覧・再接続・デタッチ</h2>
+  <p>SSH が切れてもサーバー側に残る単位がセッションです。<code>tmux ls</code> で見分けやすいよう、リポジトリ名や作業名を付けておきます。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>目的</th>
+        <th>コマンド</th>
+        <th>補足</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>名前付きセッションを開始</td>
+        <td><code>tmux new -s work</code></td>
+        <td><code>work</code> を作成してすぐアタッチする</td>
+      </tr>
+      <tr>
+        <td>あれば接続、なければ作成</td>
+        <td><code>tmux new -As work</code></td>
+        <td>スクリプトやショートカットに入れやすい1行</td>
+      </tr>
+      <tr>
+        <td>稼働中セッション一覧</td>
+        <td><code>tmux ls</code></td>
+        <td>セッション名・ウィンドウ数・接続状態を表示</td>
+      </tr>
+      <tr>
+        <td>既存セッションに再接続</td>
+        <td><code>tmux attach -t work</code></td>
+        <td>短縮形：<code>tmux a -t work</code></td>
+      </tr>
+      <tr>
+        <td>実行したままデタッチ</td>
+        <td><code>Ctrl+b d</code></td>
+        <td>元のシェルへ戻り、裏でエージェントは動き続ける</td>
+      </tr>
+      <tr>
+        <td>現在のセッション名を変更</td>
+        <td><code>Ctrl+b $</code></td>
+        <td>新しい名前を入力して Enter</td>
+      </tr>
+      <tr>
+        <td>不要なセッションを終了</td>
+        <td><code>tmux kill-session -t work</code></td>
+        <td><code>work</code> 内のウィンドウとペインをすべて閉じる</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="windows-and-panes">
+  <h2>ウィンドウとペインの操作</h2>
+  <p><code>Ctrl+b</code> を押して離してから、次のキーを押します。セッション内ではウィンドウがタブ、ペインが画面分割に相当します。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>操作</th>
+        <th>ショートカット</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>新規ウィンドウ作成</td>
+        <td><code>Ctrl+b c</code></td>
+      </tr>
+      <tr>
+        <td>前後のウィンドウへ移動</td>
+        <td><code>Ctrl+b p</code> / <code>Ctrl+b n</code></td>
+      </tr>
+      <tr>
+        <td>現在のウィンドウ名を変更</td>
+        <td><code>Ctrl+b ,</code></td>
+      </tr>
+      <tr>
+        <td>上下にペイン分割</td>
+        <td><code>Ctrl+b "</code></td>
+      </tr>
+      <tr>
+        <td>左右にペイン分割</td>
+        <td><code>Ctrl+b %</code></td>
+      </tr>
+      <tr>
+        <td>ペイン間のフォーカス移動</td>
+        <td><code>Ctrl+b</code> のあとに矢印キー</td>
+      </tr>
+      <tr>
+        <td>現在のペインを拡大 / 解除</td>
+        <td><code>Ctrl+b z</code></td>
+      </tr>
+      <tr>
+        <td>現在のペインを閉じる</td>
+        <td><code>exit</code> または <code>Ctrl+d</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>スマホの狭い画面では、左右分割よりもセッションを分けるか <code>Ctrl+b z</code> で単一ペインを拡大する方が読みやすくなります。</p>
+</section>
+
+<section id="copy-mode">
+  <h2>スクロールとコピーモード</h2>
+  <p>tmux 内では通常の端末スクロールが効かないため、コピーモードに入るかマウス設定を有効にします。</p>
+  <ul>
+    <li><strong>スクロール / コピーモードに入る：</strong><code>Ctrl+b [</code> を押し、矢印キーや <code>PageUp</code>、<code>/</code> で過去ログを遡ります。</li>
+    <li><strong>コピーモードを抜ける：</strong><code>q</code> または <code>Esc</code> で入力行に戻ります。</li>
+    <li><strong>一覧からセッションを選ぶ：</strong><code>Ctrl+b s</code> を押すと矢印キーでセッションを切り替えられます。</li>
+  </ul>
+</section>
+
+<section id="tmux-conf">
+  <h2>SSH・スマホ向けの最小 ~/.tmux.conf</h2>
+  <p>接続先マシンの <code>~/.tmux.conf</code> に次の4行を追加し、<code>tmux source-file ~/.tmux.conf</code> で反映します。</p>
+  <pre><code>set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on</code></pre>
+  <ul>
+    <li><code>mouse on</code>：SSH 経由でもタッチスクロールやペインタップが有効になります。</li>
+    <li><code>history-limit 10000</code>：エージェントの長い差分やテスト出力を遡れる行数を確保します。</li>
+    <li><code>escape-time 10</code>：Vim や CLI エージェントで <code>Esc</code> を押したときの待ち時間をなくします。</li>
+    <li><code>focus-events on</code>：ペインに戻ったことをエディタ側へ通知します。</li>
+  </ul>
+</section>
+
+<section id="phone-without-prefix">
+  <h2>スマホでプレフィックスキーを省略する</h2>
+  <p>スマホのソフトウェアキーボードで毎回 <code>Ctrl+b</code> を打つのは手間がかかります。<a href="/guide/ja/why-agentmux/">Agentmux</a> は接続時に稼働中の tmux セッションを一覧表示し、1タップで再接続できます。14日間の全機能トライアル後は無料のシングルサーバープランを利用でき、最初の設定は <a href="/guide/ja/setup/">セットアップウィザード</a> から進められます。</p>
+</section>

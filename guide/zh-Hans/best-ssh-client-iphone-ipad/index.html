@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone 与 iPad SSH 客户端推荐与对比 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:title" content="iPhone 与 iPad SSH 客户端推荐与对比">
+    <meta property="og:description" content="Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad 通过 SSH 运行 coding agent">
+    <meta property="article:published_time" content="2026-11-15">
+    <meta property="article:modified_time" content="2026-11-15">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="iPhone 与 iPad SSH 客户端推荐与对比">
+    <meta name="twitter:description" content="Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="phc_yXNQ6YDiCq8v7B8cp83zdTN3uavyWCdQcPv6YqibpvMX">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "iPhone 与 iPad SSH 客户端推荐与对比", "description": "Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。", "inLanguage": "zh-Hans", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/", "url": "https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-15", "dateModified": "2026-11-15"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首页", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/"}, {"@type": "ListItem", "position": 4, "name": "iPhone 与 iPad SSH 客户端推荐与对比", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/zh-Hans/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/zh-Hans/">指南首页</a>
+                <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">简体中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/best-ssh-client-iphone-ipad/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/best-ssh-client-iphone-ipad/" hreflang="zh-Hans" aria-current="page">简体中文</a>
+        <a href="/guide/ja/best-ssh-client-iphone-ipad/" hreflang="ja">日本語</a>
+        <a href="/guide/en/best-ssh-client-iphone-ipad/" hreflang="en">English</a>
+    </div>
+</details>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-Hans/">首页</a><span aria-hidden="true">/</span><a href="/guide/zh-Hans/">指南首页</a><span aria-hidden="true">/</span><span aria-current="page">iPhone 与 iPad SSH 客户端推荐与对比</span></nav>
+        <article class="guide-article">
+            <h1>iPhone 与 iPad SSH 客户端推荐与对比</h1>
+            <details class="guide-toc">
+    <summary>本页目录</summary>
+    <ol>
+        <li><a href="#sec-1">三种用途，各自对应的工具</a></li>
+        <li><a href="#sec-2">Termius：适合管理主机列表与跨平台同步</a></li>
+        <li><a href="#sec-3">Blink Shell：适合 Mosh 与 iPad 键盘操作</a></li>
+        <li><a href="#sec-4">Agentmux：专为 tmux 与 CLI coding agent 设计</a></li>
+        <li><a href="#sec-5">iPad 与 iPhone 该怎么选</a></li>
+        <li><a href="#sec-6">下一步从哪里开始</a></li>
+    </ol>
+</details>
+            <p>iPhone 与 iPad 最适合哪一款 SSH 客户端，取决于你打开它主要做什么：跨电脑与手机管理大量主机列表选 Termius；在网络不稳的环境搭配 iPad 实体键盘用 Mosh 选 Blink Shell；如果主要用于接回 tmux session 与 Claude Code、Codex 等 CLI agent，选 Agentmux。</p>
+<p>这几款应用底层都走 SSH，区别在于设计核心是“主机列表”、“本地 UNIX 终端”，还是“正在运行的 agent session”。完整的能力对照表可看 <a href="/guide/zh-Hans/why-agentmux/">Agentmux 与通用 SSH 客户端的区别</a>。</p>
+
+<section id="three-jobs">
+  <h2 id="sec-1">三种用途，各自对应的工具</h2>
+  <p>先看你每天在手机或 iPad 上最常重复哪一类工作，再选对应的工具。</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>主要用途</th>
+        <th>适合工具</th>
+        <th>关键原因</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>跨桌面与手机管理共享主机列表</td>
+        <td>Termius</td>
+        <td>支持 iOS、Android、macOS、Windows、Linux 主机配置同步与完整端口转发</td>
+      </tr>
+      <tr>
+        <td>在信号不稳的移动网络搭配 iPad 键盘工作</td>
+        <td>Blink Shell</td>
+        <td>支持 Mosh 与接近本地 UNIX 的终端环境，针对外接键盘优化</td>
+      </tr>
+      <tr>
+        <td>随时接回 Claude Code、Codex 或长时 tmux 任务</td>
+        <td>Agentmux</td>
+        <td>连接后直接列出 tmux session、锁屏显示进度，并内置 AI 自动权限审查</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能试用，支持 iOS 与 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+    </div>
+</aside>
+
+<section id="termius">
+  <h2 id="sec-2">Termius：适合管理主机列表与跨平台同步</h2>
+  <p>如果你的痛点是管理几十台主机、把密钥与代码片段同步到各台设备，或者需要 local、remote 与动态 SOCKS5 端口转发以及 Mosh，Termius 是最成熟的通用型工具。</p>
+  <p>但用来盯 CLI coding agent 时，每次断线重连都只会回到空白 shell，需要手动再输入 <code>tmux ls</code> 和 <code>tmux attach -t</code>；锁屏之后也不会提示 agent 是否已经跑完。</p>
+</section>
+
+<section id="blink-shell">
+  <h2 id="sec-3">Blink Shell：适合 Mosh 与 iPad 键盘操作</h2>
+  <p>如果你经常带着 iPad 和实体键盘在移动途中写代码，Blink Shell 的 Mosh 连接能在高延迟或波动的 Wi-Fi 下保持输入跟手。</p>
+  <p>不过它同样是按通用 shell 思路设计的，并没有针对 tmux session 切换、agent 权限确认提示或锁屏进度追踪做专门流程。</p>
+</section>
+
+<section id="agentmux">
+  <h2 id="sec-4">Agentmux：专为 tmux 与 CLI coding agent 设计</h2>
+  <p>Agentmux 假设代码与 agent 已经运行在你自己的 Mac、Linux 或 Windows 主机上。点进服务器时不会先给你空白提示符，而是直接列出运行中的 tmux session，点一下就回到离开时的画面。</p>
+  <ul>
+    <li><strong>离开屏幕也能追踪：</strong>任务执行期间在灵动岛与锁屏显示进度，跑完时发出提示音。</li>
+    <li><strong>AI 自动权限审查：</strong>黑名单拦截危险命令、白名单放行信任命令，其余交给 AI 判断，并可选择仅建议按键或自动按下（Pro）。</li>
+    <li><strong>手机改文件不必硬敲 Vim：</strong>内置 Runestone 代码编辑器、Markdown 预览与分支工具（Pro）。</li>
+    <li><strong>明确的取舍：</strong>仅提供手机与平板端（iOS、iPadOS、Android），只支持 local 端口转发，采用标准 SSH + tmux 而非 Mosh。</li>
+  </ul>
+  <p>提供 14 天全功能试用，之后可继续使用免费的单服务器方案。</p>
+</section>
+
+<section id="ipad-vs-iphone">
+  <h2 id="sec-5">iPad 与 iPhone 该怎么选</h2>
+  <p>如果你常在 iPad 上接实体键盘、在高铁或弱 Wi-Fi 下直接操作远程 shell，Mosh（Blink 或 Termius）会更重要；如果你多半是用 iPhone 利用碎片时间查看进度、回复 Claude Code 或 Codex 的确认提示、顺手看几行 diff，以 session 为中心、一键接回的设计能省下最多步骤。</p>
+</section>
+
+<section id="next-steps">
+  <h2 id="sec-6">下一步从哪里开始</h2>
+  <p>想用 Tailscale 与 tmux 把自己的 Mac、Linux 或 Windows 电脑连起来，可以直接走一遍 3 道题的 <a href="/guide/zh-Hans/setup/">配置向导</a>；如果想看更细的功能与架构对比，可参考 <a href="/guide/zh-Hans/why-agentmux/">Agentmux 设计对比</a>。</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="上一篇" href="/guide/zh-Hans/why-agentmux/">上一篇<span>为什么不是 Termius / Blink</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="下一篇" href="/guide/zh-Hans/setup/">下一篇<span>15 分钟，让你的 agent 开始整晚工作</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14 天全功能试用，支持 iOS 与 Android。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/zh-Hans/">首页</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tmux command cheat sheet for SSH — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="tmux command cheat sheet for SSH">
+    <meta property="og:description" content="Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad Session Command Center">
+    <meta property="article:published_time" content="2026-11-10">
+    <meta property="article:modified_time" content="2026-11-10">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="tmux command cheat sheet for SSH">
+    <meta name="twitter:description" content="Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="phc_yXNQ6YDiCq8v7B8cp83zdTN3uavyWCdQcPv6YqibpvMX">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "tmux command cheat sheet for SSH", "description": "Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/", "url": "https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-10", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "tmux command cheat sheet for SSH", "item": "https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/en/">Guide home</a>
+                <a href="/guide/en/troubleshooting/">Troubleshooting</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/tmux-cheat-sheet/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/tmux-cheat-sheet/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/tmux-cheat-sheet/" hreflang="ja">日本語</a>
+        <a href="/guide/en/tmux-cheat-sheet/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">tmux command cheat sheet for SSH</span></nav>
+        <article class="guide-article">
+            <h1>tmux command cheat sheet for SSH</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">Sessions: create, list, attach, detach</a></li>
+        <li><a href="#sec-2">Windows and panes</a></li>
+        <li><a href="#sec-3">Scrolling and copy mode</a></li>
+        <li><a href="#sec-4">A minimal ~/.tmux.conf for SSH and mobile</a></li>
+        <li><a href="#sec-5">Skipping prefix keys from your phone</a></li>
+    </ol>
+</details>
+            <p>Start a named tmux session with <code>tmux new -s work</code>, detach without stopping it using <code>Ctrl+b d</code>, list running sessions with <code>tmux ls</code>, and reattach later with <code>tmux attach -t work</code>. Every command below works over SSH on macOS and Linux.</p>
+<p>This page is the quick reference for <a href="/guide/en/what-is-tmux/">what tmux does and why agents need it</a>. Bookmark the commands you type most, or skip typing prefix chords altogether when connecting from a phone.</p>
+
+<section id="sessions">
+  <h2 id="sec-1">Sessions: create, list, attach, detach</h2>
+  <p>A session is the unit that survives an SSH drop. Name every long-running session after the repository or task so <code>tmux ls</code> stays readable.</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>Goal</th>
+        <th>Command</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Start a named session</td>
+        <td><code>tmux new -s work</code></td>
+        <td>Creates session <code>work</code> and attaches immediately</td>
+      </tr>
+      <tr>
+        <td>Attach or create if missing</td>
+        <td><code>tmux new -As work</code></td>
+        <td>Safe single command to use in scripts or shortcuts</td>
+      </tr>
+      <tr>
+        <td>List active sessions</td>
+        <td><code>tmux ls</code></td>
+        <td>Shows session names, window counts, and attach state</td>
+      </tr>
+      <tr>
+        <td>Reattach to a session</td>
+        <td><code>tmux attach -t work</code></td>
+        <td>Short form: <code>tmux a -t work</code></td>
+      </tr>
+      <tr>
+        <td>Detach and leave it running</td>
+        <td><code>Ctrl+b d</code></td>
+        <td>Returns to your outer shell; processes keep running</td>
+      </tr>
+      <tr>
+        <td>Rename current session</td>
+        <td><code>Ctrl+b $</code></td>
+        <td>Type the new name and press Enter</td>
+      </tr>
+      <tr>
+        <td>Kill a finished session</td>
+        <td><code>tmux kill-session -t work</code></td>
+        <td>Stops all windows and panes inside <code>work</code></td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14-day full-feature trial, available on iOS and Android.</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="windows-and-panes">
+  <h2 id="sec-2">Windows and panes</h2>
+  <p>Press <code>Ctrl+b</code>, release both keys, then press the command key. Inside a session, windows act like tabs and panes split one window into tiles.</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Shortcut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>New window</td>
+        <td><code>Ctrl+b c</code></td>
+      </tr>
+      <tr>
+        <td>Next / previous window</td>
+        <td><code>Ctrl+b n</code> / <code>Ctrl+b p</code></td>
+      </tr>
+      <tr>
+        <td>Rename current window</td>
+        <td><code>Ctrl+b ,</code></td>
+      </tr>
+      <tr>
+        <td>Split pane top / bottom</td>
+        <td><code>Ctrl+b "</code></td>
+      </tr>
+      <tr>
+        <td>Split pane left / right</td>
+        <td><code>Ctrl+b %</code></td>
+      </tr>
+      <tr>
+        <td>Move between panes</td>
+        <td><code>Ctrl+b</code> then arrow key</td>
+      </tr>
+      <tr>
+        <td>Zoom or unzoom current pane</td>
+        <td><code>Ctrl+b z</code></td>
+      </tr>
+      <tr>
+        <td>Close current pane</td>
+        <td><code>exit</code> or <code>Ctrl+d</code></td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p>On a phone screen, separate sessions or zoomed panes (<code>Ctrl+b z</code>) are easier to read than side-by-side splits.</p>
+</section>
+
+<section id="copy-mode">
+  <h2 id="sec-3">Scrolling and copy mode</h2>
+  <p>Normal terminal scrollback does not work inside tmux until you enter copy mode or enable mouse support.</p>
+  <ul>
+    <li><strong>Enter scroll / copy mode:</strong> press <code>Ctrl+b [</code>, then use arrow keys, <code>PageUp</code>, or <code>/</code> to search backward.</li>
+    <li><strong>Exit copy mode:</strong> press <code>q</code> or <code>Esc</code> to return to the live prompt.</li>
+    <li><strong>Switch sessions interactively:</strong> press <code>Ctrl+b s</code> for a list of sessions you can pick with arrow keys.</li>
+  </ul>
+</section>
+
+<section id="tmux-conf">
+  <h2 id="sec-4">A minimal ~/.tmux.conf for SSH and mobile</h2>
+  <p>Add these four lines to <code>~/.tmux.conf</code> on your host, then reload with <code>tmux source-file ~/.tmux.conf</code>:</p>
+  <pre><code>set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on</code></pre>
+  <ul>
+    <li><code>mouse on</code> lets touch scrolling and pane taps work over SSH.</li>
+    <li><code>history-limit 10000</code> keeps enough lines to inspect long agent diffs and test output.</li>
+    <li><code>escape-time 10</code> removes the noticeable lag after pressing <code>Esc</code> in Vim or CLI agents.</li>
+    <li><code>focus-events on</code> lets editors and terminal tools detect when you switch back to a pane.</li>
+  </ul>
+</section>
+
+<section id="phone-without-prefix">
+  <h2 id="sec-5">Skipping prefix keys from your phone</h2>
+  <p>Typing <code>Ctrl+b</code> chords on an iPhone or Android keyboard slows down quick check-ins. <a href="/guide/en/why-agentmux/">Agentmux</a> lists your running tmux sessions on connect, reattaches with one tap, and keeps a 14-day full-feature trial followed by a free single-server tier. If you have not set up your host yet, start with the <a href="/guide/en/setup/">setup wizard</a>.</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="Previous" href="/guide/en/what-is-tmux/">Previous<span>Keep the agent running after you put your phone away</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="Next" href="/guide/en/what-is-tailscale/">Next<span>Tailscale: no port open to the internet</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14-day full-feature trial, available on iOS and Android.</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">Home</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="mailto:atmux-support@saxcave.cc">Support</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

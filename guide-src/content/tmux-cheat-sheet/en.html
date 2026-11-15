@@ -1,0 +1,131 @@
+<p>Start a named tmux session with <code>tmux new -s work</code>, detach without stopping it using <code>Ctrl+b d</code>, list running sessions with <code>tmux ls</code>, and reattach later with <code>tmux attach -t work</code>. Every command below works over SSH on macOS and Linux.</p>
+<p>This page is the quick reference for <a href="/guide/en/what-is-tmux/">what tmux does and why agents need it</a>. Bookmark the commands you type most, or skip typing prefix chords altogether when connecting from a phone.</p>
+
+<section id="sessions">
+  <h2>Sessions: create, list, attach, detach</h2>
+  <p>A session is the unit that survives an SSH drop. Name every long-running session after the repository or task so <code>tmux ls</code> stays readable.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Goal</th>
+        <th>Command</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Start a named session</td>
+        <td><code>tmux new -s work</code></td>
+        <td>Creates session <code>work</code> and attaches immediately</td>
+      </tr>
+      <tr>
+        <td>Attach or create if missing</td>
+        <td><code>tmux new -As work</code></td>
+        <td>Safe single command to use in scripts or shortcuts</td>
+      </tr>
+      <tr>
+        <td>List active sessions</td>
+        <td><code>tmux ls</code></td>
+        <td>Shows session names, window counts, and attach state</td>
+      </tr>
+      <tr>
+        <td>Reattach to a session</td>
+        <td><code>tmux attach -t work</code></td>
+        <td>Short form: <code>tmux a -t work</code></td>
+      </tr>
+      <tr>
+        <td>Detach and leave it running</td>
+        <td><code>Ctrl+b d</code></td>
+        <td>Returns to your outer shell; processes keep running</td>
+      </tr>
+      <tr>
+        <td>Rename current session</td>
+        <td><code>Ctrl+b $</code></td>
+        <td>Type the new name and press Enter</td>
+      </tr>
+      <tr>
+        <td>Kill a finished session</td>
+        <td><code>tmux kill-session -t work</code></td>
+        <td>Stops all windows and panes inside <code>work</code></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="windows-and-panes">
+  <h2>Windows and panes</h2>
+  <p>Press <code>Ctrl+b</code>, release both keys, then press the command key. Inside a session, windows act like tabs and panes split one window into tiles.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Shortcut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>New window</td>
+        <td><code>Ctrl+b c</code></td>
+      </tr>
+      <tr>
+        <td>Next / previous window</td>
+        <td><code>Ctrl+b n</code> / <code>Ctrl+b p</code></td>
+      </tr>
+      <tr>
+        <td>Rename current window</td>
+        <td><code>Ctrl+b ,</code></td>
+      </tr>
+      <tr>
+        <td>Split pane top / bottom</td>
+        <td><code>Ctrl+b "</code></td>
+      </tr>
+      <tr>
+        <td>Split pane left / right</td>
+        <td><code>Ctrl+b %</code></td>
+      </tr>
+      <tr>
+        <td>Move between panes</td>
+        <td><code>Ctrl+b</code> then arrow key</td>
+      </tr>
+      <tr>
+        <td>Zoom or unzoom current pane</td>
+        <td><code>Ctrl+b z</code></td>
+      </tr>
+      <tr>
+        <td>Close current pane</td>
+        <td><code>exit</code> or <code>Ctrl+d</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>On a phone screen, separate sessions or zoomed panes (<code>Ctrl+b z</code>) are easier to read than side-by-side splits.</p>
+</section>
+
+<section id="copy-mode">
+  <h2>Scrolling and copy mode</h2>
+  <p>Normal terminal scrollback does not work inside tmux until you enter copy mode or enable mouse support.</p>
+  <ul>
+    <li><strong>Enter scroll / copy mode:</strong> press <code>Ctrl+b [</code>, then use arrow keys, <code>PageUp</code>, or <code>/</code> to search backward.</li>
+    <li><strong>Exit copy mode:</strong> press <code>q</code> or <code>Esc</code> to return to the live prompt.</li>
+    <li><strong>Switch sessions interactively:</strong> press <code>Ctrl+b s</code> for a list of sessions you can pick with arrow keys.</li>
+  </ul>
+</section>
+
+<section id="tmux-conf">
+  <h2>A minimal ~/.tmux.conf for SSH and mobile</h2>
+  <p>Add these four lines to <code>~/.tmux.conf</code> on your host, then reload with <code>tmux source-file ~/.tmux.conf</code>:</p>
+  <pre><code>set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on</code></pre>
+  <ul>
+    <li><code>mouse on</code> lets touch scrolling and pane taps work over SSH.</li>
+    <li><code>history-limit 10000</code> keeps enough lines to inspect long agent diffs and test output.</li>
+    <li><code>escape-time 10</code> removes the noticeable lag after pressing <code>Esc</code> in Vim or CLI agents.</li>
+    <li><code>focus-events on</code> lets editors and terminal tools detect when you switch back to a pane.</li>
+  </ul>
+</section>
+
+<section id="phone-without-prefix">
+  <h2>Skipping prefix keys from your phone</h2>
+  <p>Typing <code>Ctrl+b</code> chords on an iPhone or Android keyboard slows down quick check-ins. <a href="/guide/en/why-agentmux/">Agentmux</a> lists your running tmux sessions on connect, reattaches with one tap, and keeps a 14-day full-feature trial followed by a free single-server tier. If you have not set up your host yet, start with the <a href="/guide/en/setup/">setup wizard</a>.</p>
+</section>

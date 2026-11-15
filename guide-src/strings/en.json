@@ -84,6 +84,16 @@
     "windows-server": {
       "title": "Your Windows PC can be the server",
       "description": "Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed."
+    },
+    "tmux-cheat-sheet": {
+      "title": "tmux command cheat sheet for SSH",
+      "description": "Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.",
+      "image": "/resource/ipad-raw-session-command-center.webp"
+    },
+    "best-ssh-client-iphone-ipad": {
+      "title": "Best SSH client for iPhone and iPad",
+      "description": "Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.",
+      "image": "/resource/ipad-raw-run-coding-agents-anywhere.webp"
     }
   }
 }

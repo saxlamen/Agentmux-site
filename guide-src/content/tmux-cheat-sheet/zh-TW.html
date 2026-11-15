@@ -1,0 +1,131 @@
+<p>用 <code>tmux new -s work</code> 建立命名 session，按 <code>Ctrl+b d</code> 暫時脫離而不中斷程式，用 <code>tmux ls</code> 列出所有執行中的 session，再用 <code>tmux attach -t work</code> 接回畫面。以下指令在 macOS 與 Linux 透過 SSH 皆可直接使用。</p>
+<p>這頁是 <a href="/guide/zh-TW/what-is-tmux/">tmux 原理說明</a> 的隨查速查表。把最常用的幾行存起來；如果是從手機操作，也可以直接用點選取代輸入前綴組合鍵。</p>
+
+<section id="sessions">
+  <h2>Session：建立、列表、接回、脫離</h2>
+  <p>Session 是在 SSH 斷線後仍留在遠端機器上的單位。建議以專案名稱或任務命名，<code>tmux ls</code> 才不會只剩一排數字。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>目的</th>
+        <th>指令</th>
+        <th>說明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>建立命名 session</td>
+        <td><code>tmux new -s work</code></td>
+        <td>建立名為 <code>work</code> 的 session 並立刻進入</td>
+      </tr>
+      <tr>
+        <td>存在就接回、沒有就建立</td>
+        <td><code>tmux new -As work</code></td>
+        <td>最適合寫進捷徑或常用指令的單行寫法</td>
+      </tr>
+      <tr>
+        <td>列出目前所有 session</td>
+        <td><code>tmux ls</code></td>
+        <td>顯示名稱、window 數量與是否已連線</td>
+      </tr>
+      <tr>
+        <td>接回既有 session</td>
+        <td><code>tmux attach -t work</code></td>
+        <td>簡寫：<code>tmux a -t work</code></td>
+      </tr>
+      <tr>
+        <td>暫時脫離（背景繼續跑）</td>
+        <td><code>Ctrl+b d</code></td>
+        <td>回到外層 shell，裡面的 agent 不會停止</td>
+      </tr>
+      <tr>
+        <td>重新命名目前 session</td>
+        <td><code>Ctrl+b $</code></td>
+        <td>輸入新名稱後按 Enter</td>
+      </tr>
+      <tr>
+        <td>關閉已結束的 session</td>
+        <td><code>tmux kill-session -t work</code></td>
+        <td>結束 <code>work</code> 裡的所有 window 與 pane</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="windows-and-panes">
+  <h2>Window 與 Pane 操作</h2>
+  <p>先按 <code>Ctrl+b</code> 並放開，再按後面的功能鍵。在同一個 session 裡，window 像分頁，pane 則是把單一視窗分割成多塊。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>動作</th>
+        <th>快捷鍵</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>新增 window</td>
+        <td><code>Ctrl+b c</code></td>
+      </tr>
+      <tr>
+        <td>切換上一個 / 下一個 window</td>
+        <td><code>Ctrl+b p</code> / <code>Ctrl+b n</code></td>
+      </tr>
+      <tr>
+        <td>重新命名目前 window</td>
+        <td><code>Ctrl+b ,</code></td>
+      </tr>
+      <tr>
+        <td>上下分割 pane</td>
+        <td><code>Ctrl+b "</code></td>
+      </tr>
+      <tr>
+        <td>左右分割 pane</td>
+        <td><code>Ctrl+b %</code></td>
+      </tr>
+      <tr>
+        <td>在 pane 之間移動</td>
+        <td><code>Ctrl+b</code> 後按方向鍵</td>
+      </tr>
+      <tr>
+        <td>放大 / 還原目前 pane</td>
+        <td><code>Ctrl+b z</code></td>
+      </tr>
+      <tr>
+        <td>關閉目前 pane</td>
+        <td>輸入 <code>exit</code> 或按 <code>Ctrl+d</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>在手機螢幕上，分開建立獨立 session 或用 <code>Ctrl+b z</code> 放大單一 pane，會比左右並排分割好讀很多。</p>
+</section>
+
+<section id="copy-mode">
+  <h2>捲動畫面與複製模式</h2>
+  <p>在 tmux 裡直接滑動終端機通常捲不動歷史輸出，必須進入 copy mode 或開啟滑鼠模式。</p>
+  <ul>
+    <li><strong>進入捲動 / 複製模式：</strong>按 <code>Ctrl+b [</code>，之後可用方向鍵、<code>PageUp</code> 或輸入 <code>/</code> 往上搜尋文字。</li>
+    <li><strong>離開複製模式：</strong>按 <code>q</code> 或 <code>Esc</code> 回到即時輸入列。</li>
+    <li><strong>視覺化切換 session：</strong>按 <code>Ctrl+b s</code>，用方向鍵挑選想接回的 session。</li>
+  </ul>
+</section>
+
+<section id="tmux-conf">
+  <h2>給 SSH 與手機使用的精簡 ~/.tmux.conf</h2>
+  <p>在遠端主機的 <code>~/.tmux.conf</code> 加入這四行，再執行 <code>tmux source-file ~/.tmux.conf</code> 生效：</p>
+  <pre><code>set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on</code></pre>
+  <ul>
+    <li><code>mouse on</code> 讓觸控捲動與點擊切換 pane 透過 SSH 也能運作。</li>
+    <li><code>history-limit 10000</code> 保留足夠的歷史輸出，方便回看 agent 的長段 diff 與測試結果。</li>
+    <li><code>escape-time 10</code> 消除在 Vim 或 CLI agent 按 <code>Esc</code> 時的延遲感。</li>
+    <li><code>focus-events on</code> 讓編輯器與終端工具能偵測你何時切回畫面。</li>
+  </ul>
+</section>
+
+<section id="phone-without-prefix">
+  <h2>在手機上略過前綴快捷鍵</h2>
+  <p>在手機虛擬鍵盤上反覆按 <code>Ctrl+b</code> 組合鍵很花時間。<a href="/guide/zh-TW/why-agentmux/">Agentmux</a> 會在連線時自動列出執行中的 tmux session、點一下就能接回，並提供 14 天全功能試用與免費單一伺服器方案。如果主機還沒設定好，可以先跑一遍 <a href="/guide/zh-TW/setup/">設定精靈</a>。</p>
+</section>

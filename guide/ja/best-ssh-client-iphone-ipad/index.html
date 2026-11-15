@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone・iPad向けSSHクライアントの選び方 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="iPhone・iPad向けSSHクライアントの選び方">
+    <meta property="og:description" content="Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad から SSH 経由で coding agent を実行">
+    <meta property="article:published_time" content="2026-11-15">
+    <meta property="article:modified_time" content="2026-11-15">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="iPhone・iPad向けSSHクライアントの選び方">
+    <meta name="twitter:description" content="Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="phc_yXNQ6YDiCq8v7B8cp83zdTN3uavyWCdQcPv6YqibpvMX">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "iPhone・iPad向けSSHクライアントの選び方", "description": "Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/", "url": "https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-15", "dateModified": "2026-11-15"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "iPhone・iPad向けSSHクライアントの選び方", "item": "https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/ja/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/best-ssh-client-iphone-ipad/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/best-ssh-client-iphone-ipad/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/best-ssh-client-iphone-ipad/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/best-ssh-client-iphone-ipad/" hreflang="en">English</a>
+    </div>
+</details>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">iPhone・iPad向けSSHクライアントの選び方</span></nav>
+        <article class="guide-article">
+            <h1>iPhone・iPad向けSSHクライアントの選び方</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">3つの用途と対応するツール</a></li>
+        <li><a href="#sec-2">Termius：ホスト管理とクロスプラットフォーム同期向け</a></li>
+        <li><a href="#sec-3">Blink Shell：Mosh と iPad ハードウェアキーボード向け</a></li>
+        <li><a href="#sec-4">Agentmux：tmux と CLI コーディングエージェント専用設計</a></li>
+        <li><a href="#sec-5">iPad と iPhone での選び分け</a></li>
+        <li><a href="#sec-6">どこから始めるか</a></li>
+    </ol>
+</details>
+            <p>iPhone と iPad に最適な SSH クライアントは、開いたあとに何をするかで決まります。PC・スマホ間で多数のホストを同期管理するなら Termius、不安定な回線で Mosh を使うなら Blink Shell、tmux セッションや Claude Code・Codex などの CLI エージェントへ戻る用途が中心なら Agentmux が向いています。</p>
+<p>どのアプリも SSH 接続とシェル操作はできますが、「ホスト一覧」「ローカル UNIX シェル」「稼働中のエージェントセッション」のどれを主軸にするかが異なります。詳細な機能比較は <a href="/guide/ja/why-agentmux/">Agentmux と汎用 SSH クライアントの違い</a> にまとめています。</p>
+
+<section id="three-jobs">
+  <h2 id="sec-1">3つの用途と対応するツール</h2>
+  <p>まずはスマホや iPad で一番よく繰り返す作業に合わせて選びます。</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>主な用途</th>
+        <th>向いているアプリ</th>
+        <th>選ばれる理由</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>PC とスマホ間でホスト設定を共有管理</td>
+        <td>Termius</td>
+        <td>iOS・Android・macOS・Windows・Linux 間でのホスト同期とフル機能のポートフォワーディング</td>
+      </tr>
+      <tr>
+        <td>不安定なモバイル回線で iPad キーボード作業</td>
+        <td>Blink Shell</td>
+        <td>Mosh 対応とハードウェアキーボード前提のローカル UNIX 風シェル</td>
+      </tr>
+      <tr>
+        <td>Claude Code や Codex、長時間の tmux 作業を確認</td>
+        <td>Agentmux</td>
+        <td>接続時に tmux セッションを一覧表示し、ロック画面での進捗表示と AI 権限レビューを備える</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="termius">
+  <h2 id="sec-2">Termius：ホスト管理とクロスプラットフォーム同期向け</h2>
+  <p>何十台ものサーバーを整理し、鍵やスニペットを PC とスマホで同期したい場合、またローカル・リモート・動的 SOCKS5 ポートフォワーディングや Mosh が必要な場合は Termius が定番です。</p>
+  <p>一方で CLI コーディングエージェントの監視に使うと、再接続のたびに空のプロンプトへ戻るため毎回 <code>tmux ls</code> と <code>tmux attach -t</code> を打つ必要があり、画面を閉じたあとの進捗通知もありません。</p>
+</section>
+
+<section id="blink-shell">
+  <h2 id="sec-3">Blink Shell：Mosh と iPad ハードウェアキーボード向け</h2>
+  <p>iPad に外付けキーボードを付けて移動中や不安定な Wi-Fi 下で作業するなら、Mosh により高遅延環境でも入力の引っかかりを抑えられる Blink Shell が強みを発揮します。</p>
+  <p>ただし汎用シェルとして作られているため、tmux セッションの一覧選択、エージェントの権限確認プロンプト、ロック画面での完了通知といった流れは対象外です。</p>
+</section>
+
+<section id="agentmux">
+  <h2 id="sec-4">Agentmux：tmux と CLI コーディングエージェント専用設計</h2>
+  <p>Agentmux は、コードとエージェントがすでに自分の Mac・Linux・Windows マシン上で動いている前提で作られています。サーバーを選ぶと空のプロンプトではなく稼働中の tmux セッションが並び、1タップで直前の画面へ戻れます。</p>
+  <ul>
+    <li><strong>画面を閉じても進捗を追跡：</strong>実行中は Dynamic Island とロック画面に進捗を出し、完了時に通知音で知らせます。</li>
+    <li><strong>AI 権限レビュー：</strong>ブラックリストで危険なコマンドを止め、許可リストで信頼済みコマンドを通し、残りを AI が判定してキー提案または自動押下を行います（Pro）。</li>
+    <li><strong>スマホでのファイル編集：</strong>タッチキーボードで Vim を操作する代わりに、Runestone コードエディタ、Markdown プレビュー、ブランチ操作が使えます（Pro）。</li>
+    <li><strong>明確なトレードオフ：</strong>モバイル専用（iOS・iPadOS・Android）、ポートフォワーディングはローカルのみ、Mosh ではなく標準 SSH + tmux 構成です。</li>
+  </ul>
+  <p>14日間の全機能トライアルのあと、無料のシングルサーバープランをそのまま使い続けられます。</p>
+</section>
+
+<section id="ipad-vs-iphone">
+  <h2 id="sec-5">iPad と iPhone での選び分け</h2>
+  <p>iPad とキーボードを持ち歩いて弱電波下で直接シェル作業を続けるなら Mosh（Blink や Termius）が効きます。一方、iPhone で移動の合間に Claude Code や Codex の状況を確認し、確認プロンプトに答えて差分を少し見る使い方なら、セッション中心で即復帰できる設計の方が操作の手間を減らせます。</p>
+</section>
+
+<section id="next-steps">
+  <h2 id="sec-6">どこから始めるか</h2>
+  <p>自宅や職場の Mac・Linux・Windows に Tailscale と tmux で接続したい場合は、3問で手順が出る <a href="/guide/ja/setup/">セットアップウィザード</a> から始められます。仕様の細かい比較は <a href="/guide/ja/why-agentmux/">Agentmux 設計比較</a> をご覧ください。</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="前へ" href="/guide/ja/why-agentmux/">前へ<span>TermiusやBlinkではなくAgentmuxを使う理由</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="次へ" href="/guide/ja/setup/">次へ<span>15分で一晩中動くエージェント環境を整える</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/ja/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

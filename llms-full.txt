@@ -451,6 +451,82 @@ Checking this takes two minutes. SSH in, run `tmux new -s work`, start an agent,
 
 So the agent survives you putting the phone away. One problem left: getting in from outside without opening a port to the whole internet. Tailscale answers that.
 
+## tmux command cheat sheet for SSH
+
+URL: https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/
+Language: en
+Updated: 2026-11-10
+
+Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.
+
+Start a named tmux session with `tmux new -s work`, detach without stopping it using `Ctrl+b d`, list running sessions with `tmux ls`, and reattach later with `tmux attach -t work`. Every command below works over SSH on macOS and Linux.
+
+This page is the quick reference for what tmux does and why agents need it. Bookmark the commands you type most, or skip typing prefix chords altogether when connecting from a phone.
+
+## Sessions: create, list, attach, detach
+
+A session is the unit that survives an SSH drop. Name every long-running session after the repository or task so `tmux ls` stays readable.
+
+| Goal | Command | Notes |
+| --- | --- | --- |
+| Start a named session | tmux new -s work | Creates session work and attaches immediately |
+| Attach or create if missing | tmux new -As work | Safe single command to use in scripts or shortcuts |
+| List active sessions | tmux ls | Shows session names, window counts, and attach state |
+| Reattach to a session | tmux attach -t work | Short form: tmux a -t work |
+| Detach and leave it running | Ctrl+b d | Returns to your outer shell; processes keep running |
+| Rename current session | Ctrl+b $ | Type the new name and press Enter |
+| Kill a finished session | tmux kill-session -t work | Stops all windows and panes inside work |
+
+## Windows and panes
+
+Press `Ctrl+b`, release both keys, then press the command key. Inside a session, windows act like tabs and panes split one window into tiles.
+
+| Action | Shortcut |
+| --- | --- |
+| New window | Ctrl+b c |
+| Next / previous window | Ctrl+b n / Ctrl+b p |
+| Rename current window | Ctrl+b , |
+| Split pane top / bottom | Ctrl+b " |
+| Split pane left / right | Ctrl+b % |
+| Move between panes | Ctrl+b then arrow key |
+| Zoom or unzoom current pane | Ctrl+b z |
+| Close current pane | exit or Ctrl+d |
+
+On a phone screen, separate sessions or zoomed panes (`Ctrl+b z`) are easier to read than side-by-side splits.
+
+## Scrolling and copy mode
+
+Normal terminal scrollback does not work inside tmux until you enter copy mode or enable mouse support.
+
+- **Enter scroll / copy mode:** press `Ctrl+b [`, then use arrow keys, `PageUp`, or `/` to search backward.
+
+- **Exit copy mode:** press `q` or `Esc` to return to the live prompt.
+
+- **Switch sessions interactively:** press `Ctrl+b s` for a list of sessions you can pick with arrow keys.
+
+## A minimal ~/.tmux.conf for SSH and mobile
+
+Add these four lines to `~/.tmux.conf` on your host, then reload with `tmux source-file ~/.tmux.conf`:
+
+```
+set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on
+```
+
+- `mouse on` lets touch scrolling and pane taps work over SSH.
+
+- `history-limit 10000` keeps enough lines to inspect long agent diffs and test output.
+
+- `escape-time 10` removes the noticeable lag after pressing `Esc` in Vim or CLI agents.
+
+- `focus-events on` lets editors and terminal tools detect when you switch back to a pane.
+
+## Skipping prefix keys from your phone
+
+Typing `Ctrl+b` chords on an iPhone or Android keyboard slows down quick check-ins. Agentmux lists your running tmux sessions on connect, reattaches with one tap, and keeps a 14-day full-feature trial followed by a free single-server tier. If you have not set up your host yet, start with the setup wizard.
+
 ## Tailscale: no port open to the internet
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tailscale/
@@ -650,6 +726,62 @@ If one of these is your main job, buy the general tool.
 Agentmux is built for one workflow: **rejoining a running coding agent from your phone.** It is not a general-purpose operations tool. If your week is a stream of one-off commands, there is nothing here worth switching for.
 
 Decided on Agentmux? The next problem is the machine at the other end: the setup wizard asks three questions and hands back a checklist, and most of what goes wrong afterwards is already in troubleshooting.
+
+## Best SSH client for iPhone and iPad
+
+URL: https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/
+Language: en
+Updated: 2026-11-10
+
+Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.
+
+The best SSH client for iPhone and iPad depends on what you open it to do. Choose Termius if you manage many servers across desktop and mobile, Blink Shell if you rely on Mosh over unstable networks, and Agentmux if you connect mainly to tmux sessions and CLI coding agents.
+
+Every app in this category speaks SSH and gives you a shell prompt. Where they diverge is what they treat as the primary unit—a host list, a local UNIX terminal, or a running agent session. A fuller capability matrix lives in Agentmux vs general SSH clients.
+
+## Three jobs, three different tools
+
+Before installing an app, match it to the workflow you repeat most often on your phone or iPad.
+
+| Primary job | Best fit | Why it wins there |
+| --- | --- | --- |
+| Managing shared host lists across desktop and mobile | Termius | Host configuration sync across iOS, Android, macOS, Windows, and Linux; full port forwarding |
+| Working on flaky cellular links with an iPad keyboard | Blink Shell | Mosh support and a local UNIX-style shell built around hardware keyboards |
+| Checking on Claude Code, Codex, or long tmux runs | Agentmux | Lists running tmux sessions on connect, tracks agent runs on the Lock Screen, and screens permission prompts |
+
+## Termius: built for host lists and cross-platform teams
+
+Termius is the standard choice when your main problem is organizing dozens of hosts and keeping snippets, keys, and port forwarding rules synced between a laptop and a phone. It supports local, remote, and dynamic SOCKS5 forwarding as well as Mosh.
+
+For running CLI coding agents, the friction is what happens after you connect: Termius drops you at a shell prompt, so finding the right session means typing `tmux ls` and `tmux attach -t` each time, and nothing surfaces agent progress once you lock your phone.
+
+## Blink Shell: built for Mosh and iPad keyboards
+
+Blink Shell shines on an iPad with a hardware keyboard when you travel on trains or weak Wi-Fi. Mosh keeps keystrokes responsive over high-latency links without waiting for every TCP round-trip.
+
+Like Termius, Blink treats the terminal as a general shell rather than an agent workspace: reattaching to specific tmux sessions, reviewing agent permission prompts, or watching long background runs on the Lock Screen are not part of its model.
+
+## Agentmux: built for tmux and CLI coding agents
+
+Agentmux assumes the code and agent already run on a Mac, Linux box, or Windows host you own. When you tap a server, it skips the empty prompt and lists your running tmux sessions so one tap puts you back on the exact screen you left.
+
+- **Away-from-keyboard feedback:** Dynamic Island and Lock Screen progress while a run continues, plus a sound when it finishes.
+
+- **AI Permission Review:** A blacklist blocks dangerous commands, an allowlist passes trusted ones, and AI judgement handles the rest—either suggesting the key or pressing it (Pro).
+
+- **Remote file edits:** Runestone code editor, Markdown preview, and branch tools over SSH without falling back to Vim on a touch keyboard (Pro).
+
+- **Clear trade-offs:** Mobile only (iOS, iPadOS, Android), local port forwarding only, and standard SSH plus tmux rather than Mosh.
+
+It starts with a 14-day full-feature trial followed by a free single-server tier.
+
+## How to choose for iPad vs iPhone
+
+If you carry an iPad with a keyboard and spend hours writing code directly in a remote shell over spotty Wi-Fi, Mosh in Blink or Termius matters more. If you mostly check in from an iPhone while away from your desk—reattaching to Claude Code or Codex, answering a permission prompt, or inspecting a diff—session-first reattachment saves the most friction.
+
+## Where to start
+
+If you want to connect your own Mac, Linux, or Windows machine over Tailscale and tmux, follow the 3-question setup wizard. If you want a side-by-side breakdown of SSH, keys, and tmux behavior, read why Agentmux works differently from general SSH apps.
 
 ## 15 minutes to an agent that works all night
 
@@ -1788,6 +1920,82 @@ tmux 只回答一個問題：這個 process 會不會活得比你的連線久。
 
 agent 現在能在你收起手機之後活下來。剩下一個問題：怎麼從外面連進去，又不想在路由器上對公網開任何一個 port。Tailscale 回答的是這個。
 
+## tmux 常用指令速查表
+
+URL: https://agentmux.saxcave.cc/guide/zh-TW/tmux-cheat-sheet/
+Language: zh-TW
+Updated: 2026-11-10
+
+建立、列出、接回與脫離 tmux session，分割 pane、複製捲動模式，以及適合 SSH 與手機的 ~/.tmux.conf。
+
+用 `tmux new -s work` 建立命名 session，按 `Ctrl+b d` 暫時脫離而不中斷程式，用 `tmux ls` 列出所有執行中的 session，再用 `tmux attach -t work` 接回畫面。以下指令在 macOS 與 Linux 透過 SSH 皆可直接使用。
+
+這頁是 tmux 原理說明 的隨查速查表。把最常用的幾行存起來；如果是從手機操作，也可以直接用點選取代輸入前綴組合鍵。
+
+## Session：建立、列表、接回、脫離
+
+Session 是在 SSH 斷線後仍留在遠端機器上的單位。建議以專案名稱或任務命名，`tmux ls` 才不會只剩一排數字。
+
+| 目的 | 指令 | 說明 |
+| --- | --- | --- |
+| 建立命名 session | tmux new -s work | 建立名為 work 的 session 並立刻進入 |
+| 存在就接回、沒有就建立 | tmux new -As work | 最適合寫進捷徑或常用指令的單行寫法 |
+| 列出目前所有 session | tmux ls | 顯示名稱、window 數量與是否已連線 |
+| 接回既有 session | tmux attach -t work | 簡寫：tmux a -t work |
+| 暫時脫離（背景繼續跑） | Ctrl+b d | 回到外層 shell，裡面的 agent 不會停止 |
+| 重新命名目前 session | Ctrl+b $ | 輸入新名稱後按 Enter |
+| 關閉已結束的 session | tmux kill-session -t work | 結束 work 裡的所有 window 與 pane |
+
+## Window 與 Pane 操作
+
+先按 `Ctrl+b` 並放開，再按後面的功能鍵。在同一個 session 裡，window 像分頁，pane 則是把單一視窗分割成多塊。
+
+| 動作 | 快捷鍵 |
+| --- | --- |
+| 新增 window | Ctrl+b c |
+| 切換上一個 / 下一個 window | Ctrl+b p / Ctrl+b n |
+| 重新命名目前 window | Ctrl+b , |
+| 上下分割 pane | Ctrl+b " |
+| 左右分割 pane | Ctrl+b % |
+| 在 pane 之間移動 | Ctrl+b 後按方向鍵 |
+| 放大 / 還原目前 pane | Ctrl+b z |
+| 關閉目前 pane | 輸入 exit 或按 Ctrl+d |
+
+在手機螢幕上，分開建立獨立 session 或用 `Ctrl+b z` 放大單一 pane，會比左右並排分割好讀很多。
+
+## 捲動畫面與複製模式
+
+在 tmux 裡直接滑動終端機通常捲不動歷史輸出，必須進入 copy mode 或開啟滑鼠模式。
+
+- **進入捲動 / 複製模式：**按 `Ctrl+b [`，之後可用方向鍵、`PageUp` 或輸入 `/` 往上搜尋文字。
+
+- **離開複製模式：**按 `q` 或 `Esc` 回到即時輸入列。
+
+- **視覺化切換 session：**按 `Ctrl+b s`，用方向鍵挑選想接回的 session。
+
+## 給 SSH 與手機使用的精簡 ~/.tmux.conf
+
+在遠端主機的 `~/.tmux.conf` 加入這四行，再執行 `tmux source-file ~/.tmux.conf` 生效：
+
+```
+set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on
+```
+
+- `mouse on` 讓觸控捲動與點擊切換 pane 透過 SSH 也能運作。
+
+- `history-limit 10000` 保留足夠的歷史輸出，方便回看 agent 的長段 diff 與測試結果。
+
+- `escape-time 10` 消除在 Vim 或 CLI agent 按 `Esc` 時的延遲感。
+
+- `focus-events on` 讓編輯器與終端工具能偵測你何時切回畫面。
+
+## 在手機上略過前綴快捷鍵
+
+在手機虛擬鍵盤上反覆按 `Ctrl+b` 組合鍵很花時間。Agentmux 會在連線時自動列出執行中的 tmux session、點一下就能接回，並提供 14 天全功能試用與免費單一伺服器方案。如果主機還沒設定好，可以先跑一遍 設定精靈。
+
 ## 不要對公網開 port
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/
@@ -1987,6 +2195,62 @@ agent 常常一跑就是幾十分鐘，這個功能就是為那段等待做的�
 Agentmux 為一個工作流設計：**在手機上接回正在跑的 coding agent。**它不是通用的維運工具。如果你一週的工作就是一條一條零散的指令，這些差別對你沒有價值。
 
 決定用 Agentmux？下一個問題是連線另一頭那台機器。設定精靈問三個問題，然後給你一張檢查清單；之後常見的毛病，疑難排解已經都寫在那裡了。
+
+## iPhone 與 iPad SSH App 推薦與比較
+
+URL: https://agentmux.saxcave.cc/guide/zh-TW/best-ssh-client-iphone-ipad/
+Language: zh-TW
+Updated: 2026-11-10
+
+Termius、Blink Shell 與 Agentmux 怎麼選：多主機同步、Mosh 弱網連線，以及接回 tmux 與 AI coding agent。
+
+iPhone 與 iPad 最適合哪一款 SSH App，取決於你打開它主要做什麼：跨電腦與手機管理大量主機清單選 Termius；在訊號不穩的環境搭配 iPad 實體鍵盤用 Mosh 選 Blink Shell；若主要用來接回 tmux session 與 Claude Code、Codex 等 CLI agent，選 Agentmux。
+
+這幾款 App 底層都能走 SSH，差別在於設計核心是「主機列表」、「本地 UNIX 終端機」，還是「正在跑的 agent session」。完整的能力對照表可看 Agentmux 與一般 SSH App 的差異。
+
+## 三種用途，各自對應的工具
+
+先看你每天在手機或 iPad 上最常重複哪一種工作，再選對應的工具。
+
+| 主要用途 | 適合工具 | 關鍵原因 |
+| --- | --- | --- |
+| 跨桌機與手機管理共用主機清單 | Termius | 支援 iOS、Android、macOS、Windows、Linux 主機設定同步與完整 port forwarding |
+| 在訊號不穩的行動網路搭配 iPad 鍵盤工作 | Blink Shell | 支援 Mosh 與接近本地 UNIX 的終端環境，針對外接鍵盤優化 |
+| 隨時接回 Claude Code、Codex 或長時間 tmux 任務 | Agentmux | 連線直接列出 tmux session、鎖定螢幕顯示進度，並內建 AI 自動權限審查 |
+
+## Termius：適合管理主機清單與跨平台同步
+
+如果你的痛點是管幾十台主機、把金鑰與 snippet 同步到各個裝置，或需要 local、remote 與動態 SOCKS5 port forwarding 與 Mosh，Termius 是最成熟的一般型工具。
+
+但拿來盯 CLI coding agent 時，每次斷線重連都只會回到空白 shell，得自己重打 `tmux ls` 和 `tmux attach -t`；鎖定手機螢幕後也不會顯示 agent 是否跑完。
+
+## Blink Shell：適合 Mosh 與 iPad 鍵盤操作
+
+如果你常帶著 iPad 與實體鍵盤在移動中寫程式，Blink Shell 的 Mosh 連線能在高延遲或不穩定的 Wi-Fi 下保持輸入流暢。
+
+不過它同樣是把終端當成通用 shell 來設計，並未針對 tmux session 切換、agent 權限確認提示或鎖定螢幕進度追蹤做專門流程。
+
+## Agentmux：專為 tmux 與 CLI coding agent 設計
+
+Agentmux 假設程式碼與 agent 已經跑在你自己的 Mac、Linux 或 Windows 主機上。點進伺服器時不會先給你空白提示字元，而是直接列出正在跑的 tmux session，點一下就回到離開時的畫面。
+
+- **離開螢幕也能追蹤：**任務執行期間在動態島與鎖定螢幕顯示進度，跑完時發出提示音。
+
+- **AI 自動權限審查：**黑名單擋掉危險指令、白名單放行信任指令，其餘交給 AI 判斷並可選擇僅建議按鍵或自動按下（Pro）。
+
+- **手機改檔不必硬敲 Vim：**內建 Runestone 程式碼編輯器、Markdown 預覽與分支工具（Pro）。
+
+- **清楚的取捨：**僅提供手機／平板 App（iOS、iPadOS、Android），只支援 local port forwarding，且採用標準 SSH + tmux 而非 Mosh。
+
+提供 14 天全功能試用，之後可繼續使用免費的單一伺服器方案。
+
+## iPad 與 iPhone 該怎麼挑
+
+如果你常在 iPad 上接實體鍵盤、在高鐵或弱 Wi-Fi 下直接操作遠端 shell，Mosh（Blink 或 Termius）會比較重要；如果你多半是用 iPhone 零碎時間查看進度、回覆 Claude Code 或 Codex 的確認提示、順手看幾行 diff，以 session 為中心、一鍵接回的設計會省下最多操作步驟。
+
+## 下一步從哪裡開始
+
+想用 Tailscale 與 tmux 把自己的 Mac、Linux 或 Windows 電腦連起來，可以直接跑一遍 3 題的 設定精靈；如果想看更細的功能與架構對比，可參考 Agentmux 設計比較。
 
 ## 15 分鐘，讓你的 agent 開始整晚工作
 
@@ -3127,6 +3391,82 @@ tmux 只回答一个问题：这个进程会不会活得比你的连接久。其
 
 agent 现在能在你收起手机之后活下来。剩下一个问题：怎么从外面连进去，又不想在路由器上对公网开任何一个端口。Tailscale 回答的是这个。
 
+## tmux 常用命令速查表
+
+URL: https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/
+Language: zh-Hans
+Updated: 2026-11-15
+
+创建、列出、接回与脱离 tmux session，拆分 pane、复制滚动模式，以及适合 SSH 与手机的 ~/.tmux.conf。
+
+用 `tmux new -s work` 创建命名 session，按 `Ctrl+b d` 暂时脱离而不中断程序，用 `tmux ls` 列出所有运行中的 session，再用 `tmux attach -t work` 接回画面。以下命令在 macOS 与 Linux 通过 SSH 均可直接使用。
+
+这页是 tmux 原理说明 的常用速查表。把高频几行存下来；如果是从手机操作，也可以直接点选来代替输入前缀组合键。
+
+## Session：创建、列表、接回、脱离
+
+Session 是在 SSH 断线后仍留在远程机器上的单位。建议按仓库名或任务命名，这样 `tmux ls` 才不会只剩一排数字。
+
+| 目的 | 命令 | 说明 |
+| --- | --- | --- |
+| 创建命名 session | tmux new -s work | 创建名为 work 的 session 并立刻进入 |
+| 存在就接回、没有就创建 | tmux new -As work | 最适合写进快捷指令或脚本的单行写法 |
+| 列出当前所有 session | tmux ls | 显示名称、window 数量与是否已连接 |
+| 接回已有 session | tmux attach -t work | 简写：tmux a -t work |
+| 暂时脱离（后台继续跑） | Ctrl+b d | 回到外层 shell，里面的 agent 不会停止 |
+| 重命名当前 session | Ctrl+b $ | 输入新名称后按 Enter |
+| 关闭已结束的 session | tmux kill-session -t work | 结束 work 里的所有 window 与 pane |
+
+## Window 与 Pane 操作
+
+先按 `Ctrl+b` 并松开，再按后面的功能键。在同一个 session 里，window 像标签页，pane 则是把单个窗口拆分成多块。
+
+| 动作 | 快捷键 |
+| --- | --- |
+| 新建 window | Ctrl+b c |
+| 切换上一个 / 下一个 window | Ctrl+b p / Ctrl+b n |
+| 重命名当前 window | Ctrl+b , |
+| 上下拆分 pane | Ctrl+b " |
+| 左右拆分 pane | Ctrl+b % |
+| 在 pane 之间移动 | Ctrl+b 后按方向键 |
+| 放大 / 还原当前 pane | Ctrl+b z |
+| 关闭当前 pane | 输入 exit 或按 Ctrl+d |
+
+在手机屏幕上，分开创建独立 session 或用 `Ctrl+b z` 放大单个 pane，会比左右并排分屏好读得多。
+
+## 滚动画面与复制模式
+
+在 tmux 里直接滑动终端通常滚不动历史输出，必须进入 copy mode 或开启鼠标支持。
+
+- **进入滚动 / 复制模式：**按 `Ctrl+b [`，之后可用方向键、`PageUp` 或输入 `/` 向上搜索文本。
+
+- **退出复制模式：**按 `q` 或 `Esc` 回到实时输入行。
+
+- **可视化切换 session：**按 `Ctrl+b s`，用方向键挑选要接回的 session。
+
+## 适合 SSH 与手机的精简 ~/.tmux.conf
+
+在远程主机的 `~/.tmux.conf` 加入这四行，再执行 `tmux source-file ~/.tmux.conf` 生效：
+
+```
+set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on
+```
+
+- `mouse on` 让触控滚动与点击切换 pane 通过 SSH 也能生效。
+
+- `history-limit 10000` 保留足够的历史行数，方便回看 agent 的长段 diff 与测试输出。
+
+- `escape-time 10` 消除在 Vim 或 CLI agent 按 `Esc` 时的延迟感。
+
+- `focus-events on` 让编辑器与终端工具能检测你何时切回窗口。
+
+## 在手机上跳过前缀快捷键
+
+在手机虚拟键盘上反复按 `Ctrl+b` 组合键很慢。Agentmux 会在连接时自动列出运行中的 tmux session、点一下就能接回，并提供 14 天全功能试用与免费单服务器方案。如果主机还没配好，可以先走一遍 配置向导。
+
 ## 不要对公网开端口
 
 URL: https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tailscale/
@@ -3326,6 +3666,62 @@ agent 常常一跑就是几十分钟，这个功能就是为那段等待做的�
 Agentmux 为一个工作流设计：**在手机上接回正在运行的 coding agent。**它不是通用的运维工具。如果你一周的工作就是一条一条零散的命令，这些差别对你没有价值。
 
 决定用 Agentmux？下一个问题是连接另一头那台机器。配置向导问三个问题，然后给你一张检查清单；之后常见的毛病，故障排查已经都写在那里了。
+
+## iPhone 与 iPad SSH 客户端推荐与对比
+
+URL: https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/
+Language: zh-Hans
+Updated: 2026-11-15
+
+Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。
+
+iPhone 与 iPad 最适合哪一款 SSH 客户端，取决于你打开它主要做什么：跨电脑与手机管理大量主机列表选 Termius；在网络不稳的环境搭配 iPad 实体键盘用 Mosh 选 Blink Shell；如果主要用于接回 tmux session 与 Claude Code、Codex 等 CLI agent，选 Agentmux。
+
+这几款应用底层都走 SSH，区别在于设计核心是“主机列表”、“本地 UNIX 终端”，还是“正在运行的 agent session”。完整的能力对照表可看 Agentmux 与通用 SSH 客户端的区别。
+
+## 三种用途，各自对应的工具
+
+先看你每天在手机或 iPad 上最常重复哪一类工作，再选对应的工具。
+
+| 主要用途 | 适合工具 | 关键原因 |
+| --- | --- | --- |
+| 跨桌面与手机管理共享主机列表 | Termius | 支持 iOS、Android、macOS、Windows、Linux 主机配置同步与完整端口转发 |
+| 在信号不稳的移动网络搭配 iPad 键盘工作 | Blink Shell | 支持 Mosh 与接近本地 UNIX 的终端环境，针对外接键盘优化 |
+| 随时接回 Claude Code、Codex 或长时 tmux 任务 | Agentmux | 连接后直接列出 tmux session、锁屏显示进度，并内置 AI 自动权限审查 |
+
+## Termius：适合管理主机列表与跨平台同步
+
+如果你的痛点是管理几十台主机、把密钥与代码片段同步到各台设备，或者需要 local、remote 与动态 SOCKS5 端口转发以及 Mosh，Termius 是最成熟的通用型工具。
+
+但用来盯 CLI coding agent 时，每次断线重连都只会回到空白 shell，需要手动再输入 `tmux ls` 和 `tmux attach -t`；锁屏之后也不会提示 agent 是否已经跑完。
+
+## Blink Shell：适合 Mosh 与 iPad 键盘操作
+
+如果你经常带着 iPad 和实体键盘在移动途中写代码，Blink Shell 的 Mosh 连接能在高延迟或波动的 Wi-Fi 下保持输入跟手。
+
+不过它同样是按通用 shell 思路设计的，并没有针对 tmux session 切换、agent 权限确认提示或锁屏进度追踪做专门流程。
+
+## Agentmux：专为 tmux 与 CLI coding agent 设计
+
+Agentmux 假设代码与 agent 已经运行在你自己的 Mac、Linux 或 Windows 主机上。点进服务器时不会先给你空白提示符，而是直接列出运行中的 tmux session，点一下就回到离开时的画面。
+
+- **离开屏幕也能追踪：**任务执行期间在灵动岛与锁屏显示进度，跑完时发出提示音。
+
+- **AI 自动权限审查：**黑名单拦截危险命令、白名单放行信任命令，其余交给 AI 判断，并可选择仅建议按键或自动按下（Pro）。
+
+- **手机改文件不必硬敲 Vim：**内置 Runestone 代码编辑器、Markdown 预览与分支工具（Pro）。
+
+- **明确的取舍：**仅提供手机与平板端（iOS、iPadOS、Android），只支持 local 端口转发，采用标准 SSH + tmux 而非 Mosh。
+
+提供 14 天全功能试用，之后可继续使用免费的单服务器方案。
+
+## iPad 与 iPhone 该怎么选
+
+如果你常在 iPad 上接实体键盘、在高铁或弱 Wi-Fi 下直接操作远程 shell，Mosh（Blink 或 Termius）会更重要；如果你多半是用 iPhone 利用碎片时间查看进度、回复 Claude Code 或 Codex 的确认提示、顺手看几行 diff，以 session 为中心、一键接回的设计能省下最多步骤。
+
+## 下一步从哪里开始
+
+想用 Tailscale 与 tmux 把自己的 Mac、Linux 或 Windows 电脑连起来，可以直接走一遍 3 道题的 配置向导；如果想看更细的功能与架构对比，可参考 Agentmux 设计对比。
 
 ## 15 分钟，让你的 agent 开始整晚工作
 
@@ -4498,6 +4894,82 @@ tmux が解決するのは「プロセスが接続断を生き延びるか」と
 
 これでスマホをしまってもエージェントが生き延びるようになりました。残る問題はあと 1 つ、インターネット全体にポートを開けずに外から入る方法です。その答えが Tailscale です。
 
+## tmux よく使うコマンド早見表
+
+URL: https://agentmux.saxcave.cc/guide/ja/tmux-cheat-sheet/
+Language: ja
+Updated: 2026-11-15
+
+セッションの作成・一覧・再接続・デタッチ、ペイン分割、コピーモード、SSH向けの最小 ~/.tmux.conf をまとめました。
+
+名前付きセッションは `tmux new -s work` で作成し、`Ctrl+b d` で処理を止めずにデタッチ、`tmux ls` で一覧表示、`tmux attach -t work` で再接続します。以下のコマンドは macOS と Linux の SSH 接続先でそのまま使えます。
+
+このページは tmux の仕組み解説 に対応した早見表です。よく使うコマンドだけ控えておくか、スマホからならプレフィックスキーを打たずにタップ操作で切り替えられます。
+
+## セッションの作成・一覧・再接続・デタッチ
+
+SSH が切れてもサーバー側に残る単位がセッションです。`tmux ls` で見分けやすいよう、リポジトリ名や作業名を付けておきます。
+
+| 目的 | コマンド | 補足 |
+| --- | --- | --- |
+| 名前付きセッションを開始 | tmux new -s work | work を作成してすぐアタッチする |
+| あれば接続、なければ作成 | tmux new -As work | スクリプトやショートカットに入れやすい1行 |
+| 稼働中セッション一覧 | tmux ls | セッション名・ウィンドウ数・接続状態を表示 |
+| 既存セッションに再接続 | tmux attach -t work | 短縮形：tmux a -t work |
+| 実行したままデタッチ | Ctrl+b d | 元のシェルへ戻り、裏でエージェントは動き続ける |
+| 現在のセッション名を変更 | Ctrl+b $ | 新しい名前を入力して Enter |
+| 不要なセッションを終了 | tmux kill-session -t work | work 内のウィンドウとペインをすべて閉じる |
+
+## ウィンドウとペインの操作
+
+`Ctrl+b` を押して離してから、次のキーを押します。セッション内ではウィンドウがタブ、ペインが画面分割に相当します。
+
+| 操作 | ショートカット |
+| --- | --- |
+| 新規ウィンドウ作成 | Ctrl+b c |
+| 前後のウィンドウへ移動 | Ctrl+b p / Ctrl+b n |
+| 現在のウィンドウ名を変更 | Ctrl+b , |
+| 上下にペイン分割 | Ctrl+b " |
+| 左右にペイン分割 | Ctrl+b % |
+| ペイン間のフォーカス移動 | Ctrl+b のあとに矢印キー |
+| 現在のペインを拡大 / 解除 | Ctrl+b z |
+| 現在のペインを閉じる | exit または Ctrl+d |
+
+スマホの狭い画面では、左右分割よりもセッションを分けるか `Ctrl+b z` で単一ペインを拡大する方が読みやすくなります。
+
+## スクロールとコピーモード
+
+tmux 内では通常の端末スクロールが効かないため、コピーモードに入るかマウス設定を有効にします。
+
+- **スクロール / コピーモードに入る：**`Ctrl+b [` を押し、矢印キーや `PageUp`、`/` で過去ログを遡ります。
+
+- **コピーモードを抜ける：**`q` または `Esc` で入力行に戻ります。
+
+- **一覧からセッションを選ぶ：**`Ctrl+b s` を押すと矢印キーでセッションを切り替えられます。
+
+## SSH・スマホ向けの最小 ~/.tmux.conf
+
+接続先マシンの `~/.tmux.conf` に次の4行を追加し、`tmux source-file ~/.tmux.conf` で反映します。
+
+```
+set -g mouse on
+set -g history-limit 10000
+set -sg escape-time 10
+set -g focus-events on
+```
+
+- `mouse on`：SSH 経由でもタッチスクロールやペインタップが有効になります。
+
+- `history-limit 10000`：エージェントの長い差分やテスト出力を遡れる行数を確保します。
+
+- `escape-time 10`：Vim や CLI エージェントで `Esc` を押したときの待ち時間をなくします。
+
+- `focus-events on`：ペインに戻ったことをエディタ側へ通知します。
+
+## スマホでプレフィックスキーを省略する
+
+スマホのソフトウェアキーボードで毎回 `Ctrl+b` を打つのは手間がかかります。Agentmux は接続時に稼働中の tmux セッションを一覧表示し、1タップで再接続できます。14日間の全機能トライアル後は無料のシングルサーバープランを利用でき、最初の設定は セットアップウィザード から進められます。
+
 ## Tailscale：ネットにポートを開かない接続
 
 URL: https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/
@@ -4707,6 +5179,62 @@ Agentmux はあくまでクライアントであり、コードもエージェ�
 Agentmux は**「動いているコーディングエージェントにスマートフォンから戻る」**という 1 つのワークフローに特化して作られています。汎用的な運用管理ツールではありません。日々の作業が単発コマンドの連続であれば、乗り換える理由はありません。
 
 Agentmux を使うと決めたら、次に整えるのは接続先のマシンです。セットアップウィザードで 3 つの質問に答えると手順チェックリストが生成されます。その後のつまずきやすい点は トラブルシューティング にまとめてあります。
+
+## iPhone・iPad向けSSHクライアントの選び方
+
+URL: https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/
+Language: ja
+Updated: 2026-11-15
+
+Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。
+
+iPhone と iPad に最適な SSH クライアントは、開いたあとに何をするかで決まります。PC・スマホ間で多数のホストを同期管理するなら Termius、不安定な回線で Mosh を使うなら Blink Shell、tmux セッションや Claude Code・Codex などの CLI エージェントへ戻る用途が中心なら Agentmux が向いています。
+
+どのアプリも SSH 接続とシェル操作はできますが、「ホスト一覧」「ローカル UNIX シェル」「稼働中のエージェントセッション」のどれを主軸にするかが異なります。詳細な機能比較は Agentmux と汎用 SSH クライアントの違い にまとめています。
+
+## 3つの用途と対応するツール
+
+まずはスマホや iPad で一番よく繰り返す作業に合わせて選びます。
+
+| 主な用途 | 向いているアプリ | 選ばれる理由 |
+| --- | --- | --- |
+| PC とスマホ間でホスト設定を共有管理 | Termius | iOS・Android・macOS・Windows・Linux 間でのホスト同期とフル機能のポートフォワーディング |
+| 不安定なモバイル回線で iPad キーボード作業 | Blink Shell | Mosh 対応とハードウェアキーボード前提のローカル UNIX 風シェル |
+| Claude Code や Codex、長時間の tmux 作業を確認 | Agentmux | 接続時に tmux セッションを一覧表示し、ロック画面での進捗表示と AI 権限レビューを備える |
+
+## Termius：ホスト管理とクロスプラットフォーム同期向け
+
+何十台ものサーバーを整理し、鍵やスニペットを PC とスマホで同期したい場合、またローカル・リモート・動的 SOCKS5 ポートフォワーディングや Mosh が必要な場合は Termius が定番です。
+
+一方で CLI コーディングエージェントの監視に使うと、再接続のたびに空のプロンプトへ戻るため毎回 `tmux ls` と `tmux attach -t` を打つ必要があり、画面を閉じたあとの進捗通知もありません。
+
+## Blink Shell：Mosh と iPad ハードウェアキーボード向け
+
+iPad に外付けキーボードを付けて移動中や不安定な Wi-Fi 下で作業するなら、Mosh により高遅延環境でも入力の引っかかりを抑えられる Blink Shell が強みを発揮します。
+
+ただし汎用シェルとして作られているため、tmux セッションの一覧選択、エージェントの権限確認プロンプト、ロック画面での完了通知といった流れは対象外です。
+
+## Agentmux：tmux と CLI コーディングエージェント専用設計
+
+Agentmux は、コードとエージェントがすでに自分の Mac・Linux・Windows マシン上で動いている前提で作られています。サーバーを選ぶと空のプロンプトではなく稼働中の tmux セッションが並び、1タップで直前の画面へ戻れます。
+
+- **画面を閉じても進捗を追跡：**実行中は Dynamic Island とロック画面に進捗を出し、完了時に通知音で知らせます。
+
+- **AI 権限レビュー：**ブラックリストで危険なコマンドを止め、許可リストで信頼済みコマンドを通し、残りを AI が判定してキー提案または自動押下を行います（Pro）。
+
+- **スマホでのファイル編集：**タッチキーボードで Vim を操作する代わりに、Runestone コードエディタ、Markdown プレビュー、ブランチ操作が使えます（Pro）。
+
+- **明確なトレードオフ：**モバイル専用（iOS・iPadOS・Android）、ポートフォワーディングはローカルのみ、Mosh ではなく標準 SSH + tmux 構成です。
+
+14日間の全機能トライアルのあと、無料のシングルサーバープランをそのまま使い続けられます。
+
+## iPad と iPhone での選び分け
+
+iPad とキーボードを持ち歩いて弱電波下で直接シェル作業を続けるなら Mosh（Blink や Termius）が効きます。一方、iPhone で移動の合間に Claude Code や Codex の状況を確認し、確認プロンプトに答えて差分を少し見る使い方なら、セッション中心で即復帰できる設計の方が操作の手間を減らせます。
+
+## どこから始めるか
+
+自宅や職場の Mac・Linux・Windows に Tailscale と tmux で接続したい場合は、3問で手順が出る セットアップウィザード から始められます。仕様の細かい比較は Agentmux 設計比較 をご覧ください。
 
 ## 15分で一晩中動くエージェント環境を整える
 
