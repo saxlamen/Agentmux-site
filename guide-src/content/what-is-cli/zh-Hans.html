@@ -4,7 +4,7 @@
 <section id="terminal">
   <h2>终端其实是两层程序叠在一起</h2>
 
-  <p>这里有两个程序叠在一起，而初学者通常怪错那一个。<strong>终端</strong>是负责显示的那一层：它画出一格一格的字，把你的按键转出去，就这样。它后面的 <strong>shell</strong>（zsh、bash、fish）等一行文字出现，跑那行文字，然后把程序写出来的东西打印在屏幕上。</p>
+  <p>这里有两个程序叠在一起，而初学者通常怪错那一个。<strong>终端</strong>是负责显示的那一层：它画出一格一格的字，把你的按键转出去，就这样。它后面的 <strong>shell</strong>（zsh、bash、fish）等一行文字出现，执行它，然后把程序写出来的东西打印在屏幕上。</p>
   <p>就是因为薄到这个程度，agent 才操作得动。它打的每一行命令，跟你自己手动打的一模一样；它读到的错误信息，跟你看到的字不差。</p>
 </section>
 
@@ -26,7 +26,7 @@ $ echo $?
 
   <p><strong>提示符</strong>就是第一行。它告诉你四件事：你是谁、在哪台机器、哪个目录、哪个分支。机器不在你眼前的时候，这一行就不再是装饰。SSH 登录之后，它就是让你分清楚这是自己的笔记本、还是你忘记自己登进去过的那台服务器。</p>
   <p><strong>标准输出</strong>（<em>stdout</em>）是那个程序写出来的文字。第二条流 <em>stderr</em> 分开存放，真正的输出不会跟报错混在一起。</p>
-  <p><strong>exit status。</strong>每一条跑完的命令都留下一个整数，shell 用 <code>$?</code> 交给你。0 表示那个程序宣称自己成功。agent 读的就是这个数字。它读的不是“1 failed”那些字，是那个 <code>1</code>，那是它的循环还没闭上的信号。</p>
+  <p><strong>exit status。</strong>每一条跑完的命令都留下一个整数，shell 用 <code>$?</code> 交给你。0 表示程序正常结束。agent 读的就是这个数字。它读的不是“1 failed”那些字，而是那个 <code>1</code>，这说明它的工作还没完成，还会继续往下跑。</p>
 </section>
 
 <section id="capability-boundary">
@@ -59,12 +59,12 @@ npm run build
 psql "$DATABASE_URL" -f db/schema.sql
 curl -sf localhost:8000/health | jq .db</code></pre>
 
-  <p>这些命令搬到别人的云端沙盒里，要跑在哪里？那行 <code>psql</code> 连的是一个只存在于你机器上的数据库，用的 URL 来自一个从来没上传过的 <code>.env</code>。那行 <code>npm install</code> 从你 <code>.npmrc</code> 里写明的私有 registry 拉内部包。那些 <code>git</code> 动作发生在一个带着你的 remote、你的 hook、你的 signing key 的 clone 上。</p>
+  <p>这些命令搬到别人的云端沙盒里，要跑在哪里？那行 <code>psql</code> 连的是只存在于你机器上的数据库，用的 URL 来自一个从来没上传过的 <code>.env</code>。那行 <code>npm install</code> 从你 <code>.npmrc</code> 里写明的私有 registry 拉内部包。那些 <code>git</code> 动作跑在本地的仓库里，里面有你的 remote、hook 和 signing key。</p>
   <p>沙盒里的 agent 可以写一份 patch 给你，但看不见那份 patch 造成了什么结果。看不见一次 edit 的结果，就没办法把工作做完。</p>
 </section>
 
 <section id="concrete-example">
-  <h2>不需要你按任何键就会闭上的循环</h2>
+  <h2>不用你按键，agent 就能自己跑完一轮</h2>
 
   <p>你丢一句“把这个 bug 修好”。接着是十几行同样的命令，而你的手不用碰到键盘：</p>
   <ol>
@@ -79,7 +79,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 <section id="byte-stream-movable">
   <h2>为什么字节流比一个窗口值钱？</h2>
 
-  <p>你屏幕上那个终端窗口不是程序住的地方。程序接在一个 <strong>pseudo-terminal</strong> 上，那是 kernel 里一个有两端的对象：一端写进去字节，另一端就出来字节，而你的窗口只是目前握着另一端的那个人。从这个定义跟着来三件事：</p>
+  <p>你屏幕上那个终端窗口不是程序住的地方。程序接在一个 <strong>pseudo-terminal</strong> 上，那是 kernel 里一个有两端的对象：一端写进去字节，另一端就出来字节，而你的窗口只是当前接在另一端的显示层。从这个定义跟着来三件事：</p>
   <ul>
     <li><strong>可以保存下来。</strong><code>npm test &gt; build.log</code> 把那串文字写进文件，一年后另一个程序还能读它。GUI 的画布是一张图，图本身不是记录。</li>
     <li><strong>可以接起来。</strong><code>git ls-files | grep .env</code> 把一个程序的输出，变成下一个程序的输入。</li>
@@ -91,7 +91,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 <section id="what-full-access-costs">
   <h2>完整访问要付什么代价？</h2>
 
-  <p>让 agent 能对数据库做 migration 的那个权限，也能把那个数据库删掉。它知道这一点，所以会在工作做到一半时停下来问：“要跑这条命令吗？”那个 prompt 不是胆小。一个什么都不问就直接跑的 agent，等于把你的 <code>.ssh</code> 目录和生产环境的数据库押在你身上。prompt 画的是第二层跟第三层之间那条线，而且只能在那个时刻画：命令已经知道了，还没有执行。</p>
+  <p>让 agent 能对数据库做 migration 的那个权限，也能把那个数据库删掉。它知道这一点，所以会在工作做到一半时停下来问：“要跑这条命令吗？”那个 prompt 不是胆小。一个什么都不问就直接跑的 agent，随时可能误删你的 <code>.ssh</code> 目录或生产环境数据库。prompt 画的是第二层跟第三层之间那条线，而且只能在那个时刻画：命令已经知道了，还没有执行。</p>
   <p>两个习惯挡掉大部分风险。<strong>读命令本身，不要读摘要：</strong>“我要清掉 build cache”是一段描述，只有它下面那一行才有后果。<strong>同一类只批一次：</strong>一天四十次要你批准跑测试，就用一条规则让 <code>npm test</code> 直接通过。</p>
   <p>这里的代价不对称。一个你本来就会批准的 prompt 花你十秒。一个你误批准、跑在生产数据库上的命令，花你一天和一次 restore。就是这个比例让 <a href="/guide/zh-Hans/permission-review/">AI 自动权限审查</a>存在：先 blacklist，再 allowlist，剩下的交给模型判断。</p>
 </section>

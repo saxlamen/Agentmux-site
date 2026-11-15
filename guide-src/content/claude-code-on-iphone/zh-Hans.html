@@ -39,7 +39,7 @@ tmux attach -t work  # 开一个窗口看进去</code></pre>
   <h2>只用一个 SSH 窗口，锁屏那一刻 agent 就死了</h2>
 
   <p>假设你跳过 tmux：从手机 SSH 进去，跑 <code>claude</code>，看它开始读项目，然后把手机放进口袋、锁屏。</p>
-  <p>手机不再发数据包，连接超时、关闭。机器上的 sshd 跟着关掉那条连接所使用的 pseudo-terminal，kernel 对还挂在上面的每一个进程发出 <strong>SIGHUP</strong>：你的 shell，还有 shell 里面的 Claude Code。它们默认的反应就是结束。agent 停在改到一半的地方，之前读了二十分钟的项目也一起没了。</p>
+  <p>手机不再发数据包，连接超时、关闭。机器上的 sshd 跟着关掉那条连接用的 pseudo-terminal，kernel 对还挂在上面的每一个进程发出 <strong>SIGHUP</strong>：你的 shell，还有 shell 里面的 Claude Code。它们默认的反应就是结束。agent 停在改到一半的地方，之前读了二十分钟的项目也一起没了。</p>
   <p>让应用开着救不了它：Wi-Fi 换一个网络、移动网络断网、一个 Ctrl-C 按错地方，连接都照样断。tmux 把 session 从连接上搬到机器本身，所以你掉线时消失的是窗口，不是进程（<a href="/guide/zh-Hans/what-is-tmux/">机制在那篇 tmux 文章</a>）。结论只有一条：<strong>agent 要在开始做事之前就在 session 里面，因为一个正在运行的进程没办法之后搬进去。</strong></p>
 </section>
 
@@ -58,16 +58,18 @@ tmux attach -t tests    # 看完再 detach</code></pre>
 <section id="answering-permission-prompts-from-the-phone">
   <h2>agent 可以自己回答权限提示吗？</h2>
 
-  <p>Claude Code 不是想到什么就跑。它跑每一条命令之前都会先停下来；依照设置，改文件之前也会停。它把问题搁在屏幕上：这是它要跑的命令，可以吗？工作就在这里等，而如果只有你能回答，要等多久就看你什么时候抬头。离开书桌之后，权限提示不再是不方便，而是整件事的瓶颈。</p>
-  <p><a href="/guide/zh-Hans/permission-review/">AI 自动权限审查</a>只做这件事：读屏幕上当前那一则提示，然后给你建议、或帮你按下那个键。检查有固定的顺序。<strong>黑名单</strong>拦掉危险命令，命中的一定交给你。<strong>白名单</strong>放行你原本就信任的命令，直接在设备上决定，不用等。<strong>AI 判断</strong>只处理两边都没命中的，结果是允许、拒绝、或不确定，后面两种一样回到你手上。最后由这个 session 的模式决定它是只<strong>建议</strong>那个键，还是直接<strong>帮你按</strong>。</p>
-  <p>人不在旁边，责任还是你的。一条在移动网络上批准的命令，跑在那台机器上，那里存着你的 <code>.env</code>、你的密钥，还有一个不只你一个人在用的 repo。AI 判断看到的是画面，它不知道 agent 为什么走到这一步。所以先选只给建议的模式，把你每天都会批准的命令放进白名单；信号和注意力都不好的时候，先读屏幕上那条命令再按。黑名单会存在，是因为「全部批准」是一个坏的默认设置，而距离不会让它比较安全：指向主目录的 <code>rm -rf</code>，不会因为你人在站台上就比较温和。</p>
+  <p>Claude Code 不是想到什么就跑。它跑每一条命令之前都会先停下来；依照设置，改文件之前也会停。它把问题搁在屏幕上：这是它要跑的命令，可以吗？工作就在这里等，如果只有你能回答，要等多久就看你什么时候抬头。离开书桌之后，权限提示不再是不方便，而是整件事的瓶颈。</p>
+  <p><a href="/guide/zh-Hans/permission-review/">AI 自动权限审查</a>只做这件事：读屏幕上当前那一则提示，然后给你建议、或帮你按下那个键。检查有固定的顺序。<strong>黑名单</strong>拦掉危险命令，命中的一定交给你。<strong>白名单</strong>放行你原本就信任的命令，直接在设备上决定，不用等。</p>
+  <p><strong>AI 判断</strong>只处理两边都没命中的提示，结果是允许、拒绝或不确定，后两种一样交回给你。最后由这个 session 的模式决定，它是只<strong>建议</strong>按哪个键，还是直接<strong>帮你按</strong>。</p>
+  <p>人不在旁边，责任还是你的。一条在移动网络上批准的命令，跑在那台机器上，那里存着你的 <code>.env</code>、你的密钥，还有一个不只你一个人在用的 repo。AI 判断看到的是画面，它不知道 agent 为什么走到这一步。</p>
+  <p>所以先选只给建议的模式，把你每天都会批准的命令放进白名单；信号和注意力都不好的时候，先读屏幕上那条命令再按。黑名单之所以存在，是因为「全部批准」是个坏的默认设置，而且距离不会让它变安全：指向主目录的 <code>rm -rf</code>，不会因为你人在站台上就手下留情。</p>
 </section>
 
 <section id="claude-command-not-found-over-ssh">
   <h2>claude: command not found，但在 Terminal 里跑得好好的</h2>
 
   <p>同一台机器、同一个账号，两种结果：在 Terminal 里敲 <code>claude</code> 会跑，通过 SSH 就给你 <code>claude: command not found</code>。看起来像远程那套配置坏了，但这其实是从手机连进去最常撞到的问题。</p>
-  <p>Claude Code 如果是用 npm 装的，或是装在 nvm 固定的 node 版本底下，它的安装目录会写进一个启动文件。只有<em>交互式 login shell</em> 会读那个启动文件，PATH 里才有那一笔。<code>ssh host claude</code> 这种只跑一条命令的连接，启动的是非交互式 shell，它根本不会读那个文件。</p>
+  <p>Claude Code 如果是用 npm 装的，或是装在 nvm 固定的 node 版本底下，它的安装目录会写进一个启动文件。只有<em>交互式 login shell</em> 会读那个启动文件，PATH 里才有这个目录。<code>ssh host claude</code> 这种只跑一条命令的连接，启动的是非交互式 shell，它根本不会读那个文件。</p>
   <p>最稳的做法是不靠 PATH。在原本跑得动的 Terminal 里：</p>
 
   <pre><code>which claude

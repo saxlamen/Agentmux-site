@@ -1,6 +1,6 @@
 <p>tmux 是一个 terminal multiplexer：它让 terminal session 继续跑在你连进去的那台机器上，不是跑在你那条连接里面。对 AI coding agent 来说，这就是掉线之后 agent 能不能活下来的差别。SSH 连接迟早会断（手机锁屏、没信号），而掉线的 SSH 通常会把 agent 所在的 shell 一起杀掉。</p>
 <p>你把手机收起来，SSH 隧道断了，agent 跟着死。这不是运气问题，是机制。</p>
-<p>连接一断，kernel 会关掉你这次登录所用的虚拟终端（pseudo-terminal），再对接在那个终端上的每个进程发送 <strong>SIGHUP</strong>（hangup）：你的 shell，也包括 shell 里面的 agent。进程除非自己处理过这个信号，否则默认就是终止，跑到一半的东西全部作废。<a href="/guide/zh-Hans/what-is-ssh/">SSH</a> 只是连接走过的那条路，撑住 agent 的是那台机器，不是那条连接。</p>
+<p>连接一断，kernel 会关掉你这次登录用的虚拟终端（pseudo-terminal），再对接在那个终端上的每个进程发送 <strong>SIGHUP</strong>（hangup）：你的 shell，也包括 shell 里面的 agent。进程除非自己处理过这个信号，否则默认就是终止，跑到一半的东西全部作废。<a href="/guide/zh-Hans/what-is-ssh/">SSH</a> 只是连接走过的那条路，撑住 agent 的是那台机器，不是那条连接。</p>
 
 <section id="session-elsewhere">
   <h2>tmux 让 session 活在别的地方</h2>
@@ -44,7 +44,7 @@
   <h2>detach、attach，跟关掉电视是同一件事</h2>
   <p>把电视关掉，客厅里的画面没了。节目没停，一直在播。你回来打开，接的是同一个频道，从它播到的地方看下去。</p>
   <p>tmux 把这两个动作叫 <strong>detach</strong> 和 <strong>attach</strong>：关窗、开窗。两个都碰不到机器上真正在跑的东西。</p>
-  <p>这个比喻会漏掉一件事，而且漏掉的部分对你有利。电视关着的时候什么都没学到，tmux 的 session 却把输出留了下来。一个小时后接回来，画面是它现在的样子，那一个小时打印出来的东西还在 scrollback 里，往上翻就看得到。</p>
+  <p>这个比喻会漏掉一件事，而且漏掉的部分对你有利。电视关着的时候画面就错过了，tmux 的 session 却把输出留了下来。一个小时后接回来，画面是它现在的样子，那一个小时打印出来的东西还在 scrollback 里，往上翻就看得到。</p>
 </section>
 
 <section id="commands-you-type">
@@ -59,7 +59,7 @@ tmux attach -t work       # 从任何终端再接上去看它</code></pre>
     <li><code>Ctrl-b d</code> 就是 detach。终端变回普通的 shell，session 继续跑。</li>
     <li><code>Ctrl-b c</code> 开一个新的 window；<code>Ctrl-b %</code> 把一个 window 分割成两个 pane。</li>
   </ul>
-  <p>如果机器回你 <code>tmux: command not found</code>，解法在<a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>那一页。</p>
+  <p>如果机器回你 <code>tmux: command not found</code>，解法在<a href="/guide/zh-Hans/troubleshooting/">故障排查</a>那一页。</p>
 </section>
 
 <section id="what-it-means-for-agents">
@@ -77,13 +77,14 @@ tmux attach -t work       # 从任何终端再接上去看它</code></pre>
 <section id="two-devices">
   <h2>两台设备可以同时看同一个 session 吗？</h2>
   <p>可以，而且没有什么魔法。多个 client 可以同时接在同一个 session 上。排队时从手机开工，到公司从笔记本接回同一个，你看到的是跑到一半的同一个画面，不是它的副本。</p>
-  <p>两边按的键都送进同一个程序，所以一次只有一个人打字。attach 不会移动 session：它留在创建它的那台机器上，所以手机和笔记本看到的内容一致。反向也成立：你在笔记本的终端里手动开的 session，app 一样接得上，因为两边问的是同一台机器上的同一个 tmux server。</p>
+  <p>两边按的键都送进同一个程序，所以一次只有一个人打字。attach 不会移动 session：它留在创建它的那台机器上，所以手机和笔记本看到的内容一致。反过来也一样：你在笔记本的终端里手动开的 session，app 一样接得上，因为两边问的是同一台机器上的同一个 tmux server。</p>
 </section>
 
 <section id="inside-the-app">
   <h2>App 怎么处理这些 session？</h2>
   <p>Agentmux 用的就是上面那个区分：session 在机器上，连接只是去看它。手机这一侧的掉线是 detach，不是停止：重新连接，你回到同一个 session，而它已经跑得更远了。你在它的终端里手动下上面那些命令，结果一样，因为那是同一台机器上的同一个 session。</p>
-  <p>有两件跑腿它帮你做掉。机器上没有 tmux 时，app 会自己装，并判断你的机器用的是 apt、yum、dnf、pacman、apk 还是 brew。agent 装在 shell 看不到的地方时，app 会去查那个 PATH 问题，不会只丢给你一个毫无信息的画面。persistent session 属于免费的 single-server 方案，所以上面这些都不用另外付钱。<a href="/guide/zh-Hans/setup/">设置页</a>把整件事变成一份检查清单。</p>
+  <p>有两件杂事它帮你做掉了。机器上没有 tmux 时，app 会自己装，并判断你的机器用的是 apt、yum、dnf、pacman、apk 还是 brew。agent 装在 shell 看不到的地方时，app 会去查那个 PATH 问题，不会只丢给你一个毫无信息的画面。</p>
+  <p>持久 session 属于免费的 single-server 方案，上面这些功能都不用另外付费。<a href="/guide/zh-Hans/setup/">设置页</a>把整件事变成一份检查清单。</p>
 </section>
 
 <section id="what-tmux-does-not-do">

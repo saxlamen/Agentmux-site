@@ -63,7 +63,7 @@
 
   <h3>原因</h3>
   <p>这通常跟密码对不对无关。服务器的 SSH 配置把密码登录关掉了（<code>PasswordAuthentication no</code>）。这是很常见的安全设置，用意是让所有人都改用密钥登录，顺带让暴力破解密码失去用处。设置成这样，密码就算一百次都打对也不会被接受。</p>
-  <p>接下来这件事最浪费时间。较新的系统会在 <code>sshd_config</code> 最上面放一行 <code>Include /etc/ssh/sshd_config.d/*.conf</code>，把那个文件夹里的配置文件全部读进来，Ubuntu 22.10 之后、Debian 12，以及几乎所有云端主机的默认镜像都是这样。而 sshd 一个配置项只采用它最先读到的那个值，后面出现的不会覆盖前面的。</p>
+  <p>接下来这件事最浪费时间。Ubuntu 22.10 之后、Debian 12，以及几乎所有云端主机的默认镜像，都会在 <code>sshd_config</code> 最上面放一行 <code>Include /etc/ssh/sshd_config.d/*.conf</code>，把那个文件夹里的配置文件全部读进来。sshd 对一个配置项只采用最先读到的那个值，后面出现的不会覆盖前面的。</p>
   <p>所以只要 <code>/etc/ssh/sshd_config.d/</code> 底下有个 <code>50-cloud-init.conf</code> 之类的文件同样写着 <code>PasswordAuthentication no</code>，它就比你刚在主文件改的那一行先生效。你保存、重启服务，然后一样被拒绝。</p>
 
   <h3>解法</h3>
@@ -93,7 +93,7 @@ Match All
   <h3>原因</h3>
   <p>目标机器上还没装 tmux，而 Agentmux 会替你装。它会先检测这台机器用的是 apt、yum、dnf、pacman、apk（Alpine）还是 brew，再通过 SSH 跑对应的安装命令。多数情况你等它跑完就好。</p>
   <p>自动安装失败，最常见的原因是 <code>sudo</code>。安装命令里带了它，但这条通道是非交互式的，<code>sudo</code> 没有终端可以问你密码（见下面 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a>）。其次是在 Mac 上用 Homebrew 安装、但连接身份是 root，因为 Homebrew 设计上拒绝以 root 运行。</p>
-  <p>Windows 主机是同一个故事，只是程序换了：那里 Agentmux 装的是 psmux，先试 winget、再 Scoop、最后 cargo。三个都没有的机器会收到直接把话说清楚的信息：<em>这台 Windows 服务器上找不到 winget、scoop 或 cargo。请手动安装 psmux，然后重新连接。</em> 那不是安装坏掉，是那台电脑没有包管理工具，手动安装的命令在下面。</p>
+  <p>Windows 主机是同一个道理，只是程序换了：Agentmux 在那里装的是 psmux，先试 winget、再试 Scoop、最后试 cargo。如果这三个都没有，你会收到一条很直白的提示：<em>这台 Windows 服务器上找不到 winget、scoop 或 cargo。请手动安装 psmux，然后重新连接。</em> 这不是安装坏掉，只是那台电脑没有包管理工具，手动安装的命令在下面。</p>
 
   <p>还有一种少见但容易误判的情况：tmux 已经装了，只是装在 Agentmux 探测 PATH 时没看到的地方，例如 Linuxbrew 装在 <code>~/.linuxbrew</code>，MacPorts 装在 <code>/opt/local/bin</code>。信息一样是「找不到 tmux」，问题却出在 PATH，不是没装。照下面 <a href="#agent-command-not-found">claude: command not found，但桌面终端明明可以跑</a> 那节处理。</p>
 
@@ -134,7 +134,9 @@ winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-sou
   <p>问题出在 shell 的行为，不是 Agentmux。这是整页最难自己想通的卡点，所以原理值得多写几行。把它读懂之后，再遇到类似的情况，你自己就能判断。</p>
   <p>你平常在 Mac 上开的 Terminal 是一个「交互式登录 shell」。<code>claude</code> 找得到，通常是因为 nvm、npm 或安装工具在某个配置文件里加了一行，把它所在的目录放进 PATH。哪一个配置文件，zsh 和 bash 不一样，混着讲会误导，所以分开说：</p>
   <p><strong>zsh</strong>（Mac 的默认 shell）：交互式登录 shell 依次读 <code>.zshenv</code> → <code>.zprofile</code> → <code>.zshrc</code> → <code>.zlogin</code>。而 <code>ssh 主机 claude</code> 这种执行单条命令的连接，开的是非交互、非登录的 zsh，只会读 <code>.zshenv</code>，其余全部跳过，其中就包含大多数人放 PATH 设置的 <code>.zshrc</code>。</p>
-  <p><strong>bash</strong>：这部分的行为因发行版而异，没有一套统一的规则。交互式登录 shell 读的是 <code>.bash_profile</code>（或 <code>.profile</code>），不是 <code>.bashrc</code>。你会以为 bash 也会读 <code>.bashrc</code>，是因为多数发行版默认的 <code>.bash_profile</code> 里都加了一段「如果 <code>.bashrc</code> 存在就 source 它」。<code>ssh 主机 claude</code> 这种用法，就是 sshd 叫 bash 执行单条命令。这种情况下 bash 会不会读 <code>~/.bashrc</code>，答案要看发行版，差别在一个编译时期加上去的 <code>SSH_SOURCE_BASHRC</code> 特例。Debian、Ubuntu 和它们的衍生版有把这个 patch 补进去，所以非交互的单条命令 shell 也会读 <code>~/.bashrc</code>。RHEL、Fedora、Arch 这类发行版用的是官方原始版本的 bash，没有这个特例，同样场景下 <code>~/.bashrc</code> 根本不会被读到。就算在会读的发行版上，几乎每个默认的 <code>.bashrc</code> 开头也都放了一段判断：</p>
+  <p><strong>bash</strong>：这部分的行为因发行版而异，没有统一的规则。交互式登录 shell 读的是 <code>.bash_profile</code>（或 <code>.profile</code>），不是 <code>.bashrc</code>。你会以为 bash 也会读 <code>.bashrc</code>，是因为多数发行版默认的 <code>.bash_profile</code> 里都加了一段「如果 <code>.bashrc</code> 存在就 source 它」。</p>
+  <p><code>ssh 主机 claude</code> 这种用法，是 sshd 叫 bash 执行单条命令。这种情况下 bash 会不会读 <code>~/.bashrc</code>，要看发行版在编译时有没有加上 <code>SSH_SOURCE_BASHRC</code> 这个特例。Debian、Ubuntu 和它们的衍生版加了这个 patch，所以非交互的单条命令 shell 也会读 <code>~/.bashrc</code>；RHEL、Fedora、Arch 用的是官方原版 bash，没有这个特例，同样场景下 <code>~/.bashrc</code> 根本不会被读到。</p>
+  <p>就算在会读的发行版上，几乎每个默认的 <code>.bashrc</code> 开头也放了这样一段判断：</p>
   <pre><code>case $- in
     *i*) ;;
       *) return;;
@@ -206,13 +208,13 @@ esac</code></pre>
 
   <h3>原因</h3>
   <p><code>sudo</code> 正常会在终端上弹出「输入密码：」，等你打完才往下跑。但如果命令是通过非交互的渠道执行，例如 SSH 远程执行单条命令，或是 Agentmux 在背后帮你跑的安装流程，那里没有一个真正的终端可以显示提示，也没有地方让你打字。<code>sudo</code> 发现没有 TTY 可用就直接拒绝，不会傻等一个永远不会来的输入。</p>
-  <p>这里有个常见的误会：以为刚打过一次 sudo 密码，接下来一段时间就不用再打。现代的 sudo 确实会记录「已经验证过」，但那笔记录绑定的是当下那个 TTY（<code>tty_tickets</code>），跟你的账号、跟这台机器都没有关系。</p>
-  <p>你在交互式 SSH 窗口里打过密码，Agentmux 之后自动跑命令时，开的是另一条没有 TTY 的全新连接。对 sudo 来说那是另一笔记录，所以它会再问一次。这里没有缓存过期的问题：两边查的从来就不是同一笔记录。</p>
+  <p>这里有个常见的误会：以为刚打过一次 sudo 密码，接下来一段时间就不用再打。现代的 sudo 确实会记录「已经验证过」，但那条记录绑定的是当下那个 TTY（<code>tty_tickets</code>），跟你的账号、跟这台机器都没有关系。</p>
+  <p>你在交互式 SSH 窗口里打过密码，Agentmux 之后自动跑命令时，开的是另一条没有 TTY 的全新连接。对 sudo 来说那是另一条记录，所以它会再问一次。这里没有缓存过期的问题：两边查的从来就不是同一条记录。</p>
 
   <h3>解法</h3>
   <p>非交互的渠道没有地方让 sudo 问密码，所以解法有两条：让 Agentmux 帮你填密码，或自己在真正的终端里跑一次。先看 Agentmux 弹出的提示：自动安装失败时，它通常会直接请你输入 sudo 密码、或改成启用免密码 sudo，再重试一次。看到那个输入框就把密码填进去，往往比自己另外处理快。</p>
   <p>这个渠道不可用的话，就自己手动 SSH 登录那台机器，开一个正常的交互式 session，在里面执行一次同样的命令（例如 <code>sudo apt install -y tmux</code>）并输入密码，把事情做完。</p>
-  <p>它会成功，理由却跟多数人想的不一样。这没有帮 Agentmux 之后的自动流程解锁什么，两边查的 TTY 记录本来就不是同一笔。真正的原因是该装的东西已经被你装好了：下一次非交互命令检查时发现东西已经在，不需要安装，卡点就消失了。</p>
+  <p>它会成功，理由却跟多数人想的不一样。这没有帮 Agentmux 之后的自动流程解锁什么，两边查的 TTY 记录本来就不是同一条。真正的原因是该装的东西已经被你装好了：下一次非交互命令检查时发现东西已经在，不需要安装，卡点就消失了。</p>
   <p>如果某个特定命令长期都要通过非交互渠道免密码执行，可以用 <code>sudo visudo</code> 帮它加一条 <code>NOPASSWD</code> 规则，只针对那一条命令放行：</p>
   <pre><code>你的账号 ALL=(ALL) NOPASSWD: /usr/bin/apt</code></pre>
   <p>这个取舍比看起来严重。把 <code>NOPASSWD</code> 开给 apt 这类包管理器，几乎等于交出完整的 root：你可以叫 apt 装任何包，而 <code>APT::Update::Pre-Invoke</code> 这类 hook 还能以 root 身份在安装过程中执行任何命令。实际上那就是免密码的 root，只是换一种写法。</p>

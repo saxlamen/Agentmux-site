@@ -26,8 +26,8 @@
     <meta property="og:image:width" content="2752">
     <meta property="og:image:height" content="2064">
     <meta property="og:image:alt" content="iPad から SSH 経由で coding agent を実行">
-    <meta property="article:published_time" content="2026-10-28">
-    <meta property="article:modified_time" content="2026-10-28">
+    <meta property="article:published_time" content="2026-11-15">
+    <meta property="article:modified_time" content="2026-11-15">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Windows PCもそのままサーバーになる">
     <meta name="twitter:description" content="WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。">
@@ -37,7 +37,7 @@
     <meta name="theme-color" content="#090d0f">
     <meta name="posthog-key" content="">
     <meta name="posthog-host" content="https://us.i.posthog.com">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Windows PCもそのままサーバーになる", "description": "WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/windows-server/", "url": "https://agentmux.saxcave.cc/guide/ja/windows-server/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "Windows PCもそのままサーバーになる", "item": "https://agentmux.saxcave.cc/guide/ja/windows-server/"}]}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Windows PCもそのままサーバーになる", "description": "WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/windows-server/", "url": "https://agentmux.saxcave.cc/guide/ja/windows-server/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-15", "dateModified": "2026-11-15"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "Windows PCもそのままサーバーになる", "item": "https://agentmux.saxcave.cc/guide/ja/windows-server/"}]}]}</script>
 </head>
 <body class="guide">
     <nav class="guide-nav">
@@ -66,8 +66,10 @@
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
 Set-Service -Name sshd -StartupType Automatic</code></pre>
-  <p>インストーラーは <code>OpenSSH-Server-In-TCP</code> という受信ファイアウォール規則を追加します。より厳しいファイアウォール環境にある場合は、まずこの規則を確認してください。2 行目でサービスを今すぐ起動し、3 行目で再起動後も自動起動するように設定します。Windows PC は更新プログラムで自動的に再起動することがあるため、Mac 以上にこの設定が重要です。</p>
-  <p>2 つ目はマルチプレクサです。Agentmux は接続時にホストの OS を自動判別します。Windows ホストであることがわかると、アプリ側の挙動が自動で切り替わります。内部コマンドには <code>sh -c</code> ではなく PowerShell を使い、スラッシュ区切りではなくドライブパスを扱い、tmux の代わりに psmux を使います。切り替えスイッチを探す必要はなく、ログインシェルが PowerShell でも <code>cmd.exe</code> でも動作します。</p>
+  <p>インストーラーは <code>OpenSSH-Server-In-TCP</code> という受信ファイアウォール規則を追加します。より厳しいファイアウォール環境にある場合は、まずこの規則を確認してください。</p>
+  <p>2 行目でサービスを今すぐ起動し、3 行目で再起動後も自動起動するように設定します。Windows PC は更新プログラムで自動的に再起動することがあるため、Mac 以上にこの設定が重要です。</p>
+  <p>2 つ目はマルチプレクサです。Agentmux は接続時にホストの OS を自動判別し、Windows ホストであればアプリ側の挙動を自動で切り替えます。</p>
+  <p>内部コマンドには PowerShell を使い、Windows のドライブパスを扱い、tmux の代わりに psmux を使います。切り替えスイッチを探す必要はなく、ログインシェルが PowerShell でも <code>cmd.exe</code> でも動作します。</p>
 </section>
 <aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
     <p>14日間の全機能トライアル。iOS・Android に対応。</p>
@@ -78,16 +80,17 @@ Set-Service -Name sshd -StartupType Automatic</code></pre>
 </aside>
 
 <section id="why-psmux">
-  <h2>なぜ tmux ではなく psmux なのか</h2>
+  <h2>なぜ psmux を使うのか</h2>
   <p>psmux は tmux をモデルにしたコマンドライン（セッション、ウィンドウ、ペイン、<code>send-keys</code>、<code>capture-pane</code>）を持つ独立したプログラムです。<code>tmux.exe</code> というエイリアスも配置されるため、普段の操作感もそのまま使えます。Agentmux は <code>psmux</code>、<code>pmux</code>、<code>tmux.exe</code> の順に探し、見つかったものをそのまま使うため、すでに入っている環境を壊すことはありません。</p>
-  <p>これは tmux の移植版ではなく、移植版を名乗ってもいません。Agentmux はバージョン文字列を鵜呑みにせず、そのプログラムが実際に何を返すかを検証し、確認できない機能は使いません。後述する違いは、互換性一覧表ではなくこの実地検証の結果に基づいています。</p>
+  <p>psmux は tmux の移植版ではありません。Agentmux はバージョン文字列を鵜呑みにせず、そのプログラムが実際に何を返すかを検証し、確認できない機能は使いません。後述する違いは、この実地検証の結果に基づいています。</p>
   <p>そもそもなぜマルチプレクサが必要なのか仕組みを知りたい場合は、<a href="/guide/ja/what-is-tmux/">tmux の役割</a>を参照してください。接続が切れるとシェルが SIGHUP を受け取り、マルチプレクサなしではエージェントも道連れで終了します。</p>
 </section>
 
 <section id="installing-psmux">
   <h2>psmux が入っていない場合どうなるか</h2>
   <p>Agentmux が自動でインストールします。まず <code>winget install -e --id marlocarlo.psmux</code> を試し、次に Scoop、次に <code>cargo install psmux</code> と、存在するパッケージマネージャーを使って導入し再接続します。スマホ側からコマンドを打つ必要はありません。</p>
-  <p>この 3 つがどれも入っていない環境だけが手動対応になります。その場合、アプリは「<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em>」とそのまま表示します。簡素化された Windows 構成や winget を削除したサーバーが該当します。バイナリを入手して <code>PATH</code> の通った場所へ置き、再接続してください。</p>
+  <p>この 3 つがどれも入っていない環境だけが手動対応になります。その場合、アプリは「<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em>」とそのまま表示します。</p>
+  <p>簡素化された Windows 構成や winget を削除したサーバーが該当します。バイナリを入手して <code>PATH</code> の通った場所へ置き、再接続してください。</p>
   <p>導入後は同じフォルダに <code>psmux.exe</code>、<code>pmux.exe</code>、<code>tmux.exe</code> の 3 つの名前で配置されます。そのマシン上で <code>tmux</code> と打てば psmux が起動し、<code>psmux --version</code> を実行すると自身のバージョンの前に <code>tmux 3.4.0</code> と表示されます。二重にインストールされているわけではありません。</p>
 </section>
 
@@ -96,7 +99,7 @@ Set-Service -Name sshd -StartupType Automatic</code></pre>
   <ul>
     <li><strong>セッションの永続化。</strong>一覧表示、デタッチ状態での作成、アタッチ、名前変更、単体削除、一括削除が使えます。<code>Ctrl-b d</code> で PowerShell プロンプトへデタッチでき、Agentmux のタブは開いたまま残ります。</li>
     <li><strong>プロジェクトフォルダでのエージェント起動。</strong><code>C:\Users\you\src\app</code> のような Windows パス（スペースを含むパスも可）から Claude Code、Codex、または任意のコマンドを起動できます。</li>
-    <li><strong>画面状態の読み取り。</strong>ペインが許可プロンプト待ちか、作業中か、アイドルかをペイン自体から判定でき、AI 自動権限レビューも Windows 上でキーの提案だけでなく実際のキー送信まで行えます。</li>
+    <li><strong>画面状態の読み取り。</strong>ペインが許可プロンプト待ちか、作業中か、アイドルかをペイン自体から判定でき、AI 自動権限レビューも Windows 上でキーの提案と自動送信の両方に対応しています。</li>
     <li><strong>主要シェルの両対応。</strong>Windows PowerShell 5.1 と PowerShell 7、パスワード認証と鍵認証、ドライブレター、UNC パス、スペースを含むフォルダ名に対応しています。</li>
   </ul>
 </section>
@@ -104,7 +107,7 @@ Set-Service -Name sshd -StartupType Automatic</code></pre>
 <section id="what-is-different">
   <h2>Linux マシンとの違い</h2>
   <ul>
-    <li><strong>ファイル操作は SFTP 経由。</strong>閲覧、編集、転送はシェルではなく SFTP サブシステムを使います。OpenSSH 側で SFTP が無効になっている場合、黙って失敗するのではなくその旨を通知します（ターミナル機能自体は SFTP 不要です）。</li>
+    <li><strong>ファイル操作は SFTP 経由。</strong>閲覧、編集、転送は SFTP サブシステム経由で行います。OpenSSH 側で SFTP が無効になっている場合は、エラーメッセージで通知します（ターミナル機能自体は SFTP 不要です）。</li>
     <li><strong>ファイルブラウザで制限される 2 つの操作。</strong>スクリプトの実行と Git 操作は意図的に拒否されます。Windows ホスト上でシェルエラーを出してユーザーに解釈させるのを防ぐためです。</li>
     <li><strong>ペインの作業フォルダ表示なし。</strong>psmux には <code>pane_current_path</code> がないため、アプリは各ペインがどのフォルダにいるかを取得できず、実行中プログラム欄には PowerShell と表示されます。また、その表示の更新間隔も Linux より遅くなります。</li>
     <li><strong>添付ファイルの保存先は temp フォルダ。</strong>送信した画像やファイルは、Linux や Mac では <code>/tmp</code> に、Windows では Windows の temp フォルダに保存されます。ターミナルへ入力されるパスはいずれも実際の保存先です。</li>
@@ -114,8 +117,9 @@ Set-Service -Name sshd -StartupType Automatic</code></pre>
 
 <section id="wsl2-still-an-option">
   <h2>それでも WSL2 を使うべきケース</h2>
-  <p>理由は 1 つだけ残っています。サーバーとして動く Windows ではなく、<code>apt</code> や systemd、スラッシュ区切りのパスが使える Linux ユーザーランドが欲しい場合です。WSL2 の内部では、このガイドの Linux 向け手順がすべてそのまま使えます。</p>
-  <p>ただし 3 つの落とし穴は残ります。WSL2 は NAT 配下の仮想マシンで動くため、<code>netsh interface portproxy</code> でポート転送するか <code>.wslconfig</code> でミラーネットワークを有効にしないと外部から sshd に届きません。また、最後のプロセスが終了すると数秒でディストリビューションが停止するため、常時稼働にはタスクスケジューラの設定が必要です。さらに古い環境では systemd が既定でオフになっており、ウィザードのサービス起動コマンドがそのまま通らないことがあります。</p>
+  <p>理由は 1 つだけ残っています。<code>apt</code> や systemd、スラッシュ区切りのパスが使える Linux ユーザーランドが欲しい場合です。WSL2 の内部では、このガイドの Linux 向け手順がすべてそのまま使えます。</p>
+  <p>ただし 3 つの落とし穴は残ります。WSL2 は NAT 配下の仮想マシンで動くため、<code>netsh interface portproxy</code> でポート転送するか <code>.wslconfig</code> でミラーネットワークを有効にしないと外部から sshd に届きません。</p>
+  <p>また、最後のプロセスが終了すると数秒でディストリビューションが停止するため、常時稼働にはタスクスケジューラの設定が必要です。さらに古い環境では systemd が既定でオフになっており、ウィザードのサービス起動コマンドがそのまま通らないことがあります。</p>
   <p>まとめると、Linux のプログラムが必要なら WSL2 を選び、その PC 自体をサーバーとして使いたいならネイティブ構成を選んでください。仮想マシンを起こし続ける手間も、再起動のたびにアドレスが変わる心配もありません。</p>
 </section>
 

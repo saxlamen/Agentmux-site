@@ -1,5 +1,5 @@
-<p>SSH・tmux・Tailscale を使ったリモート開発が止まる原因は、大きく 8 つの典型パターンに分かれます。<code>Operation timed out</code>、<code>Permission denied (publickey)</code>、正しいはずのパスワードの拒否、<code>tmux not found</code>、<code>claude: command not found</code>、Tailscale は接続済みなのに届かない状態、リモートログインがオンなのに Mac が拒否する状態、そして <code>sudo: a terminal is required</code> です。それぞれに症状・原因・対処法があります。</p>
-<p>前の記事通りに組めば 8〜9 割は初回で動きます。動かないときも、ほぼこの 8 つのどれかに当てはまります。出たエラーメッセージの項目へ直接飛んでください。上から順に読む必要はありません。</p>
+<p>SSH・tmux・Tailscale を使ったリモート開発が止まる原因は、おおむね 8 つの典型パターンに収まります。タイムアウト、鍵やパスワードの拒否、<code>tmux</code> や <code>claude</code> が見つからないエラー、Tailscale や Mac の接続拒否、非対話での <code>sudo</code> 失敗です。</p>
+<p>前の記事通りに組めば大半は初回で動きます。動かないときもほぼこの 8 つのどれかに当てはまるため、出たエラーメッセージの項目へ直接飛んでください。上から順に読む必要はありません。</p>
 
 <section id="cannot-connect">
   <h2>接続がタイムアウトする（Operation timed out）</h2>
@@ -22,7 +22,7 @@
   <p>次に、SSH ポートで何かが待ち受けているか確認します。</p>
   <pre><code>nc -vzw 5 host-address 22</code></pre>
   <p><code>22</code> は接続先が実際に使っているポート番号に置き換えてください。<code>-w 5</code> で待機を 5 秒に区切るため、ブロックされていても固まらず結果が出ます。</p>
-  <p>結果は 3 通りのいずれかです。<code>succeeded</code> または <code>open</code> ならポートには届いているため別の原因です。<code>Connection refused</code> ならマシンまでは届いているものの、そのポートで SSH が動いていません。再びタイムアウトするなら途中の経路（多くの場合ファイアウォール）で落ちているため、サーバー側ではなくルーターや利用中のネットワーク設定を確認してください。</p>
+  <p>結果は 3 通りのいずれかです。<code>succeeded</code> または <code>open</code> ならポートには届いているため別の原因です。<code>Connection refused</code> ならマシンまでは届いているものの、そのポートで SSH が動いていません。再びタイムアウトするなら途中の経路（多くの場合ファイアウォール）で落ちているため、ルーターや利用中のネットワーク設定を確認してください。</p>
 </section>
 
 <section id="permission-denied-publickey">
@@ -63,8 +63,8 @@
 
   <h3>原因</h3>
   <p>ほとんどの場合、パスワード自体は問題ではありません。サーバー側の SSH 設定でパスワード認証が無効（<code>PasswordAuthentication no</code>）になっています。公開鍵認証を強制してパスワード総当たり攻撃を防ぐための一般的な設定で、これが有効だと正しいパスワードを何度入れても拒否されます。</p>
-  <p>ここで多くの人が時間を使う落とし穴があります。Ubuntu 22.10 以降、Debian 12、および大半のクラウド事業者の標準イメージでは、<code>sshd_config</code> の先頭付近に <code>Include /etc/ssh/sshd_config.d/*.conf</code> という行があり、そのディレクトリ内の設定ファイルをすべて読み込みます。sshd は各設定について<strong>最初に読んだ値</strong>を採用するため、後ろの行に書いても上書きされません。</p>
-  <p><code>/etc/ssh/sshd_config.d/</code> の中に <code>50-cloud-init.conf</code> などのファイルがあり、そこに <code>PasswordAuthentication no</code> が書かれていると、メインの <code>sshd_config</code> を編集してサービスを再起動しても拒否され続けます。</p>
+  <p>ここで多くの人が時間を使う落とし穴があります。Ubuntu 22.10 以降、Debian 12、および大半のクラウド事業者の標準イメージでは、<code>sshd_config</code> の先頭付近に <code>Include /etc/ssh/sshd_config.d/*.conf</code> という行があり、そのディレクトリ内の設定ファイルをすべて読み込みます。</p>
+  <p>sshd は各設定について<strong>最初に読んだ値</strong>を採用するため、後ろの行に書いても上書きされません。<code>/etc/ssh/sshd_config.d/</code> の中に <code>50-cloud-init.conf</code> などのファイルがあり、そこに <code>PasswordAuthentication no</code> が書かれていると、メインの <code>sshd_config</code> を編集してサービスを再起動しても拒否され続けます。</p>
 
   <h3>対処法</h3>
   <p><strong>対処法：</strong>より望ましい解決策は公開鍵認証に切り替えることです。上の「<a href="#permission-denied-publickey">Permission denied (publickey)</a>」の手順でサーバーの <code>authorized_keys</code> に公開鍵を登録してください。</p>
@@ -75,7 +75,7 @@
   <pre><code>sudo sshd -t</code></pre>
   <p>エラーが出なければサービスを再起動して反映します。</p>
   <pre><code>sudo systemctl restart ssh</code></pre>
-  <p>ディストリビューションによってはサービス名が <code>ssh</code> ではなく <code>sshd</code> です。見つからない場合は <code>sudo systemctl restart sshd</code> を試してください。その後、退路のウィンドウとは別に新しい接続を開いてパスワードログインが通ることを確認し、通ってから古いウィンドウを閉じます。</p>
+  <p>ディストリビューションによってはサービス名が <code>sshd</code> の場合もあります。見つからない場合は <code>sudo systemctl restart sshd</code> を試してください。その後、退路のウィンドウとは別に新しい接続を開いてパスワードログインが通ることを確認し、通ってから古いウィンドウを閉じます。</p>
   <p>Tailscale 経由で接続する構成なら、インターネット全体にパスワードログインを開く代わりに、Tailscale のアドレス帯からのみパスワードを許可し、それ以外は公開鍵のみにする方が安全です。<code>sshd_config</code> の末尾に次を追記します。</p>
   <pre><code>Match Address 100.64.0.0/10
     PasswordAuthentication yes
@@ -93,9 +93,9 @@ Match All
   <h3>原因</h3>
   <p>接続先のマシンにまだ tmux が入っていません。通常は Agentmux が apt、yum、dnf、pacman、apk（Alpine）、brew のどれを使うか判別して SSH 越しに自動インストールするため、終わるまで待つだけで済みます。</p>
   <p>それが失敗する一番の理由は <code>sudo</code> です。インストールコマンドに <code>sudo</code> が含まれているのに実行経路が非対話のため、パスワードを入力する端末がありません（下の「<a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a>」を参照）。2 番目に多いのは Mac に root で接続して Homebrew を動かそうとするケースで、Homebrew は仕様上 root での実行を拒否します。</p>
-  <p>Windows ホストでも仕組みは同じで、対象が psmux に変わります。Agentmux は winget、Scoop、cargo の順で導入を試みますが、3 つとも入っていない環境では「<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em>」と表示します。故障ではなくパッケージマネージャーがないだけなので、下の手動手順で導入します。</p>
+  <p>Windows ホストでも仕組みは同じで、対象が psmux に変わります。Agentmux は winget、Scoop、cargo の順で導入を試みますが、3 つとも入っていない環境では「<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em>」と表示します。パッケージマネージャーがないだけなので、下の手動手順で導入してください。</p>
 
-  <p>稀に誤解しやすいケースもあります。tmux 自体は入っているのに、Linuxbrew（<code>~/.linuxbrew</code>）や MacPorts（<code>/opt/local/bin</code>）など Agentmux の PATH 探索から外れた場所にある場合です。表示されるエラーは同じでも原因は未インストールではなく PATH です。下の「<a href="#agent-command-not-found">Terminal では動くのに claude: command not found になる</a>」と同じ方法で対処します。</p>
+  <p>稀に誤解しやすいケースもあります。tmux 自体は入っているのに、Linuxbrew（<code>~/.linuxbrew</code>）や MacPorts（<code>/opt/local/bin</code>）など Agentmux の PATH 探索から外れた場所にある場合です。表示されるエラーは同じでも、原因は PATH 設定にあります。下の「<a href="#agent-command-not-found">Terminal では動くのに claude: command not found になる</a>」と同じ方法で対処します。</p>
 
   <h3>対処法</h3>
   <p><strong>対処法：</strong>まず Agentmux が表示したエラーを確認します。sudo パスワードの入力や passwordless sudo の案内が出ているなら、パスワードを入力して再試行するのが別ウィンドウを開くより早道です。それでも通らない場合や TTY に関するエラーが出る場合は、下の「<a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a>」を確認してください。それが解消すれば自動インストールが通ることがほとんどです。</p>
@@ -117,7 +117,7 @@ sudo apk add tmux
 
 # Mac（root ユーザーで実行しないこと）
 brew install tmux</code></pre>
-  <p>Windows の場合は tmux ではなく psmux をインストールします。</p>
+  <p>Windows の場合は psmux をインストールします。</p>
   <pre><code># Windows (PowerShell)
 winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements</code></pre>
   <p>すでに psmux が入っている場合、winget は二重インストールせず「利用可能な新しいバージョンはありません」と返して止まらず終了します。この出力が出ればプログラムは存在しています。</p>
@@ -134,15 +134,17 @@ winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-sou
   <p>Agentmux の不具合ではなく、シェルの起動仕様によるものです。自力で原因を特定しにくい問題なので仕組みを整理しておくと、同種の現象をすべて自力で診断できるようになります。</p>
   <p>Mac で開く Terminal は<em>対話的ログインシェル</em>です。そこで <code>claude</code> に PATH が通っているのは、nvm、npm、またはインストーラーが起動ファイルへ PATH 設定を書き込んだからです。<em>どの</em>起動ファイルを読むかは zsh と bash で異なり、混同すると見当違いのファイルを直すことになります。</p>
   <p><strong>zsh</strong>（macOS の標準）：対話的ログインシェルは <code>.zshenv</code> → <code>.zprofile</code> → <code>.zshrc</code> → <code>.zlogin</code> の順に読み込みます。一方、<code>ssh host claude</code> のように単発コマンドを実行する接続は「非対話・非ログイン」の zsh を起動するため、<code>.zshenv</code> だけを読んで、多くの人が PATH を書いている <code>.zshrc</code> を含む残りをすべて飛ばします。</p>
-  <p><strong>bash</strong>：こちらはディストリビューションによって挙動が異なります。対話的ログインシェルが読むのは <code>.bashrc</code> ではなく <code>.bash_profile</code>（または <code>.profile</code>）です。普段 <code>.bashrc</code> が読まれているように見えるのは、多くの環境で <code>.bash_profile</code> の中から <code>.bashrc</code> を読み込む記述が入っているためです。<code>ssh host claude</code> のときは sshd が単発コマンド用に bash を呼び出しますが、このとき <code>~/.bashrc</code> を読むかどうかは <code>SSH_SOURCE_BASHRC</code> というコンパイル時オプション次第です。Debian や Ubuntu 系はこのパッチが入っているため非対話の単発実行でも <code>~/.bashrc</code> を読みますが、RHEL、Fedora、Arch はパッチなしの標準 bash なので一切読み込みません。さらに読むディストリビューションであっても、既定の <code>.bashrc</code> の冒頭には次の記述があります。</p>
+  <p><strong>bash</strong>：こちらはディストリビューションによって挙動が異なります。対話的ログインシェルが読むのは <code>.bash_profile</code>（または <code>.profile</code>）で、多くの環境ではその中から <code>.bashrc</code> を読み込む記述が入っています。</p>
+  <p>一方、<code>ssh host claude</code> のように単発コマンドを実行する接続で <code>~/.bashrc</code> を読むかどうかは、<code>SSH_SOURCE_BASHRC</code> というコンパイル時オプション次第です。Debian や Ubuntu 系はこのパッチが入っているため非対話の単発実行でも <code>~/.bashrc</code> を読みますが、RHEL、Fedora、Arch は標準の bash のため読み込みません。</p>
+  <p>さらに <code>.bashrc</code> を読むディストリビューションであっても、既定の <code>.bashrc</code> の冒頭には次の記述があります。</p>
   <pre><code>case $- in
     *i*) ;;
       *) return;;
 esac</code></pre>
   <p>これは「対話シェルでなければここで終了し、後ろを読まない」という意味です。この判定がファイルの先頭付近にあるため、bash が <code>.bashrc</code> を開いても、あなたが追記した PATH 行に届く前に抜けてしまい、結果として読んでいないのと同じになります。</p>
-  <p>zsh でも bash でも結末は同じです。PATH を設定する行は自分で Terminal を開いたときだけ実行され、SSH の単発コマンド実行では読まれないため、シェルは正しく「<code>claude</code> が見つからない」と報告しています。インストールされているかどうかではなく、そのシェルに探し場所が伝わっていないだけです。</p>
+  <p>zsh でも bash でも結末は同じです。PATH を設定する行は自分で Terminal を開いたときだけ実行され、SSH の単発コマンド実行では読まれないため、シェルは「<code>claude</code> が見つからない」と報告します。そのシェルに実行ファイルの場所が伝わっていないだけです。</p>
   <p>非対話実行でこれらを飛ばすのは意図的な仕様です。そうしないと、リモートコマンド 1 つ実行するたびに大量の対話用エイリアスやプロンプト設定まで読み込まれ、余計な不具合の原因になるためです。</p>
-  <p>もう 1 点、Agentmux は Mac 上で PATH を調べる際に <code>zsh -lc</code>（ログイン・非対話）を使います。これも <code>.zshrc</code> を飛ばして <code>.zshenv</code> と <code>.zprofile</code> だけを読みます。そのため Mac の zsh ユーザーにとって、PATH 設定をこの 2 つのどちらかに移すことは、手動 SSH だけでなく Agentmux 自体がエージェントを見つけられるかどうかに直結します。</p>
+  <p>もう 1 点、Agentmux は Mac 上で PATH を調べる際に <code>zsh -lc</code>（ログイン・非対話）を使います。これも <code>.zshrc</code> を飛ばして <code>.zshenv</code> と <code>.zprofile</code> だけを読みます。そのため Mac の zsh ユーザーにとって、PATH 設定をこの 2 つのどちらかに移すことは、手動 SSH と同様に Agentmux 自体がエージェントを見つけられるかどうかに直結します。</p>
 
   <h3>対処法</h3>
   <p><strong>対処法：</strong>もっとも手早いのは、PATH に頼らず <code>claude</code> の絶対パスを直接指定することです。普段 <code>claude</code> が動く Terminal ウィンドウで次を実行します。</p>
@@ -167,7 +169,7 @@ esac</code></pre>
 
   <h3>原因</h3>
   <ul>
-    <li>MagicDNS 名や <code>100.x</code> の Tailscale IP ではなく、<code>192.168.x.x</code> のようなローカルネットワーク IP に繋ごうとしている。ローカル IP は同じ Wi-Fi 内でしか通じず、モバイル回線に切り替わった瞬間に無効になります。</li>
+    <li><code>192.168.x.x</code> のようなローカルネットワーク IP に繋ごうとしている。ローカル IP は同じ Wi-Fi 内でしか通じず、モバイル回線に切り替わった瞬間に無効になるため、MagicDNS 名や <code>100.x</code> の Tailscale IP を使う必要があります。</li>
     <li>接続先の端末が直前にオフラインになったかスリープに入り、アプリ上の「オンライン」表示の更新がまだ追いついていない。</li>
     <li>Tailscale 自体は正常でも、接続先の SSH サービスが有効化または起動されていない。Tailscale は 2 台のネットワークを繋ぐだけで、SSH までオンにしてくれるわけではありません。</li>
     <li>もっともよくある原因はノードキーの期限切れです。接続先マシンで再認証が必要になっているのに、アプリ側では緑色の「接続済み」のまま残ることがあります。Tailscale の管理コンソールで再サインインが必要なマークが付いていないか確認してください。</li>
@@ -177,7 +179,7 @@ esac</code></pre>
   <p><strong>対処法：</strong>アプリ側の緑表示は古いキャッシュが残ることがあるため、まず接続先マシン側から確認します。スマートフォン版の Tailscale にはコマンドラインがないため、接続先の Mac または Linux マシンで <code>tailscale status</code> を実行します。</p>
   <pre><code>tailscale status</code></pre>
   <p>接続先マシン側でスマートフォンのノードがオンラインになっているか確認し、スマートフォン側の Tailscale アプリでも接続先マシンがグレーアウトしていたり「再サインインが必要」と出ていたりしないか確認します。</p>
-  <p>どちらも正常なら、ローカル IP ではなく <code>tailscale status</code> に出ている MagicDNS 名（例：<code>mac-mini.tail1234.ts.net</code>）または <code>100.x</code> IP を使って接続します。これで自宅 Wi-Fi でもモバイル回線でも同じアドレスが使えます。</p>
+  <p>どちらも正常なら、<code>tailscale status</code> に出ている MagicDNS 名（例：<code>mac-mini.tail1234.ts.net</code>）または <code>100.x</code> IP を使って接続します。これで自宅 Wi-Fi でもモバイル回線でも同じアドレスが使えます。</p>
   <p>そこまで確認して問題なければ、接続先マシンで SSH サービスが動いているか確かめます。Linux なら <code>sudo systemctl status ssh</code>、Mac なら下の「<a href="#mac-remote-login">リモートログインがオンなのに Mac が接続を拒否する</a>」を確認してください。</p>
 </section>
 
@@ -195,7 +197,8 @@ esac</code></pre>
 
   <h3>対処法</h3>
   <p><strong>対処法：</strong>「システム設定」→「一般」→「共有」を開きます（macOS Ventura 以降。それ以前は「システム環境設定」→「共有」）。「リモートログイン」のスイッチがオンであることを確認し、詳細を開いて許可されたユーザー一覧に自分のアカウントが入っているか確認するか、「すべてのユーザー」を選びます。</p>
-  <p>次に、ノート型なら「システム設定」→「バッテリー」、サーバーとして常時稼働させるデスクトップ型（Mac mini、Mac Studio、iMac など）なら「システム設定」→「省エネルギー」を開き、自動スリープまでの時間を延ばすか無効にします。「ネットワークアクセスによるスリープ解除」という項目があれば、これもオンにしてください。着信時にスリープから起きて SSH に応答できるようになります。</p>
+  <p>次に、ノート型なら「システム設定」→「バッテリー」、デスクトップ型（Mac mini、Mac Studio、iMac など）なら「システム設定」→「省エネルギー」を開き、自動スリープまでの時間を延ばすか無効にします。</p>
+  <p>「ネットワークアクセスによるスリープ解除」という項目があれば、これもオンにしてください。着信時にスリープから起きて SSH に応答できるようになります。</p>
 </section>
 
 <section id="sudo-needs-tty">
@@ -212,7 +215,7 @@ esac</code></pre>
   <h3>対処法</h3>
   <p><strong>対処法：</strong>非対話の経路では sudo が入力を受け取れないため、Agentmux 経由でパスワードを渡すか、対話型の端末で一度だけ自分でコマンドを実行します。まずは Agentmux の案内を確認してください。自動インストールが失敗した際、sudo パスワードの入力欄や passwordless sudo の提案が表示されることがあり、そこに入力して再試行するのが一番手軽です。</p>
   <p>その入力欄が使えない場合は、自分でマシンへ SSH ログインして通常の対話セッションを開き、<code>sudo apt install -y tmux</code> などのコマンドを手動で実行してパスワードを入力します。</p>
-  <p>これで解決するのは、認証キャッシュが Agentmux に引き継がれるからではありません（TTY 記録は別のままです）。手動でソフトウェアを入れ終えたことで、次の非対話実行時にはすでにインストール済みとなり、そもそも sudo を呼ぶ必要がなくなるからです。</p>
+  <p>手動で導入すれば、次の非対話実行時にはすでにインストール済みとなり、そもそも sudo を呼ぶ必要がなくなります（TTY の認証記録自体は別のまま引き継がれません）。</p>
   <p>特定のコマンドだけを非対話経路からパスワードなしで長期間実行させたい場合は、<code>sudo visudo</code> でそのコマンドだけに絞った <code>NOPASSWD</code> ルールを追加できます。</p>
   <pre><code>youraccount ALL=(ALL) NOPASSWD: /usr/bin/apt</code></pre>
   <p>ただしこの設定には見た目以上のリスクがあります。apt のようなパッケージマネージャーに <code>NOPASSWD</code> を許すのは、実質的にパスワードなしの root 権限を与えるのとほぼ同じです。任意のパッケージをインストールでき、<code>APT::Update::Pre-Invoke</code> などのフックを通じて root 権限で任意のコマンドを実行できるためです。</p>

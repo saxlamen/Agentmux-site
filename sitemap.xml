@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://agentmux.saxcave.cc/</loc><lastmod>2026-11-06</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/zh-TW/</loc><lastmod>2026-11-06</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/zh-Hans/</loc><lastmod>2026-11-06</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/ja/</loc><lastmod>2026-11-06</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/zh-TW/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/zh-Hans/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/ja/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/privacy.html</loc><lastmod>2026-11-06</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/</loc><lastmod>2026-11-04</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/zh-TW/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/</loc><lastmod>2026-11-10</lastmod></url>
@@ -19,32 +19,32 @@
   <url><loc>https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/zh-TW/permission-review/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/why-remote-vibe-coding/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/why-not-gui-ide/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-cli/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-ssh/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tailscale/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/setup/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/windows-server/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/claude-code-on-iphone/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/permission-review/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/</loc><lastmod>2026-11-04</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/why-remote-vibe-coding/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-cli/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-ssh/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-tmux/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/why-agentmux/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/setup/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/windows-server/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/claude-code-on-iphone/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/permission-review/</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://agentmux.saxcave.cc/guide/ja/troubleshooting/</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/why-remote-vibe-coding/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/why-not-gui-ide/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-cli/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-ssh/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tailscale/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/setup/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/windows-server/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/claude-code-on-iphone/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/permission-review/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/why-remote-vibe-coding/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-cli/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-ssh/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-tmux/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/why-agentmux/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/setup/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/windows-server/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/claude-code-on-iphone/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/permission-review/</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://agentmux.saxcave.cc/guide/ja/troubleshooting/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/en/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/</loc><lastmod>2026-11-10</lastmod></url>
   <url><loc>https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/</loc><lastmod>2026-11-10</lastmod></url>
