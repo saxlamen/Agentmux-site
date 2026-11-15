@@ -78,6 +78,7 @@
         <li><a href="#sec-8">日本語・中国語・韓国語を読む人が気づく修正</a></li>
         <li><a href="#sec-9">用途別の選び方</a></li>
         <li><a href="#sec-10">Termius の方が適しているケース</a></li>
+        <li><a href="#sec-11">iPad でのキーボード作業と iPhone での確認</a></li>
     </ol>
 </details>
             <p>汎用 SSH クライアントはコマンドを入力するために開く前提で作られていますが、Agentmux はすでに動いているエージェントへ戻るために開く前提で作られています。Mosh、SOCKS5 フォワーディング、プラットフォーム間のホスト設定同期が必要なら Termius や Blink を選んでください。複数のサーバーで動くコーディングエージェントを扱うなら、Agentmux が適しています。</p>
@@ -226,10 +227,15 @@
   <p>Agentmux は<strong>「動いているコーディングエージェントにスマートフォンから戻る」</strong>という 1 つのワークフローに特化して作られています。汎用的な運用管理ツールではありません。日々の作業が単発コマンドの連続であれば、乗り換える理由はありません。</p>
 </section>
 
+<section id="ipad-vs-iphone">
+  <h2 id="sec-11">iPad でのキーボード作業と iPhone での確認</h2>
+  <p>iPad と外付けキーボードを持ち歩き、不安定な Wi-Fi 下で長時間そのままリモートシェルを叩くなら Blink や Termius の Mosh が活きます。一方で iPhone から席を離れたあとに進捗を確認し、Claude Code や Codex の確認プロンプトに答えて差分を少し見る使い方なら、セッション一覧から即復帰できる設計の方が手間を減らせます。</p>
+</section>
+
 <p>Agentmux を使うと決めたら、次に整えるのは接続先のマシンです。<a href="/guide/ja/setup/">セットアップウィザード</a>で 3 つの質問に答えると手順チェックリストが生成されます。その後のつまずきやすい点は <a href="/guide/ja/troubleshooting/">トラブルシューティング</a> にまとめてあります。</p>
 
         </article>
-        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="前へ" href="/guide/ja/what-is-tailscale/">前へ<span>Tailscale：ネットにポートを開かない接続</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="次へ" href="/guide/ja/best-ssh-client-iphone-ipad/">次へ<span>iPhone・iPad向けSSHクライアントの選び方</span></a></nav>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="前へ" href="/guide/ja/what-is-tailscale/">前へ<span>Tailscale：ネットにポートを開かない接続</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="次へ" href="/guide/ja/setup/">次へ<span>15分で一晩中動くエージェント環境を整える</span></a></nav>
         <script>
             // If the reader picked a track on the guide index, keep only that
             // track's neighbours and restore the plain labels. Runs

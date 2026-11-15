@@ -11,7 +11,7 @@ agentmux.saxcave.cc
 ├─ /ja/               home ja
 ├─ /privacy.html      privacy policy
 └─ /guide/            language picker (redirects by preference)
-   └─ /guide/zh-TW/  14 articles
+   └─ /guide/zh-TW/  13 articles
       ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
@@ -19,14 +19,13 @@ agentmux.saxcave.cc
       ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ tmux-cheat-sheet/        [BC] 316 w / 476 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
-      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
-      ├─ best-ssh-client-iphone-ipad/ [BC] 569 w / 678 zh
+      ├─ why-agentmux/            [BC] 1308 w / 1937 zh
       ├─ setup/                   [BC] 414 w / 495 zh
       ├─ windows-server/          [BC] 1028 w / 1298 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
       ├─ permission-review/       [BC] 1258 w / 1810 zh
       └─ troubleshooting/         [-] 3309 w / 4728 zh
-   └─ /guide/zh-Hans/  14 articles
+   └─ /guide/zh-Hans/  13 articles
       ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
@@ -34,14 +33,13 @@ agentmux.saxcave.cc
       ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ tmux-cheat-sheet/        [BC] 316 w / 476 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
-      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
-      ├─ best-ssh-client-iphone-ipad/ [BC] 569 w / 678 zh
+      ├─ why-agentmux/            [BC] 1308 w / 1937 zh
       ├─ setup/                   [BC] 414 w / 495 zh
       ├─ windows-server/          [BC] 1028 w / 1298 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
       ├─ permission-review/       [BC] 1258 w / 1810 zh
       └─ troubleshooting/         [-] 3309 w / 4728 zh
-   └─ /guide/ja/  14 articles
+   └─ /guide/ja/  13 articles
       ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
@@ -49,14 +47,13 @@ agentmux.saxcave.cc
       ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ tmux-cheat-sheet/        [BC] 316 w / 476 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
-      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
-      ├─ best-ssh-client-iphone-ipad/ [BC] 569 w / 678 zh
+      ├─ why-agentmux/            [BC] 1308 w / 1937 zh
       ├─ setup/                   [BC] 414 w / 495 zh
       ├─ windows-server/          [BC] 1028 w / 1298 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
       ├─ permission-review/       [BC] 1258 w / 1810 zh
       └─ troubleshooting/         [-] 3309 w / 4728 zh
-   └─ /guide/en/  14 articles
+   └─ /guide/en/  13 articles
       ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
       ├─ why-not-gui-ide/         [B] 758 w / 981 zh
       ├─ what-is-cli/             [B] 1370 w / 2007 zh
@@ -64,8 +61,7 @@ agentmux.saxcave.cc
       ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
       ├─ tmux-cheat-sheet/        [BC] 316 w / 476 zh
       ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
-      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
-      ├─ best-ssh-client-iphone-ipad/ [BC] 569 w / 678 zh
+      ├─ why-agentmux/            [BC] 1308 w / 1937 zh
       ├─ setup/                   [BC] 414 w / 495 zh
       ├─ windows-server/          [BC] 1028 w / 1298 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
@@ -101,8 +97,7 @@ graph LR
   EN --> whatistmux["What is tmux<br>1153 w / 1695 zh"]:::art
   EN --> tmuxcheatsheet["tmux cheat sheet<br>316 w / 476 zh"]:::art
   EN --> whatistailscale["What is Tailscale<br>1266 w / 2129 zh"]:::art
-  EN --> whyagentmux["vs Termius / Blink<br>1238 w / 1848 zh"]:::art
-  EN --> bestsshclientiphoneipad["Best iOS SSH client<br>569 w / 678 zh"]:::art
+  EN --> whyagentmux["vs Termius / Blink<br>1308 w / 1937 zh"]:::art
   EN --> setup["Setup wizard<br>414 w / 495 zh"]:::art
   EN --> windowsserver["windows-server<br>1028 w / 1298 zh"]:::art
   EN --> claudecodeoniphone["Claude Code on iPhone<br>1405 w / 2222 zh"]:::art
@@ -115,16 +110,14 @@ graph LR
   whatistmux --> tmuxcheatsheet
   tmuxcheatsheet --> whatistailscale
   whatistailscale --> whyagentmux
-  whyagentmux --> bestsshclientiphoneipad
-  bestsshclientiphoneipad --> setup
+  whyagentmux --> setup
   setup --> windowsserver
   windowsserver --> permissionreview
   whyremotevibecoding --> whatistmux
   whatistmux --> tmuxcheatsheet
   tmuxcheatsheet --> whatistailscale
   whatistailscale --> whyagentmux
-  whyagentmux --> bestsshclientiphoneipad
-  bestsshclientiphoneipad --> setup
+  whyagentmux --> setup
   setup --> windowsserver
   windowsserver --> claudecodeoniphone
   claudecodeoniphone --> permissionreview

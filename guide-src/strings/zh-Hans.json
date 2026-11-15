@@ -89,11 +89,6 @@
       "title": "tmux 常用命令速查表",
       "description": "创建、列出、接回与脱离 tmux session，拆分 pane、复制滚动模式，以及适合 SSH 与手机的 ~/.tmux.conf。",
       "image": "/resource/ipad-raw-session-command-center.webp"
-    },
-    "best-ssh-client-iphone-ipad": {
-      "title": "iPhone 与 iPad SSH 客户端推荐与对比",
-      "description": "Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。",
-      "image": "/resource/ipad-raw-run-coding-agents-anywhere.webp"
     }
   }
 }

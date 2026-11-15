@@ -89,11 +89,6 @@
       "title": "tmux command cheat sheet for SSH",
       "description": "Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.",
       "image": "/resource/ipad-raw-session-command-center.webp"
-    },
-    "best-ssh-client-iphone-ipad": {
-      "title": "Best SSH client for iPhone and iPad",
-      "description": "Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.",
-      "image": "/resource/ipad-raw-run-coding-agents-anywhere.webp"
     }
   }
 }

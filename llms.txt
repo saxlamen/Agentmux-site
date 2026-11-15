@@ -29,7 +29,6 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [tmux command cheat sheet for SSH](https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/): Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.
 - [Tailscale: no port open to the internet](https://agentmux.saxcave.cc/guide/en/what-is-tailscale/): Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.
 - [Why not Termius or Blink](https://agentmux.saxcave.cc/guide/en/why-agentmux/): Agentmux vs Termius and Blink: five capability differences, and the cases where Termius is the better tool.
-- [Best SSH client for iPhone and iPad](https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/): Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.
 - [15 minutes to an agent that works all night](https://agentmux.saxcave.cc/guide/en/setup/): Answer three questions and get the steps for your machine, the agent you want to run, and where you connect from: SSH, tmux, Tailscale.
 - [Your Windows PC can be the server](https://agentmux.saxcave.cc/guide/en/windows-server/): Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.
 - [Run Claude Code on your iPhone or iPad](https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/): Claude Code runs on a machine you own, not on the phone. Remote Login, Tailscale, a named tmux session, and the PATH problem SSH causes.
@@ -46,7 +45,6 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [tmux 常用指令速查表](https://agentmux.saxcave.cc/guide/zh-TW/tmux-cheat-sheet/): 建立、列出、接回與脫離 tmux session，分割 pane、複製捲動模式，以及適合 SSH 與手機的 ~/.tmux.conf。
 - [不要對公網開 port](https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/): 不開 port 也能從手機連回去：WireGuard mesh、MagicDNS 名稱、100.x 位址，什麼時候不需要 Tailscale。
 - [為什麼不是 Termius / Blink](https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/): Agentmux 對 Termius、Blink：五個功能差異，以及什麼時候選 Termius 比較好。
-- [iPhone 與 iPad SSH App 推薦與比較](https://agentmux.saxcave.cc/guide/zh-TW/best-ssh-client-iphone-ipad/): Termius、Blink Shell 與 Agentmux 怎麼選：多主機同步、Mosh 弱網連線，以及接回 tmux 與 AI coding agent。
 - [15 分鐘，讓你的 agent 開始整晚工作](https://agentmux.saxcave.cc/guide/zh-TW/setup/): 回答三個問題，拿到照你的答案生成的步驟清單：機器、要跑的 agent、從哪裡連回來。
 - [你的 Windows 電腦也可以當主機](https://agentmux.saxcave.cc/guide/zh-TW/windows-server/): 原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。
 - [在 iPhone、iPad 上跑 Claude Code](https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/): Claude Code 跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
@@ -63,7 +61,6 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [tmux 常用命令速查表](https://agentmux.saxcave.cc/guide/zh-Hans/tmux-cheat-sheet/): 创建、列出、接回与脱离 tmux session，拆分 pane、复制滚动模式，以及适合 SSH 与手机的 ~/.tmux.conf。
 - [不要对公网开端口](https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tailscale/): 不开端口也能从手机连回去：WireGuard mesh、MagicDNS 名称、100.x 地址，什么时候不需要 Tailscale。
 - [为什么不是 Termius / Blink](https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/): Agentmux 对 Termius、Blink：五个功能差异，以及什么时候选 Termius 更好。
-- [iPhone 与 iPad SSH 客户端推荐与对比](https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/): Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。
 - [15 分钟，让你的 agent 开始整晚工作](https://agentmux.saxcave.cc/guide/zh-Hans/setup/): 回答三个问题，拿到按你的答案生成的步骤清单：机器、要跑的 agent、从哪里连回来。
 - [你的 Windows 电脑也可以当主机](https://agentmux.saxcave.cc/guide/zh-Hans/windows-server/): 原生 Windows 用 OpenSSH 连进去，session 由 psmux 撑住，还有几个跟 Linux 主机不一样的地方。不用 WSL2。
 - [在 iPhone、iPad 上跑 Claude Code](https://agentmux.saxcave.cc/guide/zh-Hans/claude-code-on-iphone/): Claude Code 跑在你自己的机器上，手机只负责终端。远程登录、Tailscale、tmux，还有 PATH 的坑。
@@ -80,7 +77,6 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [tmux よく使うコマンド早見表](https://agentmux.saxcave.cc/guide/ja/tmux-cheat-sheet/): セッションの作成・一覧・再接続・デタッチ、ペイン分割、コピーモード、SSH向けの最小 ~/.tmux.conf をまとめました。
 - [Tailscale：ネットにポートを開かない接続](https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/): Tailscaleは自分の端末間にWireGuardメッシュを構築します。ルーターのポート開放不要でMagicDNSや100.xへ接続できます。
 - [TermiusやBlinkではなくAgentmuxを使う理由](https://agentmux.saxcave.cc/guide/ja/why-agentmux/): AgentmuxとTermius・Blinkの違いを5つの機能で比較し、Termiusが向いているケースも正直に整理します。
-- [iPhone・iPad向けSSHクライアントの選び方](https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/): Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。
 - [15分で一晩中動くエージェント環境を整える](https://agentmux.saxcave.cc/guide/ja/setup/): 3つの質問に答えるだけで、使いたいマシン・エージェント・接続元に応じたSSH・tmux・Tailscaleの手順書を作成します。
 - [Windows PCもそのままサーバーになる](https://agentmux.saxcave.cc/guide/ja/windows-server/): WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。
 - [iPhoneやiPadからClaude Codeを使う](https://agentmux.saxcave.cc/guide/ja/claude-code-on-iphone/): Claude Codeはスマホではなく自分のマシンで動きます。リモートログイン、Tailscale、tmuxセッションとPATH問題の対処法。

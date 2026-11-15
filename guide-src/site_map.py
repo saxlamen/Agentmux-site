@@ -31,7 +31,6 @@ LABEL = {
     "tmux-cheat-sheet": "tmux cheat sheet",
     "what-is-tailscale": "What is Tailscale",
     "why-agentmux": "vs Termius / Blink",
-    "best-ssh-client-iphone-ipad": "Best iOS SSH client",
     "setup": "Setup wizard",
     "claude-code-on-iphone": "Claude Code on iPhone",
     "permission-review": "AI Permission Review",

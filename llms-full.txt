@@ -13,7 +13,7 @@ Source: https://agentmux.saxcave.cc/  |  App Store: https://apps.apple.com/app/i
 
 URL: https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 The cost of running agents remotely is standby: the agent waits on you. tmux and SSH move that wait to your phone.
 
@@ -86,7 +86,7 @@ Not sure where to start? Help me pick a track.
 
 URL: https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 On a desktop the IDE agent usually wins. On a phone a terminal wins: a byte stream can be stored and reattached.
 
@@ -135,7 +135,7 @@ Agentmux is not trying to replace your IDE. It replaces the part where you sit i
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-cli/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Why coding agents live in a terminal: full filesystem access and permission to execute. What a shell is, and when a GUI tool wins.
 
@@ -262,7 +262,7 @@ The terminal puts an agent on your machine, and its output is characters that ca
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-ssh/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 SSH is an encrypted channel to another computer: host, user and port, why keys beat passwords, and why no port faces the internet.
 
@@ -350,7 +350,7 @@ Then you put your phone away, the tunnel drops, and the agent dies with it. Unle
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tmux/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 tmux is a terminal multiplexer: the session lives on the server, so a dropped SSH detaches instead of killing the agent.
 
@@ -455,7 +455,7 @@ So the agent survives you putting the phone away. One problem left: getting in f
 
 URL: https://agentmux.saxcave.cc/guide/en/tmux-cheat-sheet/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Create, list, attach, and detach tmux sessions, split panes, scroll copy mode, and set a minimal ~/.tmux.conf for SSH.
 
@@ -531,7 +531,7 @@ Typing `Ctrl+b` chords on an iPhone or Android keyboard slows down quick check-i
 
 URL: https://agentmux.saxcave.cc/guide/en/what-is-tailscale/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.
 
@@ -628,7 +628,7 @@ The way in is settled. What is left is the phone in your hand, and what that pho
 
 URL: https://agentmux.saxcave.cc/guide/en/why-agentmux/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Agentmux vs Termius and Blink: five capability differences, and the cases where Termius is the better tool.
 
@@ -725,69 +725,17 @@ If one of these is your main job, buy the general tool.
 
 Agentmux is built for one workflow: **rejoining a running coding agent from your phone.** It is not a general-purpose operations tool. If your week is a stream of one-off commands, there is nothing here worth switching for.
 
+## iPad with a keyboard vs iPhone check-ins
+
+If you carry an iPad with a hardware keyboard and spend hours typing directly inside a remote shell over spotty Wi-Fi, Mosh in Blink or Termius matters more. If you mostly check in from an iPhone away from your desk—reattaching to Claude Code or Codex, answering a permission prompt, or inspecting a diff—session-first reattachment saves the most taps.
+
 Decided on Agentmux? The next problem is the machine at the other end: the setup wizard asks three questions and hands back a checklist, and most of what goes wrong afterwards is already in troubleshooting.
-
-## Best SSH client for iPhone and iPad
-
-URL: https://agentmux.saxcave.cc/guide/en/best-ssh-client-iphone-ipad/
-Language: en
-Updated: 2026-11-10
-
-Termius vs Blink Shell vs Agentmux on iOS and iPadOS: host sync, Mosh over weak links, and reattaching to tmux coding agents.
-
-The best SSH client for iPhone and iPad depends on what you open it to do. Choose Termius if you manage many servers across desktop and mobile, Blink Shell if you rely on Mosh over unstable networks, and Agentmux if you connect mainly to tmux sessions and CLI coding agents.
-
-Every app in this category speaks SSH and gives you a shell prompt. Where they diverge is what they treat as the primary unit—a host list, a local UNIX terminal, or a running agent session. A fuller capability matrix lives in Agentmux vs general SSH clients.
-
-## Three jobs, three different tools
-
-Before installing an app, match it to the workflow you repeat most often on your phone or iPad.
-
-| Primary job | Best fit | Why it wins there |
-| --- | --- | --- |
-| Managing shared host lists across desktop and mobile | Termius | Host configuration sync across iOS, Android, macOS, Windows, and Linux; full port forwarding |
-| Working on flaky cellular links with an iPad keyboard | Blink Shell | Mosh support and a local UNIX-style shell built around hardware keyboards |
-| Checking on Claude Code, Codex, or long tmux runs | Agentmux | Lists running tmux sessions on connect, tracks agent runs on the Lock Screen, and screens permission prompts |
-
-## Termius: built for host lists and cross-platform teams
-
-Termius is the standard choice when your main problem is organizing dozens of hosts and keeping snippets, keys, and port forwarding rules synced between a laptop and a phone. It supports local, remote, and dynamic SOCKS5 forwarding as well as Mosh.
-
-For running CLI coding agents, the friction is what happens after you connect: Termius drops you at a shell prompt, so finding the right session means typing `tmux ls` and `tmux attach -t` each time, and nothing surfaces agent progress once you lock your phone.
-
-## Blink Shell: built for Mosh and iPad keyboards
-
-Blink Shell shines on an iPad with a hardware keyboard when you travel on trains or weak Wi-Fi. Mosh keeps keystrokes responsive over high-latency links without waiting for every TCP round-trip.
-
-Like Termius, Blink treats the terminal as a general shell rather than an agent workspace: reattaching to specific tmux sessions, reviewing agent permission prompts, or watching long background runs on the Lock Screen are not part of its model.
-
-## Agentmux: built for tmux and CLI coding agents
-
-Agentmux assumes the code and agent already run on a Mac, Linux box, or Windows host you own. When you tap a server, it skips the empty prompt and lists your running tmux sessions so one tap puts you back on the exact screen you left.
-
-- **Away-from-keyboard feedback:** Dynamic Island and Lock Screen progress while a run continues, plus a sound when it finishes.
-
-- **AI Permission Review:** A blacklist blocks dangerous commands, an allowlist passes trusted ones, and AI judgement handles the rest—either suggesting the key or pressing it (Pro).
-
-- **Remote file edits:** Runestone code editor, Markdown preview, and branch tools over SSH without falling back to Vim on a touch keyboard (Pro).
-
-- **Clear trade-offs:** Mobile only (iOS, iPadOS, Android), local port forwarding only, and standard SSH plus tmux rather than Mosh.
-
-It starts with a 14-day full-feature trial followed by a free single-server tier.
-
-## How to choose for iPad vs iPhone
-
-If you carry an iPad with a keyboard and spend hours writing code directly in a remote shell over spotty Wi-Fi, Mosh in Blink or Termius matters more. If you mostly check in from an iPhone while away from your desk—reattaching to Claude Code or Codex, answering a permission prompt, or inspecting a diff—session-first reattachment saves the most friction.
-
-## Where to start
-
-If you want to connect your own Mac, Linux, or Windows machine over Tailscale and tmux, follow the 3-question setup wizard. If you want a side-by-side breakdown of SSH, keys, and tmux behavior, read why Agentmux works differently from general SSH apps.
 
 ## 15 minutes to an agent that works all night
 
 URL: https://agentmux.saxcave.cc/guide/en/setup/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Answer three questions and get the steps for your machine, the agent you want to run, and where you connect from: SSH, tmux, Tailscale.
 
@@ -813,7 +761,7 @@ The Windows discussed here is always *the machine you connect to*. If your Windo
 
 URL: https://agentmux.saxcave.cc/guide/en/windows-server/
 Language: en
-Updated: 2026-11-11
+Updated: 2026-11-15
 
 Native Windows over OpenSSH, sessions kept alive by psmux, and what is still different from a Linux box. No WSL2 needed.
 
@@ -888,7 +836,7 @@ The door is open and the sessions survive. What is left is the address you type 
 
 URL: https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Claude Code runs on a machine you own, not on the phone. Remote Login, Tailscale, a named tmux session, and the PATH problem SSH causes.
 
@@ -1005,7 +953,7 @@ Three things have to hold: a machine that stays awake, a session with a name, an
 
 URL: https://agentmux.saxcave.cc/guide/en/permission-review/
 Language: en
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Who answers when an agent asks to run a command: a local blacklist blocks it, an allowlist clears it, or AI judgement decides.
 
@@ -1143,7 +1091,7 @@ Only two things leave it: the redacted text on screen and your Main Intent. They
 
 URL: https://agentmux.saxcave.cc/guide/en/troubleshooting/
 Language: en
-Updated: 2026-11-11
+Updated: 2026-11-15
 
 SSH refused, key rejected, tmux missing, claude not found: eight failures, each with a cause and a command to type.
 
@@ -1478,7 +1426,7 @@ Configure it only if you understand that cost and accept it deliberately. Otherw
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 遠端跑 agent 的成本是待命：機器不關機、tmux、SSH 加 Tailscale，待命變成一支手機加十五秒。
 
@@ -1553,7 +1501,7 @@ CLI agent 真正的成本是待命，不是打字：你講三十秒，接下來�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。
 
@@ -1604,7 +1552,7 @@ Agentmux 不是要取代你的 IDE，它取代的是**坐在椅子上等**。然
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 因為終端機給的是完整檔案存取和執行權限，別的介面做不到。終端機是什麼，什麼時候該用 GUI。
 
@@ -1731,7 +1679,7 @@ curl -sf localhost:8000/health | jq .db
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。
 
@@ -1819,7 +1767,7 @@ SSH 不做下面三件事：
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 tmux 是什麼，為什麼 SSH 斷線時你的 AI coding agent 不會死：session 留在伺服器上，手機只是接上去看。
 
@@ -1924,7 +1872,7 @@ agent 現在能在你收起手機之後活下來。剩下一個問題：怎麼�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/tmux-cheat-sheet/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 建立、列出、接回與脫離 tmux session，分割 pane、複製捲動模式，以及適合 SSH 與手機的 ~/.tmux.conf。
 
@@ -2000,7 +1948,7 @@ set -g focus-events on
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 不開 port 也能從手機連回去：WireGuard mesh、MagicDNS 名稱、100.x 位址，什麼時候不需要 Tailscale。
 
@@ -2097,7 +2045,7 @@ mesh 的安全現在就是帳號的安全。任何能登入的裝置都在網路
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Agentmux 對 Termius、Blink：五個功能差異，以及什麼時候選 Termius 比較好。
 
@@ -2194,69 +2142,17 @@ agent 常常一跑就是幾十分鐘，這個功能就是為那段等待做的�
 
 Agentmux 為一個工作流設計：**在手機上接回正在跑的 coding agent。**它不是通用的維運工具。如果你一週的工作就是一條一條零散的指令，這些差別對你沒有價值。
 
+## iPad 外接鍵盤 vs iPhone 零碎時間
+
+如果你常帶著 iPad 與實體鍵盤、在高鐵或弱 Wi-Fi 下長時間直接在遠端 shell 寫程式，Blink 或 Termius 的 Mosh 會比較重要；如果你多半是用 iPhone 離開桌面後查看進度、回覆 Claude Code 或 Codex 的確認提示、順手看幾行 diff，以 session 為中心、點一下就接回的設計最省步驟。
+
 決定用 Agentmux？下一個問題是連線另一頭那台機器。設定精靈問三個問題，然後給你一張檢查清單；之後常見的毛病，疑難排解已經都寫在那裡了。
-
-## iPhone 與 iPad SSH App 推薦與比較
-
-URL: https://agentmux.saxcave.cc/guide/zh-TW/best-ssh-client-iphone-ipad/
-Language: zh-TW
-Updated: 2026-11-10
-
-Termius、Blink Shell 與 Agentmux 怎麼選：多主機同步、Mosh 弱網連線，以及接回 tmux 與 AI coding agent。
-
-iPhone 與 iPad 最適合哪一款 SSH App，取決於你打開它主要做什麼：跨電腦與手機管理大量主機清單選 Termius；在訊號不穩的環境搭配 iPad 實體鍵盤用 Mosh 選 Blink Shell；若主要用來接回 tmux session 與 Claude Code、Codex 等 CLI agent，選 Agentmux。
-
-這幾款 App 底層都能走 SSH，差別在於設計核心是「主機列表」、「本地 UNIX 終端機」，還是「正在跑的 agent session」。完整的能力對照表可看 Agentmux 與一般 SSH App 的差異。
-
-## 三種用途，各自對應的工具
-
-先看你每天在手機或 iPad 上最常重複哪一種工作，再選對應的工具。
-
-| 主要用途 | 適合工具 | 關鍵原因 |
-| --- | --- | --- |
-| 跨桌機與手機管理共用主機清單 | Termius | 支援 iOS、Android、macOS、Windows、Linux 主機設定同步與完整 port forwarding |
-| 在訊號不穩的行動網路搭配 iPad 鍵盤工作 | Blink Shell | 支援 Mosh 與接近本地 UNIX 的終端環境，針對外接鍵盤優化 |
-| 隨時接回 Claude Code、Codex 或長時間 tmux 任務 | Agentmux | 連線直接列出 tmux session、鎖定螢幕顯示進度，並內建 AI 自動權限審查 |
-
-## Termius：適合管理主機清單與跨平台同步
-
-如果你的痛點是管幾十台主機、把金鑰與 snippet 同步到各個裝置，或需要 local、remote 與動態 SOCKS5 port forwarding 與 Mosh，Termius 是最成熟的一般型工具。
-
-但拿來盯 CLI coding agent 時，每次斷線重連都只會回到空白 shell，得自己重打 `tmux ls` 和 `tmux attach -t`；鎖定手機螢幕後也不會顯示 agent 是否跑完。
-
-## Blink Shell：適合 Mosh 與 iPad 鍵盤操作
-
-如果你常帶著 iPad 與實體鍵盤在移動中寫程式，Blink Shell 的 Mosh 連線能在高延遲或不穩定的 Wi-Fi 下保持輸入流暢。
-
-不過它同樣是把終端當成通用 shell 來設計，並未針對 tmux session 切換、agent 權限確認提示或鎖定螢幕進度追蹤做專門流程。
-
-## Agentmux：專為 tmux 與 CLI coding agent 設計
-
-Agentmux 假設程式碼與 agent 已經跑在你自己的 Mac、Linux 或 Windows 主機上。點進伺服器時不會先給你空白提示字元，而是直接列出正在跑的 tmux session，點一下就回到離開時的畫面。
-
-- **離開螢幕也能追蹤：**任務執行期間在動態島與鎖定螢幕顯示進度，跑完時發出提示音。
-
-- **AI 自動權限審查：**黑名單擋掉危險指令、白名單放行信任指令，其餘交給 AI 判斷並可選擇僅建議按鍵或自動按下（Pro）。
-
-- **手機改檔不必硬敲 Vim：**內建 Runestone 程式碼編輯器、Markdown 預覽與分支工具（Pro）。
-
-- **清楚的取捨：**僅提供手機／平板 App（iOS、iPadOS、Android），只支援 local port forwarding，且採用標準 SSH + tmux 而非 Mosh。
-
-提供 14 天全功能試用，之後可繼續使用免費的單一伺服器方案。
-
-## iPad 與 iPhone 該怎麼挑
-
-如果你常在 iPad 上接實體鍵盤、在高鐵或弱 Wi-Fi 下直接操作遠端 shell，Mosh（Blink 或 Termius）會比較重要；如果你多半是用 iPhone 零碎時間查看進度、回覆 Claude Code 或 Codex 的確認提示、順手看幾行 diff，以 session 為中心、一鍵接回的設計會省下最多操作步驟。
-
-## 下一步從哪裡開始
-
-想用 Tailscale 與 tmux 把自己的 Mac、Linux 或 Windows 電腦連起來，可以直接跑一遍 3 題的 設定精靈；如果想看更細的功能與架構對比，可參考 Agentmux 設計比較。
 
 ## 15 分鐘，讓你的 agent 開始整晚工作
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/setup/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 回答三個問題，拿到照你的答案生成的步驟清單：機器、要跑的 agent、從哪裡連回來。
 
@@ -2282,7 +2178,7 @@ Updated: 2026-11-10
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/windows-server/
 Language: zh-TW
-Updated: 2026-11-11
+Updated: 2026-11-15
 
 原生 Windows 用 OpenSSH 連進去，session 由 psmux 撐住，還有幾個跟 Linux 主機不一樣的地方。不用 WSL2。
 
@@ -2357,7 +2253,7 @@ app 會幫你裝。它先試 `winget install -e --id marlocarlo.psmux`，沒有�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Claude Code 跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。
 
@@ -2474,7 +2370,7 @@ which claude
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/permission-review/
 Language: zh-TW
-Updated: 2026-11-10
+Updated: 2026-11-15
 
 Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。
 
@@ -2612,7 +2508,7 @@ AI 的結論只有三種：允許、拒絕、不確定。只有「允許」會�
 
 URL: https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/
 Language: zh-TW
-Updated: 2026-11-11
+Updated: 2026-11-15
 
 連不上、金鑰被拒、找不到 tmux、agent 指令不存在：八個卡點，各有原因和解法。
 
@@ -3665,63 +3561,11 @@ agent 常常一跑就是几十分钟，这个功能就是为那段等待做的�
 
 Agentmux 为一个工作流设计：**在手机上接回正在运行的 coding agent。**它不是通用的运维工具。如果你一周的工作就是一条一条零散的命令，这些差别对你没有价值。
 
+## iPad 外接键盘 vs iPhone 碎片时间
+
+如果你常带着 iPad 和实体键盘、在高铁或弱 Wi-Fi 下长时间直接在远程 shell 写代码，Blink 或 Termius 的 Mosh 会更重要；如果你多半是用 iPhone 在离开桌面后查看进度、回复 Claude Code 或 Codex 的确认提示、顺手看几行 diff，以 session 为中心、点一下就接回的设计最省步骤。
+
 决定用 Agentmux？下一个问题是连接另一头那台机器。配置向导问三个问题，然后给你一张检查清单；之后常见的毛病，故障排查已经都写在那里了。
-
-## iPhone 与 iPad SSH 客户端推荐与对比
-
-URL: https://agentmux.saxcave.cc/guide/zh-Hans/best-ssh-client-iphone-ipad/
-Language: zh-Hans
-Updated: 2026-11-15
-
-Termius、Blink Shell 与 Agentmux 怎么选：多主机同步、Mosh 弱网连接，以及接回 tmux 与 AI coding agent。
-
-iPhone 与 iPad 最适合哪一款 SSH 客户端，取决于你打开它主要做什么：跨电脑与手机管理大量主机列表选 Termius；在网络不稳的环境搭配 iPad 实体键盘用 Mosh 选 Blink Shell；如果主要用于接回 tmux session 与 Claude Code、Codex 等 CLI agent，选 Agentmux。
-
-这几款应用底层都走 SSH，区别在于设计核心是“主机列表”、“本地 UNIX 终端”，还是“正在运行的 agent session”。完整的能力对照表可看 Agentmux 与通用 SSH 客户端的区别。
-
-## 三种用途，各自对应的工具
-
-先看你每天在手机或 iPad 上最常重复哪一类工作，再选对应的工具。
-
-| 主要用途 | 适合工具 | 关键原因 |
-| --- | --- | --- |
-| 跨桌面与手机管理共享主机列表 | Termius | 支持 iOS、Android、macOS、Windows、Linux 主机配置同步与完整端口转发 |
-| 在信号不稳的移动网络搭配 iPad 键盘工作 | Blink Shell | 支持 Mosh 与接近本地 UNIX 的终端环境，针对外接键盘优化 |
-| 随时接回 Claude Code、Codex 或长时 tmux 任务 | Agentmux | 连接后直接列出 tmux session、锁屏显示进度，并内置 AI 自动权限审查 |
-
-## Termius：适合管理主机列表与跨平台同步
-
-如果你的痛点是管理几十台主机、把密钥与代码片段同步到各台设备，或者需要 local、remote 与动态 SOCKS5 端口转发以及 Mosh，Termius 是最成熟的通用型工具。
-
-但用来盯 CLI coding agent 时，每次断线重连都只会回到空白 shell，需要手动再输入 `tmux ls` 和 `tmux attach -t`；锁屏之后也不会提示 agent 是否已经跑完。
-
-## Blink Shell：适合 Mosh 与 iPad 键盘操作
-
-如果你经常带着 iPad 和实体键盘在移动途中写代码，Blink Shell 的 Mosh 连接能在高延迟或波动的 Wi-Fi 下保持输入跟手。
-
-不过它同样是按通用 shell 思路设计的，并没有针对 tmux session 切换、agent 权限确认提示或锁屏进度追踪做专门流程。
-
-## Agentmux：专为 tmux 与 CLI coding agent 设计
-
-Agentmux 假设代码与 agent 已经运行在你自己的 Mac、Linux 或 Windows 主机上。点进服务器时不会先给你空白提示符，而是直接列出运行中的 tmux session，点一下就回到离开时的画面。
-
-- **离开屏幕也能追踪：**任务执行期间在灵动岛与锁屏显示进度，跑完时发出提示音。
-
-- **AI 自动权限审查：**黑名单拦截危险命令、白名单放行信任命令，其余交给 AI 判断，并可选择仅建议按键或自动按下（Pro）。
-
-- **手机改文件不必硬敲 Vim：**内置 Runestone 代码编辑器、Markdown 预览与分支工具（Pro）。
-
-- **明确的取舍：**仅提供手机与平板端（iOS、iPadOS、Android），只支持 local 端口转发，采用标准 SSH + tmux 而非 Mosh。
-
-提供 14 天全功能试用，之后可继续使用免费的单服务器方案。
-
-## iPad 与 iPhone 该怎么选
-
-如果你常在 iPad 上接实体键盘、在高铁或弱 Wi-Fi 下直接操作远程 shell，Mosh（Blink 或 Termius）会更重要；如果你多半是用 iPhone 利用碎片时间查看进度、回复 Claude Code 或 Codex 的确认提示、顺手看几行 diff，以 session 为中心、一键接回的设计能省下最多步骤。
-
-## 下一步从哪里开始
-
-想用 Tailscale 与 tmux 把自己的 Mac、Linux 或 Windows 电脑连起来，可以直接走一遍 3 道题的 配置向导；如果想看更细的功能与架构对比，可参考 Agentmux 设计对比。
 
 ## 15 分钟，让你的 agent 开始整晚工作
 
@@ -5178,63 +5022,11 @@ Agentmux はあくまでクライアントであり、コードもエージェ�
 
 Agentmux は**「動いているコーディングエージェントにスマートフォンから戻る」**という 1 つのワークフローに特化して作られています。汎用的な運用管理ツールではありません。日々の作業が単発コマンドの連続であれば、乗り換える理由はありません。
 
+## iPad でのキーボード作業と iPhone での確認
+
+iPad と外付けキーボードを持ち歩き、不安定な Wi-Fi 下で長時間そのままリモートシェルを叩くなら Blink や Termius の Mosh が活きます。一方で iPhone から席を離れたあとに進捗を確認し、Claude Code や Codex の確認プロンプトに答えて差分を少し見る使い方なら、セッション一覧から即復帰できる設計の方が手間を減らせます。
+
 Agentmux を使うと決めたら、次に整えるのは接続先のマシンです。セットアップウィザードで 3 つの質問に答えると手順チェックリストが生成されます。その後のつまずきやすい点は トラブルシューティング にまとめてあります。
-
-## iPhone・iPad向けSSHクライアントの選び方
-
-URL: https://agentmux.saxcave.cc/guide/ja/best-ssh-client-iphone-ipad/
-Language: ja
-Updated: 2026-11-15
-
-Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。
-
-iPhone と iPad に最適な SSH クライアントは、開いたあとに何をするかで決まります。PC・スマホ間で多数のホストを同期管理するなら Termius、不安定な回線で Mosh を使うなら Blink Shell、tmux セッションや Claude Code・Codex などの CLI エージェントへ戻る用途が中心なら Agentmux が向いています。
-
-どのアプリも SSH 接続とシェル操作はできますが、「ホスト一覧」「ローカル UNIX シェル」「稼働中のエージェントセッション」のどれを主軸にするかが異なります。詳細な機能比較は Agentmux と汎用 SSH クライアントの違い にまとめています。
-
-## 3つの用途と対応するツール
-
-まずはスマホや iPad で一番よく繰り返す作業に合わせて選びます。
-
-| 主な用途 | 向いているアプリ | 選ばれる理由 |
-| --- | --- | --- |
-| PC とスマホ間でホスト設定を共有管理 | Termius | iOS・Android・macOS・Windows・Linux 間でのホスト同期とフル機能のポートフォワーディング |
-| 不安定なモバイル回線で iPad キーボード作業 | Blink Shell | Mosh 対応とハードウェアキーボード前提のローカル UNIX 風シェル |
-| Claude Code や Codex、長時間の tmux 作業を確認 | Agentmux | 接続時に tmux セッションを一覧表示し、ロック画面での進捗表示と AI 権限レビューを備える |
-
-## Termius：ホスト管理とクロスプラットフォーム同期向け
-
-何十台ものサーバーを整理し、鍵やスニペットを PC とスマホで同期したい場合、またローカル・リモート・動的 SOCKS5 ポートフォワーディングや Mosh が必要な場合は Termius が定番です。
-
-一方で CLI コーディングエージェントの監視に使うと、再接続のたびに空のプロンプトへ戻るため毎回 `tmux ls` と `tmux attach -t` を打つ必要があり、画面を閉じたあとの進捗通知もありません。
-
-## Blink Shell：Mosh と iPad ハードウェアキーボード向け
-
-iPad に外付けキーボードを付けて移動中や不安定な Wi-Fi 下で作業するなら、Mosh により高遅延環境でも入力の引っかかりを抑えられる Blink Shell が強みを発揮します。
-
-ただし汎用シェルとして作られているため、tmux セッションの一覧選択、エージェントの権限確認プロンプト、ロック画面での完了通知といった流れは対象外です。
-
-## Agentmux：tmux と CLI コーディングエージェント専用設計
-
-Agentmux は、コードとエージェントがすでに自分の Mac・Linux・Windows マシン上で動いている前提で作られています。サーバーを選ぶと空のプロンプトではなく稼働中の tmux セッションが並び、1タップで直前の画面へ戻れます。
-
-- **画面を閉じても進捗を追跡：**実行中は Dynamic Island とロック画面に進捗を出し、完了時に通知音で知らせます。
-
-- **AI 権限レビュー：**ブラックリストで危険なコマンドを止め、許可リストで信頼済みコマンドを通し、残りを AI が判定してキー提案または自動押下を行います（Pro）。
-
-- **スマホでのファイル編集：**タッチキーボードで Vim を操作する代わりに、Runestone コードエディタ、Markdown プレビュー、ブランチ操作が使えます（Pro）。
-
-- **明確なトレードオフ：**モバイル専用（iOS・iPadOS・Android）、ポートフォワーディングはローカルのみ、Mosh ではなく標準 SSH + tmux 構成です。
-
-14日間の全機能トライアルのあと、無料のシングルサーバープランをそのまま使い続けられます。
-
-## iPad と iPhone での選び分け
-
-iPad とキーボードを持ち歩いて弱電波下で直接シェル作業を続けるなら Mosh（Blink や Termius）が効きます。一方、iPhone で移動の合間に Claude Code や Codex の状況を確認し、確認プロンプトに答えて差分を少し見る使い方なら、セッション中心で即復帰できる設計の方が操作の手間を減らせます。
-
-## どこから始めるか
-
-自宅や職場の Mac・Linux・Windows に Tailscale と tmux で接続したい場合は、3問で手順が出る セットアップウィザード から始められます。仕様の細かい比較は Agentmux 設計比較 をご覧ください。
 
 ## 15分で一晩中動くエージェント環境を整える
 

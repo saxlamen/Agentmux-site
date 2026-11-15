@@ -89,11 +89,6 @@
       "title": "tmux よく使うコマンド早見表",
       "description": "セッションの作成・一覧・再接続・デタッチ、ペイン分割、コピーモード、SSH向けの最小 ~/.tmux.conf をまとめました。",
       "image": "/resource/ipad-raw-session-command-center.webp"
-    },
-    "best-ssh-client-iphone-ipad": {
-      "title": "iPhone・iPad向けSSHクライアントの選び方",
-      "description": "Termius・Blink Shell・Agentmux の違いを整理。ホスト同期、Mosh、tmux や CLI エージェントの再開で選び分けます。",
-      "image": "/resource/ipad-raw-run-coding-agents-anywhere.webp"
     }
   }
 }
