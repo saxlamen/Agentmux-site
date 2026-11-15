@@ -68,7 +68,8 @@
       "what-is-tailscale",
       "why-agentmux",
       "setup",
-      "windows-server"
+      "windows-server",
+      "permission-review"
     ],
     "cliuser": [
       "why-remote-vibe-coding",
@@ -77,7 +78,8 @@
       "why-agentmux",
       "setup",
       "windows-server",
-      "claude-code-on-iphone"
+      "claude-code-on-iphone",
+      "permission-review"
     ]
   },
   "trackExtended": {

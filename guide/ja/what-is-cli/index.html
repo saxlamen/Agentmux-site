@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-cli/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-cli/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-cli/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/what-is-cli/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">最強のコーディングエージェントがCLIに棲む理由</span></nav>
         <article class="guide-article">
             <h1>最強のコーディングエージェントがCLIに棲む理由</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">ボタンを取り払ったターミナルとは何か</a></li>
+        <li><a href="#sec-2">ターミナル画面から読み取る 3 つの要素</a></li>
+        <li><a href="#sec-3">インターフェースがエージェントの到達範囲を決める</a></li>
+        <li><a href="#sec-4">サンドボックスのエージェントには打てないコマンド</a></li>
+        <li><a href="#sec-5">あなたが何も押さずに閉じるループ</a></li>
+        <li><a href="#sec-6">ウィンドウよりバイトストリームのほうが価値がある理由</a></li>
+        <li><a href="#sec-7">フルアクセスの代償は何か</a></li>
+        <li><a href="#sec-8">GUI のほうが適している場面</a></li>
+    </ol>
+</details>
             <p>CLI エージェントとは、テキストでやり取りするコーディングエージェントのことです。Mac や Linux マシン、サーバーなど、あなたが所有するマシンのターミナル上で動きます。そこではあなた自身の権限を引き継ぎ、プロジェクト内の全ファイルを読み、任意のコマンドを実行し、その結果を読み取ります。エージェントがターミナルに棲むのは、この 3 つをすべて許すインターフェースが他にないからです。</p>
 <p>「CLI」と聞くと、マウスもボタンもなくカーソルが点滅するだけの苦行のように思えるかもしれません。それでも Claude Code、Codex、Gemini CLI、OpenCode はすべてターミナルで動きます。開発者たちが懐古主義だからではありません。ターミナルだけが、ファイルへのフルアクセスとコマンド実行権限の 2 つを同時に与えてくれるからです。そして実行前にあなたへ確認を求めるのも、まさにその権限を持っているからです。</p>
 
 <section id="terminal">
-  <h2>ボタンを取り払ったターミナルとは何か</h2>
+  <h2 id="sec-1">ボタンを取り払ったターミナルとは何か</h2>
 
   <p>ここでは 2 つのプログラムが重なって動いており、初心者はよく取り違えます。<strong>ターミナル</strong>は表示層であり、文字のグリッドを描画してキー入力を先へ渡します。その背後にあるのが<strong>シェル</strong>（zsh、bash、fish など）で、1 行のテキストを受け取って実行し、プログラムが書き出した結果を表示します。</p>
   <p>この薄さこそが、エージェントが実際のプロジェクトを最初から最後まで動かせる理由です。エージェントが打つコマンドはあなたが打つコマンドそのものであり、エージェントが読むエラーもあなたが目にするエラーそのものです。</p>
@@ -74,7 +96,7 @@
 </aside>
 
 <section id="read-the-screen">
-  <h2>ターミナル画面から読み取る 3 つの要素</h2>
+  <h2 id="sec-2">ターミナル画面から読み取る 3 つの要素</h2>
 
   <p>画面の中で意味を持つのは次の 3 か所だけで、残りは飾りです。</p>
 
@@ -95,7 +117,7 @@ $ echo $?
 </section>
 
 <section id="capability-boundary">
-  <h2>インターフェースがエージェントの到達範囲を決める</h2>
+  <h2 id="sec-3">インターフェースがエージェントの到達範囲を決める</h2>
 
   <p>ブラウザ上のエージェントは、あなたのパソコン内のファイルを 1 つも見られません。タブの中に閉じているためです。IDE プラグインは開いているファイルを見られますが、多くの場合は提案止まりで、git に触れたり、テストを走らせたり、パッケージを入れたりすることはできません。</p>
   <p>CLI エージェントは、あなたが持つ権限をそのまま持ちます。リポジトリ全体を読み、<code>git commit</code> を実行し、テストスイートを走らせ、依存関係をインストールします。アクセス権限は 3 段階に分かれており、段階が上がるごとにリスクも増します。</p>
@@ -108,7 +130,7 @@ $ echo $?
 </section>
 
 <section id="commands-an-agent-runs">
-  <h2>サンドボックスのエージェントには打てないコマンド</h2>
+  <h2 id="sec-4">サンドボックスのエージェントには打てないコマンド</h2>
 
   <p>「実行権限」という言葉は抽象的です。画面上の行として並べるとこうなります。</p>
 
@@ -129,7 +151,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="concrete-example">
-  <h2>あなたが何も押さずに閉じるループ</h2>
+  <h2 id="sec-5">あなたが何も押さずに閉じるループ</h2>
 
   <p>あなたが「このバグを直して」と 1 行送ると、先ほどのようなコマンドが十数個、キーボードに触れないまま連続で実行されます。</p>
   <ol>
@@ -142,7 +164,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="byte-stream-movable">
-  <h2>ウィンドウよりバイトストリームのほうが価値がある理由</h2>
+  <h2 id="sec-6">ウィンドウよりバイトストリームのほうが価値がある理由</h2>
 
   <p>プログラムはターミナルウィンドウと一体化しているわけではありません。<strong>擬似端末（pseudo-terminal）</strong>という、両端を持つカーネルオブジェクトに繋がっています。片側からバイト列が入り、もう片側から出ていくだけで、ウィンドウとは今たまたま遠いほうの端を持っている存在にすぎません。この仕組みから 3 つの性質が生まれます。</p>
   <ul>
@@ -154,7 +176,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="what-full-access-costs">
-  <h2>フルアクセスの代償は何か</h2>
+  <h2 id="sec-7">フルアクセスの代償は何か</h2>
 
   <p>データベースをマイグレーションできる権限は、データベースを削除できる権限と同じです。だからこそエージェントは作業の途中で止まり、「このコマンドを実行しますか？」と尋ねます。確認を挟むのは安全のためです。</p>
   <p>何も聞かずにすべてを実行するエージェントは、あなたの <code>.ssh</code> ディレクトリや本番データベースの扱いを推測だけで決めていることになります。確認プロンプトは第 2 段階（書き込み）と第 3 段階（実行）の境界線を引く場所であり、コマンドが確定していてまだ実行されていないその瞬間にしか引けません。</p>
@@ -164,7 +186,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="when-a-gui-is-better">
-  <h2>GUI のほうが適している場面</h2>
+  <h2 id="sec-8">GUI のほうが適している場面</h2>
 
   <p>コードに対して行うすべての作業にターミナルが向いているわけではありません。次の作業はテキストでは明確に劣ります。</p>
   <ul>
@@ -219,7 +241,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

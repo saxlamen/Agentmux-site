@@ -49,19 +49,41 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-tmux/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-tmux/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-tmux/" hreflang="ja">日本語</a>
+        <a href="/guide/en/what-is-tmux/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">Keep the agent running after you put your phone away</span></nav>
         <article class="guide-article">
             <h1>Keep the agent running after you put your phone away</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">tmux lets the session live somewhere else</a></li>
+        <li><a href="#sec-2">What is a session, a window, a pane?</a></li>
+        <li><a href="#sec-3">Is detaching like turning off a television?</a></li>
+        <li><a href="#sec-4">Which commands do I type?</a></li>
+        <li><a href="#sec-5">A dropped connection does not interrupt the agent</a></li>
+        <li><a href="#sec-6">Can two devices watch the same session?</a></li>
+        <li><a href="#sec-7">How the app handles these sessions</a></li>
+        <li><a href="#sec-8">What tmux does not do</a></li>
+    </ol>
+</details>
             <p>tmux is a terminal multiplexer: it keeps a terminal session running on the machine you connect to, rather than inside the connection you came through. For an AI coding agent, that is the difference between surviving and dying. SSH connections drop when a phone locks or a signal goes, and a dropped SSH normally kills the agent's shell.</p>
 <p>You put your phone away, the SSH tunnel drops, and the agent dies with it. That is mechanics, not bad luck.</p>
 <p>When the connection goes, the kernel closes the pseudo-terminal your login was using. It sends <strong>SIGHUP</strong> (hangup) to every process attached to it: your shell, and the agent inside it. A process that does not catch that signal on purpose terminates by default, and the kernel throws away whatever was half-finished. <a href="/guide/en/what-is-ssh/">SSH</a> was only the path the connection came along. It was never what kept the agent alive.</p>
 
 <section id="session-elsewhere">
-  <h2>tmux lets the session live somewhere else</h2>
+  <h2 id="sec-1">tmux lets the session live somewhere else</h2>
   <p>tmux opens a session on the server, and your agent runs inside that session rather than inside the SSH connection that keeps dropping.</p>
   <p>The mechanism is a process. The first time you type <code>tmux</code>, it starts a background program called the tmux <em>server</em>, which stays alive under your user account. Sessions belong to that process, and each one gets its pseudo-terminal from it instead of from <code>sshd</code>.</p>
   <p>When the connection goes, <code>sshd</code> closes its own pseudo-terminal, and only your tmux client is attached to it. The client exits. The session keeps running.</p>
@@ -75,7 +97,7 @@
 </aside>
 
 <section id="session-window-pane">
-  <h2>What is a session, a window, a pane?</h2>
+  <h2 id="sec-2">What is a session, a window, a pane?</h2>
   <p>People use three nouns for three different things, and only the first one keeps your agent alive.</p>
 
   <div class="table-wrap"><table>
@@ -106,14 +128,14 @@
 </section>
 
 <section id="detach-attach">
-  <h2>Is detaching like turning off a television?</h2>
+  <h2 id="sec-3">Is detaching like turning off a television?</h2>
   <p>Switch a TV off and the picture in your living room is gone. The broadcast never stopped. Turn it back on and you are on the same channel, wherever it has got to by now.</p>
   <p>tmux calls those two actions <strong>detach</strong> and <strong>attach</strong>: close the window, open it again. Neither one touches what is running on the machine.</p>
   <p>The analogy hides one thing, and it works in your favour. A television learns nothing while it sits switched off, but a tmux session keeps its output. Attach an hour later and you can read the hour you missed by scrolling back through it.</p>
 </section>
 
 <section id="commands-you-type">
-  <h2>Which commands do I type?</h2>
+  <h2 id="sec-4">Which commands do I type?</h2>
   <p>Start with four:</p>
   <pre><code>tmux new -s work          # make a session named work
 claude                    # start the agent inside it
@@ -128,7 +150,7 @@ tmux attach -t work       # look at it again, from anywhere</code></pre>
 </section>
 
 <section id="what-it-means-for-agents">
-  <h2>A dropped connection does not interrupt the agent</h2>
+  <h2 id="sec-5">A dropped connection does not interrupt the agent</h2>
   <p>You lose signal on the train, again in a lift, again when you switch Wi-Fi. Attach to the same tmux session every time and you can drop ten times without interrupting the agent once. It never notices, because it was never living inside your connection.</p>
   <p>The three cases people worry about on a phone are one event described three ways:</p>
   <ul>
@@ -140,19 +162,19 @@ tmux attach -t work       # look at it again, from anywhere</code></pre>
 </section>
 
 <section id="two-devices">
-  <h2>Can two devices watch the same session?</h2>
+  <h2 id="sec-6">Can two devices watch the same session?</h2>
   <p>Yes, and there is no trick to it. Several clients can attach to one session at the same time. Start the job from your phone in a queue, attach from your laptop at work, and you are looking at the same screen mid-sentence rather than a copy of it.</p>
   <p>Keys from either device go to the same program, so only one person types at a time. Attaching moves nothing: the session stays on the machine that made it, which is why your phone and your laptop agree. A session you started by hand in a laptop terminal is there for the app too.</p>
 </section>
 
 <section id="inside-the-app">
-  <h2>How the app handles these sessions</h2>
+  <h2 id="sec-7">How the app handles these sessions</h2>
   <p>Agentmux is built on the same split. A disconnect on the phone's side is a detach and nothing more: reconnect and you are back at that session, further along. Type the commands above in its terminal and it is still the same session.</p>
   <p>The app takes two chores off your hands. If the machine has no tmux, the app installs it, working out whether your machine uses apt, yum, dnf, pacman, apk, or brew. If an agent sits where the shell can't see it, the app probes that PATH problem. Persistent sessions are in the free single-server tier, so nothing here is paid. The <a href="/guide/en/setup/">setup page</a> turns it into a checklist.</p>
 </section>
 
 <section id="what-tmux-does-not-do">
-  <h2>What tmux does not do</h2>
+  <h2 id="sec-8">What tmux does not do</h2>
   <p>tmux answers one question, whether a process outlives your connection, and leaves the rest alone.</p>
   <ul>
     <li><strong>A reboot of the server ends every session.</strong> They live in the tmux server's memory, so a power cut or an unattended upgrade ends the agent with them. What survives is what reached the disk: files changed, commits made, the branch you were left on. Git is the save file, not tmux.</li>

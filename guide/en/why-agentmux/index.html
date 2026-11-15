@@ -49,18 +49,42 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/why-agentmux/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/why-agentmux/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/why-agentmux/" hreflang="ja">日本語</a>
+        <a href="/guide/en/why-agentmux/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">Why not Termius or Blink</span></nav>
         <article class="guide-article">
             <h1>Why not Termius or Blink</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">Two tools built on different assumptions</a></li>
+        <li><a href="#sec-2">What each one does, capability by capability</a></li>
+        <li><a href="#sec-3">Why does Agentmux list tmux sessions first?</a></li>
+        <li><a href="#sec-4">What does the app do while you are away?</a></li>
+        <li><a href="#sec-5">Can you edit a file without opening vim?</a></li>
+        <li><a href="#sec-6">Where do your private keys live?</a></li>
+        <li><a href="#sec-7">Siri can hand the screen to Shortcuts</a></li>
+        <li><a href="#sec-8">Fixes you&#x27;ll feel if you read CJK</a></li>
+        <li><a href="#sec-9">Which tool for which job?</a></li>
+        <li><a href="#sec-10">When Termius is the better buy</a></li>
+    </ol>
+</details>
             <p>A general SSH client assumes you opened it to type commands. Agentmux assumes you opened it to rejoin an agent that is already running. Take Termius or Blink if you need Mosh, SOCKS5 forwarding, or host sync across platforms. Take Agentmux if your work is coding agents on several servers rather than one-off commands on one host.</p>
 <p>Both apps speak SSH and both hand you a prompt. What separates them is how much thought went into reattaching, and every row below follows from that. The five capabilities described here are all checked against the current source.</p>
 
 <section id="the-assumption">
-  <h2>Two tools built on different assumptions</h2>
+  <h2 id="sec-1">Two tools built on different assumptions</h2>
   <p>A general SSH client is built around a host and a shell: it hands you a working prompt, then stays out of the way. What happens after that prompt is yours.</p>
   <p>Agentmux is built around an agent that is already running somewhere. Its job is to shorten the distance from your pocket to that process. Three consequences follow, and the last two are where a good general client stops being a substitute. That is not a build-quality problem: those behaviours were never its product.</p>
   <ul>
@@ -78,7 +102,7 @@
 </aside>
 
 <section id="capability-comparison">
-  <h2>What each one does, capability by capability</h2>
+  <h2 id="sec-2">What each one does, capability by capability</h2>
   <p>One row per capability. Where you cannot check a competitor's behaviour from outside its app, the cell says so.</p>
 
   <div class="table-wrap"><table>
@@ -147,42 +171,42 @@
 </section>
 
 <section id="tmux-first-reconnect">
-  <h2>Why does Agentmux list tmux sessions first?</h2>
+  <h2 id="sec-3">Why does Agentmux list tmux sessions first?</h2>
   <p>Connect to a server and Agentmux lists the tmux sessions already running on it. One tap reattaches, so you do not type <code>tmux ls</code> or remember <code>tmux attach -t</code>. Reconnect after a drop and you land on the same session, on the screen you left, without retyping anything.</p>
   <p>An agent's value is the context it accumulated: which files it read, why it chose this approach. Reattach to that screen and the context survives. Open a fresh prompt and you explain the task again to a process that has forgotten it. <a href="/guide/en/what-is-tmux/">What tmux does</a> is the load-bearing part of this design.</p>
 </section>
 
 <section id="background-live-activity">
-  <h2>What does the app do while you are away?</h2>
+  <h2 id="sec-4">What does the app do while you are away?</h2>
   <p>Agents routinely run for tens of minutes, and that waiting period is what this is built for. The Dynamic Island and the Lock Screen show progress, and a sound can play when the run ends. The app does not have to sit in the foreground while you stare at it.</p>
   <p>An app built around a shell has nothing to report once it is closed, because it holds no notion of a run. Here a named session on a named server is running, and the system reports on it. When that session stops to ask whether to allow a command, <a href="/guide/en/permission-review/">AI Permission Review</a> can look first: dangerous commands are held, safe ones get a suggestion or a key press (Pro).</p>
 </section>
 
 <section id="editor-git-files">
-  <h2>Can you edit a file without opening vim?</h2>
+  <h2 id="sec-5">Can you edit a file without opening vim?</h2>
   <p>Changing one line of code does not mean wrestling vim on a phone keyboard. The built-in Runestone editor opens the file and lets you edit it. For a README an agent produced, Ink gives a two-column Markdown preview, source and rendered side by side. Git tools (switching branches, reading diffs) and Files app integration are Pro features, available during the 14-day trial.</p>
   <p>The loop closes on one device: the agent changes files, you read the diff, you answer, it goes on. Every step that needs a second machine waits for a desk.</p>
 </section>
 
 <section id="keychain-isolation">
-  <h2>Where do your private keys live?</h2>
+  <h2 id="sec-6">Where do your private keys live?</h2>
   <p>Private keys go into native secure storage, the iOS Keychain or the Android Keystore, and never into the local database. On iOS, if you turn on iCloud sync, CloudKit carries non-sensitive metadata such as server names. The keys stay where they are.</p>
   <p>Ask any tool the same question: which of my private keys leave this device when sync is on? A feature list will not answer it.</p>
 </section>
 
 <section id="siri-shortcuts">
-  <h2>Siri can hand the screen to Shortcuts</h2>
+  <h2 id="sec-7">Siri can hand the screen to Shortcuts</h2>
   <p><code>GetCurrentSessionContextIntent</code> lets you tell Siri "get the current terminal contents from Agentmux". Whatever is on the terminal lands in iOS Shortcuts, ready for Notes, Messages, or anything else you build. <code>ContinueLastSessionIntent</code> is blunter: "continue working in Agentmux" reattaches to your last session.</p>
   <p>General SSH apps cannot do this, structurally: they have no semantic model of sessions, projects, and agents to expose to the system. Agentmux implements 6 App Intents across four entity types: Server, Project, TMUXSession, RecentSession.</p>
 </section>
 
 <section id="cjk-fixes">
-  <h2>Fixes you'll feel if you read CJK</h2>
+  <h2 id="sec-8">Fixes you'll feel if you read CJK</h2>
   <p>Version 1.3.10 fixed three things an English-only user never notices and a Chinese, Japanese, or Korean reader spots at once: selection drifting out of alignment on full-width characters, a link that wraps across lines copying out as several separate pieces, and a lone slash inside CJK text read as a file path.</p>
 </section>
 
 <section id="pick-by-job">
-  <h2>Which tool for which job?</h2>
+  <h2 id="sec-9">Which tool for which job?</h2>
   <p><strong>Mostly manual terminal work on one host.</strong> You log in to run commands you chose: restart a service, tail a log, check a disk. Take a general SSH client. If you want to test the idea first, the free single-server tier covers one server, persistent sessions, and the core terminal.</p>
   <p><strong>Living inside agents on several servers.</strong> One refactoring on the Mac mini, another running tests on a Linux box, a third started from a train. That is Agentmux, and specifically Pro: multiple servers, custom agents, remote editing, file history, branch tools, batch actions.</p>
   <p><strong>An agent in a browser tab or a cloud sandbox.</strong> The convenience is real, and the cost is that the files and the credentials no longer sit on your machine. Agentmux never hosts the work: it is a client, and the code and the agent stay on hardware you own, a Mac, a Linux box, or a server. Renting one is defensible if you are at peace with your project and its keys living there.</p>
@@ -190,7 +214,7 @@
 </section>
 
 <section id="when-not-to-use">
-  <h2>When Termius is the better buy</h2>
+  <h2 id="sec-10">When Termius is the better buy</h2>
   <p>If one of these is your main job, buy the general tool.</p>
   <ul>
     <li>You work on very unreliable mobile networks and need <strong>Mosh</strong> to hold the connection. Agentmux speaks standard SSH and compensates with automatic tmux reattachment, which is not the same thing as Mosh.</li>

@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-Hans/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-Hans/">指南首页</a>
                 <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
-                <a class="lang-switch" href="/guide/?choose=1">语言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">简体中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/troubleshooting/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/troubleshooting/" hreflang="zh-Hans" aria-current="page">简体中文</a>
+        <a href="/guide/ja/troubleshooting/" hreflang="ja">日本語</a>
+        <a href="/guide/en/troubleshooting/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-Hans/">首页</a><span aria-hidden="true">/</span><a href="/guide/zh-Hans/">指南首页</a><span aria-hidden="true">/</span><span aria-current="page">卡住了怎么办</span></nav>
         <article class="guide-article">
             <h1>卡住了怎么办</h1>
+            <details class="guide-toc">
+    <summary>本页目录</summary>
+    <ol>
+        <li><a href="#sec-1">连接超时（Operation timed out）</a></li>
+        <li><a href="#sec-2">Permission denied (publickey)</a></li>
+        <li><a href="#sec-3">密码正确却被拒绝</a></li>
+        <li><a href="#sec-4">找不到 tmux</a></li>
+        <li><a href="#sec-5">claude: command not found，但桌面终端明明可以跑</a></li>
+        <li><a href="#sec-6">Tailscale 显示已连接，SSH 仍连不到</a></li>
+        <li><a href="#sec-7">Mac 开了远程登录却连不上</a></li>
+        <li><a href="#sec-8">sudo: a terminal is required to read the password</a></li>
+    </ol>
+</details>
             <p>通过 SSH、tmux、Tailscale 做远程开发，最常卡住的就是下面这八种：<code>Operation timed out</code>、<code>Permission denied (publickey)</code>、密码正确却被拒绝、找不到 tmux、<code>claude: command not found</code>、Tailscale 显示已连接却连不到、远程登录开着但 Mac 不接、<code>sudo: a terminal is required</code>。每一种都分成症状、原因，和你可以照着做的解法。</p>
 <p>照着前面几篇配置，十次有八九次一次就通。剩下那一两次卡住的地方，通常就是这八种。找到你看到的错误信息跳过去看，不用整篇从头读。</p>
 
 <section id="cannot-connect">
-  <h2>连接超时（Operation timed out）</h2>
+  <h2 id="sec-1">连接超时（Operation timed out）</h2>
 
   <h3>症状</h3>
   <p>敲了 <code>ssh 用户@主机</code> 之后画面卡住不动，等了半天，才跳出 <code>Operation timed out</code> 或 <code>Connection timed out</code>。SSH 从头到尾没有问过你密码。</p>
@@ -91,7 +113,7 @@
 </aside>
 
 <section id="permission-denied-publickey">
-  <h2>Permission denied (publickey)</h2>
+  <h2 id="sec-2">Permission denied (publickey)</h2>
 
   <h3>症状</h3>
   <p>连接一发出去马上被拒绝，画面直接打印出 <code>Permission denied (publickey).</code>，SSH 连密码都没问。</p>
@@ -121,7 +143,7 @@
 </section>
 
 <section id="password-rejected">
-  <h2>密码正确却被拒绝</h2>
+  <h2 id="sec-3">密码正确却被拒绝</h2>
 
   <h3>症状</h3>
   <p>你很确定密码打对了（甚至是复制粘贴的），但 SSH 一直跳回 <code>Permission denied, please try again.</code>，或者根本没有让你输入密码的画面就结束了。</p>
@@ -150,7 +172,7 @@ Match All
 </section>
 
 <section id="tmux-not-found">
-  <h2>找不到 tmux</h2>
+  <h2 id="sec-4">找不到 tmux</h2>
 
   <h3>症状</h3>
   <p>Agentmux 提示找不到 tmux，或者你自己连上去手动敲 <code>tmux</code> 时看到 <code>command not found: tmux</code>。</p>
@@ -190,7 +212,7 @@ winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-sou
 </section>
 
 <section id="agent-command-not-found">
-  <h2>claude: command not found，但桌面终端明明可以跑</h2>
+  <h2 id="sec-5">claude: command not found，但桌面终端明明可以跑</h2>
 
   <h3>症状</h3>
   <p>你在 Mac 自己开的 Terminal 里敲 <code>claude</code>，命令正常运行。通过 Agentmux 连进去、或直接 <code>ssh 主机 claude</code>，却看到 <code>claude: command not found</code>（或 <code>bash: claude: command not found</code>）。同一台机器、同一个账号，两边结果却不一样，看起来就像 Agentmux 坏了。</p>
@@ -227,7 +249,7 @@ esac</code></pre>
 </section>
 
 <section id="tailscale-connected-but-ssh-fails">
-  <h2>Tailscale 显示已连接，SSH 仍连不到</h2>
+  <h2 id="sec-6">Tailscale 显示已连接，SSH 仍连不到</h2>
 
   <h3>症状</h3>
   <p>手机上的 Tailscale App 显示两台设备都是绿灯、在线，但用 Agentmux 或直接 <code>ssh</code> 连过去，还是失败或整个超时。</p>
@@ -249,7 +271,7 @@ esac</code></pre>
 </section>
 
 <section id="mac-remote-login">
-  <h2>Mac 开了远程登录却连不上</h2>
+  <h2 id="sec-7">Mac 开了远程登录却连不上</h2>
 
   <h3>症状</h3>
   <p>已经在系统设置里打开「远程登录」，Mac 也确定连着网络，但 SSH 还是连不上；或者连得上却被拒绝，而你很确定密码或密钥都是对的。</p>
@@ -266,7 +288,7 @@ esac</code></pre>
 </section>
 
 <section id="sudo-needs-tty">
-  <h2>sudo: a terminal is required to read the password</h2>
+  <h2 id="sec-8">sudo: a terminal is required to read the password</h2>
 
   <h3>症状</h3>
   <p>通过 Agentmux 或 SSH 执行一段包含 <code>sudo</code> 的命令时，命令直接失败，打印出 <code>sudo: a terminal is required to read the password</code>，完全没有跑起来的迹象。</p>
@@ -326,7 +348,7 @@ esac</code></pre>
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首页</a>
+            <a href="/zh-Hans/">首页</a>
             <a href="/privacy.html">隐私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
         </div>

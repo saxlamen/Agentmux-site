@@ -49,13 +49,23 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/setup/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/setup/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/setup/" hreflang="ja">日本語</a>
+        <a href="/guide/en/setup/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">15 minutes to an agent that works all night</span></nav>
         <article class="guide-article">
             <h1>15 minutes to an agent that works all night</h1>
+            
             <p>Setting up an agent that works all night takes about fifteen minutes: SSH into a machine you own, tmux so a dropped phone connection detaches instead of stopping the agent, and Tailscale so no port faces the public internet. Answer three questions about your machine, your agent, and where you connect from, and the wizard builds the checklist.</p>
 <p>Every step says why you're doing it, what to run, how to check that it worked, and where to look if it didn't. (Is that machine running Windows? <a href="#windows">Read this first</a>.)</p>
 <div id="wizard" data-wizard-lang="en" data-load-failed="Could not load the setup wizard. Please refresh.">
@@ -64,7 +74,7 @@
 <script src="/guide/assets/wizard.js" defer></script>
 
 <details id="windows" class="windows-note">
-  <summary><h2>That machine runs Windows</h2></summary>
+  <summary><h2 id="sec-1">That machine runs Windows</h2></summary>
 
   <p>Answer "a Windows PC" and the wizard hands you a checklist like every other answer: switch on the SSH server, stop the PC from sleeping, install your agent, and psmux gets installed by itself. This section is for the two things that stop people arriving from the other paths: what replaces tmux on a Windows host, and whether the WSL2 route they read about somewhere else is still required.</p>
   <p>The short version: Windows 10 and 11 ship an OpenSSH Server you switch on in PowerShell, and persistence comes from <strong>psmux</strong>, a tmux-compatible program written for Windows, which Agentmux installs when the host is missing it. You do not need WSL2, a virtual machine, or a port forward. <a href="/guide/en/windows-server/">The Windows server article</a> has the commands, what a Windows session gives you, and what is still different from a Linux box.</p>

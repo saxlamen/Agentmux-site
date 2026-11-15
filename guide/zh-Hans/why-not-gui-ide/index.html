@@ -42,25 +42,43 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-Hans/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-Hans/">指南首页</a>
                 <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
-                <a class="lang-switch" href="/guide/?choose=1">语言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">简体中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/why-not-gui-ide/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/why-not-gui-ide/" hreflang="zh-Hans" aria-current="page">简体中文</a>
+        <a href="/guide/ja/why-not-gui-ide/" hreflang="ja">日本語</a>
+        <a href="/guide/en/why-not-gui-ide/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-Hans/">首页</a><span aria-hidden="true">/</span><a href="/guide/zh-Hans/">指南首页</a><span aria-hidden="true">/</span><span aria-current="page">为什么不是 Cursor / VS Code</span></nav>
         <article class="guide-article">
             <h1>为什么不是 Cursor / VS Code</h1>
+            <details class="guide-toc">
+    <summary>本页目录</summary>
+    <ol>
+        <li><a href="#sec-1">差别在架构，不在偏好</a></li>
+        <li><a href="#sec-2">合上笔记本之后会发生什么事？</a></li>
+        <li><a href="#sec-3">“那用远程桌面（VNC）不就好了？”</a></li>
+        <li><a href="#sec-4">坐在桌前，IDE 常常更好用</a></li>
+    </ol>
+</details>
             <p>Cursor 或 VS Code 里的 agent 是 GUI 软件的一部分，所以需要屏幕、一个已登录的桌面，和一个坐在前面的人。CLI agent 的接口是一条字符流，tmux 可以把整条流保存下来，再画到任何一块屏幕上。这不是更喜欢哪一个的问题，是架构上的差别。</p>
 <p>你已经有了 Cursor，或是 VS Code 加一个 agent 插件，用得很顺。为了同一件事去学 SSH 和 tmux，只有一种情况划算：你人不在那台电脑前面。</p>
 
 <section id="architecture">
-  <h2>差别在架构，不在偏好</h2>
+  <h2 id="sec-1">差别在架构，不在偏好</h2>
 
   <p>GUI IDE 里的 agent 是那个 GUI 程序的一部分。它活在应用的进程里，状态存在那个窗口的内存里，输出画在那块画布上。所以它需要一块屏幕、一个已登录的桌面 session、一个坐在前面的人。关掉窗口，agent 就跟着结束。这不是谁的失误：agent 本来就在那个进程里面。</p>
   <p>CLI agent 的接口是一条字节流：读进来字符，吐出去字符，中间没有图形的东西。这种流可以被<strong>接上、拔掉、再接回去</strong>。</p>
@@ -76,7 +94,7 @@
 </aside>
 
 <section id="same-scenario">
-  <h2>合上笔记本之后会发生什么事？</h2>
+  <h2 id="sec-2">合上笔记本之后会发生什么事？</h2>
 
   <p>假设你下班前丢了一个大重构给 agent，估计要跑二十分钟以上，而你现在要走了。</p>
 
@@ -107,7 +125,7 @@
 </section>
 
 <section id="why-not-vnc">
-  <h2>“那用远程桌面（VNC）不就好了？”</h2>
+  <h2 id="sec-3">“那用远程桌面（VNC）不就好了？”</h2>
 
   <p>这是最常见的反驳，理论上完全讲得通：桌面留在那台机器上，你用 VNC 连回去，Cursor 一样开着，看起来就解决了。</p>
   <p>实际用起来，两者传的东西完全不同。<strong>VNC 传像素，SSH 传字符。</strong>一整块屏幕更新是几百 KB 到几 MB 的图像数据，同一块画面用字符表示只有几 KB 的文字，大约差了一千倍。</p>
@@ -116,7 +134,7 @@
 </section>
 
 <section id="honest-ending">
-  <h2>坐在桌前，IDE 常常更好用</h2>
+  <h2 id="sec-4">坐在桌前，IDE 常常更好用</h2>
 
   <p>IDE 不是错的工具。坐在桌前写代码，IDE 常常更好用：跳转定义、重构、调试器，这些在手机上都做不到。<strong>IDE 适合“你在场、你主导”，CLI agent 加远程适合“它在跑、你抽查”。</strong>用得好的人两个都留着：白天在 Mac 上用 IDE，离开座位用 Agentmux 接回同一个项目的同一个 agent。</p>
   <p>Agentmux 不是要取代你的 IDE，它取代的是<strong>坐在椅子上等</strong>。然后你把手机放进口袋，走进没有信号的楼梯间，连接断了。那个 session 接下来会怎样，要看你怎么接回去。</p>
@@ -163,7 +181,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首页</a>
+            <a href="/zh-Hans/">首页</a>
             <a href="/privacy.html">隐私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
         </div>

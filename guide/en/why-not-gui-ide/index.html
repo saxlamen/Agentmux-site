@@ -49,18 +49,36 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/why-not-gui-ide/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/why-not-gui-ide/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/why-not-gui-ide/" hreflang="ja">日本語</a>
+        <a href="/guide/en/why-not-gui-ide/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">Why not Cursor or VS Code</span></nav>
         <article class="guide-article">
             <h1>Why not Cursor or VS Code</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">The difference is architectural, not a preference</a></li>
+        <li><a href="#sec-2">What happens when you close the laptop mid-task?</a></li>
+        <li><a href="#sec-3">&quot;Couldn&#x27;t you just use remote desktop?&quot;</a></li>
+        <li><a href="#sec-4">At your desk the IDE is often the better tool</a></li>
+    </ol>
+</details>
             <p>An agent inside Cursor or VS Code runs as part of a GUI process, so it needs a screen, a logged-in desktop, and someone sitting in front of it. A CLI agent's interface is a stream of characters, which tmux can store whole and reattach on any device. The difference is architectural, not a matter of taste.</p>
 <p>You already have Cursor, or VS Code with an agent extension, and it works well. Learning SSH and tmux for the same job pays off in one situation: you are not sitting at the machine.</p>
 
 <section id="architecture">
-  <h2>The difference is architectural, not a preference</h2>
+  <h2 id="sec-1">The difference is architectural, not a preference</h2>
 
   <p>An agent inside a GUI IDE is part of that GUI program. It lives in the application's process, its state sits in that window's memory, and its output is painted onto a canvas. That is why it needs a screen, a logged-in desktop session, and a person in front of it. Close the window and the agent ends with it. Nobody overlooked anything: the agent grew out of that process.</p>
   <p>A CLI agent's interface is a byte stream: characters in, characters out, and nothing graphical anywhere along the way. A stream like that can be <strong>attached to, detached from, and attached again</strong>. tmux does the bookkeeping, because an 80×24 matrix of characters can be stored whole and redrawn onto any screen: your laptop, your phone, a friend's iPad. Changing devices loses nothing, because what changed hands was only ever characters.</p>
@@ -75,7 +93,7 @@
 </aside>
 
 <section id="same-scenario">
-  <h2>What happens when you close the laptop mid-task?</h2>
+  <h2 id="sec-2">What happens when you close the laptop mid-task?</h2>
 
   <p>Suppose you hand the agent a large refactor at the end of the working day. It needs twenty minutes at least, and you are leaving now.</p>
 
@@ -106,7 +124,7 @@
 </section>
 
 <section id="why-not-vnc">
-  <h2>"Couldn't you just use remote desktop?"</h2>
+  <h2 id="sec-3">"Couldn't you just use remote desktop?"</h2>
 
   <p>This is the most common objection, and in theory it is airtight. The desktop is still running on that machine. VNC back into it and Cursor is still open, so the problem looks solved.</p>
   <p>In practice the two ship different things. <strong>VNC sends pixels. SSH sends characters.</strong> One full screen update is hundreds of kilobytes to a few megabytes of image data, and the same screen as characters is a few kilobytes of text, a gap of roughly three orders of magnitude.</p>
@@ -115,7 +133,7 @@
 </section>
 
 <section id="honest-ending">
-  <h2>At your desk the IDE is often the better tool</h2>
+  <h2 id="sec-4">At your desk the IDE is often the better tool</h2>
 
   <p>An IDE is not the wrong tool, and at your desk it is often the better one: go-to-definition, refactoring, a debugger, none of which work over a phone connection. <strong>An IDE suits "you are here and you are driving". A CLI agent plus remote access suits "it is running and you are checking in".</strong> Use both if you can: the IDE on the Mac while you are at the desk, and Agentmux to rejoin the same agent on the same project once you have left it.</p>
   <p>Agentmux is not trying to replace your IDE. It replaces the part where you sit in a chair and wait. Then you put the phone in your pocket, the signal drops in the tunnel, and what happens to that session is a problem of its own.</p>

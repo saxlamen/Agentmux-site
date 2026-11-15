@@ -944,6 +944,17 @@ class TestPublishedHeadMetadata(unittest.TestCase):
         keys = [f.name for f in self.SITE.iterdir() if re.fullmatch(r"[0-9a-f]{32}\.txt", f.name)]
         self.assertEqual(len(keys), 1, "expected exactly one IndexNow key file")
 
+    def test_navigation_has_localized_home_lang_menu_breadcrumb_and_toc(self):
+        article = (self.SITE / "guide" / "zh-TW" / "what-is-tmux" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('class="brand" href="/zh-TW/"', article)
+        self.assertIn('class="lang-menu"', article)
+        for code in ("zh-TW", "zh-Hans", "ja", "en"):
+            self.assertIn('href="/guide/%s/what-is-tmux/"' % code, article)
+        self.assertIn('class="guide-breadcrumb"', article)
+        self.assertIn('class="guide-toc"', article)
+        self.assertIn('href="#sec-1"', article)
+        self.assertIn('<h2 id="sec-1">', article)
+
 
 if __name__ == "__main__":
     unittest.main()

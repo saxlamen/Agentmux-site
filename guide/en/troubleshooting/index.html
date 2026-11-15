@@ -49,18 +49,40 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/troubleshooting/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/troubleshooting/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/troubleshooting/" hreflang="ja">日本語</a>
+        <a href="/guide/en/troubleshooting/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">Stuck? Start here</span></nav>
         <article class="guide-article">
             <h1>Stuck? Start here</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">Connection timed out (Operation timed out)</a></li>
+        <li><a href="#sec-2">Permission denied (publickey)</a></li>
+        <li><a href="#sec-3">Password is correct but rejected</a></li>
+        <li><a href="#sec-4">tmux not found</a></li>
+        <li><a href="#sec-5">claude: command not found, but it runs fine in the desktop terminal</a></li>
+        <li><a href="#sec-6">Tailscale says connected, SSH still can&#x27;t reach it</a></li>
+        <li><a href="#sec-7">Remote Login is on but the Mac still won&#x27;t accept connections</a></li>
+        <li><a href="#sec-8">sudo: a terminal is required to read the password</a></li>
+    </ol>
+</details>
             <p>Remote development over SSH, tmux and Tailscale fails in eight recognizable ways: <code>Operation timed out</code>, <code>Permission denied (publickey)</code>, a password that is correct but rejected, <code>tmux not found</code>, <code>claude: command not found</code>, Tailscale showing connected but unreachable, Remote Login on but the Mac refusing, and <code>sudo: a terminal is required</code>. Each one has a symptom, a cause, and a fix.</p>
 <p>Follow the previous articles and it works first time eight or nine times out of ten. When it does not, it is almost always one of these eight. Find your error message and jump to it. Nobody needs to read this page from the top.</p>
 
 <section id="cannot-connect">
-  <h2>Connection timed out (Operation timed out)</h2>
+  <h2 id="sec-1">Connection timed out (Operation timed out)</h2>
 
   <h3>Symptom</h3>
   <p>You run <code>ssh user@host</code> and the screen just sits there. After a long wait comes <code>Operation timed out</code> or <code>Connection timed out</code>. SSH never gets as far as asking you for a password.</p>
@@ -91,7 +113,7 @@
 </aside>
 
 <section id="permission-denied-publickey">
-  <h2>Permission denied (publickey)</h2>
+  <h2 id="sec-2">Permission denied (publickey)</h2>
 
   <h3>Symptom</h3>
   <p>The connection is refused the instant you make it. It prints <code>Permission denied (publickey).</code> and never asks you for a password.</p>
@@ -121,7 +143,7 @@
 </section>
 
 <section id="password-rejected">
-  <h2>Password is correct but rejected</h2>
+  <h2 id="sec-3">Password is correct but rejected</h2>
 
   <h3>Symptom</h3>
   <p>You're certain the password is right, and you may well have pasted it, but SSH keeps returning <code>Permission denied, please try again.</code> Sometimes it ends without prompting you at all.</p>
@@ -150,7 +172,7 @@ Match All
 </section>
 
 <section id="tmux-not-found">
-  <h2>tmux not found</h2>
+  <h2 id="sec-4">tmux not found</h2>
 
   <h3>Symptom</h3>
   <p>Agentmux reports that it can't find tmux, or you connect yourself, type <code>tmux</code>, and get <code>command not found: tmux</code>.</p>
@@ -190,7 +212,7 @@ winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-sou
 </section>
 
 <section id="agent-command-not-found">
-  <h2>claude: command not found, but it runs fine in the desktop terminal</h2>
+  <h2 id="sec-5">claude: command not found, but it runs fine in the desktop terminal</h2>
 
   <h3>Symptom</h3>
   <p>You type <code>claude</code> in Terminal on the Mac and it runs. Connect through Agentmux, or run <code>ssh host claude</code> directly, and you get <code>claude: command not found</code>, or <code>bash: claude: command not found</code>. It is the same machine and the same account, so it looks exactly like Agentmux being broken.</p>
@@ -225,7 +247,7 @@ esac</code></pre>
 </section>
 
 <section id="tailscale-connected-but-ssh-fails">
-  <h2>Tailscale says connected, SSH still can't reach it</h2>
+  <h2 id="sec-6">Tailscale says connected, SSH still can't reach it</h2>
 
   <h3>Symptom</h3>
   <p>The Tailscale app on your phone shows both devices green and online, but connecting with Agentmux or plain <code>ssh</code> still fails or times out entirely.</p>
@@ -247,7 +269,7 @@ esac</code></pre>
 </section>
 
 <section id="mac-remote-login">
-  <h2>Remote Login is on but the Mac still won't accept connections</h2>
+  <h2 id="sec-7">Remote Login is on but the Mac still won't accept connections</h2>
 
   <h3>Symptom</h3>
   <p>Remote Login is enabled in System Settings and the Mac is definitely on the network, but SSH still can't connect. Sometimes it connects and you are refused anyway, with a password or key you are sure is correct.</p>
@@ -264,7 +286,7 @@ esac</code></pre>
 </section>
 
 <section id="sudo-needs-tty">
-  <h2>sudo: a terminal is required to read the password</h2>
+  <h2 id="sec-8">sudo: a terminal is required to read the password</h2>
 
   <h3>Symptom</h3>
   <p>Running a command containing <code>sudo</code> through Agentmux or SSH fails immediately with <code>sudo: a terminal is required to read the password</code>, showing no sign of having run at all.</p>

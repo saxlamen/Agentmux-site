@@ -14,6 +14,8 @@ TOKEN = re.compile(r"\{\{(\w+)\}\}")
 TABLE = re.compile(r"<table\b.*?</table>", re.DOTALL | re.IGNORECASE)
 TAG = re.compile(r"<[^>]+>")
 H2_SECTION = re.compile(r"<h2\b[^>]*>(.*?)</h2>(.*?)(?=<h2\b|\Z)", re.DOTALL | re.IGNORECASE)
+H2_TAG = re.compile(r"<h2\b([^>]*)>(.*?)</h2>", re.DOTALL | re.IGNORECASE)
+ID_ATTR = re.compile(r'\bid\s*=\s*"([^"]+)"', re.IGNORECASE)
 H3_HEAD = re.compile(r"<h3\b[^>]*>(.*?)</h3>(.*?)(?=<h3\b|<h2\b|\Z)", re.DOTALL | re.IGNORECASE)
 DATE_TEXT = re.compile(r"\d{4}-\d{2}-\d{2}")
 
@@ -547,6 +549,87 @@ def _lang_switch(config: dict, lang: str, slug: str = None) -> tuple:
     return "/guide/{0}/".format(other_code), other_label
 
 
+def _home_url(lang: str) -> str:
+    return {"zh-TW": "/zh-TW/", "zh-Hans": "/zh-Hans/", "ja": "/ja/"}.get(lang, "/")
+
+
+def _lang_menu(config: dict, lang: str, slug: str = None) -> str:
+    matrix = config.get("content", {})
+    current = _language(config, lang)
+    items = []
+    for entry in config["languages"]:
+        code = entry["code"]
+        if not matrix.get(code):
+            continue
+        if slug and slug in matrix.get(code, []):
+            href = "/guide/{0}/{1}/".format(code, slug)
+        else:
+            href = "/guide/{0}/".format(code)
+        aria = ' aria-current="page"' if code == lang else ""
+        items.append(
+            '<a href="{0}" hreflang="{1}"{2}>{3}</a>'.format(
+                esc(href), esc(code), aria, esc(entry["label"])
+            )
+        )
+    return (
+        '<details class="lang-menu">\n'
+        '    <summary class="lang-switch">{0}</summary>\n'
+        '    <div class="lang-menu-list">\n'
+        '        {1}\n'
+        '    </div>\n'
+        '</details>'
+    ).format(esc(current["label"]), "\n        ".join(items))
+
+
+def _breadcrumb(lang: str, strings: dict, title: str) -> str:
+    home_label = strings["ui"].get("home", "首頁" if lang == "zh-TW" else "Home")
+    guide_label = strings["ui"]["guideHome"]
+    return (
+        '<nav class="guide-breadcrumb" aria-label="Breadcrumb">'
+        '<a href="{0}">{1}</a>'
+        '<span aria-hidden="true">/</span>'
+        '<a href="/guide/{2}/">{3}</a>'
+        '<span aria-hidden="true">/</span>'
+        '<span aria-current="page">{4}</span>'
+        '</nav>'
+    ).format(esc(_home_url(lang)), esc(home_label), esc(lang), esc(guide_label), esc(title))
+
+
+def _add_toc(body_html: str, lang: str) -> tuple:
+    headings = []
+
+    def replace_h2(match):
+        attrs, inner = match.group(1), match.group(2)
+        id_match = ID_ATTR.search(attrs)
+        if id_match:
+            sec_id = id_match.group(1)
+        else:
+            sec_id = "sec-{0}".format(len(headings) + 1)
+            attrs = '{0} id="{1}"'.format(attrs, sec_id)
+        text = html.unescape(TAG.sub("", inner)).strip()
+        if text:
+            headings.append((sec_id, text))
+        return "<h2{0}>{1}</h2>".format(attrs, inner)
+
+    updated = H2_TAG.sub(replace_h2, body_html)
+    if len(headings) < 3:
+        return updated, ""
+    toc_labels = {"zh-TW": "本頁目錄", "zh-Hans": "本页目录", "ja": "目次", "en": "On this page"}
+    items = "\n        ".join(
+        '<li><a href="#{0}">{1}</a></li>'.format(esc(sec_id), esc(text))
+        for sec_id, text in headings
+    )
+    toc_html = (
+        '<details class="guide-toc">\n'
+        '    <summary>{0}</summary>\n'
+        '    <ol>\n'
+        '        {1}\n'
+        '    </ol>\n'
+        '</details>'
+    ).format(esc(toc_labels.get(lang, "On this page")), items)
+    return updated, toc_html
+
+
 def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> None:
     template = (src / "templates" / "article.html").read_text(encoding="utf-8")
     strings = _load_strings(src, lang)
@@ -577,14 +660,18 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
     body_html = wrap_tables(fragment)
     if body_html.count("</section>") >= 2:
         body_html = body_html.replace("</section>", "</section>\n" + inline_cta, 1)
+    body_html, toc_html = _add_toc(body_html, lang)
 
     analytics_cfg = config.get("analytics", {})
     page_vars = {
         "htmlLang": esc(_language(config, lang)["htmlLang"]),
         "lang": esc(lang),
+        "homeUrl": esc(_home_url(lang)),
         "title": esc(meta["title"]),
         "description": esc(meta["description"]),
         "canonical": esc(article_url(config["site"]["origin"], lang, slug)),
+        "breadcrumb": _breadcrumb(lang, strings, meta["title"]),
+        "toc": toc_html,
         "content": body_html,
         "posthogKey": esc(analytics_cfg.get("posthogKey", "")),
         "posthogHost": esc(analytics_cfg.get("posthogHost", "https://us.i.posthog.com")),
@@ -606,6 +693,7 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
         "supportLabel": esc(strings["ui"].get("support", "技術支援" if lang == "zh-TW" else "Support")),
         "otherLangUrl": esc(other_url),
         "otherLangLabel": esc(other_label),
+        "langMenu": _lang_menu(config, lang, slug),
         "appStoreUrl": esc(config["site"]["appStoreUrl"]),
         "playStoreUrl": esc(config["site"].get("playStoreUrl", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux")),
         "ctaLine": esc(strings["ui"]["ctaLine"]),
@@ -742,6 +830,7 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
             {
                 "htmlLang": esc(_language(config, lang)["htmlLang"]),
                 "lang": esc(lang),
+                "homeUrl": esc(_home_url(lang)),
                 "title": esc(strings["ui"]["trackIndexTitle"]),
                 "description": esc(strings["ui"]["trackIndexDescription"]),
                 "canonical": esc(
@@ -776,6 +865,7 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
                 "supportLabel": esc(strings["ui"].get("support", "技術支援" if lang == "zh-TW" else "Support")),
                 "otherLangUrl": esc(other_url),
                 "otherLangLabel": esc(other_label),
+                "langMenu": _lang_menu(config, lang),
             },
         ),
         encoding="utf-8",

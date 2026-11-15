@@ -42,20 +42,43 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/permission-review/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/permission-review/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/permission-review/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/permission-review/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">AI権限レビュー：エージェントの確認に誰が答えるか</span></nav>
         <article class="guide-article">
             <h1>AI権限レビュー：エージェントの確認に誰が答えるか</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">エージェントが停止して待っているときだけ起動する</a></li>
+        <li><a href="#sec-2">現在のプロンプトだけを読む</a></li>
+        <li><a href="#sec-3">ブラックリストは最初に端末内で動く</a></li>
+        <li><a href="#sec-4">許可リストは AI を使わずに決める</a></li>
+        <li><a href="#sec-5">AI は何を基準に判断するのか</a></li>
+        <li><a href="#sec-6">アドバイザーは提案、自動応答は代理押下</a></li>
+        <li><a href="#sec-7">ユーザーへ引き継がれる条件</a></li>
+        <li><a href="#sec-8">有効化の手順</a></li>
+        <li><a href="#sec-9">端末の外へ送信されるデータ</a></li>
+    </ol>
+</details>
             <p>AI 自動権限レビューは、画面を見ていないときにエージェントが出すコマンド許可プロンプトへ代わりに答える機能です。まずブラックリストが危険なコマンドを止め、許可リストが信頼済みのコマンドを通し、残りを AI 判定が判断します。最終的なキーの提案と自動押下の切り替えはセッションごとのモードで決まります。</p>
 <p>作業の途中でエージェントが「このコマンドを実行してよいですか？」と止まることがあります。ちょうど席を外していると、キーを 1 つ押すだけの待ち状態で全体の作業が止まってしまいます。</p>
 <p>AI 自動権限レビューはその瞬間のための機能です。プロンプトに対してキーを 1 回だけ答えます。コマンドを勝手に打ち込むことはなく、画面上の他の部分にも触れません。</p>
@@ -73,7 +96,7 @@
 </figure>
 
 <section id="when-it-starts">
-  <h2>エージェントが停止して待っているときだけ起動する</h2>
+  <h2 id="sec-1">エージェントが停止して待っているときだけ起動する</h2>
   <p>Agentmux はすでに Claude Code や Codex などの状態を追跡しています。「Allow this?」や「Pick 1 or 2」のようなプロンプトが画面に現れるとセッションが待機状態になり、そこからレビューが始まります。</p>
   <p>動作には次の条件も満たしている必要があります。</p>
   <ul>
@@ -93,13 +116,13 @@
 </aside>
 
 <section id="read-the-screen">
-  <h2>現在のプロンプトだけを読む</h2>
+  <h2 id="sec-2">現在のプロンプトだけを読む</h2>
   <p>読み取るのは現在画面に表示されているプロンプト（実行しようとしているコマンド、質問文、提示された選択肢）だけです。上に流れ去った過去のスクロールバックは対象になりません。</p>
   <p>画面内容を AI へ送る前に、Agentmux はパスワード、API キー、トークンに見える文字列をマスク（伏せ字化）します。マスク処理に失敗した場合はテキストを送信せず、キーも押しません。</p>
 </section>
 
 <section id="blacklist">
-  <h2>ブラックリストは最初に端末内で動く</h2>
+  <h2 id="sec-3">ブラックリストは最初に端末内で動く</h2>
   <p>照合はすべて手元のスマートフォン上で行われ、他のどの判定よりも先に走ります。ブラックリストに一致したプロンプトは AI へ一切送られず、そのままユーザーへ渡されます。組み込みルールでは、特に危険性の高い操作をカバーしています。</p>
   <ul>
     <li><code>/</code>、<code>~</code>、またはホームディレクトリに対する <code>rm -rf</code></li>
@@ -113,14 +136,14 @@
 </section>
 
 <section id="allowlist">
-  <h2>許可リストは AI を使わずに決める</h2>
+  <h2 id="sec-4">許可リストは AI を使わずに決める</h2>
   <p>テスト実行やビルドのように毎日許可しているコマンドは、許可リストに追加しておくと次回からスマートフォン上で即決されます。端末内でキーを選ぶため、AI の応答待ちも API 利用料も発生しません。</p>
   <p>「自動応答」モードでは、単一セッション限定で「このセッションのすべてのコマンドを許可」をオンにすることもできます。この場合 AI 判定はスキップされますが、ブラックリストは引き続き有効で、セッション終了時にこの設定は自動でオフに戻ります。</p>
   <p>許可リストに一致しても、画面上に明確で安全な選択肢キーが見つからない場合はユーザーへ引き継がれます。</p>
 </section>
 
 <section id="ai-judgment">
-  <h2>AI は何を基準に判断するのか</h2>
+  <h2 id="sec-5">AI は何を基準に判断するのか</h2>
   <p>どちらのリストにも当てはまらなかったプロンプトだけが AI に届きます。AI にはマスク済みの画面テキストと、今回のタスクでエージェントにやってほしいことを表す <strong>Main Intent</strong>（例：「ログイン画面のテストを修正する」）が渡されます。</p>
   <p>判定エンジンは 2 種類から選べます。</p>
   <ul>
@@ -131,7 +154,7 @@
 </section>
 
 <section id="finish">
-  <h2>アドバイザーは提案、自動応答は代理押下</h2>
+  <h2 id="sec-6">アドバイザーは提案、自動応答は代理押下</h2>
   <p>モードはセッションごとに設定できます。</p>
   <ul>
     <li><strong>アドバイザー</strong>（既定）：提案のみを行います。画面上部に推奨キーと「適用」ボタンが表示され、タップするまで何も送信されません。</li>
@@ -142,7 +165,7 @@
 </section>
 
 <section id="handed-to-you">
-  <h2>ユーザーへ引き継がれる条件</h2>
+  <h2 id="sec-7">ユーザーへ引き継がれる条件</h2>
   <ul>
     <li>ブラックリストのルールに一致したとき。</li>
     <li>AI が「拒否」または「保留」と判定したとき。</li>
@@ -155,7 +178,7 @@
 </section>
 
 <section id="get-started">
-  <h2>有効化の手順</h2>
+  <h2 id="sec-8">有効化の手順</h2>
   <p>始める前に、次のいずれかを用意してください。</p>
   <ul>
     <li><a href="https://openrouter.ai/keys">OpenRouter</a> または TypeSafe の API キー（JEV エンジン用）。</li>
@@ -171,13 +194,13 @@
 </section>
 
 <section id="privacy">
-  <h2>端末の外へ送信されるデータ</h2>
+  <h2 id="sec-9">端末の外へ送信されるデータ</h2>
   <p>端末の外に出るのは「マスク済みの画面テキスト」と「Main Intent」の 2 つだけです。送信先はあなたが設定した AI サービスであり、あなた自身の API キーが使われます。「最新のプロンプトを使用」をオンにしている場合は、そのタブで送ったプロンプトが Main Intent になるため、それも送信対象になります。</p>
   <p>Agentmux 自体は AI サービスを提供も中継もしません。各判定の記録は端末内にのみ保存され、監査ログから確認・消去できます。モデルの推論過程は保存されません。</p>
 </section>
 
         </article>
-        
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="前へ" href="/guide/ja/windows-server/">前へ · ターミナルを開いたことがない<span>Windows PCもそのままサーバーになる</span></a><a class="pager-prev" data-tracks="cliuser" data-label="前へ" href="/guide/ja/claude-code-on-iphone/">前へ · すでに CLI エージェントを使っている<span>iPhoneやiPadからClaude Codeを使う</span></a></nav>
         <script>
             // If the reader picked a track on the guide index, keep only that
             // track's neighbours and restore the plain labels. Runs
@@ -217,7 +240,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

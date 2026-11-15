@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-TW/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/?choose=1">語言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">繁體中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-cli/" hreflang="zh-TW" aria-current="page">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-cli/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-cli/" hreflang="ja">日本語</a>
+        <a href="/guide/en/what-is-cli/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-TW/">首頁</a><span aria-hidden="true">/</span><a href="/guide/zh-TW/">指南首頁</a><span aria-hidden="true">/</span><span aria-current="page">為什麼最強的 coding agent 都住在終端機裡</span></nav>
         <article class="guide-article">
             <h1>為什麼最強的 coding agent 都住在終端機裡</h1>
+            <details class="guide-toc">
+    <summary>本頁目錄</summary>
+    <ol>
+        <li><a href="#sec-1">終端機其實是兩層程式疊在一起</a></li>
+        <li><a href="#sec-2">螢幕上真正有意義的三樣東西</a></li>
+        <li><a href="#sec-3">介面決定 agent 能碰到什麼</a></li>
+        <li><a href="#sec-4">哪些指令是沙箱裡的 agent 跑不了的？</a></li>
+        <li><a href="#sec-5">不需要你按任何鍵就會閉上的迴圈</a></li>
+        <li><a href="#sec-6">為什麼位元組串比一個視窗值錢？</a></li>
+        <li><a href="#sec-7">完整存取要付什麼代價？</a></li>
+        <li><a href="#sec-8">什麼時候 GUI 比較好</a></li>
+    </ol>
+</details>
             <p>CLI agent 是一個用文字跟你對話的 coding agent。它跑在你自己擁有的機器上，一台 Mac、一台 Linux 主機、或一台伺服器，並沿用你在那台機器上的權限：讀整個專案的檔案、執行任何指令、把結果讀回來。它住在終端機裡，因為沒有別的介面能同時給你這三樣。</p>
 <p>「CLI」三個字聽起來像懲罰：沒有滑鼠、沒有按鈕、只有一個閃爍的游標。可是 Claude Code、Codex、Gemini CLI、OpenCode 全都住在這裡。做它們的人不是硬派，是因為終端機給了 agent 兩樣別的介面給不了的東西：<strong>完整讀寫檔案的權限，和執行指令的權限</strong>。也是因為這兩樣，它跑任何一條指令之前會先問你。</p>
 
 <section id="terminal">
-  <h2>終端機其實是兩層程式疊在一起</h2>
+  <h2 id="sec-1">終端機其實是兩層程式疊在一起</h2>
 
   <p>這裡有兩個程式疊在一起，而初學者通常怪錯那一個。<strong>終端機</strong>是負責顯示的那一層：它畫出一格一格的字，把你的按鍵轉出去，就這樣。它後面的 <strong>shell</strong>（zsh、bash、fish）等一行文字出現，跑那行文字，然後把程式寫出來的東西印在螢幕上。</p>
   <p>就是因為薄到這個程度，agent 才操作得動。它打的每一行指令，跟你自己手動打的一模一樣；它讀到的錯誤訊息，跟你會看到的一字不差。</p>
@@ -74,7 +96,7 @@
 </aside>
 
 <section id="read-the-screen">
-  <h2>螢幕上真正有意義的三樣東西</h2>
+  <h2 id="sec-2">螢幕上真正有意義的三樣東西</h2>
 
   <p>這份指南後面每一篇都假設你會看螢幕。真正承載意義的是三樣，其餘都是雜訊。</p>
 
@@ -95,7 +117,7 @@ $ echo $?
 </section>
 
 <section id="capability-boundary">
-  <h2>介面決定 agent 能碰到什麼</h2>
+  <h2 id="sec-3">介面決定 agent 能碰到什麼</h2>
 
   <p>網頁版的 agent 看不到你電腦裡的任何一個檔案，它只活在瀏覽器分頁裡。IDE 外掛看得到你打開的檔案，但通常停在「建議」這一步：它動不了 git，跑不了測試，更裝不了套件。</p>
   <p>CLI agent 拿的是你自己那組權限：讀整個 repo、下 <code>git commit</code>、跑測試套件、裝依賴。存取分三層，風險一層比一層高：</p>
@@ -108,7 +130,7 @@ $ echo $?
 </section>
 
 <section id="commands-an-agent-runs">
-  <h2>哪些指令是沙箱裡的 agent 跑不了的？</h2>
+  <h2 id="sec-4">哪些指令是沙箱裡的 agent 跑不了的？</h2>
 
   <p>「執行權限」是一個抽象的說法，點頭之前先把它還原成螢幕上的行：</p>
 
@@ -129,7 +151,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="concrete-example">
-  <h2>不需要你按任何鍵就會閉上的迴圈</h2>
+  <h2 id="sec-5">不需要你按任何鍵就會閉上的迴圈</h2>
 
   <p>你丟一句「把這個 bug 修好」。接著是十幾行同樣的指令，而你的手不用碰到鍵盤：</p>
   <ol>
@@ -142,7 +164,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="byte-stream-movable">
-  <h2>為什麼位元組串比一個視窗值錢？</h2>
+  <h2 id="sec-6">為什麼位元組串比一個視窗值錢？</h2>
 
   <p>你螢幕上那個終端機視窗不是程式住的地方。程式接在一個 <strong>pseudo-terminal</strong> 上，那是 kernel 裡一個有兩端的物件：一端寫進去位元組，另一端就出來位元組，而你的視窗只是目前握著另一端的那個人。從這個定義跟著來三件事：</p>
   <ul>
@@ -154,7 +176,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="what-full-access-costs">
-  <h2>完整存取要付什麼代價？</h2>
+  <h2 id="sec-7">完整存取要付什麼代價？</h2>
 
   <p>讓 agent 能對資料庫做 migration 的那個權限，也能把那個資料庫刪掉。它知道這一點，所以會在工作做到一半時停下來問：「要跑這條指令嗎？」那個 prompt 不是膽小。一個什麼都不問就直接跑的 agent，等於把你的 <code>.ssh</code> 目錄和正式環境的資料庫押在你身上。prompt 畫的是第二層跟第三層之間那條線，而且只能在那個時刻畫：指令已經知道了，還沒有執行。</p>
   <p>兩個習慣擋掉大部分風險。<strong>讀指令本身，不要讀摘要：</strong>「我要清掉 build cache」是一段描述，只有它下面那一行才有後果。<strong>同一類只批一次：</strong>一天四十次要你准許跑測試，就用一條規則讓 <code>npm test</code> 直接通過。</p>
@@ -162,7 +184,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
 </section>
 
 <section id="when-a-gui-is-better">
-  <h2>什麼時候 GUI 比較好</h2>
+  <h2 id="sec-8">什麼時候 GUI 比較好</h2>
 
   <p>終端機不是對 code 做任何事的正確介面。下面這些事情，用文字做就是比較差：</p>
   <ul>
@@ -217,7 +239,7 @@ curl -sf localhost:8000/health | jq .db</code></pre>
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首頁</a>
+            <a href="/zh-TW/">首頁</a>
             <a href="/privacy.html">隱私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>

@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-TW/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/?choose=1">語言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">繁體中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-ssh/" hreflang="zh-TW" aria-current="page">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-ssh/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-ssh/" hreflang="ja">日本語</a>
+        <a href="/guide/en/what-is-ssh/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-TW/">首頁</a><span aria-hidden="true">/</span><a href="/guide/zh-TW/">指南首頁</a><span aria-hidden="true">/</span><span aria-current="page">SSH：通往另一台電腦的隧道</span></nav>
         <article class="guide-article">
             <h1>SSH：通往另一台電腦的隧道</h1>
+            <details class="guide-toc">
+    <summary>本頁目錄</summary>
+    <ol>
+        <li><a href="#sec-1">為什麼是另一台機器，不是雲端服務？</a></li>
+        <li><a href="#sec-2">連線要打的只有三樣東西：host、user、port</a></li>
+        <li><a href="#sec-3">為什麼不用 LAN 位址，也不用公網 IP？</a></li>
+        <li><a href="#sec-4">金鑰比較安全，也更省事</a></li>
+        <li><a href="#sec-5">App 把我的密碼和金鑰放在哪裡？</a></li>
+        <li><a href="#sec-6">第一次連線，為什麼要先問你信不信這組指紋？</a></li>
+        <li><a href="#sec-7">一定要把電腦架成伺服器嗎？</a></li>
+        <li><a href="#sec-8">SSH 不是 VPN，也不是遠端桌面</a></li>
+    </ol>
+</details>
             <p>SSH 是你手上這台裝置和另一台電腦之間的加密通道：你打的字送過去，那台機器執行，印出來的文字帶回來，中間經過的每一個節點都看不懂內容。要在手機上跑 agent，SSH 就是手機連到「agent 實際運行的那台機器」的那條路。</p>
 <p>上一篇的結論是：agent 在終端機裡最能做事，因為它能讀整個檔案系統，也能真的執行指令。那個終端機不必在你口袋裡。它可以是家裡那台從來沒關過的 Mac mini，也可以是公司那台工作站，只要你的手機連得過去。</p>
 
 <section id="another-machine">
-  <h2>為什麼是另一台機器，不是雲端服務？</h2>
+  <h2 id="sec-1">為什麼是另一台機器，不是雲端服務？</h2>
   <p>網頁版 agent 和雲端 IDE 也會讓你連上一台機器。差別在那台機器是誰的。</p>
   <p>SSH 連的是你自己那台。檔案在那裡，API key 在那裡，你裝過的套件和設好的環境變數也都在那裡。不用把任何東西搬到別人的伺服器上，改動留在原地，事後不必再同步回來。</p>
   <p>反過來也有取捨。如果你沒有任何一台一直開著的機器，或是一整組人需要完全相同的起點，雲端環境是比較好的答案。換用自己的機器，代價是：它要一直開著、要連得到，而且設定由你負責。</p>
@@ -74,7 +96,7 @@
 </aside>
 
 <section id="host-user-port">
-  <h2>連線要打的只有三樣東西：host、user、port</h2>
+  <h2 id="sec-2">連線要打的只有三樣東西：host、user、port</h2>
   <p>每一次 SSH 連線都需要三個東西，指令把它們寫在同一行：</p>
   <pre><code>ssh -p 22 sax@mac-mini</code></pre>
   <div class="table-wrap"><table>
@@ -91,14 +113,14 @@
 </section>
 
 <section id="lan-or-public-ip">
-  <h2>為什麼不用 LAN 位址，也不用公網 IP？</h2>
+  <h2 id="sec-3">為什麼不用 LAN 位址，也不用公網 IP？</h2>
   <p>你第一個找到的位址在網路設定裡，長得像 <code>192.168.1.23</code>。先從同一個 Wi-Fi 下的筆電試它，那正是它的用途。但它是路由器發出的私網位址，只在你自己的網路裡有效。手機切換到行動數據就沒有路能走到它，別人的網路也沒有。</p>
   <p>第二種是家裡網路對外顯示的公網位址，再在路由器上做 port forwarding，把那個 port 指到這台機器。這條路走得通，也是要避開的那一條。掃段的機器人對全世界的位址全天候嘗試登入，一個對外開放的 port 一天之內就會開始累積登入嘗試。路由器的設定只要有一處錯了，暴露出去的是整個網路，不是一台機器。</p>
   <p>該用的是第三種位址：只有你自己的裝置看得見的私網位址。<a href="/guide/zh-TW/what-is-tailscale/">Tailscale</a> 會給每台機器一個 MagicDNS 名稱或一個 <code>100.x</code> 位址，公網上沒有別人知道它們存在。host 欄位就填這個，在家和在外都一樣。</p>
 </section>
 
 <section id="keys-vs-passwords">
-  <h2>金鑰比較安全，也更省事</h2>
+  <h2 id="sec-4">金鑰比較安全，也更省事</h2>
   <p>SSH 收密碼，也收金鑰。這件事常被講成安全和方便之間的取捨，但金鑰兩邊都贏。</p>
   <p>一對金鑰就是兩個小小的文字檔。私鑰留在會發起連線的那台裝置上。公鑰由私鑰算出來，複製到你要連的那台機器，放進那個帳號 <code>~/.ssh</code> 裡的 <code>authorized_keys</code>。這條運算只有單向：公鑰從私鑰推得出來，反過來做不到。<code>ssh-keygen</code> 幾秒就產生一對，剩下的都是複製貼上。</p>
   <p>登入時兩半互相證明配對，你一個字都不用打。密碼必須扛得住別人反覆猜，金鑰夠長，猜沒有用。設定一次，之後每一次連線都走同一套流程。</p>
@@ -107,25 +129,25 @@
 </section>
 
 <section id="what-the-app-stores">
-  <h2>App 把我的密碼和金鑰放在哪裡？</h2>
+  <h2 id="sec-5">App 把我的密碼和金鑰放在哪裡？</h2>
   <p>Agentmux 不收集任何個人資料。使用統計是匿名、可選的，關掉它不會改變連線的方式。密碼、金鑰和口令都放進作業系統的硬體級憑證儲存，不是一般檔案。你的 SSH 流量不會被記錄下來：那條通道在你的裝置和你的機器之間加密，App 本身不是中繼站。</p>
 </section>
 
 <section id="fingerprint-prompt">
-  <h2>第一次連線，為什麼要先問你信不信這組指紋？</h2>
+  <h2 id="sec-6">第一次連線，為什麼要先問你信不信這組指紋？</h2>
   <p>連一台沒連過的機器時，在密碼或金鑰之前，你會先看到一行說無法確認主機真實性的訊息、一串十六進位字元，和一個 yes 或 no。那串字元是伺服器的指紋，也就是那台機器簽名用的 host key 濃縮出來的摘要。沒有出錯，這是 SSH 在驗證另一個方向。</p>
   <p>密碼或金鑰證明的是「你對那台機器來說是誰」，host key 證明的是「那台機器對你來說是誰」。少了 host key 這半邊，任何一台站在你手機和家裡 Mac mini 之間的設備，都能冒充那台機器回答，把你送出去的每一個字讀走。第一次連線時你沒有存過的指紋可以比對，所以 client 請你先相信它，然後從那之後記住這個值。</p>
   <p>這一步在之後才派上用場。重新連一台指紋變過的機器，client 會直接拒絕。要嘛是你重裝過系統，要嘛是有別的東西在代替它回答。</p>
 </section>
 
 <section id="not-a-server">
-  <h2>一定要把電腦架成伺服器嗎？</h2>
+  <h2 id="sec-7">一定要把電腦架成伺服器嗎？</h2>
   <p>很多人聽到 SSH 就想到機房和機櫃。你要做的只是打開一個開關。Mac 上是「系統設定 → 一般 → 共享 → 遠端登入」，Linux 上通常是啟動一個叫 <code>sshd</code> 的服務，多數發行版預設就裝好了。</p>
   <p>開關打開之後，那台機器什麼都沒變。它還是你平常那台電腦，只是多了一扇可以從外面敲的門。不想記住順序的話，<a href="/guide/zh-TW/setup/">設定頁</a>會問你三個問題，再依你的情況列出一張清單。</p>
 </section>
 
 <section id="what-ssh-is-not">
-  <h2>SSH 不是 VPN，也不是遠端桌面</h2>
+  <h2 id="sec-8">SSH 不是 VPN，也不是遠端桌面</h2>
   <p>SSH 不做下面三件事：</p>
   <div class="table-wrap"><table>
     <thead>
@@ -183,7 +205,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首頁</a>
+            <a href="/zh-TW/">首頁</a>
             <a href="/privacy.html">隱私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>

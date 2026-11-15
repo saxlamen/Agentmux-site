@@ -22,7 +22,33 @@ agentmux.saxcave.cc
       ├─ setup/                   [BC] 414 w / 495 zh
       ├─ windows-server/          [BC] 1028 w / 1298 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
-      ├─ permission-review/       [-] 1258 w / 1810 zh
+      ├─ permission-review/       [BC] 1258 w / 1810 zh
+      └─ troubleshooting/         [-] 3309 w / 4728 zh
+   └─ /guide/zh-Hans/  12 articles
+      ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
+      ├─ why-not-gui-ide/         [B] 758 w / 981 zh
+      ├─ what-is-cli/             [B] 1370 w / 2007 zh
+      ├─ what-is-ssh/             [B] 1149 w / 1783 zh
+      ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
+      ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
+      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
+      ├─ setup/                   [BC] 414 w / 495 zh
+      ├─ windows-server/          [BC] 1028 w / 1298 zh
+      ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
+      ├─ permission-review/       [BC] 1258 w / 1810 zh
+      └─ troubleshooting/         [-] 3309 w / 4728 zh
+   └─ /guide/ja/  12 articles
+      ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
+      ├─ why-not-gui-ide/         [B] 758 w / 981 zh
+      ├─ what-is-cli/             [B] 1370 w / 2007 zh
+      ├─ what-is-ssh/             [B] 1149 w / 1783 zh
+      ├─ what-is-tmux/            [BC] 1153 w / 1695 zh
+      ├─ what-is-tailscale/       [BC] 1266 w / 2129 zh
+      ├─ why-agentmux/            [BC] 1238 w / 1848 zh
+      ├─ setup/                   [BC] 414 w / 495 zh
+      ├─ windows-server/          [BC] 1028 w / 1298 zh
+      ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
+      ├─ permission-review/       [BC] 1258 w / 1810 zh
       └─ troubleshooting/         [-] 3309 w / 4728 zh
    └─ /guide/en/  12 articles
       ├─ why-remote-vibe-coding/  [BC] 816 w / 1115 zh
@@ -35,7 +61,7 @@ agentmux.saxcave.cc
       ├─ setup/                   [BC] 414 w / 495 zh
       ├─ windows-server/          [BC] 1028 w / 1298 zh
       ├─ claude-code-on-iphone/   [C] 1405 w / 2222 zh
-      ├─ permission-review/       [-] 1258 w / 1810 zh
+      ├─ permission-review/       [BC] 1258 w / 1810 zh
       └─ troubleshooting/         [-] 3309 w / 4728 zh
 ```
 
@@ -80,12 +106,14 @@ graph LR
   whatistailscale --> whyagentmux
   whyagentmux --> setup
   setup --> windowsserver
+  windowsserver --> permissionreview
   whyremotevibecoding --> whatistmux
   whatistmux --> whatistailscale
   whatistailscale --> whyagentmux
   whyagentmux --> setup
   setup --> windowsserver
   windowsserver --> claudecodeoniphone
+  claudecodeoniphone --> permissionreview
   classDef home fill:#101719,color:#f4fbf7,stroke:#6f817a;
   classDef hub fill:#182326,color:#f4fbf7,stroke:#6f817a;
   classDef art fill:#121a1d,color:#a7b8b2,stroke:#6f817a;

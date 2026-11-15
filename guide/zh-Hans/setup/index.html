@@ -42,20 +42,30 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-Hans/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-Hans/">指南首页</a>
                 <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
-                <a class="lang-switch" href="/guide/?choose=1">语言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">简体中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/setup/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/setup/" hreflang="zh-Hans" aria-current="page">简体中文</a>
+        <a href="/guide/ja/setup/" hreflang="ja">日本語</a>
+        <a href="/guide/en/setup/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-Hans/">首页</a><span aria-hidden="true">/</span><a href="/guide/zh-Hans/">指南首页</a><span aria-hidden="true">/</span><span aria-current="page">15 分钟，让你的 agent 开始整晚工作</span></nav>
         <article class="guide-article">
             <h1>15 分钟，让你的 agent 开始整晚工作</h1>
+            
             <p>把 agent 放到远程跑一整晚，大约 15 分钟：用 SSH 连进你自己那台机器，用 tmux 让手机掉线时只是 detach、不会停止 agent，再用 Tailscale，就不用对公网开端口。回答三个问题：你的机器、要跑的 agent、你想从哪里连。清单会照你的答案生成。</p>
 <p>每一步都会告诉你为什么要做、命令是什么、怎么确认成功了，还有没成功的话去哪里看。（那台机器是 Windows？<a href="#windows">先看这一节</a>。）</p>
 <div id="wizard" data-wizard-lang="zh-Hans" data-load-failed="加载失败，请刷新。">
@@ -64,7 +74,7 @@
 <script src="/guide/assets/wizard.js" defer></script>
 
 <details id="windows" class="windows-note">
-  <summary><h2>那台机器是 Windows</h2></summary>
+  <summary><h2 id="sec-1">那台机器是 Windows</h2></summary>
 
   <p>选「一台 Windows 电脑」，向导会跟其他答案一样给你清单：打开 SSH 服务器、别让电脑休眠、装你的 agent，psmux 它会自己处理。这一节解决两个常见疑问：Windows 上用什么取代 tmux，还有你在别处读过的 WSL2 现在还要不要用。</p>
 
@@ -117,7 +127,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首页</a>
+            <a href="/zh-Hans/">首页</a>
             <a href="/privacy.html">隐私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
         </div>

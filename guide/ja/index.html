@@ -38,14 +38,22 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
@@ -64,6 +72,7 @@
             <li><a data-track="beginner" href="/guide/ja/why-agentmux/">TermiusやBlinkではなくAgentmuxを使う理由</a></li>
             <li><a data-track="beginner" href="/guide/ja/setup/">15分で一晩中動くエージェント環境を整える</a></li>
             <li><a data-track="beginner" href="/guide/ja/windows-server/">Windows PCもそのままサーバーになる</a></li>
+            <li><a data-track="beginner" href="/guide/ja/permission-review/">AI権限レビュー：エージェントの確認に誰が答えるか</a></li>
           </ol>
           <p class="track-extended"><strong>関連記事：</strong><a data-track="beginner" href="/guide/ja/claude-code-on-iphone/">iPhoneやiPadからClaude Codeを使う</a></p>
         </section>
@@ -78,6 +87,7 @@
             <li><a data-track="cliuser" href="/guide/ja/setup/">15分で一晩中動くエージェント環境を整える</a></li>
             <li><a data-track="cliuser" href="/guide/ja/windows-server/">Windows PCもそのままサーバーになる</a></li>
             <li><a data-track="cliuser" href="/guide/ja/claude-code-on-iphone/">iPhoneやiPadからClaude Codeを使う</a></li>
+            <li><a data-track="cliuser" href="/guide/ja/permission-review/">AI権限レビュー：エージェントの確認に誰が答えるか</a></li>
           </ol>
           <p class="track-extended"><strong>関連記事：</strong><a data-track="cliuser" href="/guide/ja/why-not-gui-ide/">CursorやVS CodeではなくCLIを選ぶ理由</a></p>
         </section>
@@ -85,7 +95,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

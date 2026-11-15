@@ -42,25 +42,43 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/why-not-gui-ide/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/why-not-gui-ide/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/why-not-gui-ide/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/why-not-gui-ide/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">CursorやVS CodeではなくCLIを選ぶ理由</span></nav>
         <article class="guide-article">
             <h1>CursorやVS CodeではなくCLIを選ぶ理由</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">アーキテクチャの違い</a></li>
+        <li><a href="#sec-2">作業の途中でノート PC を閉じると何が起きるか</a></li>
+        <li><a href="#sec-3">「リモートデスクトップを使えばいいのでは？」</a></li>
+        <li><a href="#sec-4">机の前では IDE のほうが優れていることも多い</a></li>
+    </ol>
+</details>
             <p>Cursor や VS Code の中にあるエージェントは GUI プロセスの一部として動くため、画面とログイン済みのデスクトップ、そしてその前に座る人間を必要とします。一方、CLI エージェントのインターフェースは文字列のストリームであり、tmux によって丸ごと保存してどの端末からでも再接続できます。これはアーキテクチャの違いによるものです。</p>
 <p>すでに Cursor や、エージェント拡張を入れた VS Code を使っていて十分に機能しているなら、同じ作業のために SSH と tmux を学ぶ意味があるのは 1 つの場面だけです。それは、あなたがそのマシンの前に座っていないときです。</p>
 
 <section id="architecture">
-  <h2>アーキテクチャの違い</h2>
+  <h2 id="sec-1">アーキテクチャの違い</h2>
 
   <p>GUI IDE の中にあるエージェントは、その GUI プログラムの一部です。アプリケーションのプロセス内で動き、状態はそのウィンドウのメモリ上に置かれ、出力はキャンバスに描画されます。</p>
   <p>だからこそ画面とログイン済みのデスクトップセッション、そして前に座る人が必要になります。ウィンドウを閉じればエージェントも一緒に終わるのは、そのプロセスの一部として動いているためです。</p>
@@ -77,7 +95,7 @@
 </aside>
 
 <section id="same-scenario">
-  <h2>作業の途中でノート PC を閉じると何が起きるか</h2>
+  <h2 id="sec-2">作業の途中でノート PC を閉じると何が起きるか</h2>
 
   <p>終業間際にエージェントへ大きなリファクタリングを頼んだとします。少なくとも 20 分はかかり、あなたはもう席を立ちます。</p>
 
@@ -108,7 +126,7 @@
 </section>
 
 <section id="why-not-vnc">
-  <h2>「リモートデスクトップを使えばいいのでは？」</h2>
+  <h2 id="sec-3">「リモートデスクトップを使えばいいのでは？」</h2>
 
   <p>いちばんよく出る反論であり、理屈の上では筋が通っています。向こうのマシンではデスクトップが動いたままなのだから、VNC で繋ぎ直せば Cursor も開いたままで解決する、と見えます。</p>
   <p>しかし実際には、両者が送っているものが違います。<strong>VNC はピクセルを送り、SSH は文字を送ります。</strong>画面全体の更新 1 回が画像データなら数百キロバイトから数メガバイトになるところ、同じ画面を文字として送れば数キロバイトのテキストで済みます。およそ 3 桁の差です。</p>
@@ -117,7 +135,7 @@
 </section>
 
 <section id="honest-ending">
-  <h2>机の前では IDE のほうが優れていることも多い</h2>
+  <h2 id="sec-4">机の前では IDE のほうが優れていることも多い</h2>
 
   <p>机の前では IDE のほうが優れている場面が多いです。定義ジャンプ、リファクタリング機能、デバッガなどは、どれもスマホ回線越しには使えません。<strong>IDE は「自分がそこにいて操縦するとき」に向き、CLI エージェント＋リモート接続は「走らせておいて様子を見に来るとき」に向きます。</strong></p>
   <p>併用できるなら両方使うのがいちばんです。机にいる間は Mac の IDE を使い、席を離れたら Agentmux で同じプロジェクトの同じエージェントに再合流します。</p>
@@ -165,7 +183,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

@@ -42,26 +42,49 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-TW/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/?choose=1">語言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">繁體中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-tailscale/" hreflang="zh-TW" aria-current="page">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-tailscale/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-tailscale/" hreflang="ja">日本語</a>
+        <a href="/guide/en/what-is-tailscale/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-TW/">首頁</a><span aria-hidden="true">/</span><a href="/guide/zh-TW/">指南首頁</a><span aria-hidden="true">/</span><span aria-current="page">不要對公網開 port</span></nav>
         <article class="guide-article">
             <h1>不要對公網開 port</h1>
+            <details class="guide-toc">
+    <summary>本頁目錄</summary>
+    <ol>
+        <li><a href="#sec-1">傳統解法是路由器上的三件事</a></li>
+        <li><a href="#sec-2">port forwarding 加動態 IP 為什麼一直出包？</a></li>
+        <li><a href="#sec-3">Tailscale 做了什麼？</a></li>
+        <li><a href="#sec-4">手機也在 NAT 後面，mesh 為什麼還行？</a></li>
+        <li><a href="#sec-5">你的機器多了一個只有你連得到的位址</a></li>
+        <li><a href="#sec-6">你該打的是哪個位址？</a></li>
+        <li><a href="#sec-7">這樣做你要付出什麼？</a></li>
+        <li><a href="#sec-8">私人網路不是改回密碼的理由</a></li>
+        <li><a href="#sec-9">什麼時候不需要 Tailscale？</a></li>
+    </ol>
+</details>
             <p>在家裡的電腦和手上的手機都安裝 Tailscale，兩邊登入同一個帳號，接著 SSH 連線時填那台機器的 MagicDNS 名稱或 <code>100.x</code> 開頭的位址。Tailscale 在你自己的裝置之間建立 WireGuard 加密 mesh，所以不需要對公網開放任何 port，也不需要一個固定的公網位址。</p>
 <p>agent 在你關掉手機之後還能繼續跑，但光是這樣還不夠，你得先有一個安全的入口可以連回去。最直覺的做法是把家裡的 22 port 開到公網，而那也最快出事：掃描機器人對全世界的位址全天候敲 22 port，失敗的登入記錄不到一天就會堆起來。</p>
 <p>第二個問題比較無聊，也更難避開。你家的對外 IP 幾乎一定是動態的，每隔一陣子換一次號碼；機器又躲在 NAT 後面，跟家裡其他裝置共用那一個對外位址。那裡本來就沒有公網位址可以開。</p>
 
 <section id="the-old-way">
-  <h2>傳統解法是路由器上的三件事</h2>
+  <h2 id="sec-1">傳統解法是路由器上的三件事</h2>
   <p>以前的做法是自己進路由器打通：port forwarding 把公網某個 port 轉給家裡那台機器，DDNS 把主機名稱綁到當下那個 IP，或是向 ISP 買固定 IP，然後自己維護防火牆規則，擋掉除你以外的每一個人。</p>
   <p>每一步都要對。錯一步，要嘛連不進去，要嘛整個家用網路暴露在外。就算全部設定正確，那扇門也永遠開在公網上，你在不在家都一樣。</p>
 </section>
@@ -74,7 +97,7 @@
 </aside>
 
 <section id="why-port-forwarding-plus-a-dynamic-ip-breaks">
-  <h2>port forwarding 加動態 IP 為什麼一直出包？</h2>
+  <h2 id="sec-2">port forwarding 加動態 IP 為什麼一直出包？</h2>
   <p>這裡有四個會動的零件，每一個都可以在最不方便的時候鬆掉。</p>
   <ul>
     <li><strong>位址會變。</strong>ISP 重新連線就換號碼，DDNS 客戶端要幾分鐘才跟上。每次換號碼之後都有一段時間，你存好的那個名稱連不回家；如果那次更新發生在你出門時，名稱從此指向別人的網路。</li>
@@ -86,26 +109,26 @@
 </section>
 
 <section id="what-tailscale-does">
-  <h2>Tailscale 做了什麼？</h2>
+  <h2 id="sec-3">Tailscale 做了什麼？</h2>
   <p>Tailscale 是一個 WireGuard mesh。每台裝置都裝好、都登入同一個帳號，裝置之間就會直接建立一條加密連線。這麼做沒有一個對外入口，公網上也沒有 port 等著被掃描。</p>
   <p>每台裝置產生一對 WireGuard 金鑰，私鑰那半從不離開裝置。公鑰拿去互相交換，交換完成，隧道就建立了。帳號那一側是帳務工作：讓裝置彼此認識、記下每台裝置現在從哪裡連得到、發出公網不會路由的私有位址。</p>
   <p>MagicDNS 給每台裝置一個你記得起來的名稱，名稱解析由 Tailscale 自己處理，你不用碰那個會變的 IP。裝置在 NAT 後面、位址昨晚換過、從家裡的 Wi-Fi 切到行動網路，這些變化它在背後就處理好了。</p>
 </section>
 
 <section id="why-the-mesh-works-on-a-phone-network">
-  <h2>手機也在 NAT 後面，mesh 為什麼還行？</h2>
+  <h2 id="sec-4">手機也在 NAT 後面，mesh 為什麼還行？</h2>
   <p>行動網路讓問題更糟。手機也沒有可以被連進來的公網位址：在 4G、5G 之下，它躲在 carrier-grade NAT 後面，跟大量使用者共用同一個對外位址。所以靠別人從外面敲門的做法，兩端同時失效。</p>
   <p>mesh 是反過來的設計：兩邊都只需要往外送封包。手機送一顆，機器送一顆，雙方各自知道對方看起來在哪裡，再試著穿過自己的 NAT 開出一條直連。加密由 WireGuard 負責，介紹由 mesh 負責。找不到直連時，流量改走中繼站，連線不會斷，也仍然是端到端加密。</p>
 </section>
 
 <section id="mental-model">
-  <h2>你的機器多了一個只有你連得到的位址</h2>
+  <h2 id="sec-5">你的機器多了一個只有你連得到的位址</h2>
   <p>你家那台機器多了一個私有位址。只有登入同一個 Tailscale 帳號的裝置看得到它、連得到它。掃描機器人不知道它存在，因為它從沒出現在公網上，而你的路由器什麼都沒改。</p>
   <p>從這裡開始，你的 SSH 連線打的就是這個位址，不再是那個天天被人敲門的 22 port。</p>
 </section>
 
 <section id="which-address-to-type">
-  <h2>你該打的是哪個位址？</h2>
+  <h2 id="sec-6">你該打的是哪個位址？</h2>
   <p>區網那個不是答案。同一台機器在這個架構下同時有三個位址，只有兩個值得存進 app。</p>
 
   <div class="table-wrap"><table>
@@ -141,7 +164,7 @@
 </section>
 
 <section id="what-it-costs-you">
-  <h2>這樣做你要付出什麼？</h2>
+  <h2 id="sec-7">這樣做你要付出什麼？</h2>
   <p>有三筆成本，最好在你擠進捷運之前就知道。</p>
   <p><strong>機器上多一個常跑的程式。</strong>它隨開機啟動、偶爾自己更新、也有自己的 bug。機器連不到的時候，要多排除一個嫌疑犯，才輪到 SSH。</p>
   <p><strong>多了一個控制面，而你在最壞的時刻需要它。</strong>流量直接走裝置對裝置，但裝置之間的介紹不是這樣。新的筆電、剛換掉的手機、過期的憑證，在它們重新登入之前都不在你的網路裡。如果那次重新登入發生在你出門時，機器好好的，你就是連不到。另外留一條不經過它的進入方式。</p>
@@ -149,14 +172,14 @@
 </section>
 
 <section id="keys-still-matter">
-  <h2>私人網路不是改回密碼的理由</h2>
+  <h2 id="sec-8">私人網路不是改回密碼的理由</h2>
   <p>有一個看起來合理的推論：公網連不到的機器，門上不必上鎖。這個推論錯了，那台機器還是要上鎖，而且有兩個理由。</p>
   <p>mesh 的安全現在就是帳號的安全。任何能登入的裝置都在網路裡面，也就是多了一台你已經信任的裝置。忘在計程車上的筆電不是掉在公開的 Wi-Fi 上，是在你自己蓋的網路裡面，每台機器都連得到，也沒有別的東西攔它。金鑰的好處是那一台裝置還是得證明自己是誰，才走得到下一步。</p>
   <p>第二個理由是多一層防線：mesh 讓外面的人進不來，金鑰讓已經在裡面的陌生人走不下去。兩件獨立的事情都失效，才會有人動到你的專案。密碼是一個猜得中的東西，金鑰不是。<a href="/guide/zh-TW/what-is-ssh/">金鑰怎麼完成證明</a>，寫在 SSH 那一篇。</p>
 </section>
 
 <section id="when-you-dont-need-tailscale">
-  <h2>什麼時候不需要 Tailscale？</h2>
+  <h2 id="sec-9">什麼時候不需要 Tailscale？</h2>
   <p>如果機器和手機永遠都在同一個 Wi-Fi 底下，跳過這一步。區網位址就能用，不用裝東西，也不用登入帳號。缺點是你一走出家門就全部失效，而這篇處理的正是出門之後。</p>
   <p>自己租的伺服器是另一種情況。位址不會動，沒有路由器要設定，玩壞了也不會把自己鎖在外面。換過來的風險是 22 port 永遠面對公網。有人還是會在上面跑 mesh，把 SSH 收到私有位址後面；有人讓它維持公開，完全依賴金鑰。兩種都可行，不可行的只有一種：暴露在公網上的 port 用密碼登入。</p>
   <p>如果你已經透過別人管理的網路連到那台機器，例如公司的 VPN，就走那條路。兩條重疊的隧道不會讓你更容易連上，只會讓除錯更難。如果你不確定自己屬於哪一種，<a href="/guide/zh-TW/setup/">設定頁</a>會問三個問題，然後回給你一張排好的清單。</p>
@@ -205,7 +228,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首頁</a>
+            <a href="/zh-TW/">首頁</a>
             <a href="/privacy.html">隱私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>

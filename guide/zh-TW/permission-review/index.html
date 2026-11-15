@@ -42,20 +42,43 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-TW/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/?choose=1">語言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">繁體中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/permission-review/" hreflang="zh-TW" aria-current="page">繁體中文</a>
+        <a href="/guide/zh-Hans/permission-review/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/permission-review/" hreflang="ja">日本語</a>
+        <a href="/guide/en/permission-review/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-TW/">首頁</a><span aria-hidden="true">/</span><a href="/guide/zh-TW/">指南首頁</a><span aria-hidden="true">/</span><span aria-current="page">AI 自動權限審查：agent 問你時，誰來回答</span></nav>
         <article class="guide-article">
             <h1>AI 自動權限審查：agent 問你時，誰來回答</h1>
+            <details class="guide-toc">
+    <summary>本頁目錄</summary>
+    <ol>
+        <li><a href="#sec-1">agent 停下來等你，審查才開始</a></li>
+        <li><a href="#sec-2">它只讀目前畫面上那一個提示</a></li>
+        <li><a href="#sec-3">黑名單永遠先跑，而且就在手機上</a></li>
+        <li><a href="#sec-4">白名單命中，就不用等 AI</a></li>
+        <li><a href="#sec-5">AI 能決定什麼，不能決定什麼？</a></li>
+        <li><a href="#sec-6">顧問只給建議，自動回覆幫你按</a></li>
+        <li><a href="#sec-7">哪些情況一定交回給你？</a></li>
+        <li><a href="#sec-8">要怎麼打開它？</a></li>
+        <li><a href="#sec-9">哪些資料會離開你的裝置？</a></li>
+    </ol>
+</details>
             <p>AI 自動權限審查替你回答 agent 的權限提示：黑名單先擋下危險指令，白名單放行你已經信任的指令，兩邊都沒命中的才交給 AI 判斷。判斷為允許時，顧問模式給你建議，自動回覆模式幫你按下那個鍵。</p>
 <p>agent 跑到一半停下來問「要不要執行這個指令？」，而你剛好不在螢幕前，整個任務就卡在那裡，等這一個按鍵。</p>
 <p>AI 自動權限審查就是為這一刻做的。它回答 agent 的提示，一次只按一個鍵，不會替你打指令，也不會去碰畫面上以外的東西。</p>
@@ -73,7 +96,7 @@
 </figure>
 
 <section id="when-it-starts">
-  <h2>agent 停下來等你，審查才開始</h2>
+  <h2 id="sec-1">agent 停下來等你，審查才開始</h2>
   <p>Agentmux 本來就會辨識 Claude Code、Codex 這類 agent 的狀態。畫面出現「要不要允許」或「選 1 還是 2」這種提示時，它就把那個工作階段標記成等待中，審查從這一刻開始。</p>
   <p>同時要符合這幾個條件：</p>
   <ul>
@@ -93,13 +116,13 @@
 </aside>
 
 <section id="read-the-screen">
-  <h2>它只讀目前畫面上那一個提示</h2>
+  <h2 id="sec-2">它只讀目前畫面上那一個提示</h2>
   <p>它先從畫面上找出目前那一個提示：要執行的指令、問題本身，還有可以選的選項。已經捲上去的舊內容不算數。</p>
   <p>送給 AI 之前，它會先把畫面裡看起來像密碼、API key、token 的內容遮蔽掉。遮蔽失敗時，原始內容不會送出，這一次也不幫你按任何鍵。</p>
 </section>
 
 <section id="blacklist">
-  <h2>黑名單永遠先跑，而且就在手機上</h2>
+  <h2 id="sec-3">黑名單永遠先跑，而且就在手機上</h2>
   <p>黑名單在你的手機上比對，永遠第一個檢查。命中就不會送給 AI，直接交給你處理。內建規則涵蓋最危險的幾類操作：</p>
   <ul>
     <li>對 <code>/</code>、<code>~</code> 或家目錄執行 <code>rm -rf</code></li>
@@ -113,14 +136,14 @@
 </section>
 
 <section id="allowlist">
-  <h2>白名單命中，就不用等 AI</h2>
+  <h2 id="sec-4">白名單命中，就不用等 AI</h2>
   <p>有些指令你每天都在按「允許」，例如跑測試或 build。把它們加進白名單，下次命中時，手機自己就決定要按哪個鍵，不用等 AI，也不花 API 用量。</p>
   <p>「自動回覆」模式下，你還可以對單一工作階段開啟「允許此工作階段中的所有命令」。這樣會跳過 AI 判斷，黑名單照樣有效，工作階段結束就自動關掉。</p>
   <p>白名單命中了，但畫面上找不到明確又安全的鍵時，一樣交給你。</p>
 </section>
 
 <section id="ai-judgment">
-  <h2>AI 能決定什麼，不能決定什麼？</h2>
+  <h2 id="sec-5">AI 能決定什麼，不能決定什麼？</h2>
   <p>黑名單和白名單都沒命中的提示，才會送給 AI。它看到的是遮蔽過的畫面，加上你寫的<strong>主要意圖</strong>，也就是你這次要 agent 做什麼，例如「修好登入頁的測試」。</p>
   <p>你可以選兩種引擎：</p>
   <ul>
@@ -131,7 +154,7 @@
 </section>
 
 <section id="finish">
-  <h2>顧問只給建議，自動回覆幫你按</h2>
+  <h2 id="sec-6">顧問只給建議，自動回覆幫你按</h2>
   <p>每個工作階段可以分別選模式：</p>
   <ul>
     <li><strong>顧問</strong>（預設）：只給建議。畫面上方會跳出提示，告訴你它建議按什麼，旁邊有「採納」按鈕，按下去才會送出。</li>
@@ -142,7 +165,7 @@
 </section>
 
 <section id="handed-to-you">
-  <h2>哪些情況一定交回給你？</h2>
+  <h2 id="sec-7">哪些情況一定交回給你？</h2>
   <ul>
     <li>命中黑名單。</li>
     <li>AI 判斷為拒絕或不確定。</li>
@@ -155,7 +178,7 @@
 </section>
 
 <section id="get-started">
-  <h2>要怎麼打開它？</h2>
+  <h2 id="sec-8">要怎麼打開它？</h2>
   <p>開始之前先準備好其中一種：</p>
   <ul>
     <li>JEV 引擎的 API key，透過 <a href="https://openrouter.ai/keys">OpenRouter</a> 或 TypeSafe 取得。</li>
@@ -171,12 +194,12 @@
 </section>
 
 <section id="privacy">
-  <h2>哪些資料會離開你的裝置？</h2>
+  <h2 id="sec-9">哪些資料會離開你的裝置？</h2>
   <p>離開裝置的只有兩樣：遮蔽過的畫面片段，和你的主要意圖。它們送到你自己設定的 AI 服務，用的是你自己的 API key。開啟「使用我最近的提示」之後，你在那個分頁送出的提示會成為主要意圖，也一起送出。Agentmux 不提供也不經手任何 AI 服務。每次判斷的紀錄只存在你的裝置上，可以在稽核紀錄裡查看或清除。模型的推理內容不會儲存。</p>
 </section>
 
         </article>
-        
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="上一篇" href="/guide/zh-TW/windows-server/">上一篇 · 我沒開過終端機<span>你的 Windows 電腦也可以當主機</span></a><a class="pager-prev" data-tracks="cliuser" data-label="上一篇" href="/guide/zh-TW/claude-code-on-iphone/">上一篇 · 我已經在跑 CLI agent<span>在 iPhone、iPad 上跑 Claude Code</span></a></nav>
         <script>
             // If the reader picked a track on the guide index, keep only that
             // track's neighbours and restore the plain labels. Runs
@@ -216,7 +239,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首頁</a>
+            <a href="/zh-TW/">首頁</a>
             <a href="/privacy.html">隱私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>

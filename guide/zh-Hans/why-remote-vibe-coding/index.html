@@ -42,25 +42,44 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-Hans/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-Hans/">指南首页</a>
                 <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
-                <a class="lang-switch" href="/guide/?choose=1">语言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">简体中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/why-remote-vibe-coding/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/why-remote-vibe-coding/" hreflang="zh-Hans" aria-current="page">简体中文</a>
+        <a href="/guide/ja/why-remote-vibe-coding/" hreflang="ja">日本語</a>
+        <a href="/guide/en/why-remote-vibe-coding/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-Hans/">首页</a><span aria-hidden="true">/</span><a href="/guide/zh-Hans/">指南首页</a><span aria-hidden="true">/</span><span aria-current="page">你的 AI 应该在你睡觉时工作</span></nav>
         <article class="guide-article">
             <h1>你的 AI 应该在你睡觉时工作</h1>
+            <details class="guide-toc">
+    <summary>本页目录</summary>
+    <ol>
+        <li><a href="#sec-1">时间花到哪里去了？</a></li>
+        <li><a href="#sec-2">传统做法把待命绑死在一台笔记本上</a></li>
+        <li><a href="#sec-3">哪三个零件解开这个绑定？</a></li>
+        <li><a href="#sec-4">待命的成本是一部手机加十五秒</a></li>
+        <li><a href="#sec-5">还有其他做法能接到自己的 agent 吗？</a></li>
+    </ol>
+</details>
             <p>CLI agent 真正的成本是待命，不是打字：你讲三十秒，接下来几个小时不能离开座位。把它跑在你从来没关过的机器上，用 tmux 让 session 掉线照跑，再用 SSH 加 Tailscale 从手机接回去，待命就变成一部手机加十五秒，而它在你睡觉的时候继续工作。</p>
 <p>如果你已经在用 Claude Code 或 Codex，大概感受过这件事：干活的是它，被绑住的是你。会被绑住不是因为你不肯放手，是因为那个 agent 只住在你这台机器上的一个窗口里。</p>
 
 <section id="the-cycle">
-  <h2>时间花到哪里去了？</h2>
+  <h2 id="sec-1">时间花到哪里去了？</h2>
 
   <p>一轮 CLI agent 的工作，节奏几乎都是同一个样子：</p>
   <pre><code>你讲 30 秒 → 它跑 5–20 分钟 → 它需要你决定一件事 → 重复</code></pre>
@@ -76,7 +95,7 @@
 </aside>
 
 <section id="the-binding">
-  <h2>传统做法把待命绑死在一台笔记本上</h2>
+  <h2 id="sec-2">传统做法把待命绑死在一台笔记本上</h2>
 
   <p>这种待命有一个物理位置。agent 跑在你笔记本的终端窗口里，窗口连着那个 shell，shell 连着那台不能关掉的机器。于是你只有两个选择：</p>
   <p><strong>坐着等。</strong>人留在椅子上，盯着那个大部分时间什么都不发生的画面，只为了在它问的时候三十秒内回话。一小时换三句回复。</p>
@@ -85,7 +104,7 @@
 </section>
 
 <section id="three-parts">
-  <h2>哪三个零件解开这个绑定？</h2>
+  <h2 id="sec-3">哪三个零件解开这个绑定？</h2>
 
   <p>这个绑定不是一整块，是三层叠起来的。每一层都有现成的标准工具可以拆，而那些工具都已经存在几十年了。单独看，三样都很普通；叠起来才是重点：</p>
 
@@ -114,7 +133,7 @@
 </section>
 
 <section id="the-payoff">
-  <h2>待命的成本是一部手机加十五秒</h2>
+  <h2 id="sec-4">待命的成本是一部手机加十五秒</h2>
 
   <p>三层都拆掉之后，待命的代价从<strong>一台笔记本加一个固定位置</strong>，降到一部手机加十五秒。要确认它跑到哪里，你不用再找桌子、座位和电源。</p>
   <p>只要十五秒，你就不用再排一段时间来盯它。排队看一眼，等红灯看一眼，睡前看一眼，回一句“用第二个方案”，手机收回口袋，agent 继续往前跑。</p>
@@ -122,7 +141,7 @@
 </section>
 
 <section id="alternatives">
-  <h2>还有其他做法能接到自己的 agent 吗？</h2>
+  <h2 id="sec-5">还有其他做法能接到自己的 agent 吗？</h2>
 
   <p>要从远程接到自己的 agent，路不止一条。把这些做法放在同一组标准下比，差别就很清楚，尤其是最后一栏。多数人是事后才发现自己卡在那一栏。</p>
 
@@ -229,7 +248,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首页</a>
+            <a href="/zh-Hans/">首页</a>
             <a href="/privacy.html">隐私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
         </div>

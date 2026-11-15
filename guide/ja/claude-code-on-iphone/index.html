@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/claude-code-on-iphone/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/claude-code-on-iphone/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/claude-code-on-iphone/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/claude-code-on-iphone/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">iPhoneやiPadからClaude Codeを使う</span></nav>
         <article class="guide-article">
             <h1>iPhoneやiPadからClaude Codeを使う</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">Claude Code は iPhone の中で動いているのか</a></li>
+        <li><a href="#sec-2">この順番で整える 3 つの準備</a></li>
+        <li><a href="#sec-3">なぜ素の SSH ウィンドウではエージェントが死ぬのか</a></li>
+        <li><a href="#sec-4">スマートフォンからの作業は実際どんな感覚か</a></li>
+        <li><a href="#sec-5">エージェントは自分の権限確認に自動で答えられるか</a></li>
+        <li><a href="#sec-6">Terminal では動くのに SSH 越しだと claude: command not found になる</a></li>
+        <li><a href="#sec-7">一晩中動かしたままにできるか</a></li>
+        <li><a href="#sec-8">スマートフォンでやること、机でやること</a></li>
+    </ol>
+</details>
             <p>使えます。ただし Claude Code 本体は自分の Mac や Linux マシン上で動き、iPhone で動くわけではありません。接続先のマシンで「リモートログイン」を有効にし、Tailscale 経由で繋いで、名前付きの tmux セッションの中で <code>claude</code> を起動します。</p>
 <p>iPhone が担うのはターミナル画面の表示とキー入力だけです。画面をロックしても、バックエンドのエージェントは動き続けます。この構成で押さえるべきポイントは、回線切断後も処理を生き残らせる方法、SSH 経由でコマンドが見つからない理由、移動中に権限確認プロンプトへどう答えるかの 3 点です。</p>
 
 <section id="what-the-phone-does-not-do">
-  <h2>Claude Code は iPhone の中で動いているのか</h2>
+  <h2 id="sec-1">Claude Code は iPhone の中で動いているのか</h2>
 
   <p>Claude Code は、あなたが所有するマシンのディスク上にあるプログラムです。シェルから起動され、そのマシンのファイルシステム経由でプロジェクトを読み、<code>git</code> やテストを実行し、編集結果を同じディレクトリへ書き戻します。</p>
   <p>iPhone とマシンの間でやり取りされるのは、送信するキー入力と返ってくる文字列の 2 つだけです。エージェントは iPhone にインストールされず、リポジトリのコピーも転送されません。iPhone は別のコンピュータで動いているセッションの画面を描画しているだけです。</p>
@@ -79,7 +101,7 @@
 </aside>
 
 <section id="three-things-before-the-phone-matters">
-  <h2>この順番で整える 3 つの準備</h2>
+  <h2 id="sec-2">この順番で整える 3 つの準備</h2>
 
   <p>1 つでも抜けると機能しないため、次の順番通りに設定してください。</p>
 
@@ -101,7 +123,7 @@ tmux attach -t work  # その画面にアタッチ</code></pre>
 </section>
 
 <section id="why-a-plain-ssh-window-kills-the-agent">
-  <h2>なぜ素の SSH ウィンドウではエージェントが死ぬのか</h2>
+  <h2 id="sec-3">なぜ素の SSH ウィンドウではエージェントが死ぬのか</h2>
 
   <p>tmux を使わずに SSH でログインし、<code>claude</code> を実行してから iPhone をポケットに入れて画面をロックしたとします。</p>
   <p>iPhone からのパケットが止まると接続がタイムアウトして切断されます。sshd はその接続に紐づいていた擬似端末（PTY）を閉じ、カーネルはその端末に繋がっていたすべてのプロセス（シェルと、その中の Claude Code）へ <strong>SIGHUP</strong> を送ります。どちらも既定の動作として終了するため、20 分かけて読み込んだコンテキストごと編集の途中で消滅します。</p>
@@ -109,7 +131,7 @@ tmux attach -t work  # その画面にアタッチ</code></pre>
 </section>
 
 <section id="what-working-from-a-phone-is-actually-like">
-  <h2>スマートフォンからの作業は実際どんな感覚か</h2>
+  <h2 id="sec-4">スマートフォンからの作業は実際どんな感覚か</h2>
 
   <p>スマートフォンに向いているのは「一度に 1 つの判断」です。ちょうどエージェントの作業サイクルもその単位で回ります。エージェントが計画を提示し、こちらは承認するか一文だけ修正を返します。「シリアライザは触らないで、エクスポート処理で使っている」といった 2 行の指示を返したら、またポケットにしまえます。</p>
   <p>最初にぶつかる壁はソフトウェアキーボードです。バッククォート、パイプ、引用符、バックスラッシュ、チルダは 2 階層奥にあり、<code>~/src/auth/session.ts</code> を打つだけでも時間がかかります。1 セグメント打ち間違えるだけでやり直しです。長文のプロンプトは見た目以上に推敲しづらいため、メモアプリで下書きしてから貼り付ける人も多くいます。</p>
@@ -121,7 +143,7 @@ tmux attach -t tests    # 様子を見てからデタッチ</code></pre>
 </section>
 
 <section id="answering-permission-prompts-from-the-phone">
-  <h2>エージェントは自分の権限確認に自動で答えられるか</h2>
+  <h2 id="sec-5">エージェントは自分の権限確認に自動で答えられるか</h2>
 
   <p>Claude Code は思いついた操作をすべて無条件に実行するわけではありません。コマンドを実行する前（設定によってはファイルを編集する前）に停止し、「このコマンドを実行してよいか？」と尋ねてきます。この停止で作業が止まるため、人間しか答えられない状態だと待ち時間がボトルネックになります。</p>
   <p><a href="/guide/ja/permission-review/">AI 自動権限レビュー</a>は、この権限プロンプトだけを対象に画面を読み取り、キーを提案または入力します。まず<strong>ブラックリスト</strong>が危険なコマンドを弾き、一致したものは必ずあなたへ渡します。次に<strong>許可リスト</strong>が信頼済みのコマンドを端末内で即決します。どちらにも当てはまらないものだけが <strong>AI 判定</strong>（許可／拒否／保留）に送られ、拒否と保留はあなたへ戻されます。最後にセッションのモードに応じて、キーを<strong>提案</strong>するだけか<strong>自動押下</strong>するかが決まります。</p>
@@ -130,7 +152,7 @@ tmux attach -t tests    # 様子を見てからデタッチ</code></pre>
 </section>
 
 <section id="claude-command-not-found-over-ssh">
-  <h2>Terminal では動くのに SSH 越しだと claude: command not found になる</h2>
+  <h2 id="sec-6">Terminal では動くのに SSH 越しだと claude: command not found になる</h2>
 
   <p>同じマシン、同じアカウントなのに、Terminal では <code>claude</code> が起動し、SSH 経由では <code>claude: command not found</code> と表示される。リモート環境が壊れたように見えますが、これは導入時にもっともよくある失敗です。</p>
   <p>npm でのインストールや nvm が管理する Node バージョンは、<em>対話的ログインシェル</em>だけが読み込む起動ファイルに PATH を追記します。一方、<code>ssh host claude</code> のように単発コマンドを実行する接続は非対話シェルを起動するため、その起動ファイルを読み込まず PATH が通りません。</p>
@@ -143,7 +165,7 @@ tmux attach -t tests    # 様子を見てからデタッチ</code></pre>
 </section>
 
 <section id="running-overnight-and-the-honest-limits">
-  <h2>一晩中動かしたままにできるか</h2>
+  <h2 id="sec-7">一晩中動かしたままにできるか</h2>
 
   <p>スリープしないマシン上のセッションなら一晩中動かせます。夜 11 時にリファクタリングを投げて、朝コーヒーを飲みながら結果を確認する使い方も可能です。ただし、邪魔をする要因が 3 つあります。</p>
   <p><strong>マシンが起きている必要がある。</strong>Mac がアイドルスリープに入るとネットワークインターフェースも止まるため、リモートログインがオンでも応答できなくなります。ノート型なら「システム設定」→「バッテリー」、デスクトップ型なら「省エネルギー」で自動スリープを延長または無効にし、「ネットワークアクセスによるスリープ解除」があればオンにしてください。</p>
@@ -153,7 +175,7 @@ tmux attach -t tests    # 様子を見てからデタッチ</code></pre>
 </section>
 
 <section id="phone-or-desk">
-  <h2>スマートフォンでやること、机でやること</h2>
+  <h2 id="sec-8">スマートフォンでやること、机でやること</h2>
 
   <div class="table-wrap"><table>
     <thead>
@@ -173,7 +195,7 @@ tmux attach -t tests    # 様子を見てからデタッチ</code></pre>
 </section>
 
         </article>
-        <nav class="guide-pager"><a class="pager-prev" data-tracks="cliuser" data-label="前へ" href="/guide/ja/windows-server/">前へ<span>Windows PCもそのままサーバーになる</span></a></nav>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="cliuser" data-label="前へ" href="/guide/ja/windows-server/">前へ<span>Windows PCもそのままサーバーになる</span></a><a class="pager-next" data-tracks="cliuser" data-label="次へ" href="/guide/ja/permission-review/">次へ<span>AI権限レビュー：エージェントの確認に誰が答えるか</span></a></nav>
         <script>
             // If the reader picked a track on the guide index, keep only that
             // track's neighbours and restore the plain labels. Runs
@@ -213,7 +235,7 @@ tmux attach -t tests    # 様子を見てからデタッチ</code></pre>
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

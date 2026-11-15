@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/troubleshooting/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/troubleshooting/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/troubleshooting/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/troubleshooting/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">つまずいたらここから</span></nav>
         <article class="guide-article">
             <h1>つまずいたらここから</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">接続がタイムアウトする（Operation timed out）</a></li>
+        <li><a href="#sec-2">Permission denied (publickey)</a></li>
+        <li><a href="#sec-3">パスワードは合っているのに拒否される</a></li>
+        <li><a href="#sec-4">tmux not found</a></li>
+        <li><a href="#sec-5">Terminal では動くのに claude: command not found になる</a></li>
+        <li><a href="#sec-6">Tailscale は接続済みなのに SSH で繋がらない</a></li>
+        <li><a href="#sec-7">リモートログインがオンなのに Mac が接続を拒否する</a></li>
+        <li><a href="#sec-8">sudo: a terminal is required to read the password</a></li>
+    </ol>
+</details>
             <p>SSH・tmux・Tailscale を使ったリモート開発が止まる原因は、おおむね 8 つの典型パターンに収まります。タイムアウト、鍵やパスワードの拒否、<code>tmux</code> や <code>claude</code> が見つからないエラー、Tailscale や Mac の接続拒否、非対話での <code>sudo</code> 失敗です。</p>
 <p>前の記事通りに組めば大半は初回で動きます。動かないときもほぼこの 8 つのどれかに当てはまるため、出たエラーメッセージの項目へ直接飛んでください。上から順に読む必要はありません。</p>
 
 <section id="cannot-connect">
-  <h2>接続がタイムアウトする（Operation timed out）</h2>
+  <h2 id="sec-1">接続がタイムアウトする（Operation timed out）</h2>
 
   <h3>症状</h3>
   <p><code>ssh user@host</code> を実行しても画面が止まったままになり、しばらく待ったあとに <code>Operation timed out</code> または <code>Connection timed out</code> が出ます。パスワードを聞かれる段階まで進みません。</p>
@@ -91,7 +113,7 @@
 </aside>
 
 <section id="permission-denied-publickey">
-  <h2>Permission denied (publickey)</h2>
+  <h2 id="sec-2">Permission denied (publickey)</h2>
 
   <h3>症状</h3>
   <p>接続した瞬間に拒否され、<code>Permission denied (publickey).</code> と表示されます。パスワードの入力も求められません。</p>
@@ -121,7 +143,7 @@
 </section>
 
 <section id="password-rejected">
-  <h2>パスワードは合っているのに拒否される</h2>
+  <h2 id="sec-3">パスワードは合っているのに拒否される</h2>
 
   <h3>症状</h3>
   <p>パスワードは確実に合っており貼り付けも試したのに、SSH が <code>Permission denied, please try again.</code> を返し続けます。パスワードを聞かれずに終了することもあります。</p>
@@ -150,7 +172,7 @@ Match All
 </section>
 
 <section id="tmux-not-found">
-  <h2>tmux not found</h2>
+  <h2 id="sec-4">tmux not found</h2>
 
   <h3>症状</h3>
   <p>Agentmux が tmux を見つけられないと表示する、または自分で接続して <code>tmux</code> を実行すると <code>command not found: tmux</code> になる。</p>
@@ -190,7 +212,7 @@ winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-sou
 </section>
 
 <section id="agent-command-not-found">
-  <h2>Terminal では動くのに claude: command not found になる</h2>
+  <h2 id="sec-5">Terminal では動くのに claude: command not found になる</h2>
 
   <h3>症状</h3>
   <p>Mac の Terminal で <code>claude</code> と打つと起動するのに、Agentmux 経由や <code>ssh host claude</code> で直接実行すると <code>claude: command not found</code> や <code>bash: claude: command not found</code> になる。同じマシン・同じアカウントなので Agentmux の不具合に見えます。</p>
@@ -227,7 +249,7 @@ esac</code></pre>
 </section>
 
 <section id="tailscale-connected-but-ssh-fails">
-  <h2>Tailscale は接続済みなのに SSH で繋がらない</h2>
+  <h2 id="sec-6">Tailscale は接続済みなのに SSH で繋がらない</h2>
 
   <h3>症状</h3>
   <p>スマートフォンの Tailscale アプリでは両方の端末が緑色のオンライン表示になっているのに、Agentmux や素の <code>ssh</code> で接続すると失敗またはタイムアウトする。</p>
@@ -249,7 +271,7 @@ esac</code></pre>
 </section>
 
 <section id="mac-remote-login">
-  <h2>リモートログインがオンなのに Mac が接続を拒否する</h2>
+  <h2 id="sec-7">リモートログインがオンなのに Mac が接続を拒否する</h2>
 
   <h3>症状</h3>
   <p>システム設定で「リモートログイン」が有効になっており Mac も確実にネットワークに繋がっているのに、SSH で接続できない。あるいは接続できても、正しいはずのパスワードや鍵で拒否される。</p>
@@ -267,7 +289,7 @@ esac</code></pre>
 </section>
 
 <section id="sudo-needs-tty">
-  <h2>sudo: a terminal is required to read the password</h2>
+  <h2 id="sec-8">sudo: a terminal is required to read the password</h2>
 
   <h3>症状</h3>
   <p>Agentmux や SSH 経由で <code>sudo</code> を含むコマンドを実行すると、実行された気配もなく即座に <code>sudo: a terminal is required to read the password</code> で失敗する。</p>
@@ -328,7 +350,7 @@ esac</code></pre>
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

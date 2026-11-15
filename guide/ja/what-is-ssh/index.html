@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-ssh/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-ssh/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-ssh/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/what-is-ssh/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">SSHは自分のマシンへの暗号化トンネル</span></nav>
         <article class="guide-article">
             <h1>SSHは自分のマシンへの暗号化トンネル</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">自分のマシンを使う理由</a></li>
+        <li><a href="#sec-2">実際に指定する 3 つの項目：ホスト、ユーザー、ポート</a></li>
+        <li><a href="#sec-3">なぜ LAN アドレスやグローバル IP を使わないのか</a></li>
+        <li><a href="#sec-4">鍵認証はより安全で入力の手間も減る</a></li>
+        <li><a href="#sec-5">アプリは鍵をどこに保存するのか</a></li>
+        <li><a href="#sec-6">初回接続時にフィンガープリントの確認が出る理由</a></li>
+        <li><a href="#sec-7">自分のパソコンをサーバーに作り変える必要があるのか</a></li>
+        <li><a href="#sec-8">SSH は VPN でもリモートデスクトップでもない</a></li>
+    </ol>
+</details>
             <p>SSH は、あなたの端末と別のコンピュータを結ぶ暗号化された通信路です。あなたがキー入力を送り、向こうのマシンがコマンドを実行し、その出力が返ってくる間、途中の経路の誰も内容を読むことはできません。コーディングエージェントをリモートで動かすとき、スマホからエージェントが動くマシンへ到達するための手段が SSH です。</p>
 <p>前の記事では、エージェントがいちばん力を発揮するのはファイルシステムへのフルアクセスと実行権限を持つターミナルの中だと述べました。そのターミナルはポケットの中にある必要はありません。スマホから経路さえ届けば、自宅で電源を入れっぱなしの Mac mini でも、オフィスのワークステーションでも構いません。</p>
 
 <section id="another-machine">
-  <h2>自分のマシンを使う理由</h2>
+  <h2 id="sec-1">自分のマシンを使う理由</h2>
   <p>ブラウザ型エージェントやクラウド IDE も別のマシンに接続します。違いは、それが誰のマシンかです。</p>
   <p>SSH が繋ぐのはあなた自身のマシンです。ファイルも API キーもすでにそこにあり、インストールしたパッケージも設定した環境変数もすべて揃っています。他人のサーバーへ何かを移す必要はなく、加えた変更も作ったその場に留まるため、あとから同期し直す手間もありません。</p>
   <p>トレードオフも反対側にあります。常時稼働できるマシンを 1 台も持っていない場合や、チーム全員にまったく同じ初期環境を配る必要がある場合はクラウド環境のほうが適しています。自分のマシンは、電源が入っていて、到達できて、自分でセットアップしてある必要があります。</p>
@@ -74,7 +96,7 @@
 </aside>
 
 <section id="host-user-port">
-  <h2>実際に指定する 3 つの項目：ホスト、ユーザー、ポート</h2>
+  <h2 id="sec-2">実際に指定する 3 つの項目：ホスト、ユーザー、ポート</h2>
   <p>すべての SSH 接続には 3 つの要素が必要で、コマンドにすると 1 行に収まります。</p>
   <pre><code>ssh -p 22 sax@mac-mini</code></pre>
   <div class="table-wrap"><table>
@@ -91,7 +113,7 @@
 </section>
 
 <section id="lan-or-public-ip">
-  <h2>なぜ LAN アドレスやグローバル IP を使わないのか</h2>
+  <h2 id="sec-3">なぜ LAN アドレスやグローバル IP を使わないのか</h2>
   <p>ネットワーク設定を開いて最初に見つかるアドレスは、<code>192.168.1.23</code> のような値です。同じ Wi-Fi に繋いだノート PC からならそれで繋がりますし、それが用途です。しかしこれはルーターが配ったプライベートアドレスであり、自宅のネットワーク内でしか通用しません。モバイル回線上のスマホからはそこへの経路がありません。</p>
   <p>2 つ目は、自宅回線のグローバルアドレスを使い、ルーターでポート転送を設定してマシンへ通す方法です。技術的には動きますが、避けるべき道です。</p>
   <p>スキャンボットは世界中の全アドレスに対して 24 時間ログインを試みており、ポートを公開すれば 1 日以内にアクセス試行が集まり始めます。ルーター設定を 1 か所間違えれば、自宅ネットワーク全体が外に開いてしまいます。</p>
@@ -99,7 +121,7 @@
 </section>
 
 <section id="keys-vs-passwords">
-  <h2>鍵認証はより安全で入力の手間も減る</h2>
+  <h2 id="sec-4">鍵認証はより安全で入力の手間も減る</h2>
   <p>SSH にはパスワード認証と鍵認証があり、よく「セキュリティ対利便性」の二択のように語られます。しかし鍵認証はその両方で勝っています。</p>
   <p>鍵ペアは 2 つの小さなテキストファイルです。秘密鍵は接続する側の端末に置き、公開鍵は接続先のマシン（そのアカウントの <code>~/.ssh</code> ディレクトリ内にある <code>authorized_keys</code>）にコピーします。</p>
   <p>計算は一方向で、秘密鍵から公開鍵は作れても、公開鍵から秘密鍵を復元することはできません。<code>ssh-keygen</code> を使えば数秒で作れます。</p>
@@ -111,25 +133,25 @@
 </section>
 
 <section id="what-the-app-stores">
-  <h2>アプリは鍵をどこに保存するのか</h2>
+  <h2 id="sec-5">アプリは鍵をどこに保存するのか</h2>
   <p>Agentmux は個人データを一切収集しません。利用統計は匿名かつ任意であり、オフにしても接続の動作は変わりません。パスワード、鍵、パスフレーズは OS のハードウェア保護付き認証情報ストレージに保存されます。SSH の通信内容が記録されることはなく、通信路は端末とあなたのマシンの間で暗号化されており、アプリが中継サーバーになることはありません。</p>
 </section>
 
 <section id="fingerprint-prompt">
-  <h2>初回接続時にフィンガープリントの確認が出る理由</h2>
+  <h2 id="sec-6">初回接続時にフィンガープリントの確認が出る理由</h2>
   <p>マシンへ初めて接続するとき、パスワードや鍵より前に、クライアントがホストの真正性に関する 1 文と短い 16 進数の文字列、そして yes / no の確認を出します。この文字列はサーバーのフィンガープリントで、マシンが署名に使うホスト鍵を人間が読める形に要約したものです。何か異常が起きたわけではありません。SSH が逆方向の認証を行っているのです。</p>
   <p>パスワードや鍵は「あなたがマシンに対して本人であること」を証明し、ホスト鍵は「マシンがあなたに対して本物であること」を証明します。この片側がなければ、スマホと Mac mini の間に割り込んだ誰かがなりすましてあなたの送信内容を読めてしまいます。初回接続時には比較対象となる保存済みの鍵がないため、クライアントは受け入れるか尋ねて、以後はそれを記憶します。</p>
   <p>これが役立つのは次回以降です。フィンガープリントが変わったマシンへ再接続しようとすると、クライアントは接続を拒否します。OS を再インストールしたか、あるいは別の誰かが応答しているか、どちらかです。</p>
 </section>
 
 <section id="not-a-server">
-  <h2>自分のパソコンをサーバーに作り変える必要があるのか</h2>
+  <h2 id="sec-7">自分のパソコンをサーバーに作り変える必要があるのか</h2>
   <p>「SSH」と聞くとデータセンターのサーバーラックを思い浮かべる人もいますが、実際に行うのはスイッチを 1 つ入れるだけです。Mac なら「システム設定」→「一般」→「共有」→「リモートログイン」。Linux なら多くのディストリビューションに最初から入っている <code>sshd</code> というサービスを起動するだけです。</p>
   <p>マシンの他の部分は一切変わりません。外からノックできるドアが 1 つ増えるだけで、普段どおりのパソコンのままです。手順の順番を覚えたくない場合は、<a href="/guide/ja/setup/">セットアップページ</a>で 3 つの質問に答えればチェックリストが返ってきます。</p>
 </section>
 
 <section id="what-ssh-is-not">
-  <h2>SSH は VPN でもリモートデスクトップでもない</h2>
+  <h2 id="sec-8">SSH は VPN でもリモートデスクトップでもない</h2>
   <p>SSH が行わないことが 3 つあります。</p>
   <div class="table-wrap"><table>
     <thead>
@@ -187,7 +209,7 @@
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

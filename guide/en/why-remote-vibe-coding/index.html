@@ -49,18 +49,37 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/why-remote-vibe-coding/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/why-remote-vibe-coding/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/why-remote-vibe-coding/" hreflang="ja">日本語</a>
+        <a href="/guide/en/why-remote-vibe-coding/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">Your AI should be working while you sleep</span></nav>
         <article class="guide-article">
             <h1>Your AI should be working while you sleep</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">Where does the time go?</a></li>
+        <li><a href="#sec-2">The usual setup nails standby to one laptop</a></li>
+        <li><a href="#sec-3">What three tools undo the tie?</a></li>
+        <li><a href="#sec-4">Standby costs a phone and fifteen seconds</a></li>
+        <li><a href="#sec-5">What else reaches your agent when you&#x27;re away?</a></li>
+    </ol>
+</details>
             <p>A CLI agent's real cost is standby, not typing: thirty seconds of input, then hours you cannot leave. Run the agent on a machine that stays on, keep its session alive with tmux, and reattach over SSH and Tailscale. Then standby costs a phone and fifteen seconds, and the agent keeps working while you sleep.</p>
 <p>You have probably noticed it: the agent does the work, and you are the one tied down. That tie feels like a discipline problem, a question of how well you can step away. It is a physical problem. One terminal window on one laptop has to stay open.</p>
 
 <section id="the-cycle">
-  <h2>Where does the time go?</h2>
+  <h2 id="sec-1">Where does the time go?</h2>
 
   <p>A round of work with a CLI agent almost always has the same rhythm:</p>
   <pre><code>You talk for 30 seconds → it runs for 5–20 minutes → it needs you to decide something → repeat</code></pre>
@@ -76,7 +95,7 @@
 </aside>
 
 <section id="the-binding">
-  <h2>The usual setup nails standby to one laptop</h2>
+  <h2 id="sec-2">The usual setup nails standby to one laptop</h2>
 
   <p>That standby has a physical location. The agent runs in a terminal window on your laptop. The window is tied to a shell, and the shell to one machine that has to stay awake. You then have two options, and neither is cheap:</p>
   <p><strong>Sit and wait.</strong> Stay in the chair, watching a screen where nothing happens, so that you can answer within thirty seconds when it asks. An hour of your time buys three replies.</p>
@@ -85,7 +104,7 @@
 </section>
 
 <section id="three-parts">
-  <h2>What three tools undo the tie?</h2>
+  <h2 id="sec-3">What three tools undo the tie?</h2>
 
   <p>The tie has three layers, and each layer has a standard tool that has been around for decades. Any one of them looks ordinary. Stacked in the right order, they do the whole job:</p>
 
@@ -114,7 +133,7 @@
 </section>
 
 <section id="the-payoff">
-  <h2>Standby costs a phone and fifteen seconds</h2>
+  <h2 id="sec-4">Standby costs a phone and fifteen seconds</h2>
 
   <p>Once all three are in place, checking in means unlocking your phone for fifteen seconds instead of finding a desk, a seat, and an outlet.</p>
   <p>Fifteen seconds changes what the activity is. You stop setting aside a block of time to babysit it. You glance at it in a queue, at a crossing, before bed, reply "use the second approach", and put the phone away. When you look again the agent is still working, and it has moved on without you.</p>
@@ -122,7 +141,7 @@
 </section>
 
 <section id="alternatives">
-  <h2>What else reaches your agent when you're away?</h2>
+  <h2 id="sec-5">What else reaches your agent when you're away?</h2>
 
   <p>You have more than one way to reach your own agent from outside. Line the options up against the same criteria and the differences are plain. The last column is the one that matters: it is where people find out they are stuck.</p>
 

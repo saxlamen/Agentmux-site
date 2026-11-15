@@ -49,18 +49,40 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-ssh/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-ssh/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-ssh/" hreflang="ja">日本語</a>
+        <a href="/guide/en/what-is-ssh/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">SSH is a tunnel to a machine you own</span></nav>
         <article class="guide-article">
             <h1>SSH is a tunnel to a machine you own</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">Why another machine instead of a cloud service?</a></li>
+        <li><a href="#sec-2">What you actually type: host, user, port</a></li>
+        <li><a href="#sec-3">Why not your LAN address or your public IP?</a></li>
+        <li><a href="#sec-4">Keys are safer and need less typing</a></li>
+        <li><a href="#sec-5">Where does the app keep my key?</a></li>
+        <li><a href="#sec-6">Why the fingerprint prompt appears the first time</a></li>
+        <li><a href="#sec-7">Do you have to turn your computer into a server?</a></li>
+        <li><a href="#sec-8">SSH is not a VPN or a remote desktop</a></li>
+    </ol>
+</details>
             <p>SSH is an encrypted channel between your device and another computer. You send keystrokes, that machine runs the commands, its output comes back, and no hop in between can read any of it. To run a coding agent remotely, SSH is how your phone reaches the machine the agent runs on.</p>
 <p>The last article argued that an agent does its best work in a terminal, with full access to a filesystem and permission to execute. That terminal does not have to be in your pocket. It can be the Mac mini at home that never gets switched off, or the workstation at the office, as long as your phone can route to it.</p>
 
 <section id="another-machine">
-  <h2>Why another machine instead of a cloud service?</h2>
+  <h2 id="sec-1">Why another machine instead of a cloud service?</h2>
   <p>Browser agents and cloud IDEs connect you to a machine too. The difference is whose machine it is.</p>
   <p>SSH connects you to your own. Your files and API keys are already there, along with every package you installed and every environment variable you set. Nothing has to move onto someone else's server, and the changes stay where you made them, so there is nothing to sync back afterwards.</p>
   <p>The trade-off runs the other way too. A cloud environment is the better answer if you own no machine that stays on, or if a whole team needs one identical starting point. Your machine has to be awake, reachable, and set up by you.</p>
@@ -74,7 +96,7 @@
 </aside>
 
 <section id="host-user-port">
-  <h2>What you actually type: host, user, port</h2>
+  <h2 id="sec-2">What you actually type: host, user, port</h2>
   <p>Every SSH connection needs three things, and the command writes them on one line:</p>
   <pre><code>ssh -p 22 sax@mac-mini</code></pre>
   <div class="table-wrap"><table>
@@ -91,14 +113,14 @@
 </section>
 
 <section id="lan-or-public-ip">
-  <h2>Why not your LAN address or your public IP?</h2>
+  <h2 id="sec-3">Why not your LAN address or your public IP?</h2>
   <p>The first address you find is in your network settings: something like <code>192.168.1.23</code>. Try it from a laptop on the same Wi-Fi; that is what it is for. It is a private address handed out by your router, valid only inside your own network. A phone on mobile data has no route to it.</p>
   <p>The second is the public address your home connection shows the internet, with a port forwarded through the router to that one machine. That road works, and it is the one to avoid. Scanning bots try logins against every address in the world, around the clock, and an exposed port starts collecting attempts within a day. One mistake in the router settings opens the whole network instead of one machine.</p>
   <p>Use a third kind: a private address only your own devices can see. <a href="/guide/en/what-is-tailscale/">Tailscale</a> gives each machine a MagicDNS name or a <code>100.x</code> address, and nothing else on the internet knows those exist. That goes in the host field, at home and away.</p>
 </section>
 
 <section id="keys-vs-passwords">
-  <h2>Keys are safer and need less typing</h2>
+  <h2 id="sec-4">Keys are safer and need less typing</h2>
   <p>SSH takes passwords or keys, and the choice gets framed as security versus convenience. Keys are better at both.</p>
   <p>A key pair is two small text files. The private one stays on the device that connects. The public one is computed from it and copied onto the machine you want to reach, into <code>authorized_keys</code> inside that account's <code>~/.ssh</code> directory. The arithmetic runs one way. The public half comes from the private half, and you cannot recover the private half from the public one. <code>ssh-keygen</code> makes a pair in seconds.</p>
   <p>At login the two halves prove the match and you type nothing. A password has to survive repeated guessing, and a key is long enough that guessing never pays. Set it up once and every connection afterwards works the same way.</p>
@@ -107,25 +129,25 @@
 </section>
 
 <section id="what-the-app-stores">
-  <h2>Where does the app keep my key?</h2>
+  <h2 id="sec-5">Where does the app keep my key?</h2>
   <p>Agentmux collects no personal data. Usage statistics are anonymous and optional; turning them off changes nothing about how it connects. Passwords, keys, and passphrases go into the operating system's hardware-backed credential storage. Your SSH traffic is never logged: the channel is encrypted between your device and your machine, and the app is not a relay.</p>
 </section>
 
 <section id="fingerprint-prompt">
-  <h2>Why the fingerprint prompt appears the first time</h2>
+  <h2 id="sec-6">Why the fingerprint prompt appears the first time</h2>
   <p>The first time you reach a machine, before any password or key, the client prints a line about the host's authenticity, a short string of hex, and a yes or no. That string is the server's fingerprint: a readable summary of the host key the machine signs with. Nothing has gone wrong. SSH is authenticating the other direction.</p>
   <p>A password or key proves you to the machine. A host key proves the machine to you. Without that second half, anyone between your phone and your Mac mini could answer in its place and read what you send. On a first connection there is no stored copy to compare against, so the client asks you to accept it and remembers it from then on.</p>
   <p>It earns its keep later. Reconnect to a machine whose fingerprint has changed and the client refuses. Either you reinstalled the system, or something else is answering.</p>
 </section>
 
 <section id="not-a-server">
-  <h2>Do you have to turn your computer into a server?</h2>
+  <h2 id="sec-7">Do you have to turn your computer into a server?</h2>
   <p>People hear "SSH" and picture racks in a data centre. You are flipping a switch. On a Mac it is System Settings → General → Sharing → Remote Login. On Linux it is usually starting a service called <code>sshd</code>, which most distributions already ship.</p>
   <p>Nothing else about the machine changes. It is still your everyday computer, with one more door you can knock on from outside. If you would rather not remember the order of operations, <a href="/guide/en/setup/">the setup page</a> asks three questions and hands back a checklist.</p>
 </section>
 
 <section id="what-ssh-is-not">
-  <h2>SSH is not a VPN or a remote desktop</h2>
+  <h2 id="sec-8">SSH is not a VPN or a remote desktop</h2>
   <p>Three things SSH does not do:</p>
   <div class="table-wrap"><table>
     <thead>

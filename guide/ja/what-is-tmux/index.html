@@ -42,27 +42,49 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/ja/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/ja/">ガイドトップ</a>
                 <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
-                <a class="lang-switch" href="/guide/?choose=1">言語</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">日本語</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/what-is-tmux/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/what-is-tmux/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/what-is-tmux/" hreflang="ja" aria-current="page">日本語</a>
+        <a href="/guide/en/what-is-tmux/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/ja/">ホーム</a><span aria-hidden="true">/</span><a href="/guide/ja/">ガイドトップ</a><span aria-hidden="true">/</span><span aria-current="page">スマホを閉じた後もエージェントを動かし続ける</span></nav>
         <article class="guide-article">
             <h1>スマホを閉じた後もエージェントを動かし続ける</h1>
+            <details class="guide-toc">
+    <summary>目次</summary>
+    <ol>
+        <li><a href="#sec-1">tmux はセッションをサーバー側に置く</a></li>
+        <li><a href="#sec-2">session、window、pane の違い</a></li>
+        <li><a href="#sec-3">デタッチはテレビの電源を切るようなものか</a></li>
+        <li><a href="#sec-4">実際に打つコマンド</a></li>
+        <li><a href="#sec-5">回線が切れてもエージェントは中断されない</a></li>
+        <li><a href="#sec-6">2 台の端末で同じセッションを見られるか</a></li>
+        <li><a href="#sec-7">アプリがセッションを扱う仕組み</a></li>
+        <li><a href="#sec-8">tmux がやらないこと</a></li>
+    </ol>
+</details>
             <p>tmux はターミナルマルチプレクサです。接続先のマシン上でターミナルセッションを動かし続けます。</p>
 <p>AI コーディングエージェントにとって、これは生き残るか死ぬかの違いになります。スマホがロックされたり電波が切れたりすると SSH 接続は切断され、切断された SSH は通常エージェントのシェルごと終了させてしまうためです。</p>
 <p>スマホをしまうと SSH トンネルが切れ、エージェントも一緒に死にます。これは通信環境の問題ではなく、OS の仕様による動作です。</p>
 <p>接続が切れると、カーネルはログイン時に使われていた擬似端末（pseudo-terminal）を閉じます。そしてそこに繋がっていたすべてのプロセス（シェルとその中のエージェント）へ <strong>SIGHUP</strong>（ハングアップ）シグナルを送ります。このシグナルを意図的に捕捉しないプロセスは既定で終了し、カーネルはやりかけの状態をすべて破棄します。<a href="/guide/ja/what-is-ssh/">SSH</a> は接続が通ってきた道にすぎず、エージェントを生かし続ける仕組みではありません。</p>
 
 <section id="session-elsewhere">
-  <h2>tmux はセッションをサーバー側に置く</h2>
+  <h2 id="sec-1">tmux はセッションをサーバー側に置く</h2>
   <p>tmux はサーバー上にセッションを開き、SSH 接続から切り離されたそのセッションの中でエージェントを動かします。</p>
   <p>仕組みは 1 つのプロセスです。最初に <code>tmux</code> と打つと、tmux <em>server</em> と呼ばれるバックグラウンドプログラムがあなたのユーザーアカウント下で起動して常駐します。セッションはそのプロセスに属し、各セッションの擬似端末は tmux サーバーが管理します。</p>
   <p>接続が切れると、<code>sshd</code> は自分の擬似端末を閉じますが、そこに繋がっていたのは tmux クライアントだけです。クライアントは終了しますが、セッション自体は動き続けます。</p>
@@ -76,7 +98,7 @@
 </aside>
 
 <section id="session-window-pane">
-  <h2>session、window、pane の違い</h2>
+  <h2 id="sec-2">session、window、pane の違い</h2>
   <p>tmux では 3 つの異なる概念に 3 つの名詞を使い、その中でエージェントを生かし続けるのは最初の 1 つだけです。</p>
 
   <div class="table-wrap"><table>
@@ -107,14 +129,14 @@
 </section>
 
 <section id="detach-attach">
-  <h2>デタッチはテレビの電源を切るようなものか</h2>
+  <h2 id="sec-3">デタッチはテレビの電源を切るようなものか</h2>
   <p>テレビの電源を切ればリビングの映像は消えますが、放送自体は止まりません。もう一度電源を入れれば、その時点まで進んだ同じチャンネルが映ります。</p>
   <p>tmux ではこの 2 つの操作を <strong>detach（デタッチ）</strong> と <strong>attach（アタッチ）</strong> と呼びます。ウィンドウを閉じ、また開くだけです。どちらもマシン上で動いている処理には一切触れません。</p>
   <p>ただしこの例えには 1 つ隠れた違いがあり、しかもあなたに有利に働きます。テレビは消している間の内容を覚えていませんが、tmux セッションは出力を保持しています。1 時間後にアタッチすれば、スクロールバックして見逃していた 1 時間分のログをすべて読めます。</p>
 </section>
 
 <section id="commands-you-type">
-  <h2>実際に打つコマンド</h2>
+  <h2 id="sec-4">実際に打つコマンド</h2>
   <p>まずは次の 4 つから始めます。</p>
   <pre><code>tmux new -s work          # work という名前のセッションを作る
 claude                    # その中でエージェントを起動する
@@ -129,7 +151,7 @@ tmux attach -t work       # どこからでも同じ画面に再接続する</co
 </section>
 
 <section id="what-it-means-for-agents">
-  <h2>回線が切れてもエージェントは中断されない</h2>
+  <h2 id="sec-5">回線が切れてもエージェントは中断されない</h2>
   <p>電車で電波を失い、エレベーターでまた切れ、Wi-Fi の切り替えでもう一度切れます。毎回同じ tmux セッションにアタッチし直せば、10 回切れてもエージェントは 1 回も中断されません。エージェントは最初からあなたの接続の中にいなかったため、切れたことすら気づきません。</p>
   <p>スマホでよく心配される 3 つのケースは、実は同じ現象を 3 通りの言葉で説明しているだけです。</p>
   <ul>
@@ -141,21 +163,21 @@ tmux attach -t work       # どこからでも同じ画面に再接続する</co
 </section>
 
 <section id="two-devices">
-  <h2>2 台の端末で同じセッションを見られるか</h2>
+  <h2 id="sec-6">2 台の端末で同じセッションを見られるか</h2>
   <p>見られます。特別な仕掛けも要りません。複数のクライアントが同時に 1 つのセッションへアタッチできます。駅で並びながらスマホでジョブを始め、職場のノート PC からアタッチすれば、コピーではなく文の途中のまったく同じ画面が目の前に現れます。</p>
   <p>どちらの端末から打ったキーも同じプログラムに届くため、入力は一度に 1 人だけです。アタッチしても何かが移動するわけではありません。</p>
   <p>セッションはそれを作ったマシンに留まり続けるため、スマホとノート PC の画面が一致します。ノート PC のターミナルで手動起動したセッションにも、アプリからそのまま入れます。</p>
 </section>
 
 <section id="inside-the-app">
-  <h2>アプリがセッションを扱う仕組み</h2>
+  <h2 id="sec-7">アプリがセッションを扱う仕組み</h2>
   <p>Agentmux もまったく同じ分離の上に作られています。スマホ側の切断は単なるデタッチにすぎず、再接続すればさらに進んだ状態の同じセッションに戻ります。アプリ内のターミナルで上記のコマンドを打っても、やはり同じセッションです。</p>
   <p>アプリはさらに 2 つの手間を肩代わりします。マシンに tmux が入っていなければ、apt、yum、dnf、pacman、apk、brew のどれを使うマシンかを判別して自動でインストールします。エージェントがシェルから見えない場所にある場合は、その PATH 問題を調査します。</p>
   <p>永続セッションは無料の単一サーバー枠に含まれているため、ここには課金要素はありません。<a href="/guide/ja/setup/">セットアップページ</a>ではこれをチェックリストに落とし込めます。</p>
 </section>
 
 <section id="what-tmux-does-not-do">
-  <h2>tmux がやらないこと</h2>
+  <h2 id="sec-8">tmux がやらないこと</h2>
   <p>tmux が解決するのは「プロセスが接続断を生き延びるか」という 1 点だけで、それ以外には手を出しません。</p>
   <ul>
     <li><strong>サーバーが再起動すると全セッションが終了する。</strong>セッションは tmux サーバーのメモリ上にあるため、停電や自動アップデートによる再起動が起きればエージェントも終了します。残るのはディスクに書き出されたもの（変更されたファイル、作ったコミット、いたブランチ）だけです。作業状態を保存するのは Git の役割です。</li>
@@ -209,7 +231,7 @@ tmux attach -t work       # どこからでも同じ画面に再接続する</co
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">ホーム</a>
+            <a href="/ja/">ホーム</a>
             <a href="/privacy.html">プライバシー</a>
             <a href="mailto:atmux-support@saxcave.cc">サポート</a>
         </div>

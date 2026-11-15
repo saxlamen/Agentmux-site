@@ -49,18 +49,40 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/?choose=1">Language</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">English</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/claude-code-on-iphone/" hreflang="zh-TW">繁體中文</a>
+        <a href="/guide/zh-Hans/claude-code-on-iphone/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/claude-code-on-iphone/" hreflang="ja">日本語</a>
+        <a href="/guide/en/claude-code-on-iphone/" hreflang="en" aria-current="page">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guide/en/">Guide home</a><span aria-hidden="true">/</span><span aria-current="page">Run Claude Code on your iPhone or iPad</span></nav>
         <article class="guide-article">
             <h1>Run Claude Code on your iPhone or iPad</h1>
+            <details class="guide-toc">
+    <summary>On this page</summary>
+    <ol>
+        <li><a href="#sec-1">Does Claude Code run on the phone?</a></li>
+        <li><a href="#sec-2">Three things to set up, in this order</a></li>
+        <li><a href="#sec-3">Why a plain SSH window kills the agent</a></li>
+        <li><a href="#sec-4">What is working from a phone actually like?</a></li>
+        <li><a href="#sec-5">Can the agent answer its own permission prompts?</a></li>
+        <li><a href="#sec-6">claude: command not found, but it runs in Terminal</a></li>
+        <li><a href="#sec-7">Can the agent work overnight?</a></li>
+        <li><a href="#sec-8">What belongs on the phone, what belongs at the desk</a></li>
+    </ol>
+</details>
             <p>Yes. Claude Code is a program that runs on a machine you own, never on the phone. Turn on Remote Login, reach that machine through Tailscale instead of an open port, start a tmux session with a name, and run <code>claude</code> inside it. Your iPhone carries a terminal. The agent keeps working after you lock the screen.</p>
 <p>"Claude Code on my phone" names two machines doing two different jobs. Separate them and what is left gets short: what survives a dropped connection, why the command is missing over SSH, and whether an agent should answer its own permission prompts from a train.</p>
 
 <section id="what-the-phone-does-not-do">
-  <h2>Does Claude Code run on the phone?</h2>
+  <h2 id="sec-1">Does Claude Code run on the phone?</h2>
 
   <p>Claude Code is a program on the disk of some machine you own. A shell starts it. It reads your project through that machine's filesystem, runs <code>git</code> and the tests, and writes its edits back into the same directory. None of that happens in your pocket, though the phrase suggests it does.</p>
   <p>From the phone, two things cross the wire: keys go out, characters come back. The agent is not installed there, and no copy of your repository travels. The phone draws a picture of a session running on another computer.</p>
@@ -79,7 +101,7 @@
 </aside>
 
 <section id="three-things-before-the-phone-matters">
-  <h2>Three things to set up, in this order</h2>
+  <h2 id="sec-2">Three things to set up, in this order</h2>
 
   <p>Skip one and the arrangement fails, so work through them in this order.</p>
 
@@ -101,7 +123,7 @@ tmux attach -t work  # open a window onto it</code></pre>
 </section>
 
 <section id="why-a-plain-ssh-window-kills-the-agent">
-  <h2>Why a plain SSH window kills the agent</h2>
+  <h2 id="sec-3">Why a plain SSH window kills the agent</h2>
 
   <p>Skip tmux: you SSH in, run <code>claude</code>, then put the phone in your pocket and lock the screen.</p>
   <p>The phone stops sending packets, the connection times out, and it closes. sshd closes the pseudo-terminal that connection was attached to, and the kernel sends <strong>SIGHUP</strong> to every process still attached to it: your shell, and Claude Code running inside your shell. Both take the default reaction and exit, so the agent dies mid-edit with twenty minutes of reading gone.</p>
@@ -109,7 +131,7 @@ tmux attach -t work  # open a window onto it</code></pre>
 </section>
 
 <section id="what-working-from-a-phone-is-actually-like">
-  <h2>What is working from a phone actually like?</h2>
+  <h2 id="sec-4">What is working from a phone actually like?</h2>
 
   <p>A phone fits one decision at a time, which is what an agent cycle is made of anyway. It proposes a plan, and you take it or send one sentence back. A two-line correction such as "leave the serializer alone, the export job uses it" is enough, and then the phone goes away.</p>
   <p>The on-screen keyboard is the first real cost. Backticks, pipes, quotes, backslashes and the tilde all sit two layers deep, so <code>~/src/auth/session.ts</code> takes longer than it should, and one wrong segment costs a round trip. Long prompts are harder to proofread than they look, which is why many people draft them in a notes app.</p>
@@ -121,7 +143,7 @@ tmux attach -t tests    # watch it, then detach</code></pre>
 </section>
 
 <section id="answering-permission-prompts-from-the-phone">
-  <h2>Can the agent answer its own permission prompts?</h2>
+  <h2 id="sec-5">Can the agent answer its own permission prompts?</h2>
 
   <p>Claude Code does not run everything it thinks of. Before it runs a command, and depending on your configuration before it edits a file, it stops and asks: here is the command, go ahead? That stop is where the job waits, and if only you can answer it, the waiting becomes the bottleneck.</p>
   <p><a href="/guide/en/permission-review/">AI Permission Review</a> answers those prompts and nothing else: it reads the prompt, then suggests or presses the key. A <strong>blacklist</strong> blocks dangerous commands and always hands a match to you. An <strong>allowlist</strong> passes commands you already trust, decided on the device. Anything matching neither goes to an <strong>AI judgement</strong>: allow, deny, or unsure, and the last two come back to you. The session's mode then decides whether it only <strong>suggests</strong> the key or <strong>presses</strong> it.</p>
@@ -129,7 +151,7 @@ tmux attach -t tests    # watch it, then detach</code></pre>
 </section>
 
 <section id="claude-command-not-found-over-ssh">
-  <h2>claude: command not found, but it runs in Terminal</h2>
+  <h2 id="sec-6">claude: command not found, but it runs in Terminal</h2>
 
   <p>Same machine, same account, two different answers: <code>claude</code> starts in Terminal and prints <code>claude: command not found</code> over SSH. That reads like the remote setup is broken. It is the most common failure on the way in.</p>
   <p>An install through npm, or under a node version nvm pins, writes its directory into a startup file that only an <em>interactive login</em> shell reads, and that is how the PATH gets the entry. A connection that runs one command, like <code>ssh host claude</code>, starts a non-interactive shell, and that shell never reads the file.</p>
@@ -142,7 +164,7 @@ tmux attach -t tests    # watch it, then detach</code></pre>
 </section>
 
 <section id="running-overnight-and-the-honest-limits">
-  <h2>Can the agent work overnight?</h2>
+  <h2 id="sec-7">Can the agent work overnight?</h2>
 
   <p>A session on a machine that stays awake runs all night: hand it a refactor at eleven and read the result over coffee. Three things get in the way.</p>
   <p><strong>The machine has to stay awake.</strong> A Mac that idles into sleep takes its network interface with it, and Remote Login makes no difference because nothing is left to answer. System Settings → Battery on a laptop, Energy Saver on a desktop: lengthen or switch off idle sleep, and turn on "Wake for network access" if your Mac offers it.</p>
@@ -151,7 +173,7 @@ tmux attach -t tests    # watch it, then detach</code></pre>
 </section>
 
 <section id="phone-or-desk">
-  <h2>What belongs on the phone, what belongs at the desk</h2>
+  <h2 id="sec-8">What belongs on the phone, what belongs at the desk</h2>
 
   <div class="table-wrap"><table>
     <thead>
@@ -171,7 +193,7 @@ tmux attach -t tests    # watch it, then detach</code></pre>
 </section>
 
         </article>
-        <nav class="guide-pager"><a class="pager-prev" data-tracks="cliuser" data-label="Previous" href="/guide/en/windows-server/">Previous<span>Your Windows PC can be the server</span></a></nav>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="cliuser" data-label="Previous" href="/guide/en/windows-server/">Previous<span>Your Windows PC can be the server</span></a><a class="pager-next" data-tracks="cliuser" data-label="Next" href="/guide/en/permission-review/">Next<span>AI Permission Review: who answers when your agent asks</span></a></nav>
         <script>
             // If the reader picked a track on the guide index, keep only that
             // track's neighbours and restore the plain labels. Runs

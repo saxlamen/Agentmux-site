@@ -42,25 +42,47 @@
 <body class="guide">
     <nav class="guide-nav">
         <div class="guide-nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="/zh-TW/">
                 <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
                 <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
             </a>
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/?choose=1">語言</a>
+                <details class="lang-menu">
+    <summary class="lang-switch">繁體中文</summary>
+    <div class="lang-menu-list">
+        <a href="/guide/zh-TW/claude-code-on-iphone/" hreflang="zh-TW" aria-current="page">繁體中文</a>
+        <a href="/guide/zh-Hans/claude-code-on-iphone/" hreflang="zh-Hans">简体中文</a>
+        <a href="/guide/ja/claude-code-on-iphone/" hreflang="ja">日本語</a>
+        <a href="/guide/en/claude-code-on-iphone/" hreflang="en">English</a>
+    </div>
+</details>
             </div>
         </div>
     </nav>
     <main class="shell guide-shell">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/zh-TW/">首頁</a><span aria-hidden="true">/</span><a href="/guide/zh-TW/">指南首頁</a><span aria-hidden="true">/</span><span aria-current="page">在 iPhone、iPad 上跑 Claude Code</span></nav>
         <article class="guide-article">
             <h1>在 iPhone、iPad 上跑 Claude Code</h1>
+            <details class="guide-toc">
+    <summary>本頁目錄</summary>
+    <ol>
+        <li><a href="#sec-1">Claude Code 是跑在手機上嗎？</a></li>
+        <li><a href="#sec-2">先決定的三件事，順序不能換</a></li>
+        <li><a href="#sec-3">只用一個 SSH 視窗，鎖定螢幕那一刻 agent 就死了</a></li>
+        <li><a href="#sec-4">用手機工作實際上是什麼樣子？</a></li>
+        <li><a href="#sec-5">agent 可以自己回答權限提示嗎？</a></li>
+        <li><a href="#sec-6">claude: command not found，但在 Terminal 裡跑得好好的</a></li>
+        <li><a href="#sec-7">跑一整晚可以，重開機不行</a></li>
+        <li><a href="#sec-8">什麼歸手機，什麼歸書桌</a></li>
+    </ol>
+</details>
             <p>可以，但 Claude Code 不會跑在你的 iPhone 上。它跑在你自己擁有的 Mac 或 Linux 機器上，手機只負責帶著終端機。做法是：打開遠端登入，用 Tailscale 取代對外開放的 port，開一個有名字的 tmux session，在裡面啟動 <code>claude</code>。鎖定螢幕之後，agent 照樣繼續跑。</p>
 <p>「在手機上跑 Claude Code」這句話聽起來很直白，實際上講的是兩台機器、兩種工作。把它們分開之後，問題都變短了：斷線之後什麼還會活著、為什麼同一條指令在 SSH 裡找不到、agent 能不能在你搭捷運的時候自己回答權限提示。</p>
 
 <section id="what-the-phone-does-not-do">
-  <h2>Claude Code 是跑在手機上嗎？</h2>
+  <h2 id="sec-1">Claude Code 是跑在手機上嗎？</h2>
 
   <p>Claude Code 是你某台機器硬碟裡的一個程式，由 shell 啟動。它透過那台機器的檔案系統讀你的專案，跑 <code>git</code>，跑測試，把改好的內容寫回同一個目錄。很容易以為它有一部分現在住在你口袋裡，但上面這些事沒有一項發生在手機上。</p>
   <p>從手機連過去，線上只跑兩樣東西：你按的鍵出去，session 印出的字元回來。手機上沒有裝任何 agent 的元件，你的 repo 也不必搬到任何地方。手機顯示的，只是另一台電腦上那個 session 現在的樣子。</p>
@@ -79,7 +101,7 @@
 </aside>
 
 <section id="three-things-before-the-phone-matters">
-  <h2>先決定的三件事，順序不能換</h2>
+  <h2 id="sec-2">先決定的三件事，順序不能換</h2>
 
   <p>少任何一件都不成立，所以照這個順序做。</p>
 
@@ -101,7 +123,7 @@ tmux attach -t work  # 開一個窗看進去</code></pre>
 </section>
 
 <section id="why-a-plain-ssh-window-kills-the-agent">
-  <h2>只用一個 SSH 視窗，鎖定螢幕那一刻 agent 就死了</h2>
+  <h2 id="sec-3">只用一個 SSH 視窗，鎖定螢幕那一刻 agent 就死了</h2>
 
   <p>假設你跳過 tmux：從手機 SSH 進去，跑 <code>claude</code>，看它開始讀專案，然後把手機放進口袋、鎖定螢幕。</p>
   <p>手機不再送封包，連線逾時、關閉。機器上的 sshd 跟著關掉那條連線所使用的 pseudo-terminal，kernel 對還掛在上面的每一個 process 送出 <strong>SIGHUP</strong>：你的 shell，還有 shell 裡面的 Claude Code。它們預設的反應就是結束。agent 停在改到一半的地方，之前讀了二十分鐘的專案也一起沒了。</p>
@@ -109,7 +131,7 @@ tmux attach -t work  # 開一個窗看進去</code></pre>
 </section>
 
 <section id="what-working-from-a-phone-is-actually-like">
-  <h2>用手機工作實際上是什麼樣子？</h2>
+  <h2 id="sec-4">用手機工作實際上是什麼樣子？</h2>
 
   <p>手機適合一次只做一個決定，而 agent 的工作循環就是這樣：它提出一個計畫，你用一句話核准或打回；它問要不要順便處理 migration，你選第二個。你回兩行修正：「serializer 不要動，export 那支在用它」，然後把手機收起來。</p>
   <p>螢幕鍵盤是第一筆真實的成本。backtick、pipe、引號、反斜線、代表家目錄的 tilde，全部藏在兩層之後，所以 <code>~/src/auth/session.ts</code> 這種路徑打起來比想像中久，打錯一段就是一個來回。長的 prompt 在手機上比較難寫也比較難檢查，很多人先在備忘錄裡寫好，再貼進來。</p>
@@ -121,7 +143,7 @@ tmux attach -t tests    # 看完再 detach</code></pre>
 </section>
 
 <section id="answering-permission-prompts-from-the-phone">
-  <h2>agent 可以自己回答權限提示嗎？</h2>
+  <h2 id="sec-5">agent 可以自己回答權限提示嗎？</h2>
 
   <p>Claude Code 不是想到什麼就跑。它跑每一條指令之前都會先停下來；依照設定，改檔案之前也會停。它把問題擱在畫面上：這是它要跑的指令，可以嗎？工作就在這裡等，而如果只有你能回答，要等多久就看你什麼時候抬頭。離開書桌之後，權限提示不再是不方便，而是整件事的瓶頸。</p>
   <p><a href="/guide/zh-TW/permission-review/">AI 自動權限審查</a>只做這件事：讀畫面上目前那一則提示，然後給你建議、或幫你按下那個鍵。檢查有固定的順序。<strong>黑名單</strong>擋掉危險指令，命中的一定交給你。<strong>白名單</strong>放行你原本就信任的指令，直接在裝置上決定，不用等。<strong>AI 判斷</strong>只處理兩邊都沒命中的，結果是允許、拒絕、或不確定，後面兩種一樣回到你手上。最後由這個 session 的模式決定它是只<strong>建議</strong>那個鍵，還是直接<strong>幫你按</strong>。</p>
@@ -129,7 +151,7 @@ tmux attach -t tests    # 看完再 detach</code></pre>
 </section>
 
 <section id="claude-command-not-found-over-ssh">
-  <h2>claude: command not found，但在 Terminal 裡跑得好好的</h2>
+  <h2 id="sec-6">claude: command not found，但在 Terminal 裡跑得好好的</h2>
 
   <p>同一台機器、同一個帳號，兩種結果：在 Terminal 裡打 <code>claude</code> 會跑，透過 SSH 就給你 <code>claude: command not found</code>。看起來像遠端那套設定壞了，但這其實是從手機連進去最常撞到的問題。</p>
   <p>Claude Code 如果是用 npm 裝的，或是裝在 nvm 釘選的 node 版本底下，它的安裝目錄會寫進一個啟動檔。只有<em>互動式 login shell</em> 會讀那個啟動檔，PATH 裡才有那一筆。<code>ssh host claude</code> 這種只跑一條指令的連線，啟動的是非互動式 shell，它根本不會讀那個檔案。</p>
@@ -142,7 +164,7 @@ tmux attach -t tests    # 看完再 detach</code></pre>
 </section>
 
 <section id="running-overnight-and-the-honest-limits">
-  <h2>跑一整晚可以，重開機不行</h2>
+  <h2 id="sec-7">跑一整晚可以，重開機不行</h2>
 
   <p>機器不睡，session 就能跑一整晚：十一點丟一個重構給它，早上配著咖啡看結果。有三件事會卡住。</p>
   <p><strong>機器要維持清醒。</strong>Mac 閒置進入睡眠時，網路介面跟著休眠，遠端登入開不開都沒用，因為沒有東西在回應。「系統設定 → 電池」（筆電）或「系統設定 → 節能」（長期開機當伺服器用的桌機）：把閒置睡眠的時間調長或關掉，有「喚醒以供網路存取」這個選項就打開。</p>
@@ -151,7 +173,7 @@ tmux attach -t tests    # 看完再 detach</code></pre>
 </section>
 
 <section id="phone-or-desk">
-  <h2>什麼歸手機，什麼歸書桌</h2>
+  <h2 id="sec-8">什麼歸手機，什麼歸書桌</h2>
 
   <div class="table-wrap"><table>
     <thead>
@@ -171,7 +193,7 @@ tmux attach -t tests    # 看完再 detach</code></pre>
 </section>
 
         </article>
-        <nav class="guide-pager"><a class="pager-prev" data-tracks="cliuser" data-label="上一篇" href="/guide/zh-TW/windows-server/">上一篇<span>你的 Windows 電腦也可以當主機</span></a></nav>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="cliuser" data-label="上一篇" href="/guide/zh-TW/windows-server/">上一篇<span>你的 Windows 電腦也可以當主機</span></a><a class="pager-next" data-tracks="cliuser" data-label="下一篇" href="/guide/zh-TW/permission-review/">下一篇<span>AI 自動權限審查：agent 問你時，誰來回答</span></a></nav>
         <script>
             // If the reader picked a track on the guide index, keep only that
             // track's neighbours and restore the plain labels. Runs
@@ -211,7 +233,7 @@ tmux attach -t tests    # 看完再 detach</code></pre>
     <footer class="guide-footer">
         <div>© 2026 Agentmux</div>
         <div class="guide-footer-links">
-            <a href="/">首頁</a>
+            <a href="/zh-TW/">首頁</a>
             <a href="/privacy.html">隱私政策</a>
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>
