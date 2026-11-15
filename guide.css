@@ -165,7 +165,8 @@
 .guide-cta-inline { margin: 28px 0 32px; padding: 20px 22px; }
 .guide-cta p { color: var(--ink); margin: 0 0 16px; }
 .guide-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.guide-cta-actions .primary-btn { min-height: 46px; padding: 0 20px; font-size: 15px; }
+.guide-cta-actions .primary-btn { min-height: 46px; padding: 0 20px; font-size: 15px; color: #06100d; }
+.guide-article .guide-cta a.primary-btn { color: #06100d; }
 
 .lang-cards { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 .lang-cards a { padding: 14px 22px; border: 1px solid var(--line); border-radius: var(--radius);
