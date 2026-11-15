@@ -1,0 +1,89 @@
+{
+  "ui": {
+    "guideHome": "指南首页",
+    "guideRoot": "Agentmux 指南",
+    "troubleshooting": "疑难排查",
+    "prev": "上一篇",
+    "next": "下一篇",
+    "pagerTrackFormat": "{0} · {1}",
+    "listJoin": "、",
+    "labelColon": "：",
+    "trackIndexTitle": "Agentmux 指南",
+    "trackIndexDescription": "在自己的机器上让 AI coding agent 整晚工作，再从手机接回 session。",
+    "extendedReading": "延伸阅读",
+    "ctaLine": "14 天全功能试用，支持 iOS 与 Android。",
+    "ctaButton": "在 App Store 下载",
+    "ctaAppStore": "App Store 下载",
+    "ctaPlayStore": "Google Play 下载",
+    "home": "首页",
+    "privacy": "隐私政策",
+    "support": "技术支持",
+    "tracks": {
+      "beginner": {
+        "title": "我没开过终端",
+        "blurb": "会用 AI 写代码，但没碰过 SSH。从终端是什么开始。"
+      },
+      "cliuser": {
+        "title": "我已经在跑 CLI agent",
+        "blurb": "已经在 Mac 上跑 Claude Code 或 Codex，只差从手机连过去。"
+      }
+    }
+  },
+  "articles": {
+    "why-remote-vibe-coding": {
+      "title": "你的 AI 应该在你睡觉时工作",
+      "description": "远程跑 agent 的成本是待命：机器不关机、tmux、SSH 加 Tailscale，待命变成一部手机加十五秒。"
+    },
+    "why-not-gui-ide": {
+      "title": "为什么不是 Cursor / VS Code",
+      "description": "GUI IDE 的 agent 绑在需要屏幕的进程上，CLI agent 的接口是可重连的字节流。这是架构差异，不是偏好差异。"
+    },
+    "troubleshooting": {
+      "title": "卡住了怎么办",
+      "description": "连不上、密钥被拒、找不到 tmux、agent 命令不存在：八个卡点，各有原因和解法。"
+    },
+    "what-is-cli": {
+      "title": "为什么最强的 coding agent 都住在终端里",
+      "description": "因为终端给的是完整文件访问和执行权限，别的界面做不到。终端是什么，什么时候该用 GUI。",
+      "image": "/resource/iphone-raw-launch-any-agent.webp"
+    },
+    "what-is-ssh": {
+      "title": "SSH：通往另一台电脑的隧道",
+      "description": "SSH 是什么、host／user／port 怎么运作、为什么密钥比密码省事，以及为何要用私有地址而不是对公网开端口。",
+      "image": "/resource/iphone-raw-edit-code-over-ssh.webp"
+    },
+    "what-is-tmux": {
+      "title": "让 agent 在你关掉手机后继续跑",
+      "description": "tmux 是什么，为什么 SSH 掉线时你的 AI coding agent 不会死：session 留在服务器上，手机只是接上去看。",
+      "image": "/resource/ipad-raw-session-command-center.webp"
+    },
+    "what-is-tailscale": {
+      "title": "不要对公网开端口",
+      "description": "不开端口也能从手机连回去：WireGuard mesh、MagicDNS 名称、100.x 地址，什么时候不需要 Tailscale。",
+      "image": "/resource/Darkmode_serverlist.webp"
+    },
+    "why-agentmux": {
+      "title": "为什么不是 Termius / Blink",
+      "description": "Agentmux 对 Termius、Blink：五个功能差异，以及什么时候选 Termius 更好。",
+      "image": "/resource/Serverview_tmux_agents.webp"
+    },
+    "setup": {
+      "title": "15 分钟，让你的 agent 开始整晚工作",
+      "description": "回答三个问题，拿到按你的答案生成的步骤清单：机器、要跑的 agent、从哪里连回来。",
+      "image": "/resource/ipad-raw-browse-remote-projects.webp"
+    },
+    "claude-code-on-iphone": {
+      "title": "在 iPhone、iPad 上跑 Claude Code",
+      "description": "Claude Code 跑在你自己的机器上，手机只负责终端。远程登录、Tailscale、tmux，还有 PATH 的坑。",
+      "image": "/resource/iphone-raw-run-coding-agents-anywhere.webp"
+    },
+    "permission-review": {
+      "title": "AI 自动权限审查：agent 问你时，谁来回答",
+      "description": "Agent 停下来问“要不要执行”时谁在回答：本地黑名单先拦、白名单放行你信任的，其余交给 AI 判断，再按模式给建议或直接按键。"
+    },
+    "windows-server": {
+      "title": "你的 Windows 电脑也可以当主机",
+      "description": "原生 Windows 用 OpenSSH 连进去，session 由 psmux 撑住，还有几个跟 Linux 主机不一样的地方。不用 WSL2。"
+    }
+  }
+}

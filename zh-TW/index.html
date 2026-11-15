@@ -26,6 +26,8 @@
     <meta id="twitter-description" name="twitter:description" content="Agent 跑在你自己的機器上，手機只負責接回去：用 SSH 接回 tmux 工作階段、啟動 Claude、Codex、Gemini、OpenCode，也能瀏覽和編輯遠端檔案。">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <link rel="stylesheet" href="/site.css">
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="zh_TW">
@@ -393,5 +395,6 @@
             localStorage.setItem('preferred-lang', 'zh-TW');
         });
     </script>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

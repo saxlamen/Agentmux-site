@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>让 agent 在你关掉手机后继续跑 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="tmux 是什么，为什么 SSH 掉线时你的 AI coding agent 不会死：session 留在服务器上，手机只是接上去看。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/what-is-tmux/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-tmux/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:title" content="让 agent 在你关掉手机后继续跑">
+    <meta property="og:description" content="tmux 是什么，为什么 SSH 掉线时你的 AI coding agent 不会死：session 留在服务器上，手机只是接上去看。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad 上的 session 指挥中心">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="让 agent 在你关掉手机后继续跑">
+    <meta name="twitter:description" content="tmux 是什么，为什么 SSH 掉线时你的 AI coding agent 不会死：session 留在服务器上，手机只是接上去看。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "让 agent 在你关掉手机后继续跑", "description": "tmux 是什么，为什么 SSH 掉线时你的 AI coding agent 不会死：session 留在服务器上，手机只是接上去看。", "inLanguage": "zh-Hans", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/", "url": "https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首页", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/"}, {"@type": "ListItem", "position": 4, "name": "让 agent 在你关掉手机后继续跑", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/zh-Hans/">指南首页</a>
+                <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
+                <a class="lang-switch" href="/guide/">语言</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>让 agent 在你关掉手机后继续跑</h1>
+            <p>tmux 是一个 terminal multiplexer：它让 terminal session 继续跑在你连进去的那台机器上，不是跑在你那条连接里面。对 AI coding agent 来说，这就是掉线之后 agent 能不能活下来的差别。SSH 连接迟早会断（手机锁屏、没信号），而掉线的 SSH 通常会把 agent 所在的 shell 一起杀掉。</p>
+<p>你把手机收起来，SSH 隧道断了，agent 跟着死。这不是运气问题，是机制。</p>
+<p>连接一断，kernel 会关掉你这次登录所用的虚拟终端（pseudo-terminal），再对接在那个终端上的每个进程发送 <strong>SIGHUP</strong>（hangup）：你的 shell，也包括 shell 里面的 agent。进程除非自己处理过这个信号，否则默认就是终止，跑到一半的东西全部作废。<a href="/guide/zh-Hans/what-is-ssh/">SSH</a> 只是连接走过的那条路，撑住 agent 的是那台机器，不是那条连接。</p>
+
+<section id="session-elsewhere">
+  <h2>tmux 让 session 活在别的地方</h2>
+  <p>tmux 在服务器上开一个 session。你的 agent 跑在那个 session 里面，不是跑在你那条一直会断的 SSH 连接里。</p>
+  <p>背后的机制是一个进程。你第一次输入 <code>tmux</code>，它就在你的账号底下启动一个后台程序，那是 tmux <em>server</em>，会一直活着。之后你开的每个 session 都属于它，每个 session 的虚拟终端也由它分配，不是由 <code>sshd</code> 分配。你的 agent 用的那个终端从此刻起归 tmux server 保管，跟手机那条连接没有关系。</p>
+  <p>下次连接掉线的时候，<code>sshd</code> 关掉的是它自己的虚拟终端，挂在上面的只有你的 tmux client。client 结束了，session 照样跑。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能试用，支持 iOS 与 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+    </div>
+</aside>
+
+<section id="session-window-pane">
+  <h2>session、window、pane 各是什么？</h2>
+  <p>这三个词常常被混着用，但只有第一个能保住你的 agent。后面每一段都用得到这三个词，所以先把它们分开。</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>词</th><th>是什么</th><th>对 agent 的意义</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>session</td>
+        <td>机器上一个有名字的工作场所，自带进程，由那台机器上的 tmux server 保管</td>
+        <td>掉线之后活下来的就是它。名字取一次，可以用好几个月</td>
+      </tr>
+      <tr>
+        <td>window</td>
+        <td>一个 session 里面的一个标签页，多数人一个 agent 开一个</td>
+        <td>你切走，它在后台照样跑</td>
+      </tr>
+      <tr>
+        <td>pane</td>
+        <td>一个 window 里面的分屏：左边 agent，右边测试或 <code>git status</code></td>
+        <td>手机那一小块屏幕上同时看到两件事</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>第四个词也有用：<strong>client</strong> 就是当下正在看这个 session 的终端。一个 session 可以没有 client、有一个、或有好几个。零个不是错误，那就是 detach：session 照样在跑，只是没人看。</p>
+  <p>名字因此很重要。<code>tmux new -s work</code> 创建的 session 一周后还找得回来；不取名，tmux 就帮你编号，而“接回第 2 号”这件事过了三天就没有意义。</p>
+</section>
+
+<section id="detach-attach">
+  <h2>detach、attach，跟关掉电视是同一件事</h2>
+  <p>把电视关掉，客厅里的画面没了。节目没停，一直在播。你回来打开，接的是同一个频道，从它播到的地方看下去。</p>
+  <p>tmux 把这两个动作叫 <strong>detach</strong> 和 <strong>attach</strong>：关窗、开窗。两个都碰不到机器上真正在跑的东西。</p>
+  <p>这个比喻会漏掉一件事，而且漏掉的部分对你有利。电视关着的时候什么都没学到，tmux 的 session 却把输出留了下来。一个小时后接回来，画面是它现在的样子，那一个小时打印出来的东西还在 scrollback 里，往上翻就看得到。</p>
+</section>
+
+<section id="commands-you-type">
+  <h2>要下哪些命令？</h2>
+  <p>先记这四个：</p>
+  <pre><code>tmux new -s work          # 创建一个名叫 work 的 session
+claude                    # 在里面启动 agent
+tmux ls                   # 列出 session：work: 1 windows
+tmux attach -t work       # 从任何终端再接上去看它</code></pre>
+  <p><strong>detach 不是命令，是按键。</strong>按 Ctrl-b，放手，再按 d。前面那个键是 <em>prefix</em>：tmux 收下它，下一个键才决定要做什么。另外两个第一周就会用到：</p>
+  <ul>
+    <li><code>Ctrl-b d</code> 就是 detach。终端变回普通的 shell，session 继续跑。</li>
+    <li><code>Ctrl-b c</code> 开一个新的 window；<code>Ctrl-b %</code> 把一个 window 分割成两个 pane。</li>
+  </ul>
+  <p>如果机器回你 <code>tmux: command not found</code>，解法在<a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>那一页。</p>
+</section>
+
+<section id="what-it-means-for-agents">
+  <h2>连接掉线，agent 继续跑</h2>
+  <p>你在地铁上断了信号，进电梯断一次，切 Wi-Fi 又断一次。每次都接回同一个 tmux session，掉线十次，agent 一次都没有被打断。它不知道你掉过线，因为它从头到尾就没活在你那条连接里。</p>
+  <p>手机上三个最令人担心的情况，其实是同一件事发生了三次：</p>
+  <ul>
+    <li><strong>手机锁屏。</strong>系统把 app 暂停，连接跟着断开，什么信号都送不到 agent。它继续干活。</li>
+    <li><strong>二十分钟没信号。</strong>连接在后台安静地死掉，tmux client 跟着死，session 只是被 detach，内容一点没变。</li>
+    <li><strong>系统杀掉 app，或你往上一划。</strong>没了的是手机上的一个进程，session 从头就不在里面。在笔记本上关掉终端窗口，结果一模一样。</li>
+  </ul>
+  <p>detach 不是暂停。你不在的时候，agent 继续读文件、改文件、花掉你的用量。这就是重点，所以走开之前先回它一句，或是先把它停掉。</p>
+</section>
+
+<section id="two-devices">
+  <h2>两台设备可以同时看同一个 session 吗？</h2>
+  <p>可以，而且没有什么魔法。多个 client 可以同时接在同一个 session 上。排队时从手机开工，到公司从笔记本接回同一个，你看到的是跑到一半的同一个画面，不是它的副本。</p>
+  <p>两边按的键都送进同一个程序，所以一次只有一个人打字。attach 不会移动 session：它留在创建它的那台机器上，所以手机和笔记本看到的内容一致。反向也成立：你在笔记本的终端里手动开的 session，app 一样接得上，因为两边问的是同一台机器上的同一个 tmux server。</p>
+</section>
+
+<section id="inside-the-app">
+  <h2>App 怎么处理这些 session？</h2>
+  <p>Agentmux 用的就是上面那个区分：session 在机器上，连接只是去看它。手机这一侧的掉线是 detach，不是停止：重新连接，你回到同一个 session，而它已经跑得更远了。你在它的终端里手动下上面那些命令，结果一样，因为那是同一台机器上的同一个 session。</p>
+  <p>有两件跑腿它帮你做掉。机器上没有 tmux 时，app 会自己装，并判断你的机器用的是 apt、yum、dnf、pacman、apk 还是 brew。agent 装在 shell 看不到的地方时，app 会去查那个 PATH 问题，不会只丢给你一个毫无信息的画面。persistent session 属于免费的 single-server 方案，所以上面这些都不用另外付钱。<a href="/guide/zh-Hans/setup/">设置页</a>把整件事变成一份检查清单。</p>
+</section>
+
+<section id="what-tmux-does-not-do">
+  <h2>tmux 不做的事</h2>
+  <p>tmux 只回答一个问题：这个进程会不会活得比你的连接久。其他它一概不管。</p>
+  <ul>
+    <li><strong>服务器重启，所有 session 一起结束。</strong>它们存在 tmux server 的内存里，一次断电、一次自动更新，都会把 agent 一并带走。活下来的是已经写进硬盘的东西：改过的文件、做出的 commit、你停在哪个 branch。负责存档的是 git，不是 tmux。</li>
+    <li><strong>它不会还原 agent 已经跑过的命令。</strong>tmux 留住的是输出，文件不会自己回到之前的样子。</li>
+    <li><strong><code>tmux kill-session -t work</code> 真的会杀掉它。</strong>关掉最后一个 window，或是 agent 自己崩溃，结果一样。<code>tmux kill-server</code> 则把所有 session 一并带走，而且 tmux 不会先问你。</li>
+    <li><strong>它不会让机器保持醒着。</strong>整晚开着的 Mac mini，跟合上盖子就睡的笔记本是两回事：笔记本睡着，agent 跟着暂停，真的断电的话，session 就会整个消失。</li>
+  </ul>
+</section>
+
+<p>两分钟就能验证整篇。SSH 进去，跑 <code>tmux new -s work</code>，启动 agent，按 Ctrl-b 再按 d，把连接整个关掉，然后跑 <code>tmux attach -t work</code>。画面还是同一个，已经跑得更远，上面有一个问题在等你回。</p>
+<p>agent 现在能在你收起手机之后活下来。剩下一个问题：怎么从外面连进去，又不想在路由器上对公网开任何一个端口。<a href="/guide/zh-Hans/what-is-tailscale/">Tailscale 回答的是这个</a>。</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="上一篇" href="/guide/zh-Hans/what-is-ssh/">上一篇 · 我没开过终端<span>SSH：通往另一台电脑的隧道</span></a><a class="pager-prev" data-tracks="cliuser" data-label="上一篇" href="/guide/zh-Hans/why-remote-vibe-coding/">上一篇 · 我已经在跑 CLI agent<span>你的 AI 应该在你睡觉时工作</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="下一篇" href="/guide/zh-Hans/what-is-tailscale/">下一篇<span>不要对公网开端口</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14 天全功能试用，支持 iOS 与 Android。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">首页</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

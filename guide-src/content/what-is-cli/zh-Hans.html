@@ -1,0 +1,112 @@
+<p>CLI agent 是一个用文字跟你对话的 coding agent。它跑在你自己拥有的机器上，一台 Mac、一台 Linux 主机、或一台服务器，并沿用你在那台机器上的权限：读整个项目的文件、执行任何命令、把结果读回来。它住在终端里，因为没有别的界面能同时给你这三样。</p>
+<p>“CLI”三个字听起来像惩罚：没有鼠标、没有按钮、只有一个闪烁的光标。可是 Claude Code、Codex、Gemini CLI、OpenCode 全都住在这里。做它们的人不是硬核，是因为终端给了 agent 两样别的界面给不了的东西：<strong>完整读写文件的权限，和执行命令的权限</strong>。也是因为这两样，它跑任何一条命令之前会先问你。</p>
+
+<section id="terminal">
+  <h2>终端其实是两层程序叠在一起</h2>
+
+  <p>这里有两个程序叠在一起，而初学者通常怪错那一个。<strong>终端</strong>是负责显示的那一层：它画出一格一格的字，把你的按键转出去，就这样。它后面的 <strong>shell</strong>（zsh、bash、fish）等一行文字出现，跑那行文字，然后把程序写出来的东西打印在屏幕上。</p>
+  <p>就是因为薄到这个程度，agent 才操作得动。它打的每一行命令，跟你自己手动打的一模一样；它读到的错误信息，跟你看到的字不差。</p>
+</section>
+
+<section id="read-the-screen">
+  <h2>屏幕上真正有意义的三样东西</h2>
+
+  <p>这份指南后面每一篇都假设你会看屏幕。真正承载意义的是三样，其余都是杂音。</p>
+
+  <pre><code>yuki@mini ~/projects/auth (main)
+$ npm test
+
+ ✓ src/session/refresh.test.ts  (6 tests)
+ ✗ src/session/expire.test.ts &gt; drops a session after expiry
+
+     Tests  1 failed | 41 passed (42)
+
+$ echo $?
+1</code></pre>
+
+  <p><strong>提示符</strong>就是第一行。它告诉你四件事：你是谁、在哪台机器、哪个目录、哪个分支。机器不在你眼前的时候，这一行就不再是装饰。SSH 登录之后，它就是让你分清楚这是自己的笔记本、还是你忘记自己登进去过的那台服务器。</p>
+  <p><strong>标准输出</strong>（<em>stdout</em>）是那个程序写出来的文字。第二条流 <em>stderr</em> 分开存放，真正的输出不会跟报错混在一起。</p>
+  <p><strong>exit status。</strong>每一条跑完的命令都留下一个整数，shell 用 <code>$?</code> 交给你。0 表示那个程序宣称自己成功。agent 读的就是这个数字。它读的不是“1 failed”那些字，是那个 <code>1</code>，那是它的循环还没闭上的信号。</p>
+</section>
+
+<section id="capability-boundary">
+  <h2>界面决定 agent 能碰到什么</h2>
+
+  <p>网页版的 agent 看不到你电脑里的任何一个文件，它只活在浏览器标签页里。IDE 插件看得到你打开的文件，但通常停在“建议”这一步：它动不了 git，跑不了测试，更装不了包。</p>
+  <p>CLI agent 拿的是你自己那组权限：读整个 repo、下 <code>git commit</code>、跑测试套件、装依赖。访问分三层，风险一层比一层高：</p>
+  <ul>
+    <li><strong>读。</strong>你家目录下的每一个文件，包含 <code>.ssh</code> 里的密钥。</li>
+    <li><strong>写。</strong>在 git 管着的项目里，改坏了一个 <code>git checkout</code> 就救得回来；项目之外，没有东西会帮你回滚。</li>
+    <li><strong>执行。</strong>任何你打得出来的命令，包括 migration、force push，还有指向错误路径的 <code>rm -rf</code>。</li>
+  </ul>
+  <p>这个差距没有哪个厂商刻意设计过。选了终端当界面，这组权限就跟着来了。别的界面都扣掉了一部分，所以也做不了同样的事。</p>
+</section>
+
+<section id="commands-an-agent-runs">
+  <h2>哪些命令是沙盒里的 agent 跑不了的？</h2>
+
+  <p>“执行权限”是一个抽象的说法，点头之前先把它还原成屏幕上的行：</p>
+
+  <pre><code>npm test
+npx vitest run src/session/expire.test.ts
+
+git status --short
+git commit -m "fix: expire sessions on the dot"
+
+npm install date-fns@3
+npm run build
+
+psql "$DATABASE_URL" -f db/schema.sql
+curl -sf localhost:8000/health | jq .db</code></pre>
+
+  <p>这些命令搬到别人的云端沙盒里，要跑在哪里？那行 <code>psql</code> 连的是一个只存在于你机器上的数据库，用的 URL 来自一个从来没上传过的 <code>.env</code>。那行 <code>npm install</code> 从你 <code>.npmrc</code> 里写明的私有 registry 拉内部包。那些 <code>git</code> 动作发生在一个带着你的 remote、你的 hook、你的 signing key 的 clone 上。</p>
+  <p>沙盒里的 agent 可以写一份 patch 给你，但看不见那份 patch 造成了什么结果。看不见一次 edit 的结果，就没办法把工作做完。</p>
+</section>
+
+<section id="concrete-example">
+  <h2>不需要你按任何键就会闭上的循环</h2>
+
+  <p>你丢一句“把这个 bug 修好”。接着是十几行同样的命令，而你的手不用碰到键盘：</p>
+  <ol>
+    <li>它 grep 那条错误信息，读三个文件，改一个。</li>
+    <li>它跑 <code>npm test</code>，读 exit status，看到 <code>1</code>。</li>
+    <li>它缩到那一个失败的用例，再改一次，整组重跑，拿到 <code>0</code>。</li>
+    <li>它 commit，在本地把 migration 套上去，再 curl 那个坏掉的 endpoint。</li>
+  </ol>
+  <p>整条链上没有一个按钮需要按。换成浏览器标签页或 IDE 插件，它在第二步就停下：它能产出那个 edit，却跑不了测试，于是等你去跑，再等你把结果回报给它。到最后你变成了测试执行器。这是权限的问题，不是模型强弱的问题。</p>
+</section>
+
+<section id="byte-stream-movable">
+  <h2>为什么字节流比一个窗口值钱？</h2>
+
+  <p>你屏幕上那个终端窗口不是程序住的地方。程序接在一个 <strong>pseudo-terminal</strong> 上，那是 kernel 里一个有两端的对象：一端写进去字节，另一端就出来字节，而你的窗口只是目前握着另一端的那个人。从这个定义跟着来三件事：</p>
+  <ul>
+    <li><strong>可以保存下来。</strong><code>npm test &gt; build.log</code> 把那串文字写进文件，一年后另一个程序还能读它。GUI 的画布是一张图，图本身不是记录。</li>
+    <li><strong>可以接起来。</strong><code>git ls-files | grep .env</code> 把一个程序的输出，变成下一个程序的输入。</li>
+    <li><strong>可以搬走。</strong>那个定义没有一句话说两端必须在同一个地方。tmux 把 session 搁在服务器上，你的屏幕接上去、detach、再从另一台设备接回来。</li>
+  </ul>
+  <p>第三点才是这篇的重点。<strong>字节流可以被转向、保存起来、重播，也可以从别的地方接回去；渲染好的窗口做不到。</strong>之后要讲的持久 session、SSH、在手机上接回同一个 agent，每一件事都是从这个性质来的。</p>
+</section>
+
+<section id="what-full-access-costs">
+  <h2>完整访问要付什么代价？</h2>
+
+  <p>让 agent 能对数据库做 migration 的那个权限，也能把那个数据库删掉。它知道这一点，所以会在工作做到一半时停下来问：“要跑这条命令吗？”那个 prompt 不是胆小。一个什么都不问就直接跑的 agent，等于把你的 <code>.ssh</code> 目录和生产环境的数据库押在你身上。prompt 画的是第二层跟第三层之间那条线，而且只能在那个时刻画：命令已经知道了，还没有执行。</p>
+  <p>两个习惯挡掉大部分风险。<strong>读命令本身，不要读摘要：</strong>“我要清掉 build cache”是一段描述，只有它下面那一行才有后果。<strong>同一类只批一次：</strong>一天四十次要你批准跑测试，就用一条规则让 <code>npm test</code> 直接通过。</p>
+  <p>这里的代价不对称。一个你本来就会批准的 prompt 花你十秒。一个你误批准、跑在生产数据库上的命令，花你一天和一次 restore。就是这个比例让 <a href="/guide/zh-Hans/permission-review/">AI 自动权限审查</a>存在：先 blacklist，再 allowlist，剩下的交给模型判断。</p>
+</section>
+
+<section id="when-a-gui-is-better">
+  <h2>什么时候 GUI 更好</h2>
+
+  <p>终端不是对代码做任何事的正确界面。下面这些事情，用文字做就是比较差：</p>
+  <ul>
+    <li><strong>实时 debugger。</strong>设 breakpoint、单步走过那个循环、在第四个 frame 看一个变量。</li>
+    <li><strong>任何视觉的东西。</strong>排版、间距、一个差一点点的颜色。叫 agent 描述一张截图，比你自己看一眼差得多。</li>
+    <li><strong>读一个大的 diff。</strong>两千行并排着看。所以就算代码是 agent 写的，你多半会在 GUI 里 review 它的工作。</li>
+    <li><strong>还在学的时候。</strong>编辑器在你写错的那个 token 下面画一条线，比一整墙的 stack trace 教得快。</li>
+  </ul>
+  <p>这条分界分的不是熟练跟懒惰，分的是“你在场、你在开”跟“它在跑、你去看”。坐在桌前，IDE 常常是更好用的那个工具，而把 CLI agent 用到最好的人，两边都留着。<a href="/guide/zh-Hans/why-not-gui-ide/">那条分工线怎么画</a>，自己就是一篇。</p>
+</section>
+
+<p>终端把 agent 放进你自己的机器，而它的输出是可以住在任何地方的字符。所以那台机器不必是你正坐着的这一台。<a href="/guide/zh-Hans/what-is-ssh/">从别的地方连过去，是 SSH 的工作</a>。</p>

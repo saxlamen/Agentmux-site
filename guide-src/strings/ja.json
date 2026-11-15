@@ -1,0 +1,89 @@
+{
+  "ui": {
+    "guideHome": "ガイドトップ",
+    "guideRoot": "Agentmux ガイド",
+    "troubleshooting": "トラブルシューティング",
+    "prev": "前へ",
+    "next": "次へ",
+    "pagerTrackFormat": "{0} · {1}",
+    "listJoin": "、",
+    "labelColon": "：",
+    "trackIndexTitle": "Agentmux ガイド",
+    "trackIndexDescription": "所有するマシン上で Claude Code、Codex、各種 CLI エージェントを動かし、スマホから SSH 経由で操作するためのガイド。",
+    "extendedReading": "関連記事",
+    "ctaLine": "14日間の全機能トライアル。iOS・Android に対応。",
+    "ctaButton": "App Store でダウンロード",
+    "ctaAppStore": "App Store",
+    "ctaPlayStore": "Google Play",
+    "home": "ホーム",
+    "privacy": "プライバシー",
+    "support": "サポート",
+    "tracks": {
+      "beginner": {
+        "title": "ターミナルを開いたことがない",
+        "blurb": "AI でコードは書いているが SSH に触れたことはない方向け。シェルの仕組みから SSH まで順に解説します。"
+      },
+      "cliuser": {
+        "title": "すでに CLI エージェントを使っている",
+        "blurb": "Mac 上で Claude Code や Codex をすでに動かしている方向け。SSH、tmux、接続先アドレスの指定方法を解説します。"
+      }
+    }
+  },
+  "articles": {
+    "why-remote-vibe-coding": {
+      "title": "寝ている間もAIに作業させる",
+      "description": "エージェントのリモート実行で本当に重いのは入力ではなく待機時間です。tmuxとSSHでその待機をスマホに移せます。"
+    },
+    "why-not-gui-ide": {
+      "title": "CursorやVS CodeではなくCLIを選ぶ理由",
+      "description": "デスクトップではIDEが有利でも、スマホからはターミナルが有利です。文字列のストリームなら保存して再接続できます。"
+    },
+    "troubleshooting": {
+      "title": "つまずいたらここから",
+      "description": "SSH接続拒否、鍵の認証失敗、tmux未導入、claudeが見つからないなど8つのトラブルと対処コマンドをまとめました。"
+    },
+    "what-is-cli": {
+      "title": "最強のコーディングエージェントがCLIに棲む理由",
+      "description": "エージェントがターミナルで動く理由は、ファイル全体へのアクセスとコマンド実行権限にあります。シェルの仕組みとGUIとの使い分け。",
+      "image": "/resource/iphone-raw-launch-any-agent.webp"
+    },
+    "what-is-ssh": {
+      "title": "SSHは自分のマシンへの暗号化トンネル",
+      "description": "SSHは別のPCへの暗号化通信路です。ホスト・ユーザー・ポートの意味、パスワードより鍵が安全な理由、外部公開が不要な理由を解説。",
+      "image": "/resource/iphone-raw-edit-code-over-ssh.webp"
+    },
+    "what-is-tmux": {
+      "title": "スマホを閉じた後もエージェントを動かし続ける",
+      "description": "tmuxはターミナルマルチプレクサです。セッションがサーバー側に残るため、SSHが切れてもエージェントは終了せずデタッチされます。",
+      "image": "/resource/ipad-raw-session-command-center.webp"
+    },
+    "what-is-tailscale": {
+      "title": "Tailscale：ネットにポートを開かない接続",
+      "description": "Tailscaleは自分の端末間にWireGuardメッシュを構築します。ルーターのポート開放不要でMagicDNSや100.xへ接続できます。",
+      "image": "/resource/Darkmode_serverlist.webp"
+    },
+    "why-agentmux": {
+      "title": "TermiusやBlinkではなくAgentmuxを使う理由",
+      "description": "AgentmuxとTermius・Blinkの違いを5つの機能で比較し、Termiusが向いているケースも正直に整理します。",
+      "image": "/resource/Serverview_tmux_agents.webp"
+    },
+    "setup": {
+      "title": "15分で一晩中動くエージェント環境を整える",
+      "description": "3つの質問に答えるだけで、使いたいマシン・エージェント・接続元に応じたSSH・tmux・Tailscaleの手順書を作成します。",
+      "image": "/resource/ipad-raw-browse-remote-projects.webp"
+    },
+    "claude-code-on-iphone": {
+      "title": "iPhoneやiPadからClaude Codeを使う",
+      "description": "Claude Codeはスマホではなく自分のマシンで動きます。リモートログイン、Tailscale、tmuxセッションとPATH問題の対処法。",
+      "image": "/resource/iphone-raw-run-coding-agents-anywhere.webp"
+    },
+    "permission-review": {
+      "title": "AI権限レビュー：エージェントの確認に誰が答えるか",
+      "description": "エージェントがコマンド実行の許可を求めたとき、ブラックリストで危険を止め、許可リストを通し、残りをAIが判断する仕組みです。"
+    },
+    "windows-server": {
+      "title": "Windows PCもそのままサーバーになる",
+      "description": "WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。"
+    }
+  }
+}

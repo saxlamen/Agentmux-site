@@ -1,0 +1,141 @@
+{
+  "ui": {
+    "questions": {
+      "machine": {
+        "label": "你要连哪一台机器？",
+        "options": {
+          "mac": "一台 Mac",
+          "linux": "一台 Linux 主机",
+          "vps": "云端 VPS",
+          "windows": "一台 Windows 电脑",
+          "none": "我还没有"
+        }
+      },
+      "agent": {
+        "label": "你要跑哪个 agent？",
+        "options": {
+          "claude": "Claude Code",
+          "codex": "Codex",
+          "gemini": "Gemini CLI",
+          "opencode": "OpenCode",
+          "shell": "只要 shell"
+        }
+      },
+      "reach": {
+        "label": "你想从哪里连？",
+        "options": {
+          "lan": "同一个 Wi-Fi 就好",
+          "anywhere": "任何地方"
+        }
+      }
+    },
+    "why": "为什么要做这步",
+    "verify": "怎么知道成功了",
+    "fail": "没成功的话",
+    "labelColon": "：",
+    "copy": "复制",
+    "copied": "已复制",
+    "copyFailed": "复制失败，请手动选中文字复制",
+    "restart": "重新选择",
+    "share": "复制这份清单的链接",
+    "loadFailed": "加载失败，请刷新页面。"
+  },
+  "steps": {
+    "pick-machine": {
+      "title": "先决定要用哪一台机器",
+      "why": "接下来的每一步都假设你有一台一直开着、连得到网络、让 Agentmux 连得进来的机器：一台平时开着的 Mac、一台你自己管的 Linux 主机，或一台云端 VPS。",
+      "verifyHint": "回头回答上面的问题：你已有或打算准备的机器是 Mac、Linux 主机，还是 VPS。",
+      "failHint": "如果三个都没有，最快的通常是租一台最便宜的云端 VPS；开通之后照下一步 Linux 主机的设置做。"
+    },
+    "enable-ssh-mac": {
+      "title": "在 Mac 上打开远程登录",
+      "why": "Mac 默认没有开 SSH 服务。这行命令等同在“系统设置 → 通用 → 共享”把“远程登录”打开，让 Agentmux 之后可以用 SSH 连进来。",
+      "verifyHint": "在同一台 Mac 上打开终端粘贴验证命令，能打印出你当前登录的用户名（不是错误信息），就代表 SSH 服务已经在跑了。",
+      "failHint": "如果验证命令显示 Connection refused，或者连接被拒绝，先确认共享设置里“允许访问”的用户列表有没有包含你当前这个账号。"
+    },
+    "enable-ssh-linux": {
+      "title": "在 Linux 主机上启用 SSH 服务",
+      "why": "多数 Linux 发行版默认没有装 SSH 服务，而且软件包名称、服务名称、启动服务用的命令都因发行版而异：Debian、Ubuntu、Fedora、RHEL、Arch 用的是 systemd，Alpine 用的是 OpenRC，机器上根本没有 systemctl。下面四行每一行都已经包含安装、设为开机自启、立即启动，请只跑你这台机器对应的那一行，其余三行整行跳过。",
+      "verifyHint": "跑验证命令，正常的结果依发行版有两种长相：systemd 那几种（Debian、Ubuntu、Fedora、RHEL、Arch）会打印出一段 ssh.service 或 sshd.service 的状态，其中有 Active: active (running) 这一行（画面若进入分页模式，按 q 退出）；Alpine 只会打印出一行类似 * status: started。看到其中一种就够了。",
+      "failHint": "如果装好了、服务也显示在跑，却还是连不上，问题通常不在这台机器，而是中间的防火墙或云端主机商的安全组没放行那个端口，一段一段排查比较快找到卡在哪。另外 Alpine 的精简安装没有 sudo，如果弹出 sudo: not found，你多半已经是 root，把开头的 sudo 拿掉再跑一次。"
+    },
+    "vps-ssh-ready": {
+      "title": "确认 VPS 已经可以用 SSH 连",
+      "why": "云端 VPS 几乎都默认开着 SSH 服务，厂商开通时通常会直接给你一组账密或密钥，不需要像自建机器一样自己另外装或手动开启服务。",
+      "verifyHint": "用厂商给的账密或密钥连上去，跑一次验证命令，能打印出用户名就代表这台机器已经可以正常使用 SSH。",
+      "failHint": "如果连不上，先检查厂商后台的防火墙或安全组规则有没有放行 SSH 用的那个端口，这是 VPS 最常见的卡点，通常不是 SSH 配置本身出了问题。"
+    },
+    "enable-ssh-windows": {
+      "title": "在 Windows 打开 SSH 服务器",
+      "why": "Windows 10 和 11 都把 OpenSSH Server 做成可选功能，默认关闭。那三行在同一个“以管理员身份运行”的 PowerShell 窗口跑：第一行安装，第二行现在开起来，第三行让它重启之后还在。Windows 会自己决定什么时候更新、什么时候重启，所以第三行不是想跑才跑。",
+      "verifyHint": "在 PowerShell 跑验证命令。Status 是 Running、StartType 是 Automatic 就是你要的结果：现在连得到，重启之后也连得到。安装的过程已经顺便加了 OpenSSH-Server-In-TCP 那条入站防火墙规则。",
+      "failHint": "Add-WindowsCapability 需要管理员权限，也要连得到 Windows Update。如果它说找不到这个功能，先确认是 Windows 10 1809 以上。机器上连得到、手机连不到的话，下一个嫌疑是防火墙。"
+    },
+    "keep-awake-windows": {
+      "title": "别让电脑自己睡",
+      "why": "multiplexer 撑住的是掉线，不是睡觉。电脑睡过去，agent 跟着暂停，手机怎么连都进不去，那你整晚工作就没意义了。这两行把接通电源时的睡眠和休眠都设成“从不”。",
+      "verifyHint": "跑验证命令。接通电源那行结尾是 0x00000000，就是永不睡眠；其他数字是秒数。数字前面那个标签会跟着 Windows 的显示语言走，所以看数字，不要去找特定的英文字。",
+      "failHint": "公司账号的电脑会被组策略把睡眠改回来，你刚设的未必留得住，隔天早上再看一次。Windows Update 的活动时间也要注意：重启是把所有 session 关掉，跟掉线是两回事。"
+    },
+    "install-agent": {
+      "title": "在机器上装好你选的 agent",
+      "why": "Agentmux 接的是已经在你机器上跑得动的 CLI agent，App 不负责安装它，也不负责帮你登录。照你选的那个工具的官方安装步骤，先在这台机器上装好、登录好。",
+      "verifyHint": "跑验证命令，看到打印出一段路径（不是空白或错误信息），就代表至少有一个 agent 命令已经装在这个账号的 PATH 找得到的地方。",
+      "failHint": "如果命令在你自己开的终端能跑，通过 SSH 却找不到，多半是 PATH 只在你手动登录时才生效，不是没装好，通常换成绝对路径就能解决。"
+    },
+    "install-agent-windows": {
+      "title": "在 Windows 机器上装 agent",
+      "why": "Agentmux 接的是机器上已经能跑的 CLI agent，它不会帮你装、也不会帮你登录。用那个工具自己的 Windows 安装方式，装在你之后要连进去的那个账号。机器上有 Node.js 的话，多数是跑一条 npm 命令的事。",
+      "verifyHint": "在 PowerShell 或 cmd 跑验证命令。打印出路径代表这个账号的 PATH 找得到那个命令；它回一行说找不到文件，就是没装、或装在 PATH 外面。其他 agent 照样查：where.exe codex、where.exe gemini、where.exe opencode。",
+      "failHint": "自己开的终端跑得到、Agentmux 找不到的话，通常是 PATH 只给那个 shell 用。先重启 SSH 服务让它重新读一次环境：Restart-Service sshd，还是不行就注销再登录。"
+    },
+    "tmux-handled": {
+      "title": "tmux：不需要操作",
+      "why": "你不用自己装 tmux。Agentmux 连上去会用机器上现成的包管理器（apt、dnf、yum、pacman、apk、brew、nix-env）帮你装好。",
+      "verifyHint": "这步没有要你做的事，直接看下一步。",
+      "failHint": "如果之后 app 显示自动安装失败，多半是 sudo 需要 TTY。"
+    },
+    "psmux-handled": {
+      "title": "psmux：不用做什么",
+      "why": "Windows 上没有 tmux，Agentmux 用的是 psmux，一个命令照 tmux 那套设计的程序。它会先找 psmux、pmux、tmux.exe，找不到就用机器上现成的包管理工具装：先 winget，没有再 Scoop，再没有 cargo。",
+      "verifyHint": "这一步不用做什么。想自己确认就在 PowerShell 打 where.exe psmux，打印出路径代表有了；真的没装的时候它会回一行说找不到，不会完全没输出。",
+      "failHint": "app 说 winget、Scoop、cargo 都找不到的话就自己装：跑这一步给的命令，或是下载二进制文件把那个文件夹加进 PATH，再重连一次。"
+    },
+    "tailscale-host": {
+      "title": "在这台机器上安装并登录 Tailscale",
+      "why": "要从任何地方连回这台机器，又不想把 SSH 开放到公网被扫描机器人整天敲门，就把这台机器加入你的 Tailscale 网络：装好、登录同一个账号之后，它会多一个只有你自己连得到的私有地址。",
+      "verifyHint": "跑验证命令，列表里看到这台机器、状态显示 active，就代表 Tailscale 已经在跑，而且成功连进你的网络了。",
+      "failHint": "如果状态一直卡在等待中，或这台机器根本没出现在列表里，先确认是不是用同一个账号登录的，账号不一致是最常见的原因。"
+    },
+    "tailscale-ios": {
+      "title": "在 iPhone / iPad 上安装并登录 Tailscale",
+      "why": "手机这一端也要装 Tailscale App、登录同一个账号，两台设备才会出现在同一个私有网络里，Agentmux 才连得到你刚刚设置好的那台机器。",
+      "verifyHint": "打开 Tailscale App，确认列表里看得到刚刚那台机器，状态显示绿灯、在线。",
+      "failHint": "如果手机这边登录的账号跟机器那边不是同一个，两台设备永远不会出现在彼此的列表里，这是最容易漏掉的地方。"
+    },
+    "find-lan-address": {
+      "title": "找出 Mac 在局域网里的地址",
+      "why": "只想在同一个 Wi-Fi 底下连接、不用 Tailscale 的话，得先知道这台 Mac 在局域网里的 IP，SSH 才知道要连去哪个地址。",
+      "verifyHint": "跑这行命令，打印出一串像 192.168.1.23 的地址，就是接下来要用的目标。",
+      "failHint": "如果什么都没打印出来，代表这台 Mac 不是通过 en0 上网。打开“系统设置 → Wi-Fi → 详细信息”直接看那个 IP 地址。"
+    },
+    "find-lan-address-linux": {
+      "title": "找出 Linux 主机在局域网里的地址",
+      "why": "跟 Mac 一样，只在同一个 Wi-Fi 或局域网底下连接时，得先知道这台 Linux 主机的 IP，SSH 才知道要连去哪里。",
+      "verifyHint": "跑这行命令，会打印出这台机器目前所有网络接口的 IP，通常第一个就是你要用的局域网地址（像 192.168.x.x 开头）。",
+      "failHint": "如果打印出好几个地址不确定该选哪个，通常要挑跟你手机同一个网段（例如同样是 192.168.1.x）开头的那一个。"
+    },
+    "find-lan-address-windows": {
+      "title": "找出电脑在局域网的地址",
+      "why": "不走 Tailscale、要用同一个 Wi-Fi 连的话，你得先知道这台 PC 自己的 IP，因为 SSH 要有东西可以填。Windows 通常不只一个地址：Wi-Fi、有线网络、还有一些装了就一直在的虚拟网卡。",
+      "verifyHint": "这个会每个网卡打印一段，里面有 IPv4 地址。挑跟你手机同一个网络的那一个，例如另一个 192.168.1.x。",
+      "failHint": "什么都没打印，代表那个网卡没连上。单独跑 ipconfig 看全部网卡，或是改走 Tailscale，那条路不用管流量从哪个网卡走。"
+    },
+    "add-server": {
+      "title": "在 Agentmux 里添加这台服务器",
+      "why": "前面几步都是把“这台机器可以被连到”准备好；这一步才是真正在 Agentmux 里把它加进去：填主机地址、账号，以及你刚刚确认过的连接方式。",
+      "verifyHint": "添加完成后 Agentmux 会尝试连接一次；看到服务器状态显示已连接、能看到终端画面，就代表整套设置成功了。",
+      "failHint": "如果添加后显示连不上，回头对照你刚刚选的答案，看看是机器那端的 SSH、agent 安装，还是 Tailscale 没设置好，八成是前面某一步漏掉了。"
+    }
+  }
+}

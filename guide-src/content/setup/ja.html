@@ -1,0 +1,18 @@
+<p>一晩中動かせるエージェント環境は 15 分ほどで整います。自分が所有するマシンへ SSH で接続し、スマートフォン側の切断でエージェントが止まらないよう tmux を使い、インターネットへポートを開かずに済むよう Tailscale を通します。マシン・エージェント・接続元の 3 つの質問に答えると、ウィザードが専用のチェックリストを作成します。</p>
+<p>各ステップには「なぜ行うのか」「何を実行するか」「成功の確認方法」「失敗したときの確認先」が書かれています。（接続先のマシンが Windows の場合は、<a href="#windows">先にこちらをお読みください</a>。）</p>
+<div id="wizard" data-wizard-lang="ja" data-load-failed="セットアップウィザードを読み込めませんでした。ページを再読み込みしてください。">
+    <noscript><p>セットアップウィザードには JavaScript が必要です。<a href="/guide/ja/troubleshooting/">トラブルシューティング</a>ページを直接参照することもできます。</p></noscript>
+</div>
+<script src="/guide/assets/wizard.js" defer></script>
+
+<details id="windows" class="windows-note">
+  <summary><h2>接続先のマシンが Windows の場合</h2></summary>
+
+  <p>最初の質問で「Windows PC」を選ぶと、他の選択肢と同じようにチェックリストが生成されます。SSH サーバーの有効化、スリープ防止、エージェントのインストールを案内し、psmux は自動で導入されます。このセクションでは、他の環境から来た方が迷いやすい 2 点――Windows ホストで tmux の代わりになるものと、よく見かける WSL2 手順が今でも必要かどうか――を補足します。</p>
+  <p>結論から言うと、Windows 10 と 11 には PowerShell で有効化できる OpenSSH Server が標準搭載されており、セッションの永続化には Windows 向けの tmux 互換プログラムである <strong>psmux</strong> を使います（ホストにない場合は Agentmux が自動でインストールします）。WSL2 も仮想マシンもポートフォワーディングも不要です。具体的なコマンドや Windows セッションでできること、Linux マシンとの違いは <a href="/guide/ja/windows-server/">Windows サーバー解説記事</a> にまとめています。</p>
+  <p>Windows 環境ではなく Linux のユーザーランドを使いたい場合は、引き続き WSL2 が適しています。WSL2 の内部では「Linux マシン」の手順がそのまま適用されるため、ウィザードの最初の質問では Linux を選んでください。ただし Mac にはない 3 つの注意点があります。sshd が仮想マシンの NAT 配下で動くこと、最後のプロセスが終了すると数秒でディストリビューションがシャットダウンすること、そして古い環境では systemd が既定で無効になっていることです。この 3 点の対処法は <a href="/guide/ja/windows-server/#wsl2-still-an-option">同記事の WSL2 セクション</a> に記載しています。</p>
+
+  <h3>手元で操作している PC が Windows の場合は？</h3>
+
+  <p>ここで説明している Windows とは、あくまで「<em>接続先のマシン</em>」のことです。手元で操作している PC が Windows であり、エージェント自体は別の場所（自宅の Mac mini、オフィスの Linux マシン、VPS など）で動いているなら、上記の注意事項は当てはまりません。通常のガイド通りにセットアップでき、設定すべきなのは目の前の PC ではなく接続先のマシンです。</p>
+</details>

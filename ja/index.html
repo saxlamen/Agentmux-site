@@ -26,6 +26,8 @@
     <meta id="twitter-description" name="twitter:description" content="エージェントは自分のマシンで実行。SSH で tmux セッションに再接続し、Claude、Codex、Gemini、OpenCode を操作。ファイル閲覧やリモート編集も可能。">
     <link rel="preload" as="image" href="/resource/ipad-raw-launch-any-agent.webp">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <link rel="stylesheet" href="/site.css">
     <meta property="og:site_name" content="Agentmux">
     <meta property="og:locale" content="ja_JP">
@@ -393,5 +395,6 @@
             localStorage.setItem('preferred-lang', 'ja');
         });
     </script>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

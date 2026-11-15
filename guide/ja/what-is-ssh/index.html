@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSHは自分のマシンへの暗号化トンネル — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="SSHは別のPCへの暗号化通信路です。ホスト・ユーザー・ポートの意味、パスワードより鍵が安全な理由、外部公開が不要な理由を解説。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/what-is-ssh/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-ssh/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/what-is-ssh/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="SSHは自分のマシンへの暗号化トンネル">
+    <meta property="og:description" content="SSHは別のPCへの暗号化通信路です。ホスト・ユーザー・ポートの意味、パスワードより鍵が安全な理由、外部公開が不要な理由を解説。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/what-is-ssh/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp">
+    <meta property="og:image:width" content="1320">
+    <meta property="og:image:height" content="2868">
+    <meta property="og:image:alt" content="iPhone で SSH 経由のコード編集">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SSHは自分のマシンへの暗号化トンネル">
+    <meta name="twitter:description" content="SSHは別のPCへの暗号化通信路です。ホスト・ユーザー・ポートの意味、パスワードより鍵が安全な理由、外部公開が不要な理由を解説。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "SSHは自分のマシンへの暗号化トンネル", "description": "SSHは別のPCへの暗号化通信路です。ホスト・ユーザー・ポートの意味、パスワードより鍵が安全な理由、外部公開が不要な理由を解説。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/ja/what-is-ssh/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "SSHは自分のマシンへの暗号化トンネル", "item": "https://agentmux.saxcave.cc/guide/ja/what-is-ssh/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <a class="lang-switch" href="/guide/">言語</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>SSHは自分のマシンへの暗号化トンネル</h1>
+            <p>SSH は、あなたの端末と別のコンピュータを結ぶ暗号化された通信路です。あなたがキー入力を送り、向こうのマシンがコマンドを実行し、その出力が返ってくる間、途中の経路の誰も内容を読むことはできません。コーディングエージェントをリモートで動かすとき、スマホからエージェントが動くマシンへ到達するための手段が SSH です。</p>
+<p>前の記事では、エージェントがいちばん力を発揮するのはファイルシステムへのフルアクセスと実行権限を持つターミナルの中だと述べました。そのターミナルはポケットの中にある必要はありません。スマホから経路さえ届けば、自宅で電源を入れっぱなしの Mac mini でも、オフィスのワークステーションでも構いません。</p>
+
+<section id="another-machine">
+  <h2>クラウドサービスではなく別のマシンを使う理由</h2>
+  <p>ブラウザ型エージェントやクラウド IDE も別のマシンに接続します。違いは、それが誰のマシンかです。</p>
+  <p>SSH が繋ぐのはあなた自身のマシンです。ファイルも API キーもすでにそこにあり、インストールしたパッケージも設定した環境変数もすべて揃っています。他人のサーバーへ何かを移す必要はなく、加えた変更も作ったその場に留まるため、あとから同期し直す手間もありません。</p>
+  <p>トレードオフも反対側にあります。常時稼働できるマシンを 1 台も持っていない場合や、チーム全員にまったく同じ初期環境を配る必要がある場合はクラウド環境のほうが適しています。自分のマシンは、電源が入っていて、到達できて、自分でセットアップしてある必要があります。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="host-user-port">
+  <h2>実際に指定する 3 つの項目：ホスト、ユーザー、ポート</h2>
+  <p>すべての SSH 接続には 3 つの要素が必要で、コマンドにすると 1 行に収まります。</p>
+  <pre><code>ssh -p 22 sax@mac-mini</code></pre>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>項目</th><th>何を指定するか</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Host（ホスト）</td><td>どのマシンか。<code>mac-mini</code> のような名前、または <code>100.101.102.103</code> のようなアドレス</td></tr>
+      <tr><td>User（ユーザー）</td><td>そのマシン上のどのアカウントか。そのアカウントのファイル、権限、シェルが使われ、それ以上には触れない</td></tr>
+      <tr><td>Port（ポート）</td><td>どの入り口か。SSH の標準は 22 なので、通常は空欄のままでよい</td></tr>
+    </tbody>
+  </table></div>
+  <p>初心者がつまずくのは、この 3 つのうち 2 つです。ホストはスマホから到達できるアドレスでなければなりません（どのアドレスを使うかは次のセクションで説明します）。そしてユーザーはそのマシン上に実在している必要があります。エージェントはそのユーザーとして動き、そのユーザーが触れる範囲だけを触れます。</p>
+</section>
+
+<section id="lan-or-public-ip">
+  <h2>なぜ LAN アドレスやグローバル IP を使わないのか</h2>
+  <p>ネットワーク設定を開いて最初に見つかるアドレスは、<code>192.168.1.23</code> のような値です。同じ Wi-Fi に繋いだノート PC からならそれで繋がりますし、それが用途です。しかしこれはルーターが配ったプライベートアドレスであり、自宅のネットワーク内でしか通用しません。モバイル回線上のスマホからはそこへの経路がありません。</p>
+  <p>2 つ目は、自宅回線がインターネットに見せているグローバルアドレスを使い、ルーターでポート転送を設定してそのマシンへ通す方法です。技術的には動きますが、避けるべき道です。スキャンボットは世界中の全アドレスに対して 24 時間ログインを試みており、ポートを公開すれば 1 日以内にアクセス試行が集まり始めます。ルーター設定を 1 か所間違えれば、1 台のマシンではなく自宅ネットワーク全体が外に開いてしまいます。</p>
+  <p>そこで 3 つ目の方法を使います。自分の端末からしか見えないプライベートアドレスです。<a href="/guide/ja/what-is-tailscale/">Tailscale</a> は各マシンに MagicDNS 名または <code>100.x</code> のアドレスを割り当て、インターネット上の他の誰にもその存在は見えません。自宅にいても外出先にいても、ホスト欄にはそれを入れます。</p>
+</section>
+
+<section id="keys-vs-passwords">
+  <h2>鍵認証はより安全で入力の手間も減る</h2>
+  <p>SSH にはパスワード認証と鍵認証があり、よく「セキュリティ対利便性」の二択のように語られます。しかし鍵認証はその両方で勝っています。</p>
+  <p>鍵ペアは 2 つの小さなテキストファイルです。秘密鍵は接続する側の端末に置き、公開鍵はそこから計算して接続先のマシン（そのアカウントの <code>~/.ssh</code> ディレクトリ内にある <code>authorized_keys</code>）にコピーします。計算は一方向です。秘密鍵から公開鍵は作れますが、公開鍵から秘密鍵を復元することはできません。<code>ssh-keygen</code> を使えば数秒で作れます。</p>
+  <p>ログイン時には 2 つの鍵が一致を証明するため、何も入力しなくて済みます。パスワードは総当たり推測に耐えなければなりませんが、鍵は推測が成り立たない長さを持っています。一度設定してしまえば、それ以降の接続は毎回同じように通ります。</p>
+  <p>ただし鍵もファイルなので、秘密鍵にはパスフレーズを付けてください。ロックを忘れたノート PC からファイルをコピーされれば、他人があなたの鍵を手にしてしまいます。パスフレーズがあればそのコピー単体では使えなくなりますし、ログインパスワードと違ってパスフレーズ自体はネットワークを流れません。端末上で鍵のロックを解除するために使われ、通信路を流れるのはチャレンジに対する署名済みの応答だけです。</p>
+  <p>スマホではこの違いがさらに大きくなります。入力したパスワードは接続のたびに回線を流れ、ポートに到達できる誰に対しても推測の機会を与えます。鍵は代わりにチャレンジへ応答するだけで、秘密鍵が端末の外に出ることはありません。鍵を配置したのに拒否される場合、<a href="/guide/ja/troubleshooting/">原因はたいてい数パターンに限られます</a>（パスの誤り、ユーザーの誤り、パーミッションの誤り）。</p>
+</section>
+
+<section id="what-the-app-stores">
+  <h2>アプリは鍵をどこに保存するのか</h2>
+  <p>Agentmux は個人データを一切収集しません。利用統計は匿名かつ任意であり、オフにしても接続の動作は変わりません。パスワード、鍵、パスフレーズは OS のハードウェア保護付き認証情報ストレージに保存されます。SSH の通信内容が記録されることはなく、通信路は端末とあなたのマシンの間で暗号化されており、アプリが中継サーバーになることはありません。</p>
+</section>
+
+<section id="fingerprint-prompt">
+  <h2>初回接続時にフィンガープリントの確認が出る理由</h2>
+  <p>マシンへ初めて接続するとき、パスワードや鍵より前に、クライアントがホストの真正性に関する 1 文と短い 16 進数の文字列、そして yes / no の確認を出します。この文字列はサーバーのフィンガープリントで、マシンが署名に使うホスト鍵を人間が読める形に要約したものです。何か異常が起きたわけではありません。SSH が逆方向の認証を行っているのです。</p>
+  <p>パスワードや鍵は「あなたがマシンに対して本人であること」を証明し、ホスト鍵は「マシンがあなたに対して本物であること」を証明します。この片側がなければ、スマホと Mac mini の間に割り込んだ誰かがなりすましてあなたの送信内容を読めてしまいます。初回接続時には比較対象となる保存済みの鍵がないため、クライアントは受け入れるか尋ねて、以後はそれを記憶します。</p>
+  <p>これが役立つのは次回以降です。フィンガープリントが変わったマシンへ再接続しようとすると、クライアントは接続を拒否します。OS を再インストールしたか、あるいは別の誰かが応答しているか、どちらかです。</p>
+</section>
+
+<section id="not-a-server">
+  <h2>自分のパソコンをサーバーに作り変える必要があるのか</h2>
+  <p>「SSH」と聞くとデータセンターのサーバーラックを思い浮かべる人もいますが、実際に行うのはスイッチを 1 つ入れるだけです。Mac なら「システム設定」→「一般」→「共有」→「リモートログイン」。Linux なら多くのディストリビューションに最初から入っている <code>sshd</code> というサービスを起動するだけです。</p>
+  <p>マシンの他の部分は一切変わりません。外からノックできるドアが 1 つ増えるだけで、普段どおりのパソコンのままです。手順の順番を覚えたくない場合は、<a href="/guide/ja/setup/">セットアップページ</a>で 3 つの質問に答えればチェックリストが返ってきます。</p>
+</section>
+
+<section id="what-ssh-is-not">
+  <h2>SSH は VPN でもリモートデスクトップでもない</h2>
+  <p>SSH が行わないことが 3 つあります。</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>これではない</th><th>もしそうだった場合の意味</th><th>SSH が代わりに行うこと</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>VPN</td><td>スマホが送るすべての通信を自宅ネットワークに流す</td><td>1 台のマシンの 1 つのポートへの 1 本の通信路。他の機器には到達できるようにならない</td></tr>
+      <tr><td>マウントされたファイルシステム</td><td>リモートディスクが 1 つのフォルダとして現れる</td><td>要求に応じたバイト転送。ファイルブラウザが必要なファイルを個別に取得・送信する</td></tr>
+      <tr><td>画面共有</td><td>デスクトップの画像を指で操作する</td><td>双方向のテキスト通信。キー入力を送り、出力文字列を受け取る</td></tr>
+    </tbody>
+  </table></div>
+  <p>いちばん下の行はこのツールの欠陥ではなく、明確な境界線です。クリックできるウィンドウとしてしか存在しないソフトウェアは SSH 越しには操作できません。前の記事で引いた境界と同じく、テキストで会話するエージェントこそがトンネルを通れるエージェントです。</p>
+</section>
+
+<p>そしてスマホをポケットにしまい、トンネルが切れると、エージェントも道連れに死にます。セッションが最初からその接続の中に住んでいない限りは。<a href="/guide/ja/what-is-tmux/">そのためにあるのが tmux です</a>。</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="前へ" href="/guide/ja/what-is-cli/">前へ<span>最強のコーディングエージェントがCLIに棲む理由</span></a><a class="pager-next" data-tracks="beginner" data-label="次へ" href="/guide/ja/what-is-tmux/">次へ<span>スマホを閉じた後もエージェントを動かし続ける</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

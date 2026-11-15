@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CursorやVS CodeではなくCLIを選ぶ理由 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="デスクトップではIDEが有利でも、スマホからはターミナルが有利です。文字列のストリームなら保存して再接続できます。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/why-not-gui-ide/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="CursorやVS CodeではなくCLIを選ぶ理由">
+    <meta property="og:description" content="デスクトップではIDEが有利でも、スマホからはターミナルが有利です。文字列のストリームなら保存して再接続できます。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad から SSH 経由で coding agent を実行">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CursorやVS CodeではなくCLIを選ぶ理由">
+    <meta name="twitter:description" content="デスクトップではIDEが有利でも、スマホからはターミナルが有利です。文字列のストリームなら保存して再接続できます。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "CursorやVS CodeではなくCLIを選ぶ理由", "description": "デスクトップではIDEが有利でも、スマホからはターミナルが有利です。文字列のストリームなら保存して再接続できます。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/", "url": "https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "CursorやVS CodeではなくCLIを選ぶ理由", "item": "https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <a class="lang-switch" href="/guide/">言語</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>CursorやVS CodeではなくCLIを選ぶ理由</h1>
+            <p>Cursor や VS Code の中にあるエージェントは GUI プロセスの一部として動くため、画面とログイン済みのデスクトップ、そしてその前に座る人間を必要とします。一方、CLI エージェントのインターフェースは文字列のストリームであり、tmux によって丸ごと保存してどの端末からでも再接続できます。この違いは好みの問題ではなく、アーキテクチャの違いです。</p>
+<p>すでに Cursor や、エージェント拡張を入れた VS Code を使っていて十分に機能しているなら、同じ作業のために SSH と tmux を学ぶ意味があるのは 1 つの場面だけです。それは、あなたがそのマシンの前に座っていないときです。</p>
+
+<section id="architecture">
+  <h2>違いは好みではなくアーキテクチャにある</h2>
+
+  <p>GUI IDE の中にあるエージェントは、その GUI プログラムの一部です。アプリケーションのプロセス内で動き、状態はそのウィンドウのメモリ上に置かれ、出力はキャンバスに描画されます。だからこそ画面とログイン済みのデスクトップセッション、そして前に座る人が必要になります。ウィンドウを閉じればエージェントも一緒に終わります。誰かが機能を入れ忘れたわけではなく、そのプロセスから生えているからこそそうなっています。</p>
+  <p>CLI エージェントのインターフェースはバイトストリームです。文字が入り、文字が出ていくだけで、途中にグラフィカルな要素はありません。このようなストリームは<strong>アタッチ（接続）、デタッチ（切り離し）、再アタッチ（再接続）</strong>ができます。80×24 の文字マトリクスは丸ごと記憶してどんな画面にも描き直せるため、tmux がその管理を引き受けます。ノート PC でも、スマホでも、友人の iPad でも構いません。やり取りされているのは文字だけなので、端末を切り替えても何も失われません。</p>
+  <p>CLI エージェントがリモートで機能する理由はすべてここにあります。<strong>ピクセルのキャンバスはシリアライズして再接続できませんが、文字のマトリクスはできる</strong>からです。これはキーボード派かどうかの話ではなく、機能上できるかどうかの話です。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="same-scenario">
+  <h2>作業の途中でノート PC を閉じると何が起きるか</h2>
+
+  <p>終業間際にエージェントへ大きなリファクタリングを頼んだとします。少なくとも 20 分はかかり、あなたはもう席を立ちます。</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Cursor を開いたままにする</th>
+        <th>tmux + Claude Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ノート PC を閉じる</td>
+        <td>エージェントが止まる</td>
+        <td>エージェントは動き続ける</td>
+      </tr>
+      <tr>
+        <td>2 時間後</td>
+        <td>開くとコンテキストが消えており、最初からやり直し</td>
+        <td>スマホを開くと完了している</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>右側の列にあるものは、エージェントの賢さとは無関係です。そのセッションは最初からノート PC 上にあったわけではありません。電源を切らないマシン上にあり、ノート PC はしばらくそこに接続していただけです。蓋を閉じたことで接続が終わり、作業はあなたなしで続きました。</p>
+  <p>現在の Cursor にはクラウドのバックグラウンドエージェントもあり、ノート PC を閉じても動き続けます。ただし動いているのは Cursor 側のリモートサンドボックス内のコピーであって、手元のマシンのエージェントではありません。この点は他のページで触れているブラウザ型エージェントや Codespaces と同じです。自分のマシン上のエージェントに何が起きるかを表すのは、やはり左側の列です。</p>
+</section>
+
+<section id="why-not-vnc">
+  <h2>「リモートデスクトップを使えばいいのでは？」</h2>
+
+  <p>いちばんよく出る反論であり、理屈の上では筋が通っています。向こうのマシンではデスクトップが動いたままなのだから、VNC で繋ぎ直せば Cursor も開いたままで解決する、と見えます。</p>
+  <p>しかし実際には、両者が送っているものが違います。<strong>VNC はピクセルを送り、SSH は文字を送ります。</strong>画面全体の更新 1 回が画像データなら数百キロバイトから数メガバイトになるところ、同じ画面を文字として送れば数キロバイトのテキストで済みます。およそ 3 桁の差です。</p>
+  <p>この差は日常のあちこちで効いてきます。電車の中、エレベーターの中、アンテナが 1 本しかない場所では、VNC は紙芝居になり、1 回のスクロールを描き直すのに 3 秒かかります。同じ回線でも SSH の文字は即座に届きます。</p>
+  <p>帯域に余裕があっても、今度はマウスと 1440p ディスプレイ向けに作られたデスクトップ UI を 6 インチのタッチ画面に押し込む問題が残ります。メニュー項目を 1 つ押すために拡大し、狙いを定め、タップすることになります。タッチ操作を前提に作られていない画面は、回線が速くなっても使いやすくはなりません。</p>
+</section>
+
+<section id="honest-ending">
+  <h2>机の前では IDE のほうが優れていることも多い</h2>
+
+  <p>IDE は間違った道具ではなく、机の前ではむしろ優れている場面が多いです。定義ジャンプ、リファクタリング機能、デバッガなどは、どれもスマホ回線越しには使えません。<strong>IDE は「自分がそこにいて操縦するとき」に向き、CLI エージェント＋リモート接続は「走らせておいて様子を見に来るとき」に向きます。</strong>併用できるなら両方使うのがいちばんです。机にいる間は Mac の IDE を使い、席を離れたら Agentmux で同じプロジェクトの同じエージェントに再合流します。</p>
+  <p>Agentmux は IDE を置き換えようとしているわけではありません。椅子に座って待っている時間を置き換えます。そしてスマホをポケットに入れ、トンネルの中で電波が切れたとき、そのセッションに何が起きるかという次の問題が出てきます。</p>
+</section>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="前へ" href="/guide/ja/why-remote-vibe-coding/">前へ<span>寝ている間もAIに作業させる</span></a><a class="pager-next" data-tracks="beginner" data-label="次へ" href="/guide/ja/what-is-cli/">次へ<span>最強のコーディングエージェントがCLIに棲む理由</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

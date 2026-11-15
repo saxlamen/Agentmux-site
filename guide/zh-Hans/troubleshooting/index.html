@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡住了怎么办 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="连不上、密钥被拒、找不到 tmux、agent 命令不存在：八个卡点，各有原因和解法。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/troubleshooting/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/troubleshooting/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:title" content="卡住了怎么办">
+    <meta property="og:description" content="连不上、密钥被拒、找不到 tmux、agent 命令不存在：八个卡点，各有原因和解法。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad 通过 SSH 运行 coding agent">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="卡住了怎么办">
+    <meta name="twitter:description" content="连不上、密钥被拒、找不到 tmux、agent 命令不存在：八个卡点，各有原因和解法。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "卡住了怎么办", "description": "连不上、密钥被拒、找不到 tmux、agent 命令不存在：八个卡点，各有原因和解法。", "inLanguage": "zh-Hans", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/", "url": "https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首页", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/"}, {"@type": "ListItem", "position": 4, "name": "卡住了怎么办", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/"}]}, {"@type": "FAQPage", "inLanguage": "zh-Hans", "mainEntity": [{"@type": "Question", "name": "连接超时（Operation timed out）", "acceptedAnswer": {"@type": "Answer", "text": "超时代表你的请求没有抵达对方，所以要一段一段确认，不要一直猜。先看机器本身有没有响应： ping 主机地址 ping 完全没响应？先检查 IP 有没有打错，再确认对方机器是不是在睡眠或关机。有些机器会刻意拦截 ping，所以这里不通不代表机器真的连不到，直接跳下一步。 接着确认对方那个 SSH 端口真的有服务在监听： nc -vzw 5 主机地址 22 把 22 换成对方实际使用的端口。-w 5 让命令最多等 5 秒，碰到被拦掉的端口也会在 5 秒后给你结果，不会卡着不动。 结果只有三种。succeeded 或 open：端口是通的，问题在别的地方。Connection refused：机器收得到你的连接，但那个端口上没有服务在听。又超时：中间有东西把数据包拦掉，通常是防火墙，要检查的是路由器设置或所在网络的限制，不是这台服务器。"}}, {"@type": "Question", "name": "Permission denied (publickey)", "acceptedAnswer": {"@type": "Answer", "text": "多数情况下是公钥还没放上服务器，最快的做法是用 ssh-copy-id 放上去：它会先用密码登录一次，自动把你本地的公钥加进服务器的 authorized_keys。 ssh-copy-id 用户@主机 这个做法的前提是服务器的密码登录还开着；如果密码登录已经被关掉（见下面 密码正确却被拒绝 那节），就需要请能访问这台机器控制台的人，直接把公钥内容粘贴进 ~/.ssh/authorized_keys。 如果公钥确实在里面（一行一把、内容完整没被截断），却还是被拒绝，问题多半出在权限。对照下表检查。最容易漏掉的是最后一行：~/.ssh 和 authorized_keys 都设对了，但主目录本身「组」或「其他人」可写，StrictModes 一样拒绝： 路径需要的权限命令 ~/.ssh700chmod 700 ~/.ssh ~/.ssh/authorized_keys600chmod 600 ~/.ssh/authorized_keys ~（主目录本身）组、其他人不可写chmod go-w ~ 改完权限后再试一次连接。如果还是不行，可以在本地加上 -v 看详细过程，"}}, {"@type": "Question", "name": "密码正确却被拒绝", "acceptedAnswer": {"@type": "Answer", "text": "优先做法：改用密钥登录（做法见上面 Permission denied (publickey) 那节，把你的公钥放到服务器的 authorized_keys）。 如果你有这台服务器的管理权限、也确定想开放密码登录，才去改配置。先确认有没有其他文件会覆盖你等一下要改的值： sudo grep -r PasswordAuthentication /etc/ssh/sshd_config /etc/ssh/sshd_config.d/ 如果 /etc/ssh/sshd_config.d/ 底下也有文件设置了 PasswordAuthentication，把那个值一起改掉，或直接注释掉那一行。确认干净之后，才编辑 /etc/ssh/sshd_config，把 PasswordAuthentication 那一行改成 yes。 先不要关掉你现在这个连接窗口。改坏 sshd 配置可能让你之后完全连不进这台机器。确认新配置没问题之前，留着这个窗口当退路。保存后先验证语法： sudo sshd -t 没有打印出任何错误，"}}, {"@type": "Question", "name": "找不到 tmux", "acceptedAnswer": {"@type": "Answer", "text": "先看 Agentmux 弹出的错误信息。如果它要你输入 sudo 密码、或提到启用免密码 sudo，直接把密码填进去再试一次，通常比自己另外开窗口快。如果这个渠道也失败，或信息提到终端、TTY，再照 sudo: a terminal is required to read the password 那节手动处理。处理完通常自动安装就会成功，不需要再往下做。 只有排除 sudo 问题之后还是装不起来，才手动安装： # Debian / Ubuntu sudo apt install -y tmux # RHEL / CentOS sudo yum install -y tmux # Fedora sudo dnf install -y tmux # Arch sudo pacman -S tmux # Alpine sudo apk add tmux # Mac（不要用 root 身份运行） brew install tmux Windows 上要装的是 psmux，"}}, {"@type": "Question", "name": "claude: command not found，但桌面终端明明可以跑", "acceptedAnswer": {"@type": "Answer", "text": "最快的做法：找出 claude 的绝对路径，直接用它调用，不要依赖 PATH。在平常跑得动 claude 的那个 Terminal 窗口运行： which claude 会打印出类似 /Users/你的名字/.nvm/versions/node/v20.11.0/bin/claude 的一整串路径。把它填到 Agentmux 要求输入 agent 命令的输入框，取代原本的 claude。 如果你是用 nvm 装 node，这条路径里带着版本号，升级一次就失效，得再跑一次 which claude 重新抓路径。不想每次升级都改，就用下面比较长久的做法。 比较长久的做法，依你的 shell 分开处理，不要混用： 如果是 zsh（Mac 默认）：把设置 PATH 的那几行从 .zshrc 搬到 ~/.zshenv。那几行通常来自 nvm、pyenv，或你自己加的 export PATH=...。搬到 ~/.zprofile 也可以，两个文件在 SSH 非交互执行和 Agentmux 探测 PATH 时都读得到。 如果是 bash：搬到 ~/.profile 或 ~/.bash_profile 不会生效。"}}, {"@type": "Question", "name": "Tailscale 显示已连接，SSH 仍连不到", "acceptedAnswer": {"@type": "Answer", "text": "先从目标机器查起，因为 App 上的绿灯可能是旧的状态。手机上的 Tailscale 没有命令行，tailscale status 只能在目标机器（要被连接的那台 Mac 或 Linux 机器）上运行： tailscale status 在目标机器上确认列表里手机那个节点显示在线。手机这边打开 Tailscale App，确认目标机器的状态同样正常：没有变灰，也没有需要重新登录之类的警示。 两边都正常的话，连接时一律用 MagicDNS 名称（例如 mac-mini.tail1234.ts.net）或 tailscale status 列出的 100.x IP，不要用局域网 IP。这样不管你在家里的 Wi-Fi 还是外面用移动网络，地址都有效。 以上都没问题，再到目标机器检查 SSH 服务本身有没有启动。Linux 用 sudo systemctl status ssh；Mac 请见下面 Mac 开了远程登录却连不上 那节。"}}, {"@type": "Question", "name": "Mac 开了远程登录却连不上", "acceptedAnswer": {"@type": "Answer", "text": "打开「系统设置 → 通用 → 共享」。那是 macOS Ventura 之后的路径，Ventura 之前是「系统偏好设置 → 共享」，没有「通用」这一层。找到「远程登录」，确认开关打开，再点进去看「允许访问」的用户列表里有没有你要连接的那个账号，或直接选「所有用户」。 接着打开「系统设置 → 电池」（笔记本电脑）或「系统设置 → 节能」（Mac mini、Mac Studio、iMac 这类长期开机当服务器用的台式机，上面示例里的 mac-mini.tail1234.ts.net 就是这种）。把「电脑闲置时进入睡眠」的时间调长或关掉。如果面板上有「唤醒以供网络访问」这个选项，一并打开，Mac 就算睡着，收到连接请求时也能醒过来响应 SSH。"}}, {"@type": "Question", "name": "sudo: a terminal is required to read the password", "acceptedAnswer": {"@type": "Answer", "text": "非交互的渠道没有地方让 sudo 问密码，所以解法有两条：让 Agentmux 帮你填密码，或自己在真正的终端里跑一次。先看 Agentmux 弹出的提示：自动安装失败时，它通常会直接请你输入 sudo 密码、或改成启用免密码 sudo，再重试一次。看到那个输入框就把密码填进去，往往比自己另外处理快。 这个渠道不可用的话，就自己手动 SSH 登录那台机器，开一个正常的交互式 session，在里面执行一次同样的命令（例如 sudo apt install -y tmux）并输入密码，把事情做完。 它会成功，理由却跟多数人想的不一样。这没有帮 Agentmux 之后的自动流程解锁什么，两边查的 TTY 记录本来就不是同一笔。真正的原因是该装的东西已经被你装好了：下一次非交互命令检查时发现东西已经在，不需要安装，卡点就消失了。 如果某个特定命令长期都要通过非交互渠道免密码执行，可以用 sudo visudo 帮它加一条 NOPASSWD 规则，只针对那一条命令放行： 你的账号 ALL=(ALL) NOPASSWD: /usr/bin/apt 这个取舍比看起来严重。把 NOPASSWD 开给 apt 这类包管理器，"}}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/zh-Hans/">指南首页</a>
+                <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
+                <a class="lang-switch" href="/guide/">语言</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>卡住了怎么办</h1>
+            <p>通过 SSH、tmux、Tailscale 做远程开发，最常卡住的就是下面这八种：<code>Operation timed out</code>、<code>Permission denied (publickey)</code>、密码正确却被拒绝、找不到 tmux、<code>claude: command not found</code>、Tailscale 显示已连接却连不到、远程登录开着但 Mac 不接、<code>sudo: a terminal is required</code>。每一种都分成症状、原因，和你可以照着做的解法。</p>
+<p>照着前面几篇配置，十次有八九次一次就通。剩下那一两次卡住的地方，通常就是这八种。找到你看到的错误信息跳过去看，不用整篇从头读。</p>
+
+<section id="cannot-connect">
+  <h2>连接超时（Operation timed out）</h2>
+
+  <h3>症状</h3>
+  <p>敲了 <code>ssh 用户@主机</code> 之后画面卡住不动，等了半天，才跳出 <code>Operation timed out</code> 或 <code>Connection timed out</code>。SSH 从头到尾没有问过你密码。</p>
+
+  <h3>原因</h3>
+  <ul>
+    <li>host 名称打错字，例如打成 <code>my-serverr</code>。这种情况 SSH 会立刻报错 <code>Could not resolve hostname</code>，不会卡到超时，看到它就先去检查拼写。会卡到超时的通常是 IP 打错：少写一段、错一个数字，或是连到一个根本没人响应的地址。</li>
+    <li>对方的 SSH 不是开在标准的 22 端口，你少打了 <code>-p</code>。</li>
+    <li>目标机器正在睡眠，或干脆是关机的。</li>
+    <li>中间有防火墙拦掉连接，例如家用路由器、公司网络、酒店的 Wi-Fi。机器根本没收到你的请求。</li>
+  </ul>
+
+  <h3>解法</h3>
+  <p>超时代表你的请求没有抵达对方，所以要一段一段确认，不要一直猜。先看机器本身有没有响应：</p>
+  <pre><code>ping 主机地址</code></pre>
+  <p><code>ping</code> 完全没响应？先检查 IP 有没有打错，再确认对方机器是不是在睡眠或关机。有些机器会刻意拦截 <code>ping</code>，所以这里不通不代表机器真的连不到，直接跳下一步。</p>
+  <p>接着确认对方那个 SSH 端口真的有服务在监听：</p>
+  <pre><code>nc -vzw 5 主机地址 22</code></pre>
+  <p>把 <code>22</code> 换成对方实际使用的端口。<code>-w 5</code> 让命令最多等 5 秒，碰到被拦掉的端口也会在 5 秒后给你结果，不会卡着不动。</p>
+  <p>结果只有三种。<code>succeeded</code> 或 <code>open</code>：端口是通的，问题在别的地方。<code>Connection refused</code>：机器收得到你的连接，但那个端口上没有服务在听。又超时：中间有东西把数据包拦掉，通常是防火墙，要检查的是路由器设置或所在网络的限制，不是这台服务器。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能试用，支持 iOS 与 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+    </div>
+</aside>
+
+<section id="permission-denied-publickey">
+  <h2>Permission denied (publickey)</h2>
+
+  <h3>症状</h3>
+  <p>连接一发出去马上被拒绝，画面直接打印出 <code>Permission denied (publickey).</code>，SSH 连密码都没问。</p>
+
+  <h3>原因</h3>
+  <p>服务器不接受你这把密钥。最常见的原因是公钥根本没放到服务器上。</p>
+  <p>另一个容易被忽略的原因，是 <code>~/.ssh</code> 这个文件夹或 <code>authorized_keys</code> 的权限太宽。SSH 对这件事非常严格：权限不对，它就直接忽略整个文件，不管里面的密钥是不是正确。</p>
+
+  <h3>解法</h3>
+  <p>多数情况下是公钥还没放上服务器，最快的做法是用 <code>ssh-copy-id</code> 放上去：它会先用密码登录一次，自动把你本地的公钥加进服务器的 <code>authorized_keys</code>。</p>
+  <pre><code>ssh-copy-id 用户@主机</code></pre>
+  <p>这个做法的前提是服务器的密码登录还开着；如果密码登录已经被关掉（见下面 <a href="#password-rejected">密码正确却被拒绝</a> 那节），就需要请能访问这台机器控制台的人，直接把公钥内容粘贴进 <code>~/.ssh/authorized_keys</code>。</p>
+  <p>如果公钥确实在里面（一行一把、内容完整没被截断），却还是被拒绝，问题多半出在权限。对照下表检查。最容易漏掉的是最后一行：<code>~/.ssh</code> 和 <code>authorized_keys</code> 都设对了，但主目录本身「组」或「其他人」可写，<code>StrictModes</code> 一样拒绝：</p>
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>路径</th><th>需要的权限</th><th>命令</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>~/.ssh</code></td><td><code>700</code></td><td><code>chmod 700 ~/.ssh</code></td></tr>
+      <tr><td><code>~/.ssh/authorized_keys</code></td><td><code>600</code></td><td><code>chmod 600 ~/.ssh/authorized_keys</code></td></tr>
+      <tr><td><code>~</code>（主目录本身）</td><td>组、其他人不可写</td><td><code>chmod go-w ~</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>改完权限后再试一次连接。如果还是不行，可以在本地加上 <code>-v</code> 看详细过程，确认 SSH 真的有把你预期的那把密钥发出去：</p>
+  <pre><code>ssh -v 用户@主机</code></pre>
+  <p>输出会有五、六十行，你只需要其中两行。<code>Offering public key: ...</code> 代表你的密钥真的发出去了，本地这边没问题。紧接着出现 <code>Authentications that can continue: publickey</code>，代表服务器收到了这把密钥但没有接受。那就是密钥放错地方或权限不对，照上面的步骤继续查。</p>
+</section>
+
+<section id="password-rejected">
+  <h2>密码正确却被拒绝</h2>
+
+  <h3>症状</h3>
+  <p>你很确定密码打对了（甚至是复制粘贴的），但 SSH 一直跳回 <code>Permission denied, please try again.</code>，或者根本没有让你输入密码的画面就结束了。</p>
+
+  <h3>原因</h3>
+  <p>这通常跟密码对不对无关。服务器的 SSH 配置把密码登录关掉了（<code>PasswordAuthentication no</code>）。这是很常见的安全设置，用意是让所有人都改用密钥登录，顺带让暴力破解密码失去用处。设置成这样，密码就算一百次都打对也不会被接受。</p>
+  <p>接下来这件事最浪费时间。较新的系统会在 <code>sshd_config</code> 最上面放一行 <code>Include /etc/ssh/sshd_config.d/*.conf</code>，把那个文件夹里的配置文件全部读进来，Ubuntu 22.10 之后、Debian 12，以及几乎所有云端主机的默认镜像都是这样。而 sshd 一个配置项只采用它最先读到的那个值，后面出现的不会覆盖前面的。</p>
+  <p>所以只要 <code>/etc/ssh/sshd_config.d/</code> 底下有个 <code>50-cloud-init.conf</code> 之类的文件同样写着 <code>PasswordAuthentication no</code>，它就比你刚在主文件改的那一行先生效。你保存、重启服务，然后一样被拒绝。</p>
+
+  <h3>解法</h3>
+  <p>优先做法：改用密钥登录（做法见上面 <a href="#permission-denied-publickey">Permission denied (publickey)</a> 那节，把你的公钥放到服务器的 <code>authorized_keys</code>）。</p>
+  <p>如果你有这台服务器的管理权限、也确定想开放密码登录，才去改配置。先确认有没有其他文件会覆盖你等一下要改的值：</p>
+  <pre><code>sudo grep -r PasswordAuthentication /etc/ssh/sshd_config /etc/ssh/sshd_config.d/</code></pre>
+  <p>如果 <code>/etc/ssh/sshd_config.d/</code> 底下也有文件设置了 <code>PasswordAuthentication</code>，把那个值一起改掉，或直接注释掉那一行。确认干净之后，才编辑 <code>/etc/ssh/sshd_config</code>，把 <code>PasswordAuthentication</code> 那一行改成 <code>yes</code>。</p>
+  <p><strong>先不要关掉你现在这个连接窗口。</strong>改坏 sshd 配置可能让你之后完全连不进这台机器。确认新配置没问题之前，留着这个窗口当退路。保存后先验证语法：</p>
+  <pre><code>sudo sshd -t</code></pre>
+  <p>没有打印出任何错误，才重新启动服务让配置生效：</p>
+  <pre><code>sudo systemctl restart ssh</code></pre>
+  <p>部分发行版的服务名称是 <code>sshd</code> 而不是 <code>ssh</code>。上面那行找不到服务的话，改试 <code>sudo systemctl restart sshd</code>。接着开一个全新的连接窗口（不要用你留着当退路的那一个），确认真的能用密码登录，然后才关掉旧窗口。</p>
+  <p>整套环境都建立在 Tailscale 上，所以有个比「把密码登录对整个互联网开放」更安全的做法：只允许 Tailscale 网段的连接用密码，其余来源仍然只能用密钥。在 <code>sshd_config</code> 尾端加一段：</p>
+  <pre><code>Match Address 100.64.0.0/10
+    PasswordAuthentication yes
+
+Match All
+    PasswordAuthentication no</code></pre>
+</section>
+
+<section id="tmux-not-found">
+  <h2>找不到 tmux</h2>
+
+  <h3>症状</h3>
+  <p>Agentmux 提示找不到 tmux，或者你自己连上去手动敲 <code>tmux</code> 时看到 <code>command not found: tmux</code>。</p>
+
+  <h3>原因</h3>
+  <p>目标机器上还没装 tmux，而 Agentmux 会替你装。它会先检测这台机器用的是 apt、yum、dnf、pacman、apk（Alpine）还是 brew，再通过 SSH 跑对应的安装命令。多数情况你等它跑完就好。</p>
+  <p>自动安装失败，最常见的原因是 <code>sudo</code>。安装命令里带了它，但这条通道是非交互式的，<code>sudo</code> 没有终端可以问你密码（见下面 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a>）。其次是在 Mac 上用 Homebrew 安装、但连接身份是 root，因为 Homebrew 设计上拒绝以 root 运行。</p>
+  <p>Windows 主机是同一个故事，只是程序换了：那里 Agentmux 装的是 psmux，先试 winget、再 Scoop、最后 cargo。三个都没有的机器会收到直接把话说清楚的信息：<em>这台 Windows 服务器上找不到 winget、scoop 或 cargo。请手动安装 psmux，然后重新连接。</em> 那不是安装坏掉，是那台电脑没有包管理工具，手动安装的命令在下面。</p>
+
+  <p>还有一种少见但容易误判的情况：tmux 已经装了，只是装在 Agentmux 探测 PATH 时没看到的地方，例如 Linuxbrew 装在 <code>~/.linuxbrew</code>，MacPorts 装在 <code>/opt/local/bin</code>。信息一样是「找不到 tmux」，问题却出在 PATH，不是没装。照下面 <a href="#agent-command-not-found">claude: command not found，但桌面终端明明可以跑</a> 那节处理。</p>
+
+  <h3>解法</h3>
+  <p>先看 Agentmux 弹出的错误信息。如果它要你输入 sudo 密码、或提到启用免密码 sudo，直接把密码填进去再试一次，通常比自己另外开窗口快。如果这个渠道也失败，或信息提到终端、TTY，再照 <a href="#sudo-needs-tty">sudo: a terminal is required to read the password</a> 那节手动处理。处理完通常自动安装就会成功，不需要再往下做。</p>
+  <p>只有排除 <code>sudo</code> 问题之后还是装不起来，才手动安装：</p>
+  <pre><code># Debian / Ubuntu
+sudo apt install -y tmux
+
+# RHEL / CentOS
+sudo yum install -y tmux
+
+# Fedora
+sudo dnf install -y tmux
+
+# Arch
+sudo pacman -S tmux
+
+# Alpine
+sudo apk add tmux
+
+# Mac（不要用 root 身份运行）
+brew install tmux</code></pre>
+  <p>Windows 上要装的是 psmux，不是 tmux：</p>
+  <pre><code># Windows（PowerShell）
+winget install -e --id marlocarlo.psmux --accept-package-agreements --accept-source-agreements</code></pre>
+  <p>psmux 已经装过的话，winget 不会再装一次，它会返回没有较新的版本；用 SSH 连进去时它也不会停下来问你什么。那样的输出就代表东西已经在了。</p>
+  <p>那台机器没有 winget 的话，你有在用 Scoop 或 cargo 就用它们，不然就下载一个 binary 放进已经在 <code>PATH</code> 里的文件夹。两种做法之后都要重连一次，因为应用是开 session 的时候才去探那个程序。</p>
+</section>
+
+<section id="agent-command-not-found">
+  <h2>claude: command not found，但桌面终端明明可以跑</h2>
+
+  <h3>症状</h3>
+  <p>你在 Mac 自己开的 Terminal 里敲 <code>claude</code>，命令正常运行。通过 Agentmux 连进去、或直接 <code>ssh 主机 claude</code>，却看到 <code>claude: command not found</code>（或 <code>bash: claude: command not found</code>）。同一台机器、同一个账号，两边结果却不一样，看起来就像 Agentmux 坏了。</p>
+
+  <h3>原因</h3>
+  <p>问题出在 shell 的行为，不是 Agentmux。这是整页最难自己想通的卡点，所以原理值得多写几行。把它读懂之后，再遇到类似的情况，你自己就能判断。</p>
+  <p>你平常在 Mac 上开的 Terminal 是一个「交互式登录 shell」。<code>claude</code> 找得到，通常是因为 nvm、npm 或安装工具在某个配置文件里加了一行，把它所在的目录放进 PATH。哪一个配置文件，zsh 和 bash 不一样，混着讲会误导，所以分开说：</p>
+  <p><strong>zsh</strong>（Mac 的默认 shell）：交互式登录 shell 依次读 <code>.zshenv</code> → <code>.zprofile</code> → <code>.zshrc</code> → <code>.zlogin</code>。而 <code>ssh 主机 claude</code> 这种执行单条命令的连接，开的是非交互、非登录的 zsh，只会读 <code>.zshenv</code>，其余全部跳过，其中就包含大多数人放 PATH 设置的 <code>.zshrc</code>。</p>
+  <p><strong>bash</strong>：这部分的行为因发行版而异，没有一套统一的规则。交互式登录 shell 读的是 <code>.bash_profile</code>（或 <code>.profile</code>），不是 <code>.bashrc</code>。你会以为 bash 也会读 <code>.bashrc</code>，是因为多数发行版默认的 <code>.bash_profile</code> 里都加了一段「如果 <code>.bashrc</code> 存在就 source 它」。<code>ssh 主机 claude</code> 这种用法，就是 sshd 叫 bash 执行单条命令。这种情况下 bash 会不会读 <code>~/.bashrc</code>，答案要看发行版，差别在一个编译时期加上去的 <code>SSH_SOURCE_BASHRC</code> 特例。Debian、Ubuntu 和它们的衍生版有把这个 patch 补进去，所以非交互的单条命令 shell 也会读 <code>~/.bashrc</code>。RHEL、Fedora、Arch 这类发行版用的是官方原始版本的 bash，没有这个特例，同样场景下 <code>~/.bashrc</code> 根本不会被读到。就算在会读的发行版上，几乎每个默认的 <code>.bashrc</code> 开头也都放了一段判断：</p>
+  <pre><code>case $- in
+    *i*) ;;
+      *) return;;
+esac</code></pre>
+  <p>意思是「如果现在不是交互模式，就直接结束，不要往下读」。这段判断通常写在文件最前面，所以 bash 即使真的把 <code>.bashrc</code> 打开了，也会在读到你加的 PATH 那行之前就跳出去，结果跟没读到一样。</p>
+  <p>不管 zsh 还是 bash，结果都一样。设置 PATH 的那一行，只在你自己开 Terminal 的时候执行过。SSH 执行单条命令时没读到它，PATH 里就没有 <code>claude</code> 的位置，shell 说找不到是正确的反应。这跟 <code>claude</code> 有没有装好无关：它一直都在，只是没人告诉这个 shell 要去哪里找。</p>
+  <p>非交互执行时跳过这些配置文件是刻意的设计。不然每跑一段远程命令，都要先加载一堆给人交互用的别名和提示符配置，出错的机会跟着变多。</p>
+  <p>还有一点。Agentmux 在 Mac 上探测 PATH 用的是 <code>zsh -lc</code>，也就是登录但非交互，一样跳过 <code>.zshrc</code>，只读 <code>.zshenv</code> 和 <code>.zprofile</code>。所以对 Mac 上的 zsh 用户来说，把 PATH 设置搬到这两个文件，影响的不只是你手动 SSH 找不找得到命令，还包括 Agentmux 自己能不能找到 agent 命令。</p>
+
+  <h3>解法</h3>
+  <p>最快的做法：找出 <code>claude</code> 的绝对路径，直接用它调用，不要依赖 PATH。在平常跑得动 <code>claude</code> 的那个 Terminal 窗口运行：</p>
+  <pre><code>which claude</code></pre>
+  <p>会打印出类似 <code>/Users/你的名字/.nvm/versions/node/v20.11.0/bin/claude</code> 的一整串路径。把它填到 Agentmux 要求输入 agent 命令的输入框，取代原本的 <code>claude</code>。</p>
+  <p>如果你是用 nvm 装 node，这条路径里带着版本号，升级一次就失效，得再跑一次 <code>which claude</code> 重新抓路径。不想每次升级都改，就用下面比较长久的做法。</p>
+  <p>比较长久的做法，依你的 shell 分开处理，不要混用：</p>
+  <p><strong>如果是 zsh</strong>（Mac 默认）：把设置 PATH 的那几行从 <code>.zshrc</code> 搬到 <code>~/.zshenv</code>。那几行通常来自 nvm、pyenv，或你自己加的 <code>export PATH=...</code>。搬到 <code>~/.zprofile</code> 也可以，两个文件在 SSH 非交互执行和 Agentmux 探测 PATH 时都读得到。</p>
+  <p><strong>如果是 bash</strong>：搬到 <code>~/.profile</code> 或 <code>~/.bash_profile</code> 不会生效。<code>ssh 主机 claude</code> 开的是非登录 shell，这两个文件都不会被读到。</p>
+  <p>机器是 Debian、Ubuntu 或它们的衍生版的话，把 PATH 那几行搬进 <code>~/.bashrc</code>，放在文件最前面那段 <code>case $- in ... esac</code> 判断式「之前」，它就会在交互判断拦下之前先生效。RHEL、Fedora、Arch 这类发行版则不同，<code>~/.bashrc</code> 在这个场景下本来就不会被读到，改它没有任何效果。</p>
+  <p>不知道自己属于哪一种的话，就用上面的绝对路径。那个做法每个发行版都有效，也是唯一保证跨发行版都能用的解法。</p>
+  <p>搬完之后，开一个新的 SSH 连接测试，确认真的生效了：</p>
+  <pre><code>ssh 主机 'claude --version'</code></pre>
+  <p>能打印出版本号，就代表 PATH 这次真的在非交互 shell 里也读到了。</p>
+</section>
+
+<section id="tailscale-connected-but-ssh-fails">
+  <h2>Tailscale 显示已连接，SSH 仍连不到</h2>
+
+  <h3>症状</h3>
+  <p>手机上的 Tailscale App 显示两台设备都是绿灯、在线，但用 Agentmux 或直接 <code>ssh</code> 连过去，还是失败或整个超时。</p>
+
+  <h3>原因</h3>
+  <ul>
+    <li>连接用的是局域网 IP（像 <code>192.168.x.x</code>），不是 Tailscale 给的 MagicDNS 名称或 <code>100.x</code> 开头的 Tailscale IP。局域网 IP 只有在同一个 Wi-Fi 底下连得到。手机一切到移动网络，这组 IP 就完全无效。</li>
+    <li>对方设备的状态其实刚掉线或正在睡眠，Tailscale App 上显示的「在线」还没更新。</li>
+    <li>Tailscale 本身正常，但目标机器上的 SSH 服务根本没开或没启动。Tailscale 只负责把两台机器的网络打通，不会帮你把 SSH 服务打开。</li>
+    <li>最常见的原因是 node key 过期。目标机器需要重新验证，App 里看起来还是绿灯「已连接」，实际上这台机器已经不在网络里。到 Tailscale 的管理后台查那台机器有没有被标成需要重新登录，重新验证一次通常就解决了。</li>
+  </ul>
+
+  <h3>解法</h3>
+  <p>先从目标机器查起，因为 App 上的绿灯可能是旧的状态。手机上的 Tailscale 没有命令行，<code>tailscale status</code> 只能在目标机器（要被连接的那台 Mac 或 Linux 机器）上运行：</p>
+  <pre><code>tailscale status</code></pre>
+  <p>在目标机器上确认列表里手机那个节点显示在线。手机这边打开 Tailscale App，确认目标机器的状态同样正常：没有变灰，也没有需要重新登录之类的警示。</p>
+  <p>两边都正常的话，连接时一律用 MagicDNS 名称（例如 <code>mac-mini.tail1234.ts.net</code>）或 <code>tailscale status</code> 列出的 <code>100.x</code> IP，不要用局域网 IP。这样不管你在家里的 Wi-Fi 还是外面用移动网络，地址都有效。</p>
+  <p>以上都没问题，再到目标机器检查 SSH 服务本身有没有启动。Linux 用 <code>sudo systemctl status ssh</code>；Mac 请见下面 <a href="#mac-remote-login">Mac 开了远程登录却连不上</a> 那节。</p>
+</section>
+
+<section id="mac-remote-login">
+  <h2>Mac 开了远程登录却连不上</h2>
+
+  <h3>症状</h3>
+  <p>已经在系统设置里打开「远程登录」，Mac 也确定连着网络，但 SSH 还是连不上；或者连得上却被拒绝，而你很确定密码或密钥都是对的。</p>
+
+  <h3>原因</h3>
+  <ul>
+    <li>「远程登录」默认只允许「特定用户」列表里的账号登录。你用来连接的那个账号可能根本不在列表上。</li>
+    <li>Mac 进入睡眠之后网络接口跟着休眠，SSH 自然连不到。这跟远程登录有没有打开无关，是机器当下对网络请求完全没响应。</li>
+  </ul>
+
+  <h3>解法</h3>
+  <p>打开「系统设置 → 通用 → 共享」。那是 macOS Ventura 之后的路径，Ventura 之前是「系统偏好设置 → 共享」，没有「通用」这一层。找到「远程登录」，确认开关打开，再点进去看「允许访问」的用户列表里有没有你要连接的那个账号，或直接选「所有用户」。</p>
+  <p>接着打开「系统设置 → 电池」（笔记本电脑）或「系统设置 → 节能」（Mac mini、Mac Studio、iMac 这类长期开机当服务器用的台式机，上面示例里的 <code>mac-mini.tail1234.ts.net</code> 就是这种）。把「电脑闲置时进入睡眠」的时间调长或关掉。如果面板上有「唤醒以供网络访问」这个选项，一并打开，Mac 就算睡着，收到连接请求时也能醒过来响应 SSH。</p>
+</section>
+
+<section id="sudo-needs-tty">
+  <h2>sudo: a terminal is required to read the password</h2>
+
+  <h3>症状</h3>
+  <p>通过 Agentmux 或 SSH 执行一段包含 <code>sudo</code> 的命令时，命令直接失败，打印出 <code>sudo: a terminal is required to read the password</code>，完全没有跑起来的迹象。</p>
+
+  <h3>原因</h3>
+  <p><code>sudo</code> 正常会在终端上弹出「输入密码：」，等你打完才往下跑。但如果命令是通过非交互的渠道执行，例如 SSH 远程执行单条命令，或是 Agentmux 在背后帮你跑的安装流程，那里没有一个真正的终端可以显示提示，也没有地方让你打字。<code>sudo</code> 发现没有 TTY 可用就直接拒绝，不会傻等一个永远不会来的输入。</p>
+  <p>这里有个常见的误会：以为刚打过一次 sudo 密码，接下来一段时间就不用再打。现代的 sudo 确实会记录「已经验证过」，但那笔记录绑定的是当下那个 TTY（<code>tty_tickets</code>），跟你的账号、跟这台机器都没有关系。</p>
+  <p>你在交互式 SSH 窗口里打过密码，Agentmux 之后自动跑命令时，开的是另一条没有 TTY 的全新连接。对 sudo 来说那是另一笔记录，所以它会再问一次。这里没有缓存过期的问题：两边查的从来就不是同一笔记录。</p>
+
+  <h3>解法</h3>
+  <p>非交互的渠道没有地方让 sudo 问密码，所以解法有两条：让 Agentmux 帮你填密码，或自己在真正的终端里跑一次。先看 Agentmux 弹出的提示：自动安装失败时，它通常会直接请你输入 sudo 密码、或改成启用免密码 sudo，再重试一次。看到那个输入框就把密码填进去，往往比自己另外处理快。</p>
+  <p>这个渠道不可用的话，就自己手动 SSH 登录那台机器，开一个正常的交互式 session，在里面执行一次同样的命令（例如 <code>sudo apt install -y tmux</code>）并输入密码，把事情做完。</p>
+  <p>它会成功，理由却跟多数人想的不一样。这没有帮 Agentmux 之后的自动流程解锁什么，两边查的 TTY 记录本来就不是同一笔。真正的原因是该装的东西已经被你装好了：下一次非交互命令检查时发现东西已经在，不需要安装，卡点就消失了。</p>
+  <p>如果某个特定命令长期都要通过非交互渠道免密码执行，可以用 <code>sudo visudo</code> 帮它加一条 <code>NOPASSWD</code> 规则，只针对那一条命令放行：</p>
+  <pre><code>你的账号 ALL=(ALL) NOPASSWD: /usr/bin/apt</code></pre>
+  <p>这个取舍比看起来严重。把 <code>NOPASSWD</code> 开给 apt 这类包管理器，几乎等于交出完整的 root：你可以叫 apt 装任何包，而 <code>APT::Update::Pre-Invoke</code> 这类 hook 还能以 root 身份在安装过程中执行任何命令。实际上那就是免密码的 root，只是换一种写法。</p>
+  <p>清楚知道这个代价、也刻意接受，才这样设置。否则宁可回到上面「先手动装一次」的做法。也绝对不要直接放行 <code>NOPASSWD: ALL</code>，那等于整台机器的 <code>sudo</code> 都不再需要密码。</p>
+</section>
+        </article>
+        
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14 天全功能试用，支持 iOS 与 Android。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">首页</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

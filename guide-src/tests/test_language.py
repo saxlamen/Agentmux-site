@@ -132,5 +132,87 @@ class ZhHantStyleTest(unittest.TestCase):
         self.assertEqual(en, zh, "articles missing a zh-TW draft")
 
 
+def zh_hans_sources() -> list:
+    paths = sorted((SRC / "content").glob("*/zh-Hans.html"))
+    paths += [SRC / "strings" / "zh-Hans.json", SRC / "wizard" / "strings" / "zh-Hans.json"]
+    return [p for p in paths if p.exists()]
+
+
+# Taiwan-only terms -> mainland equivalents for zh-Hans
+TAIWAN_TERMS = {
+    "鎖定螢幕": "锁屏",
+    "伺服器": "服务器",
+    "預設": "默认",
+    "軟體": "软件",
+    "硬體": "硬件",
+    "網路": "网络",
+    "程式碼": "代码",
+    "使用者": "用户",
+    "搜尋": "搜索",
+    "選單": "菜单",
+    "記憶體": "内存",
+    "快取": "缓存",
+    "介面": "界面",
+    "圖示": "图标",
+    "回饋": "反馈",
+    "資訊": "信息",
+    "斷線": "掉线",
+    "區域網路": "局域网",
+    "電腦": "计算机/电脑",
+    "硬碟": "硬盘",
+    "滑鼠": "鼠标",
+    "影片": "视频",
+    "音訊": "音频",
+    "設定": "设置",
+    "載入": "加载",
+    "解除安裝": "卸载",
+}
+
+TRADITIONAL_ONLY = set(
+    "鎖門網頁載錄際組級統總關邊線運遠連還進義樂習亞產親從眾無顯暫術機權條來傑極"
+    "櫃標檔檢漢溝沒澤潔測濟潤濕滿滅災熱愛狀現療視覺覽計認讓論設證評詞譯誤說談敗"
+    "賬購責資車軌輕輯遷違遞遺郵釋鐘鑰銀鏈問閒隊難頂順預頻題額風館駛騎顧駐類緊紀"
+    "純約細織終紹結給絡絕繼績維綠緩編縮聯腦艱節藥獲營慮補規筆簡電時東書寫語讀會"
+    "見兒並於廣蓋別選徑樣經層識壞蘇確體"
+)
+
+
+class ZhHansStyleTest(unittest.TestCase):
+    def setUp(self):
+        self.sources = zh_hans_sources()
+
+    def test_no_taiwan_terminology(self):
+        if not self.sources:
+            return
+        offenders = []
+        for path in self.sources:
+            text = path.read_text(encoding="utf-8")
+            for term, preferred in TAIWAN_TERMS.items():
+                if term in text:
+                    line = text[: text.index(term)].count("\n") + 1
+                    offenders.append("%s:%d %s (write %s)" % (path.name, line, term, preferred))
+        self.assertEqual(offenders, [], "Taiwan terminology in zh-Hans copy:\n" + "\n".join(offenders))
+
+    def test_no_traditional_characters(self):
+        if not self.sources:
+            return
+        offenders = []
+        for path in self.sources:
+            text = path.read_text(encoding="utf-8")
+            for char in sorted(set(text) & TRADITIONAL_ONLY):
+                line = text[: text.index(char)].count("\n") + 1
+                offenders.append("%s:%d %s" % (path.name, line, char))
+        self.assertEqual(offenders, [], "Traditional characters in zh-Hans copy:\n" + "\n".join(offenders))
+
+    def test_every_article_has_zh_hans_and_ja(self):
+        en = {p.parent.name for p in (SRC / "content").glob("*/en.html")}
+        zh_hans = {p.parent.name for p in (SRC / "content").glob("*/zh-Hans.html")}
+        ja = {p.parent.name for p in (SRC / "content").glob("*/ja.html")}
+        if zh_hans:
+            self.assertEqual(en, zh_hans, "articles missing a zh-Hans draft")
+        if ja:
+            self.assertEqual(en, ja, "articles missing a ja draft")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2, exit=False)

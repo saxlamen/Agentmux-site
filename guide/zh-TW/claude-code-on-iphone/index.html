@@ -12,6 +12,8 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/claude-code-on-iphone/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/claude-code-on-iphone/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
     <meta property="og:type" content="article">
@@ -33,6 +35,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "在 iPhone、iPad 上跑 Claude Code", "description": "Claude Code 跑在你自己的機器上，手機只負責終端機。遠端登入、Tailscale、tmux，還有 PATH 的坑。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-04", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "在 iPhone、iPad 上跑 Claude Code", "item": "https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/"}]}]}</script>
 </head>
 <body class="guide">
@@ -45,7 +49,7 @@
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/en/claude-code-on-iphone/">English</a>
+                <a class="lang-switch" href="/guide/">語言</a>
             </div>
         </div>
     </nav>
@@ -66,6 +70,13 @@
   </ul>
   <p>有兩個後果。機器必須一直開著、而且要連得到：蓋著蓋子收在抽屜裡的筆電什麼都不會跑。手機那一邊最便宜，換一支手機就恢復了。</p>
 </section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能試用，支援 iOS 與 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下載</a>
+    </div>
+</aside>
 
 <section id="three-things-before-the-phone-matters">
   <h2>先決定的三件事，順序不能換</h2>
@@ -189,7 +200,7 @@ tmux attach -t tests    # 看完再 detach</code></pre>
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>14 天全功能試用，支援 iOS 與 Android。</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
@@ -205,5 +216,6 @@ tmux attach -t tests    # 看完再 detach</code></pre>
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

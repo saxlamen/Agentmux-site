@@ -12,6 +12,8 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/claude-code-on-iphone/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/claude-code-on-iphone/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/claude-code-on-iphone/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
     <meta property="og:type" content="article">
@@ -33,6 +35,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Run Claude Code on your iPhone or iPad", "description": "Claude Code runs on a machine you own, not on the phone. Remote Login, Tailscale, a named tmux session, and the PATH problem SSH causes.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/", "url": "https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-11-04", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Run Claude Code on your iPhone or iPad", "item": "https://agentmux.saxcave.cc/guide/en/claude-code-on-iphone/"}]}]}</script>
 </head>
 <body class="guide">
@@ -45,7 +49,7 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/zh-TW/claude-code-on-iphone/">繁體中文</a>
+                <a class="lang-switch" href="/guide/">Language</a>
             </div>
         </div>
     </nav>
@@ -66,6 +70,13 @@
   </ul>
   <p>Two consequences follow. The machine has to stay on and reachable: a laptop closed in a drawer runs nothing. The phone is the cheap half to replace.</p>
 </section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14-day full-feature trial, available on iOS and Android.</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
 
 <section id="three-things-before-the-phone-matters">
   <h2>Three things to set up, in this order</h2>
@@ -189,7 +200,7 @@ tmux attach -t tests    # watch it, then detach</code></pre>
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>14-day full-feature trial, available on iOS and Android.</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
@@ -205,5 +216,6 @@ tmux attach -t tests    # watch it, then detach</code></pre>
             <a href="mailto:atmux-support@saxcave.cc">Support</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

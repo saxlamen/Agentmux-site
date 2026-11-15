@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentmux ガイド — Agentmux</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="所有するマシン上で Claude Code、Codex、各種 CLI エージェントを動かし、スマホから SSH 経由で操作するためのガイド。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="Agentmux ガイド">
+    <meta property="og:description" content="所有するマシン上で Claude Code、Codex、各種 CLI エージェントを動かし、スマホから SSH 経由で操作するためのガイド。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad から SSH 経由で coding agent を実行">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agentmux ガイド">
+    <meta name="twitter:description" content="所有するマシン上で Claude Code、Codex、各種 CLI エージェントを動かし、スマホから SSH 経由で操作するためのガイド。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "name": "Agentmux ガイド", "description": "所有するマシン上で Claude Code、Codex、各種 CLI エージェントを動かし、スマホから SSH 経由で操作するためのガイド。", "url": "https://agentmux.saxcave.cc/guide/ja/", "inLanguage": "ja", "dateModified": "2026-11-04", "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "hasPart": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://agentmux.saxcave.cc/guide/ja/why-remote-vibe-coding/", "name": "寝ている間もAIに作業させる"}, {"@type": "ListItem", "position": 2, "url": "https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/", "name": "CursorやVS CodeではなくCLIを選ぶ理由"}, {"@type": "ListItem", "position": 3, "url": "https://agentmux.saxcave.cc/guide/ja/what-is-cli/", "name": "最強のコーディングエージェントがCLIに棲む理由"}, {"@type": "ListItem", "position": 4, "url": "https://agentmux.saxcave.cc/guide/ja/what-is-ssh/", "name": "SSHは自分のマシンへの暗号化トンネル"}, {"@type": "ListItem", "position": 5, "url": "https://agentmux.saxcave.cc/guide/ja/what-is-tmux/", "name": "スマホを閉じた後もエージェントを動かし続ける"}, {"@type": "ListItem", "position": 6, "url": "https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/", "name": "Tailscale：ネットにポートを開かない接続"}, {"@type": "ListItem", "position": 7, "url": "https://agentmux.saxcave.cc/guide/ja/why-agentmux/", "name": "TermiusやBlinkではなくAgentmuxを使う理由"}, {"@type": "ListItem", "position": 8, "url": "https://agentmux.saxcave.cc/guide/ja/setup/", "name": "15分で一晩中動くエージェント環境を整える"}, {"@type": "ListItem", "position": 9, "url": "https://agentmux.saxcave.cc/guide/ja/windows-server/", "name": "Windows PCもそのままサーバーになる"}, {"@type": "ListItem", "position": 10, "url": "https://agentmux.saxcave.cc/guide/ja/claude-code-on-iphone/", "name": "iPhoneやiPadからClaude Codeを使う"}, {"@type": "ListItem", "position": 11, "url": "https://agentmux.saxcave.cc/guide/ja/permission-review/", "name": "AI権限レビュー：エージェントの確認に誰が答えるか"}, {"@type": "ListItem", "position": 12, "url": "https://agentmux.saxcave.cc/guide/ja/troubleshooting/", "name": "つまずいたらここから"}]}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <a class="lang-switch" href="/guide/">言語</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <h1>Agentmux ガイド</h1>
+        <section class="track" id="beginner">
+          <h2>ターミナルを開いたことがない</h2>
+          <p>AI でコードは書いているが SSH に触れたことはない方向け。シェルの仕組みから SSH まで順に解説します。</p>
+          <ol>
+            <li><a data-track="beginner" href="/guide/ja/why-remote-vibe-coding/">寝ている間もAIに作業させる</a></li>
+            <li><a data-track="beginner" href="/guide/ja/why-not-gui-ide/">CursorやVS CodeではなくCLIを選ぶ理由</a></li>
+            <li><a data-track="beginner" href="/guide/ja/what-is-cli/">最強のコーディングエージェントがCLIに棲む理由</a></li>
+            <li><a data-track="beginner" href="/guide/ja/what-is-ssh/">SSHは自分のマシンへの暗号化トンネル</a></li>
+            <li><a data-track="beginner" href="/guide/ja/what-is-tmux/">スマホを閉じた後もエージェントを動かし続ける</a></li>
+            <li><a data-track="beginner" href="/guide/ja/what-is-tailscale/">Tailscale：ネットにポートを開かない接続</a></li>
+            <li><a data-track="beginner" href="/guide/ja/why-agentmux/">TermiusやBlinkではなくAgentmuxを使う理由</a></li>
+            <li><a data-track="beginner" href="/guide/ja/setup/">15分で一晩中動くエージェント環境を整える</a></li>
+            <li><a data-track="beginner" href="/guide/ja/windows-server/">Windows PCもそのままサーバーになる</a></li>
+          </ol>
+          <p class="track-extended"><strong>関連記事：</strong><a data-track="beginner" href="/guide/ja/claude-code-on-iphone/">iPhoneやiPadからClaude Codeを使う</a></p>
+        </section>
+        <section class="track" id="cliuser">
+          <h2>すでに CLI エージェントを使っている</h2>
+          <p>Mac 上で Claude Code や Codex をすでに動かしている方向け。SSH、tmux、接続先アドレスの指定方法を解説します。</p>
+          <ol>
+            <li><a data-track="cliuser" href="/guide/ja/why-remote-vibe-coding/">寝ている間もAIに作業させる</a></li>
+            <li><a data-track="cliuser" href="/guide/ja/what-is-tmux/">スマホを閉じた後もエージェントを動かし続ける</a></li>
+            <li><a data-track="cliuser" href="/guide/ja/what-is-tailscale/">Tailscale：ネットにポートを開かない接続</a></li>
+            <li><a data-track="cliuser" href="/guide/ja/why-agentmux/">TermiusやBlinkではなくAgentmuxを使う理由</a></li>
+            <li><a data-track="cliuser" href="/guide/ja/setup/">15分で一晩中動くエージェント環境を整える</a></li>
+            <li><a data-track="cliuser" href="/guide/ja/windows-server/">Windows PCもそのままサーバーになる</a></li>
+            <li><a data-track="cliuser" href="/guide/ja/claude-code-on-iphone/">iPhoneやiPadからClaude Codeを使う</a></li>
+          </ol>
+          <p class="track-extended"><strong>関連記事：</strong><a data-track="cliuser" href="/guide/ja/why-not-gui-ide/">CursorやVS CodeではなくCLIを選ぶ理由</a></p>
+        </section>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script>
+        // Whichever section the reader clicks through from counts as their
+        // chosen track; the pager on each article uses it to decide which
+        // neighbours to show. Skip quietly when localStorage is blocked.
+        (function () {
+            var links = document.querySelectorAll('a[data-track]');
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener('click', function () {
+                    try {
+                        localStorage.setItem('agentmux-guide-track', this.getAttribute('data-track'));
+                    } catch (e) {}
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

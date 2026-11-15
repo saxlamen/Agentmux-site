@@ -12,6 +12,8 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/why-not-gui-ide/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/why-not-gui-ide/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
     <meta property="og:type" content="article">
@@ -33,6 +35,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "為什麼不是 Cursor / VS Code", "description": "GUI IDE 的 agent 綁在一個需要螢幕的 process 上，CLI agent 的介面是一條可以重新接上的位元組流。這是架構差異，不是偏好差異。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-28", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "為什麼不是 Cursor / VS Code", "item": "https://agentmux.saxcave.cc/guide/zh-TW/why-not-gui-ide/"}]}]}</script>
 </head>
 <body class="guide">
@@ -45,7 +49,7 @@
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/en/why-not-gui-ide/">English</a>
+                <a class="lang-switch" href="/guide/">語言</a>
             </div>
         </div>
     </nav>
@@ -63,6 +67,13 @@
   <p>tmux 做得到這件事，是因為一個 80×24 的字元矩陣可以完整存下來，再畫到任何一塊螢幕上：你的筆電、你的手機、你朋友的 iPad。換一台裝置不會少掉任何東西，因為那些內容本來就只是字元。</p>
   <p>CLI agent 能在遠端跑，理由只有這一個：<strong>一塊像素畫布沒法序列化之後再接回來，一個字元矩陣可以</strong>。這話說的是能力，不是用文字介面的人比較厲害。</p>
 </section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能試用，支援 iOS 與 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下載</a>
+    </div>
+</aside>
 
 <section id="same-scenario">
   <h2>合上筆電之後會發生什麼事？</h2>
@@ -141,7 +152,7 @@
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>14 天全功能試用，支援 iOS 與 Android。</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
@@ -157,5 +168,6 @@
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

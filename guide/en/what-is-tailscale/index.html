@@ -12,6 +12,8 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tailscale/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
     <meta property="og:type" content="article">
@@ -33,6 +35,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Tailscale: no port open to the internet", "description": "Tailscale builds a WireGuard mesh between your own devices, so your phone connects to a MagicDNS name or a 100.x address and no port opens.", "inLanguage": "en", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "url": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/", "image": ["https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-30", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux Guide", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "Guide home", "item": "https://agentmux.saxcave.cc/guide/en/"}, {"@type": "ListItem", "position": 4, "name": "Tailscale: no port open to the internet", "item": "https://agentmux.saxcave.cc/guide/en/what-is-tailscale/"}]}]}</script>
 </head>
 <body class="guide">
@@ -45,7 +49,7 @@
             <div class="guide-nav-links">
                 <a href="/guide/en/">Guide home</a>
                 <a href="/guide/en/troubleshooting/">Troubleshooting</a>
-                <a class="lang-switch" href="/guide/zh-TW/what-is-tailscale/">繁體中文</a>
+                <a class="lang-switch" href="/guide/">Language</a>
             </div>
         </div>
     </nav>
@@ -61,6 +65,13 @@
   <p>The traditional fix meant the router itself: port forwarding so a public port reaches the machine, a DDNS service binding a hostname to today's IP or a static IP from your ISP, then firewall rules kept straight by hand.</p>
   <p>Get one step wrong and you cannot get in, or you have exposed your whole home network. Get them all right and a door still faces the internet.</p>
 </section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14-day full-feature trial, available on iOS and Android.</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
 
 <section id="why-port-forwarding-plus-a-dynamic-ip-breaks">
   <h2>Why does port forwarding plus a dynamic IP keep breaking?</h2>
@@ -183,7 +194,7 @@
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>14-day full-feature trial, available on iOS and Android.</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
@@ -199,5 +210,6 @@
             <a href="mailto:atmux-support@saxcave.cc">Support</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

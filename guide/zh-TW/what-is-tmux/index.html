@@ -12,6 +12,8 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/what-is-tmux/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-tmux/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
     <meta property="og:type" content="article">
@@ -33,6 +35,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "讓 agent 在你關掉手機後繼續跑", "description": "tmux 是什麼，為什麼 SSH 斷線時你的 AI coding agent 不會死：session 留在伺服器上，手機只是接上去看。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-session-command-center.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-28", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "讓 agent 在你關掉手機後繼續跑", "item": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-tmux/"}]}]}</script>
 </head>
 <body class="guide">
@@ -45,7 +49,7 @@
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/en/what-is-tmux/">English</a>
+                <a class="lang-switch" href="/guide/">語言</a>
             </div>
         </div>
     </nav>
@@ -62,6 +66,13 @@
   <p>背後的機制是一個 process。你第一次輸入 <code>tmux</code>，它就在你的帳號底下啟動一個背景程式，那是 tmux <em>server</em>，會一直活著。之後你開的每個 session 都屬於它，每個 session 的虛擬終端機也由它分配，不是由 <code>sshd</code> 分配。你的 agent 用的那個終端機從此刻起歸 tmux server 保管，跟手機那條連線沒有關係。</p>
   <p>下次連線斷掉的時候，<code>sshd</code> 關掉的是它自己的虛擬終端機，掛在那上面的只有你的 tmux client。client 結束了，session 照樣跑。</p>
 </section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能試用，支援 iOS 與 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下載</a>
+    </div>
+</aside>
 
 <section id="session-window-pane">
   <h2>session、window、pane 各是什麼？</h2>
@@ -184,7 +195,7 @@ tmux attach -t work       # 從任何終端機再接上去看它</code></pre>
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>14 天全功能試用，支援 iOS 與 Android。</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
@@ -200,5 +211,6 @@ tmux attach -t work       # 從任何終端機再接上去看它</code></pre>
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

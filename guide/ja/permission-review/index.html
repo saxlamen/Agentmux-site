@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI権限レビュー：エージェントの確認に誰が答えるか — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="エージェントがコマンド実行の許可を求めたとき、ブラックリストで危険を止め、許可リストを通し、残りをAIが判断する仕組みです。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/permission-review/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/permission-review/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/permission-review/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/permission-review/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/permission-review/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="AI権限レビュー：エージェントの確認に誰が答えるか">
+    <meta property="og:description" content="エージェントがコマンド実行の許可を求めたとき、ブラックリストで危険を止め、許可リストを通し、残りをAIが判断する仕組みです。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/permission-review/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad から SSH 経由で coding agent を実行">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI権限レビュー：エージェントの確認に誰が答えるか">
+    <meta name="twitter:description" content="エージェントがコマンド実行の許可を求めたとき、ブラックリストで危険を止め、許可リストを通し、残りをAIが判断する仕組みです。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "AI権限レビュー：エージェントの確認に誰が答えるか", "description": "エージェントがコマンド実行の許可を求めたとき、ブラックリストで危険を止め、許可リストを通し、残りをAIが判断する仕組みです。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/permission-review/", "url": "https://agentmux.saxcave.cc/guide/ja/permission-review/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "AI権限レビュー：エージェントの確認に誰が答えるか", "item": "https://agentmux.saxcave.cc/guide/ja/permission-review/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <a class="lang-switch" href="/guide/">言語</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>AI権限レビュー：エージェントの確認に誰が答えるか</h1>
+            <p>AI 自動権限レビューは、画面を見ていないときにエージェントが出すコマンド許可プロンプトへ代わりに答える機能です。まずブラックリストが危険なコマンドを止め、許可リストが信頼済みのコマンドを通し、残りを AI 判定が判断します。最終的なキーの提案と自動押下の切り替えはセッションごとのモードで決まります。</p>
+<p>作業の途中でエージェントが「このコマンドを実行してよいですか？」と止まることがあります。ちょうど席を外していると、キーを 1 つ押すだけの待ち状態で全体の作業が止まってしまいます。</p>
+<p>AI 自動権限レビューはその瞬間のための機能です。プロンプトに対してキーを 1 回だけ答えます。コマンドを勝手に打ち込むことはなく、画面上の他の部分にも触れません。</p>
+
+<figure class="flow" aria-label="AI 自動権限レビューの判定フロー">
+  <ol>
+    <li><strong>エージェントが停止して待機</strong><span>Agentmux が権限プロンプトを検出</span></li>
+    <li><strong>画面を読み取る</strong><span>現在のプロンプトを抽出し、機密情報をマスク</span></li>
+    <li><strong>ブラックリスト</strong><span>危険なコマンドに一致</span><em>ユーザーへ引き継ぎ</em></li>
+    <li><strong>許可リスト</strong><span>信頼済みコマンドに一致。端末内でキーを選択</span></li>
+    <li><strong>AI 判定</strong><span>許可・拒否・保留のいずれか</span><em>拒否または保留：ユーザーへ引き継ぎ</em></li>
+    <li><strong>送信前の再確認</strong><span>画面が変わっていれば何も送らない</span><em>ユーザーへ引き継ぎ</em></li>
+    <li><strong>提案、または代理押下</strong><span>選択したモードに従う</span></li>
+  </ol>
+</figure>
+
+<section id="when-it-starts">
+  <h2>エージェントが停止して待っているときだけ起動する</h2>
+  <p>Agentmux はすでに Claude Code や Codex などの状態を追跡しています。「Allow this?」や「Pick 1 or 2」のようなプロンプトが画面に現れるとセッションが待機状態になり、そこからレビューが始まります。</p>
+  <p>動作には次の条件も満たしている必要があります。</p>
+  <ul>
+    <li>設定の「AI 自動権限レビュー」スイッチがオンであること。</li>
+    <li>セッションのモードが「オフ」ではなく「アドバイザー」または「自動応答」であること。</li>
+    <li>Pro プランを契約中、または無料トライアル期間中であること。</li>
+  </ul>
+  <p>各プロンプトの判定は 1 回だけで、数秒おきに何度も再チェックすることはありません。レビュー中にユーザー自身がターミナルでキーを押したり文字を入力したりすると、進行中のレビューはキャンセルされてユーザー入力が優先されます。</p>
+  <p>別のタブに切り替えても、見ていない側のセッションではバックグラウンドでレビューが継続します。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="read-the-screen">
+  <h2>スクロールバックではなく現在のプロンプトだけを読む</h2>
+  <p>読み取るのは現在画面に表示されているプロンプト――実行しようとしているコマンド、質問文、提示された選択肢――だけです。上に流れ去った過去の出力は対象になりません。</p>
+  <p>画面内容を AI へ送る前に、Agentmux はパスワード、API キー、トークンに見える文字列をマスク（伏せ字化）します。マスク処理に失敗した場合はテキストを送信せず、キーも押しません。</p>
+</section>
+
+<section id="blacklist">
+  <h2>ブラックリストは最初に端末内で動く</h2>
+  <p>照合はすべて手元のスマートフォン上で行われ、他のどの判定よりも先に走ります。ブラックリストに一致したプロンプトは AI へ一切送られず、そのままユーザーへ渡されます。組み込みルールでは、特に危険性の高い操作をカバーしています。</p>
+  <ul>
+    <li><code>/</code>、<code>~</code>、またはホームディレクトリに対する <code>rm -rf</code></li>
+    <li><code>sudo</code></li>
+    <li><code>git push --force</code>（<code>--force-with-lease</code> は対象外）</li>
+    <li><code>DROP TABLE</code>、<code>DROP DATABASE</code>、<code>TRUNCATE TABLE</code></li>
+    <li><code>curl … | sh</code> のようにダウンロード結果を直接シェルへパイプする操作</li>
+    <li><code>mkfs</code> や <code>dd if=</code> などディスクへ直接書き込むコマンド</li>
+  </ul>
+  <p>組み込みルールは編集・削除でき、独自のルールを追加することもできます。</p>
+</section>
+
+<section id="allowlist">
+  <h2>許可リストは AI を使わずに決める</h2>
+  <p>テスト実行やビルドのように毎日許可しているコマンドは、許可リストに追加しておくと次回からスマートフォン上で即決されます。端末内でキーを選ぶため、AI の応答待ちも API 利用料も発生しません。</p>
+  <p>「自動応答」モードでは、単一セッション限定で「このセッションのすべてのコマンドを許可」をオンにすることもできます。この場合 AI 判定はスキップされますが、ブラックリストは引き続き有効で、セッション終了時にこの設定は自動でオフに戻ります。</p>
+  <p>許可リストに一致しても、画面上に明確で安全な選択肢キーが見つからない場合はユーザーへ引き継がれます。</p>
+</section>
+
+<section id="ai-judgment">
+  <h2>AI は何を基準に判断するのか</h2>
+  <p>どちらのリストにも当てはまらなかったプロンプトだけが AI に届きます。AI にはマスク済みの画面テキストと、今回のタスクでエージェントにやってほしいことを表す <strong>Main Intent</strong>（例：「ログイン画面のテストを修正する」）が渡されます。</p>
+  <p>判定エンジンは 2 種類から選べます。</p>
+  <ul>
+    <li><strong>JEV 判定エンジン</strong>（OpenRouter または TypeSafe 経由）：ターミナルのプロンプト向けに作られた高速なエンジンです。3 段階で判断します。安全な読み取り専用操作は許可し、Main Intent に沿ったコマンドも許可します。無関係、不明瞭、または高リスクなものはすべてユーザーへ戻します。不審な内容や悪意あるインジェクションに見えるものは即座に拒否します。</li>
+    <li><strong>OpenAI 互換 LLM</strong>：OpenAI、OpenRouter、または自分のマシンで動かしているローカルモデルを指定できます。</li>
+  </ul>
+  <p>AI が出す結論は「許可」「拒否」「保留」の 3 択です。先へ進むのは「許可」だけで、AI は画面上のどのキーを選ぶか正確に指定する必要があります。「Always allow」や「Don't ask again」のような恒久的な許可は絶対に選びません。</p>
+</section>
+
+<section id="finish">
+  <h2>アドバイザーは提案、自動応答は代理押下</h2>
+  <p>モードはセッションごとに設定できます。</p>
+  <ul>
+    <li><strong>アドバイザー</strong>（既定）：提案のみを行います。画面上部に推奨キーと「適用」ボタンが表示され、タップするまで何も送信されません。</li>
+    <li><strong>自動応答</strong>：判定が「許可」のとき、代わりにキーを押し、どのキーを押したかを通知で知らせます。</li>
+  </ul>
+  <p>どちらのモードでも、キーを送る直前に画面をもう一度確認します。プロンプトが変わっていたり、選択肢が移動していたり、カーソルが対象上にない場合は何も送りません。AI の判定には数秒かかるため、その間に画面が変わって誤ったキーを押してしまう事故を防ぐための二重チェックです。</p>
+  <p>自動応答でキーを送信したあと、そのセッションで次のキーを送るまで 3 秒の待機時間を設けています。</p>
+</section>
+
+<section id="handed-to-you">
+  <h2>ユーザーへ引き継がれる条件</h2>
+  <ul>
+    <li>ブラックリストのルールに一致したとき。</li>
+    <li>AI が「拒否」または「保留」と判定したとき。</li>
+    <li>プロンプトがどのキーを求めているか判別できないとき。</li>
+    <li>選択肢が「Always allow」などの恒久的な許可であるとき。</li>
+    <li>キーを送信する直前に画面が変化したとき。</li>
+    <li>機密テキストのマスク処理に失敗したとき。</li>
+  </ul>
+  <p>これらの場合は、レビュー機能をオフにしているときと同じ形でユーザーへ通知が届きます。</p>
+</section>
+
+<section id="get-started">
+  <h2>有効化の手順</h2>
+  <p>始める前に、次のいずれかを用意してください。</p>
+  <ul>
+    <li><a href="https://openrouter.ai/keys">OpenRouter</a> または TypeSafe の API キー（JEV エンジン用）。</li>
+    <li>OpenAI API や手元のマシンで動かしているモデルなど、独自の OpenAI 互換 LLM エンドポイント。</li>
+  </ul>
+  <ol>
+    <li>「設定」→「AI 自動権限レビュー」を開き、スイッチをオンにします。初回は送信されるデータの説明が表示されるため、同意すると詳細設定へ進みます。</li>
+    <li>詳細設定でエンジンを選び、API キーを入力して「AI エンドポイント接続をテスト」をタップし、疎通を確認します。</li>
+    <li>設定画面に戻り、権限レビューモードの既定値（最初は「アドバイザー」が無難です）を選んで Main Intent を記入します。</li>
+    <li>サーバーに接続してエージェントを起動します。新しいタブは既定モードで始まります。特定のセッションだけモードや Main Intent を変えたいときは、ターミナルツールバーの権限レビューボタンをタップします。ここで「最新のプロンプトを使用」をオンにすると、そのタブで送ったプロンプトが自動で Main Intent に反映されます。</li>
+  </ol>
+  <p>まずは数日間「アドバイザー」で動かし、自分の実際の判断と提案が一致するかを確かめてから、パターンが安定しているセッションで「自動応答」に切り替えてください。</p>
+</section>
+
+<section id="privacy">
+  <h2>端末の外へ送信されるデータ</h2>
+  <p>端末の外に出るのは「マスク済みの画面テキスト」と「Main Intent」の 2 つだけです。送信先はあなたが設定した AI サービスであり、あなた自身の API キーが使われます。「最新のプロンプトを使用」をオンにしている場合は、そのタブで送ったプロンプトが Main Intent になるため、それも送信対象になります。Agentmux 自体は AI サービスを提供も中継もしません。各判定の記録は端末内にのみ保存され、監査ログから確認・消去できます。モデルの推論過程は保存されません。</p>
+</section>
+
+        </article>
+        
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

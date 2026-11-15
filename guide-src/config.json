@@ -4,6 +4,10 @@
     "appStoreUrl": "https://apps.apple.com/app/id6766158521",
     "playStoreUrl": "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"
   },
+  "analytics": {
+    "posthogKey": "",
+    "posthogHost": "https://us.i.posthog.com"
+  },
   "seo": {
     "orgName": "Agentmux",
     "supportEmail": "atmux-support@saxcave.cc",
@@ -11,11 +15,11 @@
     "logoWidth": 192,
     "logoHeight": 192,
     "defaultOgImage": "/resource/ipad-raw-run-coding-agents-anywhere.webp",
-    "ogLocale": { "en": "en_US", "zh-TW": "zh_TW" },
+    "ogLocale": { "en": "en_US", "zh-TW": "zh_TW", "zh-Hans": "zh_CN", "ja": "ja_JP" },
     "guideRootTitle": "Agentmux Guide",
     "guideRootDescription": "Learn SSH, Tailscale, and CLI coding agents — then run them from your phone.",
     "faqSlugs": ["troubleshooting"],
-    "faqAnswerHeadings": ["Fix", "解法"],
+    "faqAnswerHeadings": ["Fix", "解法", "対処法"],
     "fallbackUpdated": "2026-10-28",
     "llms": {
       "title": "Agentmux",
@@ -36,6 +40,8 @@
   },
   "languages": [
     { "code": "zh-TW", "htmlLang": "zh-Hant", "label": "繁體中文" },
+    { "code": "zh-Hans", "htmlLang": "zh-Hans", "label": "简体中文" },
+    { "code": "ja", "htmlLang": "ja", "label": "日本語" },
     { "code": "en", "htmlLang": "en", "label": "English" }
   ],
   "slugs": [
@@ -94,6 +100,34 @@
       "troubleshooting"
     ],
     "en": [
+      "why-remote-vibe-coding",
+      "why-not-gui-ide",
+      "what-is-cli",
+      "what-is-ssh",
+      "what-is-tmux",
+      "what-is-tailscale",
+      "why-agentmux",
+      "setup",
+      "windows-server",
+      "claude-code-on-iphone",
+      "permission-review",
+      "troubleshooting"
+    ],
+    "zh-Hans": [
+      "why-remote-vibe-coding",
+      "why-not-gui-ide",
+      "what-is-cli",
+      "what-is-ssh",
+      "what-is-tmux",
+      "what-is-tailscale",
+      "why-agentmux",
+      "setup",
+      "windows-server",
+      "claude-code-on-iphone",
+      "permission-review",
+      "troubleshooting"
+    ],
+    "ja": [
       "why-remote-vibe-coding",
       "why-not-gui-ide",
       "what-is-cli",

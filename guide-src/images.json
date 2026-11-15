@@ -4,7 +4,9 @@
     "height": 2868,
     "alt": {
       "en": "Dark mode server list",
-      "zh-TW": "深色模式的主機清單"
+      "zh-TW": "深色模式的主機清單",
+      "zh-Hans": "深色模式的主机列表",
+      "ja": "ダークモードのサーバー一覧"
     }
   },
   "/resource/FileExplorer.webp": {
@@ -12,7 +14,9 @@
     "height": 2868,
     "alt": {
       "en": "Remote file explorer",
-      "zh-TW": "遠端檔案總管"
+      "zh-TW": "遠端檔案總管",
+      "zh-Hans": "远程文件管理器",
+      "ja": "リモートファイルエクスプローラー"
     }
   },
   "/resource/Serverview_tmux_agents.webp": {
@@ -20,7 +24,9 @@
     "height": 2688,
     "alt": {
       "en": "Server tmux agents view",
-      "zh-TW": "主機的 tmux session 與 agent 畫面"
+      "zh-TW": "主機的 tmux session 與 agent 畫面",
+      "zh-Hans": "主机的 tmux session 与 agent 画面",
+      "ja": "サーバーの tmux セッションと agent 画面"
     }
   },
   "/resource/app-icon-192.webp": {
@@ -28,7 +34,9 @@
     "height": 192,
     "alt": {
       "en": "Agentmux Icon",
-      "zh-TW": "Agentmux 圖示"
+      "zh-TW": "Agentmux 圖示",
+      "zh-Hans": "Agentmux 图标",
+      "ja": "Agentmux アイコン"
     }
   },
   "/resource/ipad-raw-browse-remote-projects.webp": {
@@ -36,7 +44,9 @@
     "height": 2064,
     "alt": {
       "en": "iPad Remote File Explorer",
-      "zh-TW": "iPad 瀏覽遠端專案檔案"
+      "zh-TW": "iPad 瀏覽遠端專案檔案",
+      "zh-Hans": "iPad 浏览远程项目文件",
+      "ja": "iPad でリモートプロジェクトを閲覧"
     }
   },
   "/resource/ipad-raw-launch-any-agent.webp": {
@@ -44,7 +54,9 @@
     "height": 2064,
     "alt": {
       "en": "iPad Agent Launcher interface",
-      "zh-TW": "iPad 上的 agent 啟動畫面"
+      "zh-TW": "iPad 上的 agent 啟動畫面",
+      "zh-Hans": "iPad 上的 agent 启动界面",
+      "ja": "iPad の agent 起動画面"
     }
   },
   "/resource/ipad-raw-run-coding-agents-anywhere.webp": {
@@ -52,7 +64,9 @@
     "height": 2064,
     "alt": {
       "en": "iPad running coding agents over SSH",
-      "zh-TW": "iPad 透過 SSH 跑 coding agent"
+      "zh-TW": "iPad 透過 SSH 跑 coding agent",
+      "zh-Hans": "iPad 通过 SSH 运行 coding agent",
+      "ja": "iPad から SSH 経由で coding agent を実行"
     }
   },
   "/resource/ipad-raw-session-command-center.webp": {
@@ -60,7 +74,9 @@
     "height": 2064,
     "alt": {
       "en": "iPad Session Command Center",
-      "zh-TW": "iPad 上的 session 指揮中心"
+      "zh-TW": "iPad 上的 session 指揮中心",
+      "zh-Hans": "iPad 上的 session 指挥中心",
+      "ja": "iPad のセッションコマンドセンター"
     }
   },
   "/resource/iphone-raw-edit-code-over-ssh.webp": {
@@ -68,7 +84,9 @@
     "height": 2868,
     "alt": {
       "en": "iPhone Code Editor over SSH",
-      "zh-TW": "iPhone 透過 SSH 編輯程式碼"
+      "zh-TW": "iPhone 透過 SSH 編輯程式碼",
+      "zh-Hans": "iPhone 通过 SSH 编辑代码",
+      "ja": "iPhone で SSH 経由のコード編集"
     }
   },
   "/resource/iphone-raw-launch-any-agent.webp": {
@@ -76,7 +94,9 @@
     "height": 2868,
     "alt": {
       "en": "Agent launcher on iPhone",
-      "zh-TW": "iPhone 上的 agent 啟動畫面"
+      "zh-TW": "iPhone 上的 agent 啟動畫面",
+      "zh-Hans": "iPhone 上的 agent 启动界面",
+      "ja": "iPhone の agent 起動画面"
     }
   },
   "/resource/iphone-raw-preview-docs-instantly.webp": {
@@ -84,7 +104,9 @@
     "height": 2868,
     "alt": {
       "en": "Markdown documentation preview",
-      "zh-TW": "Markdown 文件預覽"
+      "zh-TW": "Markdown 文件預覽",
+      "zh-Hans": "Markdown 文档预览",
+      "ja": "Markdown ドキュメントプレビュー"
     }
   },
   "/resource/iphone-raw-run-coding-agents-anywhere.webp": {
@@ -92,7 +114,9 @@
     "height": 2868,
     "alt": {
       "en": "iPhone running coding agents over SSH",
-      "zh-TW": "iPhone 透過 SSH 跑 coding agent"
+      "zh-TW": "iPhone 透過 SSH 跑 coding agent",
+      "zh-Hans": "iPhone 通过 SSH 运行 coding agent",
+      "ja": "iPhone から SSH 経由で coding agent を実行"
     }
   }
 }

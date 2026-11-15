@@ -12,6 +12,8 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-ssh/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/what-is-ssh/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-ssh/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
     <meta property="og:type" content="article">
@@ -33,6 +35,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "SSH：通往另一台電腦的隧道", "description": "SSH 是什麼、host／user／port 怎麼運作、為什麼金鑰比密碼省事，以及為何要用私有位址而不是對公網開 port。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-edit-code-over-ssh.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-28", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "SSH：通往另一台電腦的隧道", "item": "https://agentmux.saxcave.cc/guide/zh-TW/what-is-ssh/"}]}]}</script>
 </head>
 <body class="guide">
@@ -45,7 +49,7 @@
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/en/what-is-ssh/">English</a>
+                <a class="lang-switch" href="/guide/">語言</a>
             </div>
         </div>
     </nav>
@@ -61,6 +65,13 @@
   <p>SSH 連的是你自己那台。檔案在那裡，API key 在那裡，你裝過的套件和設好的環境變數也都在那裡。不用把任何東西搬到別人的伺服器上，改動留在原地，事後不必再同步回來。</p>
   <p>反過來也有取捨。如果你沒有任何一台一直開著的機器，或是一整組人需要完全相同的起點，雲端環境是比較好的答案。換用自己的機器，代價是：它要一直開著、要連得到，而且設定由你負責。</p>
 </section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能試用，支援 iOS 與 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下載</a>
+    </div>
+</aside>
 
 <section id="host-user-port">
   <h2>連線要打的只有三樣東西：host、user、port</h2>
@@ -161,7 +172,7 @@
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>14 天全功能試用，支援 iOS 與 Android。</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
@@ -177,5 +188,6 @@
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

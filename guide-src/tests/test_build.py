@@ -877,7 +877,7 @@ class TestPublishedHeadMetadata(unittest.TestCase):
 
     SITE = Path(__file__).resolve().parents[2]
     STRINGS = Path(__file__).resolve().parents[1] / "strings"
-    CAPS = {"en": (60, 160), "zh-TW": (34, 82)}  # title, description; CJK is wider per glyph
+    CAPS = {"en": (60, 160), "zh-TW": (34, 82), "zh-Hans": (34, 82), "ja": (34, 82)}  # title, description; CJK is wider per glyph
 
     def guide_pages(self):
         return sorted((self.SITE / "guide").glob("*/index.html")) + sorted(self.SITE.glob("guide/*/*/index.html"))

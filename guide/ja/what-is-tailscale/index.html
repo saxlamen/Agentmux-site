@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailscale：ネットにポートを開かない接続 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Tailscaleは自分の端末間にWireGuardメッシュを構築します。ルーターのポート開放不要でMagicDNSや100.xへ接続できます。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-tailscale/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tailscale/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-tailscale/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="Tailscale：ネットにポートを開かない接続">
+    <meta property="og:description" content="Tailscaleは自分の端末間にWireGuardメッシュを構築します。ルーターのポート開放不要でMagicDNSや100.xへ接続できます。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp">
+    <meta property="og:image:width" content="1320">
+    <meta property="og:image:height" content="2868">
+    <meta property="og:image:alt" content="ダークモードのサーバー一覧">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tailscale：ネットにポートを開かない接続">
+    <meta name="twitter:description" content="Tailscaleは自分の端末間にWireGuardメッシュを構築します。ルーターのポート開放不要でMagicDNSや100.xへ接続できます。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Tailscale：ネットにポートを開かない接続", "description": "Tailscaleは自分の端末間にWireGuardメッシュを構築します。ルーターのポート開放不要でMagicDNSや100.xへ接続できます。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/", "url": "https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/", "image": ["https://agentmux.saxcave.cc/resource/Darkmode_serverlist.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "Tailscale：ネットにポートを開かない接続", "item": "https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <a class="lang-switch" href="/guide/">言語</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>Tailscale：ネットにポートを開かない接続</h1>
+            <p>パソコンとスマホの両方に Tailscale をインストールして同じアカウントでサインインし、SSH の接続先にマシンの MagicDNS 名または <code>100.x</code> のアドレスを指定します。Tailscale はあなたの端末間だけで暗号化された WireGuard メッシュを構築するため、ルーターのポートをインターネットに開ける必要も、グローバルアドレスへ SSH を向ける必要もありません。</p>
+<p>接続が切れてもエージェントが生き残るようになっても、安全に再接続できる入り口がなければ意味がありません。いちばん安直な方法はポート 22 をインターネットへ公開することですが、それはトラブルへの最短ルートです。スキャンボットは世界中のあらゆる IP のポート 22 を 24 時間叩き続けています。</p>
+<p>もう 1 つ、もっと地味で避けにくい問題もあります。自宅の IP は動的であり、マシンは NAT の背後に置かれて自宅の他の機器と 1 つの外向きアドレスを共有しています。そもそも外に向けて開けるための固有のグローバルアドレスが存在しないことが多いのです。</p>
+
+<section id="the-old-way">
+  <h2>ルーターで行う 3 つの手作業</h2>
+  <p>従来の解決策はルーターそのものを触る方法でした。外部ポートを特定のマシンへ届けるポートフォワーディング、変動する今日の IP にホスト名を紐づける DDNS（またはプロバイダからの固定 IP）、そして手作業で維持するファイアウォールルールです。</p>
+  <p>手順を 1 つ間違えれば外から入れなくなるか、自宅ネットワーク全体を晒すことになります。すべて正しく設定しても、インターネットに向かってドアが 1 つ開いたままになる点は変わりません。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="why-port-forwarding-plus-a-dynamic-ip-breaks">
+  <h2>ポートフォワーディング＋動的 IP が壊れ続ける理由</h2>
+  <p>4 つの条件が同時に成り立ち続ける必要があり、そのどれか 1 つがいちばん困るタイミングで崩れます。</p>
+  <ul>
+    <li><strong>アドレスが変わる。</strong>プロバイダが IP を割り当て直すと、DDNS クライアントが追いつくまで数分かかります。切り替わるたびに、保存していた接続先が自宅を指さない空白時間が生まれます。外出中にその更新が失敗すれば、そのホスト名は別の誰かのものになります。</li>
+    <li><strong>そもそも自分専用のアドレスではないことがある。</strong>キャリアグレード NAT（CGNAT）の環境下ではルーターがプロバイダ網内のアドレスしか持っていないため、ポートフォワーディング自体が機能しません。</li>
+    <li><strong>転送設定が 1 つ増えるごとにドアも 1 つ増える。</strong>スマートテレビや古いカメラと同じネットワークへの入り口が増えます。</li>
+    <li><strong>ずっと正しい状態を保ち続けなければならない。</strong>ファームウェア更新でルールが初期化されたり、ルーターを買い替えれば最初から作り直しになります。</li>
+  </ul>
+  <p>いちばん厄介なのは原因調査です。モバイル回線上で、スマホから自宅のルーターを直そうとして、目当てのマシンにそもそも届かない状態に陥ります。</p>
+</section>
+
+<section id="what-tailscale-does">
+  <h2>Tailscale が行うこと</h2>
+  <p>Tailscale は WireGuard メッシュです。各端末にインストールして同じアカウントでサインインすると、端末同士が直接暗号化されたリンクを張ります。この構成では外部向けの入り口を一切開かず、ボットがスキャンできるポートもインターネット上に残りません。</p>
+  <p>各端末が WireGuard の鍵ペアを生成し、秘密鍵は端末の外に出ません。公開鍵だけが交換され、それを使ってトンネルが張られます。アカウントが担うのは台帳の役割です。端末同士を紹介し、それぞれがどこから到達できるかを追跡し、インターネットからはルーティングされないプライベートアドレスを配ります。</p>
+  <p>MagicDNS が各端末に覚えやすい名前を付けて名前解決を引き受けるため、NAT も、夜中に変わった IP も、自宅 Wi-Fi からモバイル回線への切り替えも、すべて表に出ずに処理されます。</p>
+</section>
+
+<section id="why-the-mesh-works-on-a-phone-network">
+  <h2>スマホ回線にアドレスがなくてもメッシュが動く理由</h2>
+  <p>モバイル回線では事情がさらに厳しくなります。スマホ側にもグローバルアドレスはなく、4G や 5G ではキャリアグレード NAT の背後で他の大勢の契約者と 1 つの外向きアドレスを共有しています。着信側の接続を前提にした設計は、両端で破綻します。</p>
+  <p>メッシュはその逆で動きます。双方がパケットを<em>外向き</em>に送るだけで済むからです。スマホが 1 つ送り、マシンが 1 つ送り、お互いがどこから見えているかを把握した上で、それぞれの NAT を越えた直接経路を試みます。暗号化は WireGuard が担い、顔合わせはメッシュが担います。直接経路が組めない環境ではリレー経由に切り替わりますが、通信はエンドツーエンドで暗号化されたままです。</p>
+</section>
+
+<section id="mental-model">
+  <h2>自分の端末だけが届くプライベートアドレス</h2>
+  <p>あなたのマシンにプライベートアドレスが 1 つ増えます。同じ Tailscale アカウントでサインインした端末だけが、その存在を見て到達できます。スキャンボットはそのアドレスの存在すら知りません。インターネット上に一度も出ていないからです。</p>
+  <p>これ以降、SSH は一日中叩かれ続けるポート 22 ではなく、そのアドレスに向けて接続します。</p>
+</section>
+
+<section id="which-address-to-type">
+  <h2>どのアドレスを入力すればよいか</h2>
+  <p>LAN アドレスはスキップして構いません。マシンは同時に 3 つのアドレスを持っていますが、保存する価値があるのはそのうち 2 つだけです。</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr><th>アドレス</th><th>使える場所</th><th>使うべきか</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>LAN（例：<code>192.168.1.23</code>）</td>
+        <td>その Wi-Fi 内のみ</td>
+        <td>使わない。モバイル回線からはどこにも届かない</td>
+      </tr>
+      <tr>
+        <td>プロバイダがルーターに振ったアドレス</td>
+        <td>キャリアグレード NAT 下では使えない</td>
+        <td>使わない。変動するうえ、ルーターのアドレスである</td>
+      </tr>
+      <tr>
+        <td>MagicDNS 名（例：<code>mac-mini.tail1234.ts.net</code>）</td>
+        <td>両端でトンネルが張れていればどの回線でも</td>
+        <td>使う。これを保存する</td>
+      </tr>
+      <tr>
+        <td><code>100.x.y.z</code></td>
+        <td>MagicDNS 名と同じ</td>
+        <td>名前解決がうまくいかないときに使う</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>LAN アドレスが識別しているのはあなたのマシンではなくローカルネットワークです。MagicDNS 名を保存しておけば、マシンが別の Wi-Fi に移っても、IP が変わっても、引っ越してもそのまま繋がります。<code>tailscale status</code> を実行すれば両方を確認できます。</p>
+  <p>両方の端末が接続済みに見えるのに SSH が失敗するときは、まずアドレスを確認してください。サインアウトされたマシンを含め、<a href="/guide/ja/troubleshooting/">Tailscale は接続済みなのに SSH が届かない場合</a>に手順をまとめています。</p>
+</section>
+
+<section id="what-it-costs-you">
+  <h2>メッシュを使ううえでの 3 つのコスト</h2>
+  <p>電車に乗る前に知っておくべきコストが 3 つあります。</p>
+  <p><strong>マシン上で動くプログラムが 1 つ増える。</strong>起動時に立ち上がり、ときどき自動更新され、独自の不具合を抱えることもあります。SSH を疑う前に切り分ける対象が 1 つ増えます。</p>
+  <p><strong>肝心なときにコントロールプレーンが必要になる。</strong>通信自体は端末間で直接流れますが、端末同士の紹介はそうではありません。新しいノート PC、買い替えたスマホ、期限切れの認証情報は、サインインするまでネットワークに入れません。外出先でそのサインインに失敗すると、マシンは正常なのに到達できなくなります。別の接続手段も残しておいてください。</p>
+  <p><strong>スマホ側の接続を維持しておく必要がある。</strong>このトンネルは VPN プロファイルとして動くため、再起動後や別の VPN が割り込んだとき、あるいは確認ダイアログを閉じたときにスマホ側で切れることがあります。他の原因を調べる前にまずここを確認してください。なお、このトンネルを通るのはあなた自身のアドレス宛ての通信だけです。</p>
+</section>
+
+<section id="keys-still-matter">
+  <h2>プライベートネットワークでも鍵はやはり必要</h2>
+  <p>インターネットから誰にも届かないマシンであっても、ドアに鍵は掛けておくべきです。理由は 2 つあります。</p>
+  <p>メッシュの安全性は、そのままあなたのアカウントの安全性になります。サインインした端末はすべて内側にあり、内側とは「すでに信頼した端末」を意味します。タクシーに置き忘れたノート PC はあなたが組んだネットワークの内側にあり、あらゆるマシンに到達できて他にチェックがありません。SSH 鍵があれば、マシン側でもう一度証明を求められます。</p>
+  <p>2 つ目は多層防御（defence in depth）です。メッシュが見知らぬ人を外に締め出し、鍵がすでに中に入ってしまった相手をその先で止めます。あなたのプロジェクトに到達するには独立した 2 つの仕組みが破られなければなりません。パスワードは推測できる 1 つの要素ですが、鍵はそうではありません。<a href="/guide/ja/what-is-ssh/">鍵がどう証明するか</a>の仕組みは SSH の記事で扱っています。</p>
+</section>
+
+<section id="when-you-dont-need-tailscale">
+  <h2>Tailscale が不要なケース</h2>
+  <p>マシンとスマホが同じ Wi-Fi にあり、今後もずっとそうなら、この手順は飛ばしてください。LAN アドレスがそのまま使え、何もインストールせず、何にもサインインしなくて済みます。外へ一歩出た瞬間に使えなくなるだけです。</p>
+  <p>クラウド上のホストサーバーでは計算が変わります。アドレスは動かず、自分で設定するルーターもなく、設定ミスで締め出されることもありません。リスクはポート 22 が常時インターネットに面する点に移ります。そこでも SSH をプライベートアドレスの裏に隠すためメッシュを使う人もいれば、公開したまま鍵認証に頼る人もいます。成り立たないのは、公開ポートにパスワード認証を置くことです。</p>
+  <p>職場の VPN など、すでに誰かが管理するネットワーク経由でマシンに届いているなら、その経路を使ってください。2 つのトンネルを重ねても接続は良くならず、デバッグだけが難しくなります。自分がどれに当てはまるか迷う場合は、<a href="/guide/ja/setup/">セットアップページ</a>で 3 つの質問に答えるとチェックリストが生成されます。</p>
+</section>
+
+<p>入り口はこれで決まりました。あとは手元のスマホと、そのスマホが「なぜあなたはここにいるのか」をどう想定しているかです。</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="前へ" href="/guide/ja/what-is-tmux/">前へ<span>スマホを閉じた後もエージェントを動かし続ける</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="次へ" href="/guide/ja/why-agentmux/">次へ<span>TermiusやBlinkではなくAgentmuxを使う理由</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

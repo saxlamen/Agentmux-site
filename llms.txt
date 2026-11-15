@@ -49,6 +49,36 @@ Full guide text (all languages, one file): https://agentmux.saxcave.cc/llms-full
 - [AI 自動權限審查：agent 問你時，誰來回答](https://agentmux.saxcave.cc/guide/zh-TW/permission-review/): Agent 停下來問「要不要執行」時誰在回答：本機黑名單先擋、白名單放行你信任的，其餘交給 AI 判斷，再依模式給建議或直接按鍵。
 - [卡住了怎麼辦](https://agentmux.saxcave.cc/guide/zh-TW/troubleshooting/): 連不上、金鑰被拒、找不到 tmux、agent 指令不存在：八個卡點，各有原因和解法。
 
+## Guide (简体中文)
+
+- [你的 AI 应该在你睡觉时工作](https://agentmux.saxcave.cc/guide/zh-Hans/why-remote-vibe-coding/): 远程跑 agent 的成本是待命：机器不关机、tmux、SSH 加 Tailscale，待命变成一部手机加十五秒。
+- [为什么不是 Cursor / VS Code](https://agentmux.saxcave.cc/guide/zh-Hans/why-not-gui-ide/): GUI IDE 的 agent 绑在需要屏幕的进程上，CLI agent 的接口是可重连的字节流。这是架构差异，不是偏好差异。
+- [为什么最强的 coding agent 都住在终端里](https://agentmux.saxcave.cc/guide/zh-Hans/what-is-cli/): 因为终端给的是完整文件访问和执行权限，别的界面做不到。终端是什么，什么时候该用 GUI。
+- [SSH：通往另一台电脑的隧道](https://agentmux.saxcave.cc/guide/zh-Hans/what-is-ssh/): SSH 是什么、host／user／port 怎么运作、为什么密钥比密码省事，以及为何要用私有地址而不是对公网开端口。
+- [让 agent 在你关掉手机后继续跑](https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tmux/): tmux 是什么，为什么 SSH 掉线时你的 AI coding agent 不会死：session 留在服务器上，手机只是接上去看。
+- [不要对公网开端口](https://agentmux.saxcave.cc/guide/zh-Hans/what-is-tailscale/): 不开端口也能从手机连回去：WireGuard mesh、MagicDNS 名称、100.x 地址，什么时候不需要 Tailscale。
+- [为什么不是 Termius / Blink](https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/): Agentmux 对 Termius、Blink：五个功能差异，以及什么时候选 Termius 更好。
+- [15 分钟，让你的 agent 开始整晚工作](https://agentmux.saxcave.cc/guide/zh-Hans/setup/): 回答三个问题，拿到按你的答案生成的步骤清单：机器、要跑的 agent、从哪里连回来。
+- [你的 Windows 电脑也可以当主机](https://agentmux.saxcave.cc/guide/zh-Hans/windows-server/): 原生 Windows 用 OpenSSH 连进去，session 由 psmux 撑住，还有几个跟 Linux 主机不一样的地方。不用 WSL2。
+- [在 iPhone、iPad 上跑 Claude Code](https://agentmux.saxcave.cc/guide/zh-Hans/claude-code-on-iphone/): Claude Code 跑在你自己的机器上，手机只负责终端。远程登录、Tailscale、tmux，还有 PATH 的坑。
+- [AI 自动权限审查：agent 问你时，谁来回答](https://agentmux.saxcave.cc/guide/zh-Hans/permission-review/): Agent 停下来问“要不要执行”时谁在回答：本地黑名单先拦、白名单放行你信任的，其余交给 AI 判断，再按模式给建议或直接按键。
+- [卡住了怎么办](https://agentmux.saxcave.cc/guide/zh-Hans/troubleshooting/): 连不上、密钥被拒、找不到 tmux、agent 命令不存在：八个卡点，各有原因和解法。
+
+## Guide (日本語)
+
+- [寝ている間もAIに作業させる](https://agentmux.saxcave.cc/guide/ja/why-remote-vibe-coding/): エージェントのリモート実行で本当に重いのは入力ではなく待機時間です。tmuxとSSHでその待機をスマホに移せます。
+- [CursorやVS CodeではなくCLIを選ぶ理由](https://agentmux.saxcave.cc/guide/ja/why-not-gui-ide/): デスクトップではIDEが有利でも、スマホからはターミナルが有利です。文字列のストリームなら保存して再接続できます。
+- [最強のコーディングエージェントがCLIに棲む理由](https://agentmux.saxcave.cc/guide/ja/what-is-cli/): エージェントがターミナルで動く理由は、ファイル全体へのアクセスとコマンド実行権限にあります。シェルの仕組みとGUIとの使い分け。
+- [SSHは自分のマシンへの暗号化トンネル](https://agentmux.saxcave.cc/guide/ja/what-is-ssh/): SSHは別のPCへの暗号化通信路です。ホスト・ユーザー・ポートの意味、パスワードより鍵が安全な理由、外部公開が不要な理由を解説。
+- [スマホを閉じた後もエージェントを動かし続ける](https://agentmux.saxcave.cc/guide/ja/what-is-tmux/): tmuxはターミナルマルチプレクサです。セッションがサーバー側に残るため、SSHが切れてもエージェントは終了せずデタッチされます。
+- [Tailscale：ネットにポートを開かない接続](https://agentmux.saxcave.cc/guide/ja/what-is-tailscale/): Tailscaleは自分の端末間にWireGuardメッシュを構築します。ルーターのポート開放不要でMagicDNSや100.xへ接続できます。
+- [TermiusやBlinkではなくAgentmuxを使う理由](https://agentmux.saxcave.cc/guide/ja/why-agentmux/): AgentmuxとTermius・Blinkの違いを5つの機能で比較し、Termiusが向いているケースも正直に整理します。
+- [15分で一晩中動くエージェント環境を整える](https://agentmux.saxcave.cc/guide/ja/setup/): 3つの質問に答えるだけで、使いたいマシン・エージェント・接続元に応じたSSH・tmux・Tailscaleの手順書を作成します。
+- [Windows PCもそのままサーバーになる](https://agentmux.saxcave.cc/guide/ja/windows-server/): WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。
+- [iPhoneやiPadからClaude Codeを使う](https://agentmux.saxcave.cc/guide/ja/claude-code-on-iphone/): Claude Codeはスマホではなく自分のマシンで動きます。リモートログイン、Tailscale、tmuxセッションとPATH問題の対処法。
+- [AI権限レビュー：エージェントの確認に誰が答えるか](https://agentmux.saxcave.cc/guide/ja/permission-review/): エージェントがコマンド実行の許可を求めたとき、ブラックリストで危険を止め、許可リストを通し、残りをAIが判断する仕組みです。
+- [つまずいたらここから](https://agentmux.saxcave.cc/guide/ja/troubleshooting/): SSH接続拒否、鍵の認証失敗、tmux未導入、claudeが見つからないなど8つのトラブルと対処コマンドをまとめました。
+
 ## Support and legal
 
 - [Privacy Policy](https://agentmux.saxcave.cc/privacy.html): what Agentmux does and does not collect.

@@ -534,6 +534,19 @@ def _pager(config: dict, strings: dict, lang: str, slug: str) -> str:
     return '<nav class="guide-pager">' + "".join(parts) + "</nav>"
 
 
+def _lang_switch(config: dict, lang: str, slug: str = None) -> tuple:
+    """Target URL and label for the top-nav language switcher."""
+    if len(config.get("languages", [])) > 2:
+        labels = {"zh-TW": "語言", "zh-Hans": "语言", "en": "Language", "ja": "言語"}
+        return "/guide/", labels.get(lang, "Language")
+    other_code = "en" if lang == "zh-TW" else "zh-TW"
+    other_label = "English" if lang == "zh-TW" else "繁體中文"
+    matrix = config.get("content", {})
+    if slug and slug in matrix.get(other_code, []):
+        return "/guide/{0}/{1}/".format(other_code, slug), other_label
+    return "/guide/{0}/".format(other_code), other_label
+
+
 def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> None:
     template = (src / "templates" / "article.html").read_text(encoding="utf-8")
     strings = _load_strings(src, lang)
@@ -541,21 +554,40 @@ def build_article(src: Path, out: Path, config: dict, lang: str, slug: str) -> N
     fragment = _content_fragment(src, lang, slug)
     published, modified = article_dates(config, src, lang, slug)
     image = og_image(config, meta)
-    other_code = "en" if lang == "zh-TW" else "zh-TW"
-    other_label = "English" if lang == "zh-TW" else "繁體中文"
-    matrix = config.get("content", {})
-    if slug in matrix.get(other_code, []):
-        other_url = "/guide/{0}/{1}/".format(other_code, slug)
-    else:
-        other_url = "/guide/{0}/".format(other_code)
+    other_url, other_label = _lang_switch(config, lang, slug)
 
+    play_store_url = config["site"].get(
+        "playStoreUrl", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"
+    )
+    inline_cta = (
+        '<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">\n'
+        '    <p>{0}</p>\n'
+        '    <div class="guide-cta-actions">\n'
+        '        <a class="primary-btn" href="{1}" target="_blank" rel="noopener noreferrer">{2}</a>\n'
+        '        <a class="primary-btn play-btn" href="{3}" target="_blank" rel="noopener noreferrer">{4}</a>\n'
+        '    </div>\n'
+        '</aside>'
+    ).format(
+        esc(strings["ui"]["ctaLine"]),
+        esc(config["site"]["appStoreUrl"]),
+        esc(strings["ui"].get("ctaAppStore", strings["ui"]["ctaButton"])),
+        esc(play_store_url),
+        esc(strings["ui"].get("ctaPlayStore", "Google Play")),
+    )
+    body_html = wrap_tables(fragment)
+    if body_html.count("</section>") >= 2:
+        body_html = body_html.replace("</section>", "</section>\n" + inline_cta, 1)
+
+    analytics_cfg = config.get("analytics", {})
     page_vars = {
         "htmlLang": esc(_language(config, lang)["htmlLang"]),
         "lang": esc(lang),
         "title": esc(meta["title"]),
         "description": esc(meta["description"]),
         "canonical": esc(article_url(config["site"]["origin"], lang, slug)),
-        "content": wrap_tables(fragment),
+        "content": body_html,
+        "posthogKey": esc(analytics_cfg.get("posthogKey", "")),
+        "posthogHost": esc(analytics_cfg.get("posthogHost", "https://us.i.posthog.com")),
         "hreflang": hreflang_block(config, slug),
         "jsonld": article_jsonld(config, lang, slug, meta, strings, fragment, (published, modified)),
         "ogTitle": esc(meta["title"]),
@@ -663,9 +695,7 @@ def build_track_index(src: Path, out: Path, config: dict, lang: str) -> None:
     strings = _load_strings(src, lang)
     available = set(config.get("content", {}).get(lang, []))
     extended_matrix = config.get("trackExtended", {})
-    other_code = "en" if lang == "zh-TW" else "zh-TW"
-    other_label = "English" if lang == "zh-TW" else "繁體中文"
-    other_url = "/guide/{0}/".format(other_code)
+    other_url, other_label = _lang_switch(config, lang)
     blocks = []
     for track_name, slugs in config["tracks"].items():
         track_strings = strings["ui"]["tracks"][track_name]

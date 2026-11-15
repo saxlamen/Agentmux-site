@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows PCもそのままサーバーになる — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/windows-server/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/windows-server/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/windows-server/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/windows-server/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/windows-server/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="Windows PCもそのままサーバーになる">
+    <meta property="og:description" content="WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/windows-server/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad から SSH 経由で coding agent を実行">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Windows PCもそのままサーバーになる">
+    <meta name="twitter:description" content="WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "Windows PCもそのままサーバーになる", "description": "WSL2不要。OpenSSHとpsmuxでWindows上のセッションを維持する仕組みと、Linuxマシンとの違いを解説します。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/windows-server/", "url": "https://agentmux.saxcave.cc/guide/ja/windows-server/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "Windows PCもそのままサーバーになる", "item": "https://agentmux.saxcave.cc/guide/ja/windows-server/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <a class="lang-switch" href="/guide/">言語</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>Windows PCもそのままサーバーになる</h1>
+            <p>はい。Agentmux は Linux レイヤーを挟まずに、ネイティブの Windows PC へ SSH で直接接続できます。Windows 10 または 11 に同梱されている OpenSSH Server を有効にし、他のサーバーと同じように接続先へ追加するだけで、PowerShell ターミナル、<strong>psmux</strong> による永続セッション、そしてコーディングエージェントが利用できます。</p>
+<p>以前は「手前に WSL2 を立てる」必要がありましたが、理由は欠けていたプログラムが 1 つだけあったためです。tmux には Windows 版がなく、スマホの回線が切れてもエージェントを生かし続けるには tmux が不可欠でした。現在では Windows 向けに書かれた互換プログラムがその穴を埋めるため、WSL2 だけが入り口ではなくなりました。</p>
+
+<section id="what-the-pc-needs">
+  <h2>Windows PC 側で必要な 2 つの条件</h2>
+  <p>1 つ目は SSH の入り口です。Windows 10 と 11 にはオプション機能として OpenSSH Server が含まれており、管理者権限の PowerShell で次のコマンドを実行して有効化します。</p>
+  <pre><code># PowerShell（管理者として実行）
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType Automatic</code></pre>
+  <p>インストーラーは <code>OpenSSH-Server-In-TCP</code> という受信ファイアウォール規則を追加します。より厳しいファイアウォール環境にある場合は、まずこの規則を確認してください。2 行目でサービスを今すぐ起動し、3 行目で再起動後も自動起動するように設定します。Windows PC は更新プログラムで自動的に再起動することがあるため、Mac 以上にこの設定が重要です。</p>
+  <p>2 つ目はマルチプレクサです。Agentmux は接続時にホストの OS を自動判別します。Windows ホストであることがわかると、アプリ側の挙動が自動で切り替わります。内部コマンドには <code>sh -c</code> ではなく PowerShell を使い、スラッシュ区切りではなくドライブパスを扱い、tmux の代わりに psmux を使います。切り替えスイッチを探す必要はなく、ログインシェルが PowerShell でも <code>cmd.exe</code> でも動作します。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="why-psmux">
+  <h2>なぜ tmux ではなく psmux なのか</h2>
+  <p>psmux は tmux をモデルにしたコマンドライン（セッション、ウィンドウ、ペイン、<code>send-keys</code>、<code>capture-pane</code>）を持つ独立したプログラムです。<code>tmux.exe</code> というエイリアスも配置されるため、普段の操作感もそのまま使えます。Agentmux は <code>psmux</code>、<code>pmux</code>、<code>tmux.exe</code> の順に探し、見つかったものをそのまま使うため、すでに入っている環境を壊すことはありません。</p>
+  <p>これは tmux の移植版ではなく、移植版を名乗ってもいません。Agentmux はバージョン文字列を鵜呑みにせず、そのプログラムが実際に何を返すかを検証し、確認できない機能は使いません。後述する違いは、互換性一覧表ではなくこの実地検証の結果に基づいています。</p>
+  <p>そもそもなぜマルチプレクサが必要なのか仕組みを知りたい場合は、<a href="/guide/ja/what-is-tmux/">tmux の役割</a>を参照してください。接続が切れるとシェルが SIGHUP を受け取り、マルチプレクサなしではエージェントも道連れで終了します。</p>
+</section>
+
+<section id="installing-psmux">
+  <h2>psmux が入っていない場合どうなるか</h2>
+  <p>Agentmux が自動でインストールします。まず <code>winget install -e --id marlocarlo.psmux</code> を試し、次に Scoop、次に <code>cargo install psmux</code> と、存在するパッケージマネージャーを使って導入し再接続します。スマホ側からコマンドを打つ必要はありません。</p>
+  <p>この 3 つがどれも入っていない環境だけが手動対応になります。その場合、アプリは「<em>Neither winget, scoop, nor cargo was found on the Windows server. Install psmux manually, then reconnect.</em>」とそのまま表示します。簡素化された Windows 構成や winget を削除したサーバーが該当します。バイナリを入手して <code>PATH</code> の通った場所へ置き、再接続してください。</p>
+  <p>導入後は同じフォルダに <code>psmux.exe</code>、<code>pmux.exe</code>、<code>tmux.exe</code> の 3 つの名前で配置されます。そのマシン上で <code>tmux</code> と打てば psmux が起動し、<code>psmux --version</code> を実行すると自身のバージョンの前に <code>tmux 3.4.0</code> と表示されます。二重にインストールされているわけではありません。</p>
+</section>
+
+<section id="what-you-get">
+  <h2>Windows セッションでできること</h2>
+  <ul>
+    <li><strong>セッションの永続化。</strong>一覧表示、デタッチ状態での作成、アタッチ、名前変更、単体削除、一括削除が使えます。<code>Ctrl-b d</code> で PowerShell プロンプトへデタッチでき、Agentmux のタブは開いたまま残ります。</li>
+    <li><strong>プロジェクトフォルダでのエージェント起動。</strong><code>C:\Users\you\src\app</code> のような Windows パス（スペースを含むパスも可）から Claude Code、Codex、または任意のコマンドを起動できます。</li>
+    <li><strong>画面状態の読み取り。</strong>ペインが許可プロンプト待ちか、作業中か、アイドルかをペイン自体から判定でき、AI 自動権限レビューも Windows 上でキーの提案だけでなく実際のキー送信まで行えます。</li>
+    <li><strong>主要シェルの両対応。</strong>Windows PowerShell 5.1 と PowerShell 7、パスワード認証と鍵認証、ドライブレター、UNC パス、スペースを含むフォルダ名に対応しています。</li>
+  </ul>
+</section>
+
+<section id="what-is-different">
+  <h2>Linux マシンとの違い</h2>
+  <ul>
+    <li><strong>ファイル操作は SFTP 経由。</strong>閲覧、編集、転送はシェルではなく SFTP サブシステムを使います。OpenSSH 側で SFTP が無効になっている場合、黙って失敗するのではなくその旨を通知します（ターミナル機能自体は SFTP 不要です）。</li>
+    <li><strong>ファイルブラウザで制限される 2 つの操作。</strong>スクリプトの実行と Git 操作は意図的に拒否されます。Windows ホスト上でシェルエラーを出してユーザーに解釈させるのを防ぐためです。</li>
+    <li><strong>ペインの作業フォルダ表示なし。</strong>psmux には <code>pane_current_path</code> がないため、アプリは各ペインがどのフォルダにいるかを取得できず、実行中プログラム欄には PowerShell と表示されます。また、その表示の更新間隔も Linux より遅くなります。</li>
+    <li><strong>添付ファイルの保存先は temp フォルダ。</strong>送信した画像やファイルは、Linux や Mac では <code>/tmp</code> に、Windows では Windows の temp フォルダに保存されます。ターミナルへ入力されるパスはいずれも実際の保存先です。</li>
+    <li><strong>Windows はあくまで「接続先」。</strong>Windows 上で動く Agentmux クライアントアプリはありません。手元の操作端末が Windows で、エージェントが別のマシンにある場合は、この記事の内容は当てはまりません。</li>
+  </ul>
+</section>
+
+<section id="wsl2-still-an-option">
+  <h2>それでも WSL2 を使うべきケース</h2>
+  <p>理由は 1 つだけ残っています。サーバーとして動く Windows ではなく、<code>apt</code> や systemd、スラッシュ区切りのパスが使える Linux ユーザーランドが欲しい場合です。WSL2 の内部では、このガイドの Linux 向け手順がすべてそのまま使えます。</p>
+  <p>ただし 3 つの落とし穴は残ります。WSL2 は NAT 配下の仮想マシンで動くため、<code>netsh interface portproxy</code> でポート転送するか <code>.wslconfig</code> でミラーネットワークを有効にしないと外部から sshd に届きません。また、最後のプロセスが終了すると数秒でディストリビューションが停止するため、常時稼働にはタスクスケジューラの設定が必要です。さらに古い環境では systemd が既定でオフになっており、ウィザードのサービス起動コマンドがそのまま通らないことがあります。</p>
+  <p>まとめると、Linux のプログラムが必要なら WSL2 を選び、その PC 自体をサーバーとして使いたいならネイティブ構成を選んでください。仮想マシンを起こし続ける手間も、再起動のたびにアドレスが変わる心配もありません。</p>
+</section>
+
+<p>入り口が開き、セッションも消えなくなりました。残るはスマートフォンから入力するアドレス、つまり<a href="/guide/ja/what-is-tailscale/">外出先からそのアドレスへ安全に接続できるか</a>という点です。</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="前へ" href="/guide/ja/setup/">前へ<span>15分で一晩中動くエージェント環境を整える</span></a><a class="pager-next" data-tracks="cliuser" data-label="次へ" href="/guide/ja/claude-code-on-iphone/">次へ<span>iPhoneやiPadからClaude Codeを使う</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

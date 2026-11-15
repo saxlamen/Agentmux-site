@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么不是 Termius / Blink — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="Agentmux 对 Termius、Blink：五个功能差异，以及什么时候选 Termius 更好。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/why-agentmux/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/why-agentmux/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/why-agentmux/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:title" content="为什么不是 Termius / Blink">
+    <meta property="og:description" content="Agentmux 对 Termius、Blink：五个功能差异，以及什么时候选 Termius 更好。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/Serverview_tmux_agents.webp">
+    <meta property="og:image:width" content="1242">
+    <meta property="og:image:height" content="2688">
+    <meta property="og:image:alt" content="主机的 tmux session 与 agent 画面">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="为什么不是 Termius / Blink">
+    <meta name="twitter:description" content="Agentmux 对 Termius、Blink：五个功能差异，以及什么时候选 Termius 更好。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/Serverview_tmux_agents.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "为什么不是 Termius / Blink", "description": "Agentmux 对 Termius、Blink：五个功能差异，以及什么时候选 Termius 更好。", "inLanguage": "zh-Hans", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/", "url": "https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/", "image": ["https://agentmux.saxcave.cc/resource/Serverview_tmux_agents.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首页", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/"}, {"@type": "ListItem", "position": 4, "name": "为什么不是 Termius / Blink", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/why-agentmux/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/zh-Hans/">指南首页</a>
+                <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
+                <a class="lang-switch" href="/guide/">语言</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>为什么不是 Termius / Blink</h1>
+            <p>通用的 SSH 应用假设你打开它是为了敲命令；Agentmux 假设你是要接回一个已经在运行的 agent。需要 Mosh、SOCKS5 转发，或跨平台同步主机列表，就买 Termius 或 Blink。如果你整天在好几台服务器的 agent 之间切换，就买 Agentmux：一个赢在范围，一个赢在接回的深度。</p>
+<p>两个都能开 SSH、都能敲命令，分叉的地方只有一处：谁把「接回」这件事想得比较透彻。下面每一条差别都是从那个假设来的，所有功能全部对照现行代码查证过。</p>
+
+<section id="the-assumption">
+  <h2>两种工具的核心假设不同</h2>
+  <p>通用的 SSH client 围绕的是「一台主机加一个 shell」：给你一个能用的提示符，然后别挡路。提示符之后发生什么是你的事：你开哪个进程、它活不活得下来、明天怎么找回来。</p>
+  <p>Agentmux 围绕的是「一个已经在运行的 agent」，它的任务是缩短你口袋到那个进程的距离。三个结论随之而来，后两个是通用的 client 补不起来的地方。原因不是它做得比较差：那些行为本来就不在它的产品范围内。</p>
+  <ul>
+    <li><strong>你先看到什么。</strong>一台主机，或这台主机上跑着的 session。</li>
+    <li><strong>掉线的代价。</strong>一个要自己重新来过的提示符，或你离开时的那个画面。</li>
+    <li><strong>你不在的时候应用做什么。</strong>什么都不做，或锁屏上的进度，加上一声跑完的提示音。</li>
+  </ul>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能试用，支持 iOS 与 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+    </div>
+</aside>
+
+<section id="capability-comparison">
+  <h2>每个功能摆在一起，谁做得到？</h2>
+  <p>每一行一个功能。对手从外部查证不到的行为，格子里就写查证不到，不猜。</p>
+
+  <div class="table-wrap"><table>
+    <thead>
+      <tr>
+        <th>功能</th>
+        <th>通用 SSH client</th>
+        <th>Agentmux</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>接回 tmux session</td>
+        <td>自己输入 <code>tmux ls</code>，再输入 <code>tmux attach -t</code></td>
+        <td>连上就把服务器上现有的 session 列出来，点一下接回</td>
+      </tr>
+      <tr>
+        <td>掉线之后</td>
+        <td>提示符回来了，session 要自己找</td>
+        <td>detach 不是终止：你回到离开时那个画面</td>
+      </tr>
+      <tr>
+        <td>跑几十分钟的 agent</td>
+        <td>没有「一次运行」这层概念可以汇报进度</td>
+        <td>灵动岛与锁屏显示进度，跑完可以播放提示音</td>
+      </tr>
+      <tr>
+        <td>问你要不要准许一条命令</td>
+        <td>你人必须坐在屏幕前</td>
+        <td>AI 自动权限审查：黑名单拦截、白名单放行、其余交给 AI 判断，再给建议或帮你按（Pro）</td>
+      </tr>
+      <tr>
+        <td>改文件里的一行</td>
+        <td>用手机键盘跟 vim 肉搏</td>
+        <td>Runestone 编辑器、Ink 双栏 Markdown 预览、分支工具、Files 应用集成（Pro）</td>
+      </tr>
+      <tr>
+        <td>私钥放在哪里</td>
+        <td>从外部查证不到</td>
+        <td>Keychain／Keystore，绝不写入本地数据库；iCloud 同步只带走服务器名称</td>
+      </tr>
+      <tr>
+        <td>从应用外面自动化</td>
+        <td>没有 session、项目、agent 这层模型可以交给系统</td>
+        <td>6 个 App Intent，涵盖四种 entity：Server、Project、TMUXSession、RecentSession</td>
+      </tr>
+      <tr>
+        <td>不稳的移动网络</td>
+        <td><strong>Mosh</strong> 是买这类应用的理由</td>
+        <td>只有标准 SSH 加 tmux 自动重连，不等同于 Mosh</td>
+      </tr>
+      <tr>
+        <td>Port forwarding</td>
+        <td>Local、Remote、Dynamic（SOCKS5）都有</td>
+        <td>只有 Local</td>
+      </tr>
+      <tr>
+        <td>大规模的主机配置</td>
+        <td>五个平台同步，主机列表能共享给团队</td>
+        <td>多服务器与批量操作（Pro），平台只有手机与平板</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>先看最后三行。Agentmux 就是在那里输的，那也决定了哪些读者该留在通用工具那一边。</p>
+</section>
+
+<section id="tmux-first-reconnect">
+  <h2>为什么先列 tmux session？</h2>
+  <p>连上服务器，Agentmux 直接把上面现有的 tmux session 列出来，点一下就接回去。不用记 <code>tmux ls</code>、<code>tmux attach -t</code>。掉线之后重连，接的还是同一个 session，画面停在你离开的那一刻，不用重新敲一次 attach。</p>
+  <p>agent 的价值在于它积累下来的上下文：读过哪些文件、为什么选这个做法。接回同一个画面，上下文还在眼前；开一个新的提示符，你得对一个已经忘光的进程把任务重讲一次。如果你还没用过 tmux，先读<a href="/guide/zh-Hans/what-is-tmux/">tmux 在做什么</a>，这整套设计都建立在它上面。</p>
+</section>
+
+<section id="background-live-activity">
+  <h2>你不在的时候，应用在做什么？</h2>
+  <p>agent 常常一跑就是几十分钟，这个功能就是为那段等待做的：灵动岛和锁屏显示当前进度，跑完可以播一声提示音。应用不必一直开在前台，让你死盯着等结果。</p>
+  <p>围绕 shell 的应用关掉之后没有东西可汇报，因为它没有「还在跑」这层概念。这边是某台服务器上某个有名字的 session 在跑，系统的面板替它汇报。等它停下来问你要不要允许某条命令时，<a href="/guide/zh-Hans/permission-review/">AI 自动权限审查</a>可以先替你看一眼：危险的拦下来，安全的给建议或直接帮你按（Pro）。</p>
+</section>
+
+<section id="editor-git-files">
+  <h2>在手机上改文件，一定要开 vim 吗？</h2>
+  <p>临时改一行代码，不必在手机上跟 vim 肉搏。内置的 Runestone 编辑器直接打开文件让你改。要看 agent 产出的 README，Ink 提供双栏 Markdown 预览，源码和排版同时看得到。Git 工具（切换分支、查看 diff）和 Files 应用集成是 Pro 功能，14 天试用期间也用得到。</p>
+  <p>重点是整个循环在一台设备上闭环：agent 改文件，你看 diff，你回答，它继续跑。每多一个步骤要换到另一台机器，你就多跑一趟书桌。</p>
+</section>
+
+<section id="keychain-isolation">
+  <h2>你的私钥放在哪里？</h2>
+  <p>私钥在 iOS 只存在系统的 Keychain 里，在 Android 则由 Android Keystore 做硬件保护，不会写入本地数据库。如果你开了 iCloud 同步（iOS），CloudKit 带走的是服务器名称这类不敏感的 metadata。私钥留在原地。</p>
+  <p>考虑任何工具都问同一个问题：开了同步之后，我的哪些私钥会离开这台设备？功能列表不会回答你。</p>
+</section>
+
+<section id="siri-shortcuts">
+  <h2>Siri 可以把终端画面交给快捷指令</h2>
+  <p>对 Siri 说「从 Agentmux 获取当前终端内容」，<code>GetCurrentSessionContextIntent</code> 就把终端当下的内容抓进 iOS 快捷指令，可以接去备忘录、信息，或任何你自己搭的流程。<code>ContinueLastSessionIntent</code> 更直接：一句「在 Agentmux 继续工作」就接回上一个 session。</p>
+  <p>这类自动化，通用的 SSH 应用从结构上做不到：它们没有 session、项目、agent 这一层语义模型可以交给系统。Agentmux 目前实现了 6 个 App Intent，涵盖 Server、Project、TMUXSession、RecentSession 四种 entity。</p>
+</section>
+
+<section id="cjk-fixes">
+  <h2>三个只有中文用户会有感的修复</h2>
+  <p>1.3.10 修掉了三个英文圈用户感觉不到、中文读者一眼就懂的毛病：全角字符选中时对齐跑偏，链接跨行时复制出来断成好几截，词句里出现一个斜杠就被当成文件路径。没有实际处理过中日韩文字的人，不会踩到这三个坑。</p>
+</section>
+
+<section id="pick-by-job">
+  <h2>你的工作是哪一种，就买哪一种</h2>
+  <p><strong>主要是一台主机上的手动终端工作。</strong>你登录是为了跑自己挑的命令：重启服务、tail log、看磁盘。那就买通用的 SSH client。想先试试以 session 为中心的做法，免费的单服务器方案就涵盖一台服务器、持久 session 和核心终端。</p>
+  <p><strong>整天住在好几台服务器的 agent 里。</strong>一个在 Mac mini 上重构，另一个在 Linux 机器上跑测试，第三个是你上火车前开的。这就是 Agentmux，而且具体来说是 Pro：多服务器、自定义 agent、远程编辑、文件历史、分支工具、批量操作。</p>
+  <p><strong>agent 活在浏览器标签页或云端沙盒里。</strong>方便是真的，代价是文件和凭据不再存在你的机器上。Agentmux 从不代跑你的工作：它是 client，代码和 agent 留在你自己拥有的硬件上，一台 Mac、一台 Linux 机器、或一台服务器。把项目和密钥放到别人租给你的环境里，只要你觉得安心，那也是合理的选择。</p>
+  <p>怎么连进去跟选哪个应用一样重要。标准 SSH 加密钥或密码就够，建议走 Tailscale，因为不用对公网开端口。地址要用 MagicDNS 名称或 100.x 地址，不是局域网 IP。</p>
+</section>
+
+<section id="when-not-to-use">
+  <h2>什么时候该买 Termius 而不是 Agentmux</h2>
+  <p>下面任何一条如果是你的主要工作，就去买通用工具。</p>
+  <ul>
+    <li>你在很不稳定的移动网络下工作，需要 <strong>Mosh</strong> 撑住连接。Agentmux 只有标准 SSH，靠 tmux 自动重连补回来，但那不等同于 Mosh。</li>
+    <li>你需要 <strong>Remote／Dynamic（SOCKS5）port forwarding</strong>。Agentmux 只有 Local。从某个网络打隧道出去、或让浏览器走跳板机，是你每天在做的事。这样的话，这是硬缺口，不是偏好问题。</li>
+    <li>你要在 iOS／Android／Windows／macOS／Linux 之间同步大量主机配置，或跟团队共享主机列表。Agentmux 是手机与平板的 client：Pro 有多服务器与批量操作，没有共享给同事这回事。</li>
+    <li>你是 SRE 或系统管理员，要在几十上百台服务器上做运维。能被脚本操作的主机列表，胜过一个要你点来点去的 session 列表。</li>
+  </ul>
+  <p>Agentmux 为一个工作流设计：<strong>在手机上接回正在运行的 coding agent。</strong>它不是通用的运维工具。如果你一周的工作就是一条一条零散的命令，这些差别对你没有价值。</p>
+</section>
+
+<p>决定用 Agentmux？下一个问题是连接另一头那台机器。<a href="/guide/zh-Hans/setup/">配置向导</a>问三个问题，然后给你一张检查清单；之后常见的毛病，<a href="/guide/zh-Hans/troubleshooting/">故障排查</a>已经都写在那里了。</p>
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="上一篇" href="/guide/zh-Hans/what-is-tailscale/">上一篇<span>不要对公网开端口</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="下一篇" href="/guide/zh-Hans/setup/">下一篇<span>15 分钟，让你的 agent 开始整晚工作</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14 天全功能试用，支持 iOS 与 Android。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">首页</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

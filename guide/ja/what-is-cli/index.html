@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最強のコーディングエージェントがCLIに棲む理由 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="エージェントがターミナルで動く理由は、ファイル全体へのアクセスとコマンド実行権限にあります。シェルの仕組みとGUIとの使い分け。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/ja/what-is-cli/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/what-is-cli/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/what-is-cli/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/what-is-cli/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/what-is-cli/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="最強のコーディングエージェントがCLIに棲む理由">
+    <meta property="og:description" content="エージェントがターミナルで動く理由は、ファイル全体へのアクセスとコマンド実行権限にあります。シェルの仕組みとGUIとの使い分け。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/ja/what-is-cli/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp">
+    <meta property="og:image:width" content="1320">
+    <meta property="og:image:height" content="2868">
+    <meta property="og:image:alt" content="iPhone の agent 起動画面">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="最強のコーディングエージェントがCLIに棲む理由">
+    <meta name="twitter:description" content="エージェントがターミナルで動く理由は、ファイル全体へのアクセスとコマンド実行権限にあります。シェルの仕組みとGUIとの使い分け。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "最強のコーディングエージェントがCLIに棲む理由", "description": "エージェントがターミナルで動く理由は、ファイル全体へのアクセスとコマンド実行権限にあります。シェルの仕組みとGUIとの使い分け。", "inLanguage": "ja", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/ja/what-is-cli/", "url": "https://agentmux.saxcave.cc/guide/ja/what-is-cli/", "image": ["https://agentmux.saxcave.cc/resource/iphone-raw-launch-any-agent.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux ガイド", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "ガイドトップ", "item": "https://agentmux.saxcave.cc/guide/ja/"}, {"@type": "ListItem", "position": 4, "name": "最強のコーディングエージェントがCLIに棲む理由", "item": "https://agentmux.saxcave.cc/guide/ja/what-is-cli/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/ja/">ガイドトップ</a>
+                <a href="/guide/ja/troubleshooting/">トラブルシューティング</a>
+                <a class="lang-switch" href="/guide/">言語</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>最強のコーディングエージェントがCLIに棲む理由</h1>
+            <p>CLI エージェントとは、テキストでやり取りするコーディングエージェントのことです。Mac や Linux マシン、サーバーなど、あなたが所有するマシンのターミナル上で動きます。そこではあなた自身の権限を引き継ぎ、プロジェクト内の全ファイルを読み、任意のコマンドを実行し、その結果を読み取ります。エージェントがターミナルに棲むのは、この 3 つをすべて許すインターフェースが他にないからです。</p>
+<p>「CLI」と聞くと、マウスもボタンもなくカーソルが点滅するだけの苦行のように思えるかもしれません。それでも Claude Code、Codex、Gemini CLI、OpenCode はすべてターミナルで動きます。開発者たちが懐古主義だからではありません。ターミナルだけが、ファイルへのフルアクセスとコマンド実行権限の 2 つを同時に与えてくれるからです。そして実行前にあなたへ確認を求めるのも、まさにその権限を持っているからです。</p>
+
+<section id="terminal">
+  <h2>ボタンを取り払ったターミナルとは何か</h2>
+
+  <p>ここでは 2 つのプログラムが重なって動いており、初心者はよく取り違えます。<strong>ターミナル</strong>は表示層であり、文字のグリッドを描画してキー入力を先へ渡します。その背後にあるのが<strong>シェル</strong>（zsh、bash、fish など）で、1 行のテキストを受け取って実行し、プログラムが書き出した結果を表示します。</p>
+  <p>この薄さこそが、エージェントが実際のプロジェクトを最初から最後まで動かせる理由です。エージェントが打つコマンドはあなたが打つコマンドそのものであり、エージェントが読むエラーもあなたが目にするエラーそのものです。</p>
+</section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+</aside>
+
+<section id="read-the-screen">
+  <h2>ターミナル画面から読み取る 3 つの要素</h2>
+
+  <p>画面の中で意味を持つのは次の 3 か所だけで、残りは飾りです。</p>
+
+  <pre><code>yuki@mini ~/projects/auth (main)
+$ npm test
+
+ ✓ src/session/refresh.test.ts  (6 tests)
+ ✗ src/session/expire.test.ts &gt; drops a session after expiry
+
+     Tests  1 failed | 41 passed (42)
+
+$ echo $?
+1</code></pre>
+
+  <p><strong>プロンプト</strong>が最初の行です。自分が誰で、どのマシンにいて、どのディレクトリとブランチにいるかを示します。マシンが目の前にないとき、この行は単なる飾りではなくなります。SSH でログインしたあと、いま操作しているのが手元のノート PC なのか、切り忘れたサーバーなのかを見分ける手がかりになります。</p>
+  <p><strong>標準出力</strong>（<em>stdout</em>）はプログラムが書き出したテキストです。もう 1 つのストリームである <em>stderr</em> はエラーや警告を分けて流し、本来の出力が読みにくくなるのを防ぎます。</p>
+  <p><strong>終了ステータス。</strong>すべてのコマンドは終了時に整数を 1 つ残し、シェルはそれを <code>$?</code> として渡します。0 はプログラムが成功したと宣言したことを意味します。エージェントが読んでいるのは「1 failed」という文言よりもこの数値であり、<code>1</code> が返ればループがまだ閉じていない合図になります。</p>
+</section>
+
+<section id="capability-boundary">
+  <h2>インターフェースがエージェントの到達範囲を決める</h2>
+
+  <p>ブラウザ上のエージェントは、あなたのパソコン内のファイルを 1 つも見られません。タブの中に閉じているためです。IDE プラグインは開いているファイルを見られますが、多くの場合は提案止まりで、git に触れたり、テストを走らせたり、パッケージを入れたりすることはできません。</p>
+  <p>CLI エージェントは、あなたが持つ権限をそのまま持ちます。リポジトリ全体を読み、<code>git commit</code> を実行し、テストスイートを走らせ、依存関係をインストールします。アクセス権限は 3 段階に分かれており、段階が上がるごとにリスクも増します。</p>
+  <ul>
+    <li><strong>読み取り（Read）。</strong>ホームディレクトリ内のあらゆるファイル。<code>.ssh</code> の中の鍵も含まれます。</li>
+    <li><strong>書き込み（Write）。</strong>git 管理下のプロジェクトなら、誤った編集は <code>git checkout</code> 1 回で戻せます。管理外では誰も元に戻してくれません。</li>
+    <li><strong>実行（Execute）。</strong>あなたが打てるコマンドすべて。マイグレーション、force-push、パスを間違えた <code>rm -rf</code> も含まれます。</li>
+  </ul>
+  <p>誰かが意図的にこの差を設計したわけではありません。ターミナルという仕組みにもともと付いてくる権限セットがそれであり、他のインターフェースはそこから一部を削っているだけです。</p>
+</section>
+
+<section id="commands-an-agent-runs">
+  <h2>サンドボックスのエージェントには打てないコマンド</h2>
+
+  <p>「実行権限」という言葉は抽象的です。画面上の行として並べるとこうなります。</p>
+
+  <pre><code>npm test
+npx vitest run src/session/expire.test.ts
+
+git status --short
+git commit -m "fix: expire sessions on the dot"
+
+npm install date-fns@3
+npm run build
+
+psql "$DATABASE_URL" -f db/schema.sql
+curl -sf localhost:8000/health | jq .db</code></pre>
+
+  <p>ホスト型のサンドボックスには、これらを走らせる場所がありません。この <code>psql</code> はあなたのマシン上にしかないデータベースへ、アップロードされたことのない <code>.env</code> の URL を使って接続します。この <code>npm install</code> は <code>.npmrc</code> に書かれたプライベートレジストリから社内パッケージを引いてきます。これらの <code>git</code> コマンドは、あなたのリモート、フック、署名鍵を備えたクローン上で動きます。</p>
+  <p>サンドボックス内のエージェントはパッチを渡すことはできても、そのパッチが何を引き起こしたかを観測できません。自分の編集結果を確認できないエージェントは、タスクを完了させられません。</p>
+</section>
+
+<section id="concrete-example">
+  <h2>あなたが何も押さずに閉じるループ</h2>
+
+  <p>あなたが「このバグを直して」と 1 行送ると、先ほどのようなコマンドが十数個、キーボードに触れないまま連続で実行されます。</p>
+  <ol>
+    <li>失敗メッセージを grep で探し、3 つのファイルを読み、1 つを編集する。</li>
+    <li><code>npm test</code> を実行し、終了ステータスを読んで <code>1</code> を確認する。</li>
+    <li>1 つのテストケースに絞って再編集し、全体を流し直して <code>0</code> を得る。</li>
+    <li>コミットし、ローカルにマイグレーションを適用し、壊れていたエンドポイントへ curl を投げる。</li>
+  </ol>
+  <p>この一連の流れのどこにもクリックは要りません。同じエージェントをブラウザのタブや IDE プラグインに置くと、ステップ 2 で止まります。編集案は作れてもテストを走らせられないため、あなたがテストを実行して結果を教えてくれるのを待つことになります。あなたがテストランナーになってしまうのです。これはモデルの性能ではなく、権限の問題です。</p>
+</section>
+
+<section id="byte-stream-movable">
+  <h2>ウィンドウよりバイトストリームのほうが価値がある理由</h2>
+
+  <p>プログラムはターミナルウィンドウの「中」に住んでいるわけではありません。<strong>擬似端末（pseudo-terminal）</strong>という、両端を持つカーネルオブジェクトに繋がっています。片側からバイト列が入り、もう片側から出ていくだけで、ウィンドウとは今たまたま遠いほうの端を持っている存在にすぎません。この仕組みから 3 つの性質が生まれます。</p>
+  <ul>
+    <li><strong>保存できる。</strong><code>npm test &gt; build.log</code> とすればテキストがファイルに書き出され、1 年後でも別のプログラムで読めます。GUI のキャンバスは絵であり、絵は記録になりません。</li>
+    <li><strong>連結できる。</strong><code>git ls-files | grep .env</code> のように、あるプログラムの出力を次のプログラムの入力へ渡せます。</li>
+    <li><strong>移動できる。</strong>仕組みの定義上、両端が同じ場所にある必要はありません。tmux がセッションをサーバー側に置いておけば、あなたの画面は別の端末からアタッチ、デタッチ、再アタッチできます。</li>
+  </ul>
+  <p>このガイドの要点は 3 つ目です。<strong>バイトストリームは転送し、保存し、再生し、別の場所から再接続できます。描画されたウィンドウにはそれができません。</strong>永続セッションも、SSH も、スマホ上の同じエージェントも、すべてこの 1 つの性質から導かれます。</p>
+</section>
+
+<section id="what-full-access-costs">
+  <h2>フルアクセスの代償は何か</h2>
+
+  <p>データベースをマイグレーションできる権限は、データベースを削除できる権限と同じです。だからこそエージェントは作業の途中で止まり、「このコマンドを実行しますか？」と尋ねます。その確認は臆病さではありません。何も聞かずにすべてを実行するエージェントは、あなたの <code>.ssh</code> ディレクトリや本番データベースの扱いを推測だけで決めていることになります。確認プロンプトは第 2 段階（書き込み）と第 3 段階（実行）の境界線を引く場所であり、コマンドが確定していてまだ実行されていないその瞬間にしか引けません。</p>
+  <p>2 つの習慣でリスクの大半は抑えられます。<strong>要約ではなくコマンドそのものを読むこと。</strong>「ビルドキャッシュを整理します」は説明文にすぎず、実際に結果をもたらすのはその下の行です。<strong>よく使うカテゴリは一度だけ許可すること。</strong>テストの実行を 1 日 40 回聞かれるなら、<code>npm test</code> を通すルールを 1 つ書きます。</p>
+  <p>どうせ許可する確認に 10 秒かかっても大したことはありませんが、本番データベースへのコマンドを誤って許可すれば、1 日とリストア作業を失います。その比率があるからこそ <a href="/guide/ja/permission-review/">AI 権限レビュー</a>があります。ブラックリストで明らかに危険なものを止め、すでに信頼しているものは許可リストを通し、残りをモデルが判断します。</p>
+</section>
+
+<section id="when-a-gui-is-better">
+  <h2>GUI のほうが適している場面</h2>
+
+  <p>コードに対して行うすべての作業にターミナルが向いているわけではありません。次の作業はテキストでは明確に劣ります。</p>
+  <ul>
+    <li><strong>ライブデバッガ。</strong>ブレークポイントを置き、ループをステップ実行し、4 番目のフレームで変数の中身を見る作業。</li>
+    <li><strong>視覚的な作業全般。</strong>レイアウト、余白、わずかに違う色の調整。エージェントにスクリーンショットを説明させるより、自分で見たほうが速いです。</li>
+    <li><strong>大きな diff のレビュー。</strong>2,000 行を左右に並べて見る作業。エージェントが書いたコードであっても GUI でレビューする理由がここにあります。</li>
+    <li><strong>まだ学習中の段階。</strong>エディタは間違えたトークンの下に線を引いてくれるため、スタックトレースの壁よりも速く学べます。</li>
+  </ul>
+  <p>ここでの線引きは熟練と怠慢ではなく、<strong>「自分がそこにいて操縦している」</strong>か<strong>「向こうで動いていて様子を見に来る」</strong>かの違いです。机の上では IDE のほうが優れた道具であることが多く、CLI エージェントを最も使いこなしている人は両方を持っています。<a href="/guide/ja/why-not-gui-ide/">その役割分担</a>については別の記事で詳しく書いています。</p>
+</section>
+
+<p>ターミナルはエージェントをあなたのマシンに置き、その出力はどこにでも運べる文字になります。つまりそのマシンは、あなたが今座っているマシンである必要がありません。<a href="/guide/ja/what-is-ssh/">別の場所からそこへ届くのが SSH の役目です</a>。</p>
+
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner" data-label="前へ" href="/guide/ja/why-not-gui-ide/">前へ<span>CursorやVS CodeではなくCLIを選ぶ理由</span></a><a class="pager-next" data-tracks="beginner" data-label="次へ" href="/guide/ja/what-is-ssh/">次へ<span>SSHは自分のマシンへの暗号化トンネル</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14日間の全機能トライアル。iOS・Android に対応。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">ホーム</a>
+            <a href="/privacy.html">プライバシー</a>
+            <a href="mailto:atmux-support@saxcave.cc">サポート</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>

@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="{{posthogKey}}">
+    <meta name="posthog-host" content="{{posthogHost}}">
     {{jsonld}}
 </head>
 <body class="guide">
@@ -79,7 +81,7 @@
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>{{ctaLine}}</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="{{appStoreUrl}}" target="_blank" rel="noopener noreferrer">{{ctaAppStore}}</a>
@@ -95,5 +97,6 @@
             <a href="mailto:atmux-support@saxcave.cc">{{supportLabel}}</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

@@ -12,6 +12,8 @@
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
     <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/why-remote-vibe-coding/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/why-remote-vibe-coding/">
     <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/why-remote-vibe-coding/">
     <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
     <meta property="og:type" content="article">
@@ -33,6 +35,8 @@
     <link rel="stylesheet" href="/site.css">
     <link rel="stylesheet" href="/guide.css">
     <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "Article", "headline": "你的 AI 應該在你睡覺時工作", "description": "遠端跑 agent 的成本是待命：機器不關機、tmux、SSH 加 Tailscale，待命變成一支手機加十五秒。", "inLanguage": "zh-TW", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/", "url": "https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-run-coding-agents-anywhere.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-07-28", "dateModified": "2026-11-10"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首頁", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首頁", "item": "https://agentmux.saxcave.cc/guide/zh-TW/"}, {"@type": "ListItem", "position": 4, "name": "你的 AI 應該在你睡覺時工作", "item": "https://agentmux.saxcave.cc/guide/zh-TW/why-remote-vibe-coding/"}]}]}</script>
 </head>
 <body class="guide">
@@ -45,7 +49,7 @@
             <div class="guide-nav-links">
                 <a href="/guide/zh-TW/">指南首頁</a>
                 <a href="/guide/zh-TW/troubleshooting/">疑難排解</a>
-                <a class="lang-switch" href="/guide/en/why-remote-vibe-coding/">English</a>
+                <a class="lang-switch" href="/guide/">語言</a>
             </div>
         </div>
     </nav>
@@ -63,6 +67,13 @@
   <p>把一整天的比例攤開來看，吃掉時間的不是打字。你描述需求那 30 秒，是全程最短的一截。剩下全是等：等它讀完專案，等它改完十幾個檔案，等測試跑完。然後它停下來問：「這個 migration 要不要順便處理？」你回一句話，接著又等五分鐘、二十分鐘。</p>
   <p>一天下來，你真正打字的時間可能不到十分鐘，被佔掉的是好幾個小時。這幾個小時你在<strong>待命</strong>：什麼都沒做，但不能走開，因為它隨時可能要你回一句話。</p>
 </section>
+<aside class="guide-cta guide-cta-inline" data-cta-placement="inline">
+    <p>14 天全功能試用，支援 iOS 與 Android。</p>
+    <div class="guide-cta-actions">
+        <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
+        <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下載</a>
+    </div>
+</aside>
 
 <section id="the-binding">
   <h2>傳統做法把待命綁死在一台筆電上</h2>
@@ -207,7 +218,7 @@
                 }
             })();
         </script>
-        <aside class="guide-cta">
+        <aside class="guide-cta" data-cta-placement="footer">
             <p>14 天全功能試用，支援 iOS 與 Android。</p>
             <div class="guide-cta-actions">
                 <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下載</a>
@@ -223,5 +234,6 @@
             <a href="mailto:atmux-support@saxcave.cc">技術支援</a>
         </div>
     </footer>
+    <script defer src="/analytics.js"></script>
 </body>
 </html>

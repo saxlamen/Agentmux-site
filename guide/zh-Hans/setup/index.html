@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15 分钟，让你的 agent 开始整晚工作 — Agentmux Guide</title>
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="回答三个问题，拿到按你的答案生成的步骤清单：机器、要跑的 agent、从哪里连回来。">
+    <link rel="canonical" href="https://agentmux.saxcave.cc/guide/zh-Hans/setup/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="llms-full.txt">
+    <link rel="alternate" hreflang="zh-TW" href="https://agentmux.saxcave.cc/guide/zh-TW/setup/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://agentmux.saxcave.cc/guide/zh-Hans/setup/">
+    <link rel="alternate" hreflang="ja" href="https://agentmux.saxcave.cc/guide/ja/setup/">
+    <link rel="alternate" hreflang="en" href="https://agentmux.saxcave.cc/guide/en/setup/">
+    <link rel="alternate" hreflang="x-default" href="https://agentmux.saxcave.cc/guide/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Agentmux">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:title" content="15 分钟，让你的 agent 开始整晚工作">
+    <meta property="og:description" content="回答三个问题，拿到按你的答案生成的步骤清单：机器、要跑的 agent、从哪里连回来。">
+    <meta property="og:url" content="https://agentmux.saxcave.cc/guide/zh-Hans/setup/">
+    <meta property="og:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-browse-remote-projects.webp">
+    <meta property="og:image:width" content="2752">
+    <meta property="og:image:height" content="2064">
+    <meta property="og:image:alt" content="iPad 浏览远程项目文件">
+    <meta property="article:published_time" content="2026-10-28">
+    <meta property="article:modified_time" content="2026-10-28">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="15 分钟，让你的 agent 开始整晚工作">
+    <meta name="twitter:description" content="回答三个问题，拿到按你的答案生成的步骤清单：机器、要跑的 agent、从哪里连回来。">
+    <meta name="twitter:image" content="https://agentmux.saxcave.cc/resource/ipad-raw-browse-remote-projects.webp">
+    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/guide.css">
+    <meta name="theme-color" content="#090d0f">
+    <meta name="posthog-key" content="">
+    <meta name="posthog-host" content="https://us.i.posthog.com">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "HowTo", "headline": "15 分钟，让你的 agent 开始整晚工作", "description": "回答三个问题，拿到按你的答案生成的步骤清单：机器、要跑的 agent、从哪里连回来。", "inLanguage": "zh-Hans", "mainEntityOfPage": "https://agentmux.saxcave.cc/guide/zh-Hans/setup/", "url": "https://agentmux.saxcave.cc/guide/zh-Hans/setup/", "image": ["https://agentmux.saxcave.cc/resource/ipad-raw-browse-remote-projects.webp"], "author": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "publisher": {"@type": "Organization", "@id": "https://agentmux.saxcave.cc/#organization", "name": "Agentmux", "url": "https://agentmux.saxcave.cc/", "logo": {"@type": "ImageObject", "url": "https://agentmux.saxcave.cc/resource/app-icon-192.webp", "width": 192, "height": 192}, "email": "atmux-support@saxcave.cc", "sameAs": ["https://apps.apple.com/app/id6766158521", "https://play.google.com/store/apps/details?id=cc.saxcave.agentmux"]}, "isPartOf": {"@id": "https://agentmux.saxcave.cc/#website"}, "datePublished": "2026-10-28", "dateModified": "2026-10-28"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "首页", "item": "https://agentmux.saxcave.cc/"}, {"@type": "ListItem", "position": 2, "name": "Agentmux 指南", "item": "https://agentmux.saxcave.cc/guide/"}, {"@type": "ListItem", "position": 3, "name": "指南首页", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/"}, {"@type": "ListItem", "position": 4, "name": "15 分钟，让你的 agent 开始整晚工作", "item": "https://agentmux.saxcave.cc/guide/zh-Hans/setup/"}]}]}</script>
+</head>
+<body class="guide">
+    <nav class="guide-nav">
+        <div class="guide-nav-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark"><img src="/resource/app-icon-192.webp" alt="Agentmux Icon"></span>
+                <span class="brand-word">Agen<span class="brand-tmux">tmux</span></span>
+            </a>
+            <div class="guide-nav-links">
+                <a href="/guide/zh-Hans/">指南首页</a>
+                <a href="/guide/zh-Hans/troubleshooting/">疑难排查</a>
+                <a class="lang-switch" href="/guide/">语言</a>
+            </div>
+        </div>
+    </nav>
+    <main class="shell guide-shell">
+        <article class="guide-article">
+            <h1>15 分钟，让你的 agent 开始整晚工作</h1>
+            <p>把 agent 放到远程跑一整晚，大约 15 分钟：用 SSH 连进你自己那台机器，用 tmux 让手机掉线时只是 detach、不会停止 agent，再用 Tailscale，就不用对公网开端口。回答三个问题：你的机器、要跑的 agent、你想从哪里连。清单会照你的答案生成。</p>
+<p>每一步都会告诉你为什么要做、命令是什么、怎么确认成功了，还有没成功的话去哪里看。（那台机器是 Windows？<a href="#windows">先看这一节</a>。）</p>
+<div id="wizard" data-wizard-lang="zh-Hans" data-load-failed="加载失败，请刷新。">
+    <noscript><p>这个配置向导需要 JavaScript。你也可以直接看<a href="/guide/zh-Hans/troubleshooting/">故障排查</a>页。</p></noscript>
+</div>
+<script src="/guide/assets/wizard.js" defer></script>
+
+<details id="windows" class="windows-note">
+  <summary><h2>那台机器是 Windows</h2></summary>
+
+  <p>选「一台 Windows 电脑」，向导会跟其他答案一样给你清单：打开 SSH 服务器、别让电脑休眠、装你的 agent，psmux 它会自己处理。这一节处理两件从别条路过来的人一定会卡住的事：Windows 上取代 tmux 的是什么，还有你在别处读过的 WSL2 现在还要不要走。</p>
+
+  <p>先讲结论：Windows 10 和 11 都有 OpenSSH Server，用 PowerShell 打开就好。撑住 session 的是 <strong>psmux</strong>：命令照 tmux 那套设计，为 Windows 写的。那台机器没装的话，Agentmux 会帮你装。不用 WSL2、不用虚拟机，也不用转发端口。命令、Windows 的 session 能做什么、跟 Linux 主机哪里不一样，全部在<a href="/guide/zh-Hans/windows-server/">这篇 Windows 主机指南</a>。</p>
+
+  <p>想要的是 Linux 那个生态而不是一台 Windows，就继续用 WSL2。WSL2 里面是完整的 Linux，「Linux 主机」那条路照样适用，回去把第一题改成「一台 Linux 主机」。它附带三个 Mac 没有的坑：sshd 躲在虚拟机的 NAT 后面、WSL 最后一个进程结束后几秒发行版就关掉、旧版默认没有 systemd。三个坑的解法写在<a href="/guide/zh-Hans/windows-server/#wsl2-still-an-option">那篇 WSL2 那一节</a>。</p>
+
+  <h3>如果 Windows 只是你工作用的那台电脑呢？</h3>
+
+  <p>这里讲的 Windows，指的从来是「那台被连进去的机器」。如果你的 Windows 只是你平常工作的电脑，agent 跑在别台上（家里的 Mac mini、公司的 Linux 主机、一台 VPS），那上面这些你一个都不会遇到，这份指南对你完全适用。你要配置的机器，不是你手上这台。</p>
+</details>
+        </article>
+        <nav class="guide-pager"><a class="pager-prev" data-tracks="beginner cliuser" data-label="上一篇" href="/guide/zh-Hans/why-agentmux/">上一篇<span>为什么不是 Termius / Blink</span></a><a class="pager-next" data-tracks="beginner cliuser" data-label="下一篇" href="/guide/zh-Hans/windows-server/">下一篇<span>你的 Windows 电脑也可以当主机</span></a></nav>
+        <script>
+            // If the reader picked a track on the guide index, keep only that
+            // track's neighbours and restore the plain labels. Runs
+            // synchronously so both cards never flash before one is removed.
+            (function () {
+                var nav = document.querySelector('.guide-pager');
+                if (!nav) return;
+                var track = null;
+                try { track = localStorage.getItem('agentmux-guide-track'); } catch (e) { return; }
+                if (!track) return;
+                var cards = nav.querySelectorAll('a[data-tracks]');
+                var keep = [];
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-tracks').split(' ').indexOf(track) !== -1) {
+                        keep.push(cards[i]);
+                    }
+                }
+                // This article isn't on the reader's track, or there was no
+                // fork to resolve. Leave the pager alone.
+                if (!keep.length || keep.length === cards.length) return;
+                for (var j = 0; j < cards.length; j++) {
+                    if (keep.indexOf(cards[j]) === -1) cards[j].parentNode.removeChild(cards[j]);
+                }
+                for (var k = 0; k < keep.length; k++) {
+                    keep[k].firstChild.nodeValue = keep[k].getAttribute('data-label');
+                }
+            })();
+        </script>
+        <aside class="guide-cta" data-cta-placement="footer">
+            <p>14 天全功能试用，支持 iOS 与 Android。</p>
+            <div class="guide-cta-actions">
+                <a class="primary-btn" href="https://apps.apple.com/app/id6766158521" target="_blank" rel="noopener noreferrer">App Store 下载</a>
+                <a class="primary-btn play-btn" href="https://play.google.com/store/apps/details?id=cc.saxcave.agentmux" target="_blank" rel="noopener noreferrer">Google Play 下载</a>
+            </div>
+        </aside>
+    </main>
+    <footer class="guide-footer">
+        <div>© 2026 Agentmux</div>
+        <div class="guide-footer-links">
+            <a href="/">首页</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="mailto:atmux-support@saxcave.cc">技术支持</a>
+        </div>
+    </footer>
+    <script defer src="/analytics.js"></script>
+</body>
+</html>
