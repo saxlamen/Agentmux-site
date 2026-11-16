@@ -11,9 +11,9 @@ the site speaks **four languages** while the guide speaks two.
 | Home | `index.source.html` (39 copy slots per locale, switched with `data-lang`) | `python3 build_home.py` | en, zh-TW, zh-Hans, ja | 413 en words / 547 / 527 / 809 CJK chars |
 | Home search metadata | `build_home.py` `LANG_CONFIG` (paints each page) **and** `LANG_META` inside `index.source.html` (repaints on an in-page language switch) | `python3 build_home.py` | en, zh-TW, zh-Hans, ja | title + description per locale |
 | Home structured data | `build_home.py` `FEATURE_LIST`, `OFFER_DESCRIPTION` | same | en | 6 feature lines |
-| Guide articles | `guide-src/content/<slug>/{en,zh-TW}.html` | `python3 guide-src/build.py` | en, zh-TW | 16,619 en words / 23,379 zh chars, 12 articles |
-| Guide titles, meta, UI | `guide-src/strings/{en,zh-TW}.json` (53 strings each) | same | en, zh-TW | 2,810 / 1,513 chars |
-| Setup wizard | `guide-src/wizard/strings/{en,zh-TW}.json` (89 strings each) | copied to `guide/assets/` | en, zh-TW | 9,967 / 4,310 chars |
+| Guide articles | `guide-src/content/<slug>/{en,zh-TW}.html` | `python3 guide-src/build.py` | en, zh-TW | 17,334 en words / 24,261 zh chars, 13 articles |
+| Guide titles, meta, UI | `guide-src/strings/{en,zh-TW}.json` (56 strings each) | same | en, zh-TW | 3,006 / 1,638 chars |
+| Setup wizard | `guide-src/wizard/strings/{en,zh-TW}.json` (89 strings each) | copied to `guide/assets/` | en, zh-TW | 10,104 / 4,357 chars |
 | Guide language picker | built from `guide-src/config.json` | `build.py` | en, zh-TW | — |
 | Privacy policy | `privacy.html` (four locales in one file) | static | en, zh-TW, zh-Hans, ja | 1,259 en words / 1,913 / 1,896 / 3,125 CJK |
 | Announcement popup | `announce.json` | hand-edited, deployed as-is by Pages | en, de, es, fr, ja, ko, pt-BR, ru, zh-Hans, zh-Hant | 1 title + 1 message + 1 button label per locale |
